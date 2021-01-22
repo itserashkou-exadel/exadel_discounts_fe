@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <div id="app">
+        <div id="app" :style="myStyle" >
             <router-view/>
         </div>
     </v-app>
@@ -11,7 +11,10 @@
     export default {
         data() {
             return {
-                showPassword: false
+                showPassword: false,
+                myStyle: {
+                    backgroundColor:"#0091EA"
+                }
             }
         },
         components: {

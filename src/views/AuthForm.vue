@@ -1,34 +1,36 @@
 <template>
-    <v-content >
-        <v-card class="elevation-0 d-flex align-center justify-space-around flex-column">
-            <v-card width="500px"  class="mt-9" >
-                <v-card-title class="d-flex justify-center">Welcome to CrazyPrice App</v-card-title>
-                <v-card-text>
-                    <v-autocomplete label="Выберите страну" :items="countries"></v-autocomplete>
-                    <v-autocomplete label="Выберите город" :items="towns"></v-autocomplete>
-                </v-card-text>
-
-                <v-card-actions>
-                    <v-btn dark color="success" class="mx-auto">
-                        <router-link to="/mainpage">Login</router-link>
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
+    <div class="wrapper">
+        <v-card width="33%" class="mx-auto mt-15" color="blue-grey lighten-4" hover >
+            <v-card-title>Welcome to CrazyPrice App</v-card-title>
+            <v-card-text>
+                <v-form>
+                    <v-autocomplete label="Choose your country" :items="location.countries"></v-autocomplete>
+                    <v-autocomplete label="Choose your country" :items="location.towns"></v-autocomplete>
+                    <v-card-actions class="d-flex justify-center" >
+                        <v-btn color="success" width="150">Login</v-btn>
+                    </v-card-actions>
+                </v-form>
+            </v-card-text>
         </v-card>
-
-    </v-content>
+    </div>
 </template>
 
 <script>
     export default {
         name: "AuthForm",
-        data: () => ({
-            countries: ['Belarus', 'Ukraine', 'USA',],
-            towns: ['Grodno', 'Minsk', 'Brest',]
-        })
+        data() {
+            return {
+                location: {
+                    countries: ['Belarus', 'Ukraine', 'USA',],
+                    towns: ['Grodno', 'Minsk', 'Brest',],
+                },
+            }
+        }
     }
 </script>
 
 <style scoped>
-
+    .wrapper {
+        height: 100vh;
+    }
 </style>
