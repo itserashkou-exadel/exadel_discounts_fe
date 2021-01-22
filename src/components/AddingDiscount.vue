@@ -1,9 +1,9 @@
 <template>
-    <v-contasiner style="height: 100vh"
-            class="grey lighten-5 mb-6"
+    <v-container
+            class="mb-6"
     >
         <v-row
-                :align="start"
+                align-content="center"
                 no-gutters
                 style="height: 100px;"
         >
@@ -13,49 +13,46 @@
             </v-col>
         </v-row>
         <v-row
-                :align="start"
                 no-gutters
-                style="height: 100%;"
         >
             <v-col class="ml-10">
-                <v-text-field
-                        style="width: 80%"
+                <v-text-field class="cutwidth"
                         label="Название услуги"
                         outlined
                 ></v-text-field>
                 <v-text-field
-                        style="width: 80%"
+                        class="cutwidth"
                         label="Скидка"
                         outlined
                 ></v-text-field>
-                <div style="display: flex; width: 80%"
+                <div style="display: flex" class="cutwidth"
                 >
                     <v-text-field
                             prepend-icon="С"
                             append-outer-icon="mdi-calendar"
-                            label=""
+
                             outlined
                     ></v-text-field>
                     <v-text-field class="ml-5"
                             prepend-icon="По"
                             append-outer-icon="mdi-calendar"
-                            label=""
+
                             outlined
                     ></v-text-field>
                 </div>
                 <v-text-field
-                        style="width: 80%"
+                        class="cutwidth"
                         label="Вендор"
                         outlined
                 ></v-text-field>
                 <v-text-field
-                        style="width: 80%"
+                        class="cutwidth"
                         label="Список тегов"
                         outlined
                 ></v-text-field>
                 <v-text-field
                         height="150px"
-                        style="width: 80%"
+                        class="cutwidth"
                         label="Описание услуги"
                         outlined
                 ></v-text-field>
@@ -89,19 +86,14 @@
                         outlined
                 ></v-text-field>
                 <v-text-field
-                        accept="image/*"
                         style="width: 80%"
-                        append-icon="mdi-flip-v-attachment"
+                        append-icon="mdi-clippy"
                         label="Изображение"
                         outlined
                 ></v-text-field>
-
             </v-col>
-
         </v-row>
-
-    </v-contasiner>
-
+    </v-container>
 </template>
 
 <script>
@@ -112,5 +104,10 @@
 
 
 <style scoped>
-
+    .container {
+        margin-left: 0;
+    }
+    .cutwidth {
+        width: 80%;
+    }
 </style>
