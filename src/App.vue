@@ -1,8 +1,9 @@
 <template>
-    <div id="app">
-   <Sign/>
-    <router-view/>
-    </div>
+    <v-app>
+        <div id="app">
+            <router-view/>
+        </div>
+    </v-app>
 </template>
 
 <script>
@@ -14,7 +15,7 @@
             }
         },
         components: {
-            // Sign
+
         }
     }
 </script>
