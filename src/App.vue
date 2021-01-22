@@ -1,8 +1,8 @@
 <template>
-    <div id="app">
-   <Sign/>
+    <v-app id="app">
+
     <router-view/>
-    </div>
+    </v-app>
 </template>
 
 <script>

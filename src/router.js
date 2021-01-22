@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from './components/Home'
 import Sign from "./components/Sign";
+import AddingDiscount from "./components/AddingDiscount";
 
 
 Vue.use(VueRouter);
@@ -29,6 +30,10 @@ const router = new VueRouter({
         {
             path: "/home",
             component: Home
+        },
+        {
+            path: '/addingDiscount',
+            component: AddingDiscount
         }
     ]
 });
