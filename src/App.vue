@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    // import Sign from '@/components/Sign'
+    import Sign from '@/components/Sign'
     export default {
         data() {
             return {
@@ -14,7 +14,7 @@
             }
         },
         components: {
-            // Sign
+            Sign
         }
     }
 </script>
