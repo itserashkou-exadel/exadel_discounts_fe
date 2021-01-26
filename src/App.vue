@@ -1,32 +1,71 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+    <v-app>
+        <!--      <v-container>-->
+        <!--          <v-row justify="start" >-->
+        <!--              <v-col cols="4">-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--              <v-col cols="4">-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--              <v-col cols="4" >-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--              <v-col cols="4" >-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--              <v-col cols="4" >-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--          </v-row>-->
+        <!--          <v-spacer class="my-16"></v-spacer>-->
+        <!--          <v-row justify="space-between">-->
+        <!--              <v-col col="4">-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--              <v-col col="4">-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--              <v-col col="4">-->
+        <!--                  <Typography />-->
+        <!--              </v-col>-->
+        <!--          </v-row>-->
+
+        <Cards/>
+<!--        :descriptions2="descriptions2"-->
+
+
+
+
+
+        <v-main>
+
+            <!-- Provides the application the proper gutter -->
+
+
+            <!-- If using vue-router -->
+            <router-view></router-view>
+
+        </v-main>
+
+    </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
+<script>
+    import Cards from './views/Cards.vue'
+    // import Card from './components/Card.vue'
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    export default {
+        name: 'App',
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+        components: {
+            Cards
+        },
+
+        data: () => ({
+
+
+        }),
+    };
+</script>
