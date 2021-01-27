@@ -42,7 +42,7 @@
                 </v-row>
             </v-col>
             <v-icon
-                    v-on:click="colorSwitch"
+                    v-on:click="iconSwitch"
                     class="mr-13" large>
                 {{ card }}
             </v-icon>
@@ -84,15 +84,15 @@
         },
         data() {
             return {
-                card:"mdi-heart-outline"
+                card: "mdi-heart-outline"
             }
         },
         methods: {
-            colorSwitch() {
-                if(this.card==="mdi-heart-outline")
-                    this.card="mdi-heart"
+            iconSwitch() {
+                if (this.card === "mdi-heart-outline")
+                    this.card = "mdi-heart"
                 else
-                    this.card="mdi-heart-outline"
+                    this.card = "mdi-heart-outline"
             }
         }
     }
