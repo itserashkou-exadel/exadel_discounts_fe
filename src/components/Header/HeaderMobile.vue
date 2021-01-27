@@ -46,6 +46,10 @@
                          @click="sideNav= false">
               <v-list-item-title>{{ link.text }}</v-list-item-title>
             </v-list-item>
+            <v-btn value="nearby"
+                   icon>
+              <v-icon>mdi-map-marker</v-icon>
+            </v-btn>
             <Avatar/>
           </v-list>
         </v-card>
@@ -69,6 +73,7 @@
         color="blue lighten-5"
         multiple
     ></v-text-field>
+
   </v-toolbar>
 </template>
 
