@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-app-bar app dark color="#40BFEF">
+        <v-app-bar app dark color="primary">
 
             <v-row>
                 <v-col cols="12" md="2" class="pl-10 pt-5">

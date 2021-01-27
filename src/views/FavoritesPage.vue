@@ -1,10 +1,10 @@
 <template>
-$END$
+  <v-content>FAVORITES</v-content>
 </template>
 
 <script>
 export default {
-name: "Header"
+  name: "FavoritesPage"
 }
 </script>
 
