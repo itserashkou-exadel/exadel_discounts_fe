@@ -6,6 +6,7 @@ import SubscribesPage from "@/views/SubscriptionsPage.vue";
 import MapPage from "@/views/MapPage.vue";
 import FavoritesPage from "@/views/FavoritesPage.vue";
 import AppTemplate from "@/views/AppTemplate.vue";
+import AddingDiscount from './views/AddingDiscount.vue'
 
 
 Vue.use(VueRouter);
@@ -33,6 +34,9 @@ const router = new VueRouter({
       ]
     },
     {
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
       path: '/subscriptions',
       name: 'subscriptions',
       component: AppTemplate,
