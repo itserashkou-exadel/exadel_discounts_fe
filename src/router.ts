@@ -1,5 +1,6 @@
+import VueRouter from 'vue-router';
+import Cards from './views/Cards.vue';
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import Sign from "./components/Sign.vue";
 import HomePage from "@/views/HomePage.vue";
 import SubscribesPage from "@/views/SubscriptionsPage.vue";
@@ -7,7 +8,6 @@ import MapPage from "@/views/MapPage.vue";
 import FavoritesPage from "@/views/FavoritesPage.vue";
 import AppTemplate from "@/views/AppTemplate.vue";
 import AddingDiscount from './views/AddingDiscount.vue'
-
 
 Vue.use(VueRouter);
 
@@ -32,6 +32,11 @@ const router = new VueRouter({
           component: HomePage,
         }
       ]
+    },
+    {
+      path: '/cards',
+      name: 'cards',
+      component: Cards
     },
     {
       // route level code-splitting
