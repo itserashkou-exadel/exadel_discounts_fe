@@ -19,7 +19,6 @@
       </div>
       <br />
     </div>
-
   </div>
 </template>
 <script lang='ts'>
