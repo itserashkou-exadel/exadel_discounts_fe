@@ -39,14 +39,14 @@
                                 ref="menu"
                                 v-model="menu"
                                 :close-on-content-click="false"
-                                :return-value.sync="date"
+                                :return-value.sync="dateStart"
                                 transition="scale-transition"
                                 offset-y
                                 min-width="auto"
                         >
                             <template v-slot:activator="{on}">
                                 <v-text-field
-                                        v-model="date"
+                                        v-model="dateStart"
                                         append-outer-icon="mdi-calendar"
                                         outlined
                                         readonly
@@ -54,7 +54,7 @@
                                 ></v-text-field>
                             </template>
                             <v-date-picker
-                                    v-model="date"
+                                    v-model="dateStart"
                                     no-title
                                     scrollable
                             >
@@ -69,7 +69,7 @@
                                 <v-btn
                                         text
                                         color="primary"
-                                        @click="$refs.menu.save(date)"
+                                        @click="$refs.menu.save(dateStart)"
                                 >
                                     OK
                                 </v-btn>
@@ -79,17 +79,17 @@
                                 class="pt-4 pr-2"
                         >По</span>
                         <v-menu
-                                ref="menu2"
-                                v-model="menu2"
+                                ref="menuFinish"
+                                v-model="menuFinish"
                                 :close-on-content-click="false"
-                                :return-value.sync="date2"
+                                :return-value.sync="dateFinish"
                                 transition="scale-transition"
                                 offset-y
                                 min-width="auto"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                        v-model="date2"
+                                        v-model="dateFinish"
                                         append-outer-icon="mdi-calendar"
                                         outlined
                                         readonly
@@ -98,7 +98,7 @@
                                 ></v-text-field>
                             </template>
                             <v-date-picker
-                                    v-model="date2"
+                                    v-model="dateFinish"
                                     no-title
                                     scrollable
                             >
@@ -106,14 +106,14 @@
                                 <v-btn
                                         text
                                         color="primary"
-                                        @click="menu2 = false"
+                                        @click="menuFinish = false"
                                 >
                                     Cancel
                                 </v-btn>
                                 <v-btn
                                         text
                                         color="primary"
-                                        @click="$refs.menu2.save(date2)"
+                                        @click="$refs.menuFinish.save(dateFinish)"
                                 >
                                     OK
                                 </v-btn>
@@ -207,10 +207,10 @@
                 valid: true,
                 nameRules: [],
                 picker: new Date().toISOString().substr(0, 10),
-                date: new Date().toISOString().substr(0, 10),
-                date2: new Date().toISOString().substr(0, 10),
+                dateStart: new Date().toISOString().substr(0, 10),
+                dateFinish: new Date().toISOString().substr(0, 10),
                 menu: false,
-                menu2: false,
+                menuFinish: false,
                 belarus: [
                     {id: 1, town: 'Grodno', country: 'Belarus'},
                     {id: 2, town: 'Minsk', country: 'Belarus'}],

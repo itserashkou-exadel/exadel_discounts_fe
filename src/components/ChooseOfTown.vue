@@ -2,7 +2,6 @@
     <div>
         <v-list
                 ref="list"
-
         >
             <v-list-group>
                 <template v-slot:activator="{on, attrs}"
@@ -13,18 +12,15 @@
                             v-bind="attrs"
                     >Choose your location</v-list-item-title>
                 </template>
-
                 <!--            Первая группа            -->
                 <v-list-group no-action sub-group>
                     <template v-slot:activator>
                         <v-list-item-content>
                             <v-list-item-title
-
                             >Belarus
                             </v-list-item-title>
                         </v-list-item-content>
                     </template>
-
                     <v-list-item-group v-model="fictionalSelected">
                         <v-list-item v-for="town in belarus" :key="town.town">
                             <v-list-item-title
@@ -62,7 +58,6 @@
                 fictionalSelected: null,
                 realSelected: null
             }
-
         },
         props: ['belarus', 'ukraine', 'listmodel'],
         methods: {
