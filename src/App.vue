@@ -1,9 +1,8 @@
 <template>
-  <v-app>
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+  <div id="app">
+    <Sign/>
+    <router-view/>
+  </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
