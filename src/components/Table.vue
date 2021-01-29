@@ -1,5 +1,6 @@
 <template>
-    <v-container>
+    <v-container fill-height>
+      <router-view/>
         <v-row class="justify-center align-center">
             <v-col cols="12" lg="10" md="12" sm="10">
                 <v-data-table
@@ -23,12 +24,13 @@
                                     max-width="500px"
                             >
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
+                                 <v-btn  @click="$router.push({name:'add_discount'})"
                                             color="primary"
                                             dark
                                             class="mb-2"
                                             v-bind="attrs"
                                             v-on="on"
+
                                     >
                                         New Item
                                     </v-btn>
