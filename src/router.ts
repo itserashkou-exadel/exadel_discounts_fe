@@ -7,7 +7,7 @@ import SubscribesPage from "@/views/SubscriptionsPage.vue";
 import MapPage from "@/views/MapPage.vue";
 import FavoritesPage from "@/views/FavoritesPage.vue";
 import AppTemplate from "@/views/AppTemplate.vue";
-import Table from '@/components/Table.vue'
+import AddingDiscount from "@/views/AddingDiscount.vue"
 
 Vue.use(VueRouter);
 
@@ -20,11 +20,6 @@ const router = new VueRouter({
       path: '/',
       name: 'sign',
       component: Sign
-    },
-    {
-      path: '/table',
-      name: 'table',
-      component: Table
     },
     {
       path: '/home',
@@ -79,6 +74,18 @@ const router = new VueRouter({
           path: "/favorites",
           name: "favorites",
           component: FavoritesPage
+        }
+      ]
+    },
+    {
+      path: '/addingdiscount',
+      name: 'addingDiscount',
+      component: AddingDiscount,
+      children: [
+        {
+          path: "/addingdiscount",
+          name: "addingDiscount",
+          component: AddingDiscount
         }
       ]
     }
