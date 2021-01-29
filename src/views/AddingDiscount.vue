@@ -140,25 +140,23 @@
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
-                            v-bind:belarus="belarus"
-                            v-bind:ukraine="ukraine"
-                            v-bind:listmodel="listmodel"
-                            @select="select"
-                    />
-                    <v-text-field
-                            readonly
-                            label="Страна"
-                            outlined
-                            v-model="selected.country"
-                    >
-                    </v-text-field>
-                    <v-text-field
-                            readonly
-                            label="Город"
-                            outlined
-                            v-model="selected.town"
-                    >
-                    </v-text-field>
+                            v-bind:countriesAndTowns="countriesAndTowns"/>
+                    <!--                            @select="select"-->
+
+<!--                    <v-text-field-->
+<!--                            readonly-->
+<!--                            label="Страна"-->
+<!--                            outlined>-->
+<!--                        &lt;!&ndash;                            v-model="selected.country"&ndash;&gt;-->
+
+<!--                    </v-text-field>-->
+<!--                    <v-text-field-->
+<!--                            readonly-->
+<!--                            label="Город"-->
+<!--                            outlined>-->
+<!--                        &lt;!&ndash;                            v-model="selected.town"&ndash;&gt;-->
+
+<!--                    </v-text-field>-->
                     <v-text-field
                             label="Улица"
                             outlined
@@ -175,9 +173,9 @@
                            color="info"
                            block
                            elevation="2"
-                           large
-                           @click="submit"
-                    >Добавить
+                           large>
+                        <!--                           @click="submit"-->
+                        Добавить
                     </v-btn>
                     <v-btn
                             color="info"
@@ -212,47 +210,43 @@
                 dateFinish: new Date().toISOString().substr(0, 10),
                 menu: false,
                 menuFinish: false,
-                belarus: [
+                countriesAndTowns: [
                     {id: 1, town: 'Grodno', country: 'Belarus'},
-                    {id: 2, town: 'Minsk', country: 'Belarus'}],
-                ukraine: [
-                    {id: 3, town: 'Kiev', country: 'Ukraine'}
-                ],
-                selected: {},
-                listmodel: false
+                    {id: 2, town: 'Minsk', country: 'Belarus'},
+                    {id: 3, town: 'Kiev', country: 'Ukraine'}],
+                // selected: {},
             }
         },
 
         methods: {
-            ...mapActions(['goFetch']),
-            ...mapMutations(['createDiscount']),
-            submit() {
-                if (this.$refs.form.validate()) {
-                    this.createDiscount({
-                        title: this.title,
-                        id: Date.now()
-                    });
-                    this.$refs.form.reset()
-                }
-            },
+            // ...mapActions(['goFetch']),
+            // ...mapMutations(['createDiscount']),
+            // submit() {
+            //     if (this.$refs.form.validate()) {
+            //         this.createDiscount({
+            //             title: this.title,
+            //             id: Date.now()
+            //         });
+            //         this.$refs.form.reset()
+            //     }
+            // },
             resetForm() {
                 this.$refs.form.reset()
-            },
-            redirectToIS4() {
-                console.log('You was redirected')
-                this.$router.push('/identity')
-            },
-            select (town) {
-                this.selected = town
-                this.listmodel = false
             }
+            // redirectToIS4() {
+            //     console.log('You was redirected')
+            //     this.$router.push('/identity')
+            // },
+            //     select (town) {
+            //         this.selected = town
+            //         this.listmodel = false
+            //     }
+            // },
 
-
-        },
-
-        computed: mapGetters(['allDiscounts']),
-        async mounted() {
-            this.goFetch('https://jsonplaceholder.typicode.com/posts')
+            // computed: mapGetters(['allDiscounts']),
+            // async mounted() {
+            //     this.goFetch('https://jsonplaceholder.typicode.com/posts')
+            // }
         }
     }
 </script>
