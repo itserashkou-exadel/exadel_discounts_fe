@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height>
+    <v-container>
         <v-row class="justify-center align-center">
             <v-col cols="12" lg="10" md="12" sm="10">
                 <v-data-table
@@ -73,27 +73,26 @@
                     </template>
                     <template v-slot:expanded-item="{ headers, item }">
                         <td :colspan="headers.length">
-                            <v-row class="my-5">
+                            <v-row justify="center" align="center" class="my-5">
                                 <v-col cols="1">
                                     <v-btn>
                                         <v-icon color="orange">{{icons.icon}}</v-icon>
                                     </v-btn>
                                 </v-col>
-
-                                <v-col cols="10" align-self="start">
+                                <v-spacer></v-spacer>
+                                <v-col cols="7" align-self="start">
                                     <h2 >Details about "{{item.name}}"</h2>
                                 </v-col>
                                 <v-col  cols="12" md="9" class="inform">
-                                    <p>More info about {{ item.info }}</p>
+                                    <p class="mb-0">More info about {{ item.info }}</p>
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col cols="12"  class="text-center">
                                     <v-btn
-                                            depressed
                                             color="primary"
+
                                     >
                                         More info
                                     </v-btn>
-
                                 </v-col>
                             </v-row>
                         </td>
@@ -295,4 +294,5 @@
     .inform{
         text-align: left;
     }
+
 </style>
