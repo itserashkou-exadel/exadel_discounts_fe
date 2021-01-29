@@ -1,9 +1,7 @@
 <template>
-
     <v-container class="d-flex align-center wrapper" fluid>
         <v-card width="500" class="mx-auto ">
             <v-card-text >
-
                 <v-list-group eager>
                     <template v-slot:activator>
                         <v-list-item-title>Choose your location</v-list-item-title>

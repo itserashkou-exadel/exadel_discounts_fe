@@ -1,7 +1,8 @@
 <template>
     <v-container
+
             class="mb-6 ml-10 pr-10 font-weight-regular"
-    >
+    >  <router-view/>
         <v-form v-model="valid" ref="form">
             <v-row
                     align-content="center"
