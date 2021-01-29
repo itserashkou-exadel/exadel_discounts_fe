@@ -142,20 +142,20 @@
                             v-bind:countriesAndTowns="countriesAndTowns"/>
                     <!--                            @select="select"-->
 
-                    <v-text-field
-                            readonly
-                            label="Страна"
-                            outlined>
-                        <!--                            v-model="selected.country"-->
+<!--                    <v-text-field-->
+<!--                            readonly-->
+<!--                            label="Страна"-->
+<!--                            outlined>-->
+<!--                        &lt;!&ndash;                            v-model="selected.country"&ndash;&gt;-->
 
-                    </v-text-field>
-                    <v-text-field
-                            readonly
-                            label="Город"
-                            outlined>
-                        <!--                            v-model="selected.town"-->
+<!--                    </v-text-field>-->
+<!--                    <v-text-field-->
+<!--                            readonly-->
+<!--                            label="Город"-->
+<!--                            outlined>-->
+<!--                        &lt;!&ndash;                            v-model="selected.town"&ndash;&gt;-->
 
-                    </v-text-field>
+<!--                    </v-text-field>-->
                     <v-text-field
                             label="Улица"
                             outlined
