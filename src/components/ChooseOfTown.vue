@@ -5,10 +5,9 @@
                 label="Choose country"
                 outlined
                 v-model="selectedCountry"
-                @click="setSelectedCountry"
         ></v-select>
         <v-select
-                :items="getTown(countriesAndTowns, selectedCountry)"
+                :items="getSelectedCountry()"
                 label="Choose town"
                 outlined
         ></v-select>
@@ -18,38 +17,30 @@
 <script>
     export default {
         name: "ChooseOfTown",
-        data () {
+        data() {
             return {
-                selectedCountry: 'gh'
+                selectedCountry: null
             }
         },
         props: ['countriesAndTowns'],
         methods: {
             getCountry(arr) {
                 const countries = [];
-                for (let i = 0; i < arr.length; i++){
+                for (let i = 0; i < arr.length; i++) {
                     countries.push(arr[i].country)
                 }
                 return countries
             },
-            getTown(arr, country) {
-                console.log(country)
-                console.log(2);
-                const towns = [];
-                for (let i = 0; i < arr.length; i++){
-                  //  if (arr.country === country){
-                    towns.push(arr[i].town)
+            getSelectedCountry() {
+                const towns = []
+                for (let i = 0; i < this.countriesAndTowns.length; i++) {
+                    if (this.countriesAndTowns[i].country === this.selectedCountry) {
+                        towns.push(this.countriesAndTowns[i].town)
+                    }
                 }
                 return towns
-            },
-            setSelectedCountry () {
-                console.log(typeof(this.selectedCountry))
             }
-            // select(town) {
-            //     console.log(town);
-            //     this.$emit('select', town)
-
-            }
+        }
     }
 </script>
 
