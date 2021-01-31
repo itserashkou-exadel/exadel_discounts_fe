@@ -7,12 +7,14 @@
                         :headers="headers"
                         :items="offers"
                         class="elevation-8"
-                        mobile-breakpoint="900px"
+
                         show-expand
                         item-key="name"
                         :single-expand="singleExpand"
                         :expanded.sync="expanded"
+                        mobile-breakpoint="900px"
                 >
+
                     <template v-slot:top>
                         <v-toolbar
                                 flat
@@ -24,13 +26,12 @@
                                     max-width="500px"
                             >
                                 <template v-slot:activator="{ on, attrs }">
-                                 <v-btn  @click="$router.push({name:'add_discount'})"
+                                 <v-btn  @click="$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})"
                                             color="primary"
                                             dark
                                             class="mb-2"
                                             v-bind="attrs"
                                             v-on="on"
-
                                     >
                                         New Item
                                     </v-btn>
@@ -54,8 +55,10 @@
                         <v-icon
                                 small
                                 class="mr-2"
-                                @click="editItem(item)"
+
+                                @click="$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount'}})"
                         >
+<!--                            @click="editItem(item)"-->
                             mdi-pencil
                         </v-icon>
                         <v-icon
