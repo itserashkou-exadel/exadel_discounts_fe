@@ -27,6 +27,7 @@
                     ></v-text-field>
                     <v-text-field
                             label="Скидка"
+                            v-model="valueOfDiscount"
                             outlined
                     ></v-text-field>
                     <div
@@ -129,10 +130,12 @@
                     ></v-text-field>
                     <v-text-field
                             label="Список тегов"
+                            v-model="tag"
                             outlined
                     ></v-text-field>
                     <v-text-field
                             height="150px"
+                            v-model="description"
                             label="Описание услуги"
                             outlined
                     ></v-text-field>
@@ -159,7 +162,7 @@
                            large
                            @click="submit"
                     >
-                        Добавить
+                        {{titleOfButton()}}
                     </v-btn>
                     <v-btn
                             color="info"
@@ -186,7 +189,9 @@
         data() {
             return {
                 title: '',
+                valueOfDiscount: '',
                 vendor: '',
+                description: '',
                 dialog: false,
                 valid: true,
                 nameRules: [],
@@ -199,19 +204,21 @@
                     {id: 1, town: 'Grodno', country: 'Belarus'},
                     {id: 2, town: 'Minsk', country: 'Belarus'},
                     {id: 3, town: 'Kiev', country: 'Ukraine'}]
-
             }
         },
 
         methods: {
-            ...mapActions(['goFetch']),
-            ...mapMutations(['createDiscount']),
-            submit() {
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+            submit(item) {
                 if (this.$refs.form.validate()) {
-                    this.createDiscount({
+                    if (this.$route.params.placeOfCall == 'newDiscount') {
+                    this.addDiscount({
                         title: this.title,
                         id: Date.now()
-                    });
+                    })}
+                    else {
+                        this.updateDiscount(item)
+                    }
                     this.$refs.form.reset()
                 }
             },
@@ -223,13 +230,24 @@
                     return 'Добавление услуги'
                 }
                 else {return 'Редактироование услуги'}
+            },
+            titleOfButton () {
+                if (this.$route.params.placeOfCall == 'newDiscount') {
+                    return 'Добавить'
+                }
+                else {return 'Записать'}
             }
             },
 
             computed: mapGetters(['allDiscounts']),
             async mounted() {
                 this.goFetch('https://jsonplaceholder.typicode.com/posts')
+            },
+        created() {
+            if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+                this.title = 'jjjj'
             }
+        }
     }
 </script>
 

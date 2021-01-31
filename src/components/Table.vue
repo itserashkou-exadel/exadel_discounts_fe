@@ -55,10 +55,8 @@
                         <v-icon
                                 small
                                 class="mr-2"
-
-                                @click="$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount'}})"
+                                @click="$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}})"
                         >
-<!--                            @click="editItem(item)"-->
                             mdi-pencil
                         </v-icon>
                         <v-icon
@@ -256,6 +254,7 @@
                 ]
             },
             editItem(item) {
+                console.log(item)
                 this.editedIndex = this.offers.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true

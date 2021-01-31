@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -18,13 +19,26 @@ let store = new Vuex.Store({
         },
         createDiscount (state, disc) {
             state.discounts.unshift(disc)
+        },
+        updTask (state, updatedDiscount)  {
+            const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
+            if(index !== -1) {
+                state.discounts.splice(index, 1, updatedDiscount);
+            }
         }
     },
     actions: {
-        async goFetch (ctx, str) {
-            const res = await fetch(str);
-            const discounts = await res.json();
-            ctx.commit('setDiscounts', discounts)
+        async goFetch ({commit}, str) {
+            const response = await axios.get(str);
+            commit('setDiscounts', response.data);
+        },
+        async addDiscount ({ commit }, newDiscount) {
+            const response = await axios.post('https://jsonplaceholder.typicode.com/posts', newDiscount);
+            commit('createDiscount', response.data);
+        },
+        async updateDiscount ( { commit }, discount) {
+            const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
+            commit('updTask', response.data);
         }
     }
 
