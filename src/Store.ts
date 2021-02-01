@@ -11,6 +11,9 @@ let store = new Vuex.Store({
     getters: {
         allDiscounts (state) {
             return state.discounts
+        },
+        discountById (state, id) {
+            return state.discounts.find(element => element.id = id)
         }
     },
     mutations: {
@@ -33,7 +36,7 @@ let store = new Vuex.Store({
             commit('setDiscounts', response.data);
         },
         async addDiscount ({ commit }, newDiscount) {
-            const response = await axios.post('https://jsonplaceholder.typicode.com/posts', newDiscount);
+            const response = await axios.post('../../discount.json', newDiscount);
             commit('createDiscount', response.data);
         },
         async updateDiscount ( { commit }, discount) {

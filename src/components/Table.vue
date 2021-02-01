@@ -92,7 +92,6 @@
                                 <v-col cols="12"  class="text-center">
                                     <v-btn
                                             color="primary"
-
                                     >
                                         More info
                                     </v-btn>
