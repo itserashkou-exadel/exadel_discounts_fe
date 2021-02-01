@@ -55,7 +55,7 @@
                         <v-icon
                                 small
                                 class="mr-2"
-                                @click="$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}})"
+                                @click="editItem(item)"
                         >
                             mdi-pencil
                         </v-icon>
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+    import router from "@/router";
     export default {
         name: "Table",
         data: () => ({
@@ -254,10 +255,10 @@
                 ]
             },
             editItem(item) {
-                console.log(item)
-                this.editedIndex = this.offers.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
+                // this.editedIndex = this.offers.indexOf(item)
+                // this.editedItem = Object.assign({}, item)
+                // this.dialog = true
+                this.$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}})
             },
             deleteItem(item) {
                 this.editedIndex = this.offers.indexOf(item)
