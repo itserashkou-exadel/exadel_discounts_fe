@@ -25,10 +25,10 @@
         props: ['countriesAndTowns'],
         methods: {
             getCountry(arr) {
-                const countries = [];
-                for (let i = 0; i < arr.length; i++) {
-                    countries.push(arr[i].country)
-                }
+                const countries = arr.map(element => element.country)
+                // for (let i = 0; i < arr.length; i++) {
+                //     countries.push(arr[i].country)
+                // }
                 return countries
             },
             getSelectedCountry() {
