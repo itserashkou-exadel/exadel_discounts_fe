@@ -45,7 +45,7 @@ const router = new VueRouter({
             component: AppTemplate,
             children: [
                 {
-                    path: '/home/add_discount',
+                    path: '/add_discount',
                     name: 'add_discount',
                     component: AddingDiscount,
                 }]

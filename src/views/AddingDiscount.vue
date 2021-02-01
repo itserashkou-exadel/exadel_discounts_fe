@@ -1,6 +1,5 @@
 <template>
     <v-container
-
             class="mb-6 ml-10 pr-10 font-weight-regular"
     >  <router-view/>
         <v-form v-model="valid" ref="form">
@@ -10,7 +9,7 @@
             >
                 <v-col cols="12" class="pb-5 pt-5"
                 >
-                    <h1>Добавление услуги</h1>
+                    <h1>{{titleOfPage()}}</h1>
                 </v-col>
             </v-row>
             <v-row
@@ -28,6 +27,7 @@
                     ></v-text-field>
                     <v-text-field
                             label="Скидка"
+                            v-model="valueOfDiscount"
                             outlined
                     ></v-text-field>
                     <div
@@ -130,10 +130,12 @@
                     ></v-text-field>
                     <v-text-field
                             label="Список тегов"
+                            v-model="tag"
                             outlined
                     ></v-text-field>
                     <v-text-field
                             height="150px"
+                            v-model="description"
                             label="Описание услуги"
                             outlined
                     ></v-text-field>
@@ -141,22 +143,6 @@
                 <v-col cols="12" md="5">
                     <ChooseOfTown
                             v-bind:countriesAndTowns="countriesAndTowns"/>
-                    <!--                            @select="select"-->
-
-<!--                    <v-text-field-->
-<!--                            readonly-->
-<!--                            label="Страна"-->
-<!--                            outlined>-->
-<!--                        &lt;!&ndash;                            v-model="selected.country"&ndash;&gt;-->
-
-<!--                    </v-text-field>-->
-<!--                    <v-text-field-->
-<!--                            readonly-->
-<!--                            label="Город"-->
-<!--                            outlined>-->
-<!--                        &lt;!&ndash;                            v-model="selected.town"&ndash;&gt;-->
-
-<!--                    </v-text-field>-->
                     <v-text-field
                             label="Улица"
                             outlined
@@ -173,9 +159,10 @@
                            color="info"
                            block
                            elevation="2"
-                           large>
-                        <!--                           @click="submit"-->
-                        Добавить
+                           large
+                           @click="submit"
+                    >
+                        {{titleOfButton()}}
                     </v-btn>
                     <v-btn
                             color="info"
@@ -188,6 +175,7 @@
                 </v-col>
             </v-row>
         </v-form>
+        <p>{{allDiscounts}}</p>
     </v-container>
 </template>
 
@@ -201,7 +189,9 @@
         data() {
             return {
                 title: '',
+                valueOfDiscount: '',
                 vendor: '',
+                description: '',
                 dialog: false,
                 valid: true,
                 nameRules: [],
@@ -213,40 +203,50 @@
                 countriesAndTowns: [
                     {id: 1, town: 'Grodno', country: 'Belarus'},
                     {id: 2, town: 'Minsk', country: 'Belarus'},
-                    {id: 3, town: 'Kiev', country: 'Ukraine'}],
-                // selected: {},
+                    {id: 3, town: 'Kiev', country: 'Ukraine'}]
             }
         },
 
         methods: {
-            // ...mapActions(['goFetch']),
-            // ...mapMutations(['createDiscount']),
-            // submit() {
-            //     if (this.$refs.form.validate()) {
-            //         this.createDiscount({
-            //             title: this.title,
-            //             id: Date.now()
-            //         });
-            //         this.$refs.form.reset()
-            //     }
-            // },
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+            submit(item) {
+                if (this.$refs.form.validate()) {
+                    if (this.$route.params.placeOfCall == 'newDiscount') {
+                    this.addDiscount({
+                        title: this.title,
+                        id: Date.now()
+                    })}
+                    else {
+                        this.updateDiscount(item)
+                    }
+                    this.$refs.form.reset()
+                }
+            },
             resetForm() {
                 this.$refs.form.reset()
+            },
+            titleOfPage () {
+                if (this.$route.params.placeOfCall == 'newDiscount') {
+                    return 'Добавление услуги'
+                }
+                else {return 'Редактироование услуги'}
+            },
+            titleOfButton () {
+                if (this.$route.params.placeOfCall == 'newDiscount') {
+                    return 'Добавить'
+                }
+                else {return 'Записать'}
             }
-            // redirectToIS4() {
-            //     console.log('You was redirected')
-            //     this.$router.push('/identity')
-            // },
-            //     select (town) {
-            //         this.selected = town
-            //         this.listmodel = false
-            //     }
-            // },
+            },
 
-            // computed: mapGetters(['allDiscounts']),
-            // async mounted() {
-            //     this.goFetch('https://jsonplaceholder.typicode.com/posts')
-            // }
+            computed: mapGetters(['allDiscounts']),
+            async mounted() {
+                this.goFetch('https://jsonplaceholder.typicode.com/posts')
+            },
+        created() {
+            if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+                this.title = 'jjjj'
+            }
         }
     }
 </script>
