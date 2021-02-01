@@ -1,9 +1,9 @@
 <template>
-  <v-content>SUBSCRIPTIONS</v-content>
+    <v-content>SUBSCRIPTIONS</v-content>
 </template>
 
 <script>
-export default {
-name: "SubscriptionsPage"
-}
+    export default {
+        name: "SubscriptionsPage"
+    };
 </script>
