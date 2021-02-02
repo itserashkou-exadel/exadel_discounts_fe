@@ -9,9 +9,24 @@
             <div>
                 !
             </div>
-            <MglMarker :coordinates="coordinates1" color="blue" />
-            <MglMarker :coordinates="coordinates2" color="blue" />
+            <MglMarker :coordinates="coordinates1" color="blue">
+                <MglPopup :coordinates="coordinates1" anchor="top">
+                    <VCard> <v-card-text>Marker 1</v-card-text> </VCard>
+                </MglPopup>
+
+            <MglMarker :coordinates="coordinates2" color="blue">
+                <MglPopup :coordinates="coordinates2" anchor="top">
+                    <VCard> <v-card-text>Marker 2</v-card-text> </VCard>
+                </MglPopup>
+            </MglMarker>
+
             <MglMarker :coordinates="coordinates3" color="blue" />
+                <MglPopup :coordinates="coordinates2" anchor="top">
+                    <VCard> <v-card-text>Marker 3</v-card-text> </VCard>
+                </MglPopup>
+            </MglMarker>
+
+
         </MglMap>
     </div>
 
@@ -21,12 +36,13 @@
 <script>
 
     import Mapbox from "mapbox-gl";
-    import {MglMap, MglMarker} from "vue-mapbox";
+    import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
 
     export default {
         components: {
             MglMap,
-            MglMarker
+            MglMarker,
+            MglPopup
         },
         data() {
             return {
@@ -42,7 +58,9 @@
             this.mapbox = Mapbox;
         },
         methods: {
+            showPopUp(){
 
+            }
         }
     }
 </script>
