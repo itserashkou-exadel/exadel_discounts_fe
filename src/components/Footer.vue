@@ -2,6 +2,7 @@
   <v-footer color="primary"  dark app
   >
     <v-container fluid>
+    <!--      TODO: Fix problem with Footer-->
       <v-row no-gutters>
         <v-col cols="9"
                align-self="center">
