@@ -25,13 +25,14 @@
                 </MglMarker>
 
                 <MglMarker :coordinates="coordinates3" color="blue"/>
-                <MglPopup :coordinates="coordinates2" anchor="top">
+                <MglPopup :coordinates="coordinates3" anchor="top">
                     <VCard>
                         <v-card-text>Marker 3</v-card-text>
                     </VCard>
                 </MglPopup>
             </MglMarker>
-<!--            <Footer/>-->
+
+            <!--            <Footer/>-->
         </MglMap>
     </div>
 
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-
+    import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import Mapbox from "mapbox-gl";
     import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
     import Footer from "@/components/Footer";
