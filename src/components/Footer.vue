@@ -2,7 +2,7 @@
   <v-footer color="primary"  dark app
   >
     <v-container fluid>
-      <v-row no-gutters>
+      <v-row >
         <v-col cols="9"
                align-self="center">
           <v-card color="primary" flat class="ml-3">

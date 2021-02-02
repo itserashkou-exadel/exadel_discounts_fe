@@ -11,22 +11,27 @@
             </div>
             <MglMarker :coordinates="coordinates1" color="blue">
                 <MglPopup :coordinates="coordinates1" anchor="top">
-                    <VCard> <v-card-text>Marker 1</v-card-text> </VCard>
+                    <VCard>
+                        <v-card-text>Marker 1</v-card-text>
+                    </VCard>
                 </MglPopup>
 
-            <MglMarker :coordinates="coordinates2" color="blue">
+                <MglMarker :coordinates="coordinates2" color="blue">
+                    <MglPopup :coordinates="coordinates2" anchor="top">
+                        <VCard>
+                            <v-card-text>Marker 2</v-card-text>
+                        </VCard>
+                    </MglPopup>
+                </MglMarker>
+
+                <MglMarker :coordinates="coordinates3" color="blue"/>
                 <MglPopup :coordinates="coordinates2" anchor="top">
-                    <VCard> <v-card-text>Marker 2</v-card-text> </VCard>
+                    <VCard>
+                        <v-card-text>Marker 3</v-card-text>
+                    </VCard>
                 </MglPopup>
             </MglMarker>
-
-            <MglMarker :coordinates="coordinates3" color="blue" />
-                <MglPopup :coordinates="coordinates2" anchor="top">
-                    <VCard> <v-card-text>Marker 3</v-card-text> </VCard>
-                </MglPopup>
-            </MglMarker>
-
-
+<!--            <Footer/>-->
         </MglMap>
     </div>
 
@@ -37,9 +42,11 @@
 
     import Mapbox from "mapbox-gl";
     import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
+    import Footer from "@/components/Footer";
 
     export default {
         components: {
+            Footer,
             MglMap,
             MglMarker,
             MglPopup
@@ -58,14 +65,14 @@
             this.mapbox = Mapbox;
         },
         methods: {
-            showPopUp(){
+            showPopUp() {
 
             }
         }
     }
 </script>
 <style>
-    #map{
+    #map {
         width: 100vw;
         height: 100vh;
     }
