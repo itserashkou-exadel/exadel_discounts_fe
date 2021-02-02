@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 let store = new Vuex.Store({
     state: {
-        discounts: []
+        discounts: [],
+        locale: null
     },
     getters: {
         allDiscounts (state) {

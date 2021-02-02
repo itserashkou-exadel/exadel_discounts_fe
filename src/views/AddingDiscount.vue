@@ -20,7 +20,7 @@
                     <v-text-field
                             placeholder="title"
                             v-model="title"
-                            label="Название услуги"
+                            label='title'
                             outlined
                             :counter="10"
                             :rules="nameRules"
@@ -35,7 +35,7 @@
                     >
                         <span
                                 class="pt-4 pr-2"
-                        >C</span>
+                        >{{$t('from')}}</span>
                         <v-menu
                                 ref="menu"
                                 v-model="menu"
@@ -78,7 +78,7 @@
                         </v-menu>
                         <span
                                 class="pt-4 pr-2"
-                        >По</span>
+                        >{{$t('to')}}</span>
                         <v-menu
                                 ref="menuFinish"
                                 v-model="menuFinish"
@@ -170,7 +170,7 @@
                             elevation="2"
                             large
                             @click="resetForm"
-                    >Отменить
+                    >{{$t('cancel')}}
                     </v-btn>
                 </v-col>
             </v-row>
@@ -188,9 +188,10 @@
         components: {ChooseOfTown},
         data() {
             return {
+                check: 'ddd',
                 title: '',
                 valueOfDiscount: '',
-                vendor: '',
+                vendor: '55',
                 description: '',
                 dialog: false,
                 valid: true,
@@ -227,15 +228,15 @@
             },
             titleOfPage () {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
-                    return 'Добавление услуги'
+                    return this.$t('newD')
                 }
-                else {return 'Редактироование услуги'}
+                else {return this.$t('editing')}
             },
             titleOfButton () {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
-                    return 'Добавить'
+                    return this.$t('add')
                 }
-                else {return 'Записать'}
+                else {return this.$t('save')}
             }
             },
 
