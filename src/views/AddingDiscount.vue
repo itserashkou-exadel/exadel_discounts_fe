@@ -239,13 +239,15 @@
             }
             },
 
-            computed: mapGetters(['allDiscounts']),
+            computed: mapGetters(['allDiscounts', ['discountById']]),
             async mounted() {
-                this.goFetch('https://jsonplaceholder.typicode.com/posts')
+                this.goFetch('../discount.json')
             },
         created() {
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
-                this.title = 'jjjj'
+                const id = this.$router.params.idOfDiscount;
+                const discount = this.discountById(id);
+                this.title = discount.title;
             }
         }
     }

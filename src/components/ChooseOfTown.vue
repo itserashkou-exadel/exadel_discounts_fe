@@ -25,19 +25,12 @@
         props: ['countriesAndTowns'],
         methods: {
             getCountry(arr) {
-                const countries = [];
-                for (let i = 0; i < arr.length; i++) {
-                    countries.push(arr[i].country)
-                }
+                const countries = arr.map(element => element.country)
                 return countries
             },
             getSelectedCountry() {
-                const towns = []
-                for (let i = 0; i < this.countriesAndTowns.length; i++) {
-                    if (this.countriesAndTowns[i].country === this.selectedCountry) {
-                        towns.push(this.countriesAndTowns[i].town)
-                    }
-                }
+                const towns = this.countriesAndTowns.filter(element => element.country === this.selectedCountry)
+                .map(element => element.town)
                 return towns
             }
         }
