@@ -1,5 +1,5 @@
 <template>
-  <v-footer color="primary"  dark app
+  <v-footer color="primary"  dark app absolute
   >
     <v-container fluid>
       <v-row no-gutters>

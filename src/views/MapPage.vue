@@ -9,4 +9,8 @@ name: "MapPage",
   components: {Map},
 }
 </script>
-
+<style>
+.container {
+  padding: 0px;
+}
+</style>
