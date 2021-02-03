@@ -19,24 +19,19 @@
                         <v-toolbar
                                 flat
                         >
-                            <v-toolbar-title><h2>Services</h2></v-toolbar-title>
+                            <v-toolbar-title><h3>Services</h3></v-toolbar-title>
                             <v-spacer></v-spacer>
-                            <v-dialog
-                                    v-model="dialog"
-                                    max-width="500px"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
+                            <Modal/>
+
                                  <v-btn  @click="$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})"
                                             color="primary"
                                             dark
                                             class="mb-2"
-                                            v-bind="attrs"
-                                            v-on="on"
+
                                     >
                                         New Item
                                     </v-btn>
-                                </template>
-                            </v-dialog>
+
                             <v-dialog v-model="dialogDelete" max-width="500px">
                                 <v-card>
                                     <v-card-title class="headline">Are you sure you want to delete this item?
@@ -106,9 +101,10 @@
 </template>
 
 <script>
-    import router from "@/router";
+    import Modal from "@/components/Filter/Modal";
     export default {
         name: "Table",
+        components: {Modal},
         data: () => ({
             expanded: [],
             singleExpand: true,
