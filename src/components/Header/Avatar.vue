@@ -17,7 +17,7 @@
                outlined
                color="primary"
         >
-          ВЫЙТИ
+          {{$t('hLogOut')}}
         </v-btn>
       </div>
     </v-list-item-content>
