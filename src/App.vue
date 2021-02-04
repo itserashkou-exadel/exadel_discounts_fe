@@ -47,6 +47,6 @@
     }
 
     .slider-margin{
-        margin: 0 12px !important;
+        margin: 0 16px !important;
     }
 </style>
