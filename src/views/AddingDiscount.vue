@@ -20,13 +20,13 @@
                     <v-text-field
                             placeholder="title"
                             v-model="title"
-                            label='title'
+                            :label="this.$t('adLabelOfDiscountTitle')"
                             outlined
                             :counter="10"
                             :rules="nameRules"
                     ></v-text-field>
                     <v-text-field
-                            label="Скидка"
+                            :label="this.$t('adLabelOfDiscountDiscount')"
                             v-model="valueOfDiscount"
                             outlined
                     ></v-text-field>
@@ -35,7 +35,7 @@
                     >
                         <span
                                 class="pt-4 pr-2"
-                        >{{$t('from')}}</span>
+                        >{{$t('adFrom')}}</span>
                         <v-menu
                                 ref="menu"
                                 v-model="menu"
@@ -65,20 +65,20 @@
                                         color="primary"
                                         @click="menu = false"
                                 >
-                                    Cancel
+                                    {{$t('dtCancel')}}
                                 </v-btn>
                                 <v-btn
                                         text
                                         color="primary"
                                         @click="$refs.menu.save(dateStart)"
                                 >
-                                    OK
+                                    {{$t('dtOk')}}
                                 </v-btn>
                             </v-date-picker>
                         </v-menu>
                         <span
                                 class="pt-4 pr-2"
-                        >{{$t('to')}}</span>
+                        >{{$t('adTo')}}</span>
                         <v-menu
                                 ref="menuFinish"
                                 v-model="menuFinish"
@@ -109,14 +109,14 @@
                                         color="primary"
                                         @click="menuFinish = false"
                                 >
-                                    Cancel
+                                    {{$t('dtCancel')}}
                                 </v-btn>
                                 <v-btn
                                         text
                                         color="primary"
                                         @click="$refs.menuFinish.save(dateFinish)"
                                 >
-                                    OK
+                                    {{$t('dtOk')}}
                                 </v-btn>
                             </v-date-picker>
                         </v-menu>
@@ -125,18 +125,17 @@
                     <v-text-field
                             placeholder="vendor"
                             v-model="vendor"
-                            label="Вендор"
+                            :label= "this.$t('adLabelOfDiscountVendor')"
                             outlined
                     ></v-text-field>
                     <v-text-field
-                            label="Список тегов"
-                            v-model="tag"
+                            :label="this.$t('adLabelOfDiscountTags')"
                             outlined
                     ></v-text-field>
                     <v-text-field
                             height="150px"
                             v-model="description"
-                            label="Описание услуги"
+                            :label="this.$t('adLabelOfDiscountDescription')"
                             outlined
                     ></v-text-field>
                 </v-col>
@@ -144,11 +143,11 @@
                     <ChooseOfTown
                             v-bind:countriesAndTowns="countriesAndTowns"/>
                     <v-text-field
-                            label="Улица"
+                            :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                     ></v-text-field>
                     <v-text-field
-                            label="Ссылка на изображение"
+                            :label="this.$t('adLabelOfDiscountPicture')"
                             outlined
                     ></v-text-field>
                 </v-col>
@@ -170,12 +169,11 @@
                             elevation="2"
                             large
                             @click="resetForm"
-                    >{{$t('cancel')}}
+                    >{{$t('adCancel')}}
                     </v-btn>
                 </v-col>
             </v-row>
         </v-form>
-        <p>{{allDiscounts}}</p>
     </v-container>
 </template>
 
@@ -228,21 +226,21 @@
             },
             titleOfPage () {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
-                    return this.$t('newD')
+                    return this.$tc('adEditingNewDiscount', 2)
                 }
-                else {return this.$t('editing')}
+                else {return this.$tc('adEditingNewDiscount', 1)}
             },
             titleOfButton () {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
-                    return this.$t('add')
+                    return this.$tc('adAddSave', 1)
                 }
-                else {return this.$t('save')}
+                else {return this.$tc('adAddSave', 2);
             }
-            },
+            }},
 
             computed: mapGetters(['allDiscounts', ['discountById']]),
             async mounted() {
-                this.goFetch('../discount.json')
+                this.goFetch('../discount.json');
             },
         created() {
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
@@ -253,8 +251,6 @@
         }
     }
 </script>
-
-
 <style scoped>
 
 </style>
