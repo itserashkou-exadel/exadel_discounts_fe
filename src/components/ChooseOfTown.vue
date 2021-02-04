@@ -2,13 +2,13 @@
     <div>
         <v-select
                 :items="getCountry(countriesAndTowns)"
-                label="Choose country"
+                :label="this.$t('adLabelOfDiscountCountry')"
                 outlined
                 v-model="selectedCountry"
         ></v-select>
         <v-select
                 :items="getSelectedCountry()"
-                label="Choose town"
+                :label="this.$t('adLabelOfDiscountCity')"
                 outlined
         ></v-select>
     </div>
