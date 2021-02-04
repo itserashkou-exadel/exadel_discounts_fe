@@ -6,9 +6,13 @@ Vue.use(Vuex);
 
 let store = new Vuex.Store({
     state: {
-        discounts: []
+        discounts: [],
+        switch: true
     },
     getters: {
+        switcher: state => {
+            return state.switch;
+        },
         allDiscounts (state) {
             return state.discounts
         },
@@ -17,6 +21,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        changeSwitcher: state => {
+            state.switch = !state.switch;
+        },
         setDiscounts (state, discounts) {
             state.discounts = discounts
         },
@@ -31,6 +38,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        changeSwitcher({commit}, state){
+          commit('setSwitcher', state);
+        },
         async goFetch ({commit}, str) {
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
