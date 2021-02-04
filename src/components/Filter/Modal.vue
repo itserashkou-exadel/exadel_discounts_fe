@@ -1,9 +1,8 @@
 <template>
-    <v-row justify="end" class="pr-15">
+
         <v-dialog
                 content-class="zero"
                 v-model="dialog"
-                persistent
                 max-width="600px"
 
         >
@@ -15,7 +14,6 @@
                        v-bind="attrs"
                        v-on="on"
                        class="pointer"
-
                 ></v-img>
             </template>
             <v-card>
@@ -92,7 +90,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </v-row>
+
 </template>
 
 <script>

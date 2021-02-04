@@ -18,6 +18,7 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
+
         {
             path: '/',
             name: 'sign',
@@ -37,6 +38,18 @@ const router = new VueRouter({
                     path: '/home',
                     name: 'home',
                     component: HomePage,
+                }
+            ]
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: AppTemplate,
+            children: [
+                {
+                    path: '/cards',
+                    name: 'cards',
+                    component: Cards,
                 }
             ]
         },
