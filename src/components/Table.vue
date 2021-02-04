@@ -19,24 +19,19 @@
                         <v-toolbar
                                 flat
                         >
-                            <v-toolbar-title><h2>{{$t('dtServices')}}</h2></v-toolbar-title>
+                            <v-toolbar-title><h3>{{$t('dtServices')}}</h3></v-toolbar-title>
                             <v-spacer></v-spacer>
-                            <v-dialog
-                                    v-model="dialog"
-                                    max-width="500px"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
+                            <Modal/>
+
                                  <v-btn  @click="$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})"
                                             color="primary"
                                             dark
                                             class="mb-2"
-                                            v-bind="attrs"
-                                            v-on="on"
+
                                     >
                                         {{$t('dtNewItem')}}
                                     </v-btn>
-                                </template>
-                            </v-dialog>
+
                             <v-dialog v-model="dialogDelete" max-width="500px">
                                 <v-card>
                                     <v-card-title class="headline">{{$t('dtRemoval')}}
@@ -106,9 +101,10 @@
 </template>
 
 <script>
-    import router from "@/router";
+    import Modal from "@/components/Filter/Modal";
     export default {
         name: "Table",
+        components: {Modal},
         data: () => ({
 
             expanded: [],
@@ -259,7 +255,6 @@
                 // this.editedIndex = this.offers.indexOf(item)
                 // this.editedItem = Object.assign({}, item)
                 // this.dialog = true
-
                 this.$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}})
             },
             deleteItem(item) {

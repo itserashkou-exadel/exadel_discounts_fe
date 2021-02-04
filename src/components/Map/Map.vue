@@ -9,9 +9,30 @@
             <div>
                 !
             </div>
-            <MglMarker :coordinates="coordinates1" color="blue" />
-            <MglMarker :coordinates="coordinates2" color="blue" />
-            <MglMarker :coordinates="coordinates3" color="blue" />
+            <MglMarker :coordinates="coordinates1" color="blue">
+                <MglPopup :coordinates="coordinates1" anchor="top">
+                    <VCard>
+                        <v-card-text>Marker 1</v-card-text>
+                    </VCard>
+                </MglPopup>
+
+                <MglMarker :coordinates="coordinates2" color="blue">
+                    <MglPopup :coordinates="coordinates2" anchor="top">
+                        <VCard>
+                            <v-card-text>Marker 2</v-card-text>
+                        </VCard>
+                    </MglPopup>
+                </MglMarker>
+
+                <MglMarker :coordinates="coordinates3" color="blue"/>
+                <MglPopup :coordinates="coordinates3" anchor="top">
+                    <VCard>
+                        <v-card-text>Marker 3</v-card-text>
+                    </VCard>
+                </MglPopup>
+            </MglMarker>
+
+            <!--            <Footer/>-->
         </MglMap>
     </div>
 
@@ -19,14 +40,17 @@
 </template>
 
 <script>
-
+    import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import Mapbox from "mapbox-gl";
-    import {MglMap, MglMarker} from "vue-mapbox";
+    import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
+    import Footer from "@/components/Footer";
 
     export default {
         components: {
+            Footer,
             MglMap,
-            MglMarker
+            MglMarker,
+            MglPopup
         },
         data() {
             return {
@@ -42,12 +66,14 @@
             this.mapbox = Mapbox;
         },
         methods: {
+            showPopUp() {
 
+            }
         }
     }
 </script>
 <style>
-    #map{
+    #map {
         width: 100vw;
         height: 100vh;
     }
