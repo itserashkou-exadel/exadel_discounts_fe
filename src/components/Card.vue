@@ -1,7 +1,7 @@
 <template>
     <v-card
-            class=" my-12"
-            max-width="374"
+            class="my-12"
+            max-width="350"
             height="570"
     >
         <div>

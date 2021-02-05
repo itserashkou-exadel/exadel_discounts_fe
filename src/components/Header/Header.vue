@@ -1,6 +1,5 @@
 <template>
-  <v-app-bar color="primary" flat
-  >
+  <v-app-bar color="primary" flat>
     <v-toolbar-title class="headline text-uppercase">
         <span class="text--accent-4"
               color="blue lighten-5">Crazy</span>
