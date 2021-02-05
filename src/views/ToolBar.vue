@@ -1,9 +1,9 @@
 <template>
-    <v-row class="d-flex align-center justify-end mr-13">
-        <v-col cols="2" lg="1" md="2">
+    <v-row class="d-flex align-center justify-lg-end justify-md-end justify-sm-center justify-center shrink">
+        <v-col cols="2" lg="1" md="2" class="d-flex justify-end">
             <Modal/>
         </v-col>
-        <v-col cols="4" lg="1" md="2" sm="3" >
+        <v-col cols="4" lg="2" md="2" sm="3" class="d-flex justify-center">
             <SwitchButton></SwitchButton>
         </v-col>
         <v-col cols="4" lg="2" md="2" sm="2">
