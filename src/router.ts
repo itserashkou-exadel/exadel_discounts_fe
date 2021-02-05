@@ -9,6 +9,7 @@ import FavoritesPage from "@/views/FavoritesPage.vue";
 import AppTemplate from "@/views/AppTemplate.vue";
 import Table from '@/components/Table.vue';
 import AddingDiscount from '@/views/AddingDiscount.vue';
+import Detail from '@/views/Detail.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,7 @@ const router = new VueRouter({
             name: 'sign',
             component: Sign
         },
+
         {
             path: '/',
             name: 'table',
@@ -38,6 +40,17 @@ const router = new VueRouter({
                     component: HomePage,
                 }
             ]
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: AppTemplate,
+            children: [
+                {
+                    path: '/home/detail',
+                    name: 'detail',
+                    component: Detail,
+                }]
         },
         {
             path: '/home',

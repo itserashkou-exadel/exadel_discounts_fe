@@ -91,7 +91,7 @@
                                 <v-col cols="12"  class="text-center">
                                     <v-btn
                                             color="primary"
-
+                                            @click="$router.push({name:'detail'})"
                                     >
                                         More info
                                     </v-btn>
