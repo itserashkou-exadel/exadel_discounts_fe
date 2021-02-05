@@ -1,7 +1,7 @@
 <template>
     <v-col cols="12" lg="10" md="12" sm="10" class="pa-0">
         <v-data-table
-                :headers="headers"
+                :headers="headers()"
                 :items="offers"
                 class="elevation-8"
 
@@ -16,16 +16,16 @@
                 <v-toolbar
                         flat
                 >
-                    <v-toolbar-title><h3>Services</h3></v-toolbar-title>
+                    <v-toolbar-title><h3>{{$t('Services')}}</h3></v-toolbar-title>
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
 
-                            <v-card-title class="headline">Are you sure you want to delete this item?
+                            <v-card-title class="headline">{{$t('dtRemoval')}}
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="blue darken-1" text @click="closeDelete">{{$t('dtCancel')}}</v-btn>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{$t('dtOk')}}</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -65,7 +65,7 @@
                         </v-col>
                         <v-spacer></v-spacer>
                         <v-col cols="7" align-self="start">
-                            <h2 >Details about "{{item.name}}"</h2>
+                            <h2 >{{$t('dtDetailsAbout')}} "{{item.name}}"</h2>
                         </v-col>
                         <v-col  cols="12" md="9" class="inform">
                             <p class="mb-0">More info about {{ item.info }}</p>
@@ -74,7 +74,7 @@
                             <v-btn
                                     color="primary"
                             >
-                                More info
+                                {{$t('dtMoreInfo')}}
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -97,20 +97,6 @@
             icons: {
                 icon: "mdi-star"
             },
-            headers: [
-                {
-                    text: 'Offer',
-                    align: 'left',
-                    sortable: false,
-                    value: 'name',
-                },
-                {text: 'Vendor', value: 'vendor'},
-                {text: 'Discount', value: 'discount'},
-                {text: 'Start date', value: 'start_date'},
-                {text: 'Finish date', value: 'finish_date'},
-                {text: 'Rating', value: 'rating'},
-                {text: 'Actions', value: 'actions', sortable: false},
-            ],
             offers: [],
             editedIndex: -1,
             editedItem: {
@@ -147,6 +133,20 @@
             this.initialize()
         },
         methods: {
+            headers(){return [
+                {
+                    text: this.$t('dtOffer'),
+                    align: 'left',
+                    sortable: false,
+                    value: 'name',
+                },
+                {text: this.$t('dtVendor'), value: 'vendor'},
+                {text: this.$t('dtDiscount'), value: 'discount'},
+                {text: this.$t('dtStartDate'), value: 'start_date'},
+                {text: this.$t('dtFinishDate'), value: 'finish_date'},
+                {text: this.$t('dtRating'), value: 'rating'},
+                {text: this.$t('dtActions'), value: 'actions', sortable: false},
+            ]},
             initialize() {
                 this.offers = [
                     {
