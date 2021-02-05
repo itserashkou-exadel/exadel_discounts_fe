@@ -33,5 +33,13 @@
   "hFavorites": "ИЗБРАННОЕ",
   "hLogOut": "Выйти",
   "sLogIn": "Войти",
-  "sChooseLocation": "Выберите ваше местопложения"
+  "sChooseLocation": "Выберите ваше местопложения",
+  "tbTable": "Таблица",
+  "tbCards": "Карточки",
+  "fFilter": "Фильтр",
+  "fVendor": "Вендор",
+  "fDiscount": "Скидка",
+  "fRating": "Рейтинг",
+  "fClose": "Закрыть",
+  "fSave": "Сохранить"
 }

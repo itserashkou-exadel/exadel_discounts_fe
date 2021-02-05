@@ -20,7 +20,7 @@
 
         computed: {
             direction: function (){
-                return this.$store.getters.switcher === true ? 'Table' : 'Cards';
+                return this.$store.getters.switcher === true ? this.$t('tbTable') : this.$t('tbCards');
             },
         }
     }

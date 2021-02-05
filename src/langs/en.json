@@ -33,5 +33,13 @@
  "hFavorites": "FAVORITES",
  "hLogOut": "Log out",
  "sLogIn": "Log in",
- "sChooseLocation": "Choose your location"
+ "sChooseLocation": "Choose your location",
+ "tbTable": "Table",
+ "tbCards": "Cards",
+ "fFilter": "Filter",
+ "fVendor": "Vendor",
+ "fDiscount": "Discount",
+ "fRating": "Rating",
+ "fClose": "Close",
+ "fSave": "Save"
 }

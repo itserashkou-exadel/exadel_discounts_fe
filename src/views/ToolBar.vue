@@ -12,7 +12,7 @@
                     dark
                     class="mb-2"
             >
-                New Item
+                {{$t('dtNewItem')}}
             </v-btn>
         </v-col>
     </v-row>
