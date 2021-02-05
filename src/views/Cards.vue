@@ -1,24 +1,20 @@
 <template>
-    <v-app>
     <v-container>
         <v-card>
-            <v-row class="mx-12 justify-center">
-
+            <v-row>
                 <v-col lg="4"
-                       md="6"
                        sm="12"
-                       class="d-flex justify-center"
+                       md="6"
                        v-for="description in descriptions"
-                       :key="description.id">
+                       :key="description.id"
+                       class="d-flex justify-center">
                     <Card
                             :description="description"
                     />
                 </v-col>
             </v-row>
         </v-card>
-
     </v-container>
-    </v-app>
 </template>
 <script>
     import Card from '../components/Card.vue'

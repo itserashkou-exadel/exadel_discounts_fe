@@ -1,13 +1,13 @@
 <template>
     <div>
         <v-container fluid class="pt-8">
-            <v-row>
+            <v-row class="mt-1">
                 <v-col cols="12">
-                    <v-card max-width="100%" class="d-none mt-n7 d-md-block dekstop_blur" style="position:relative">
+                    <v-card max-width="100%" class="d-none mt-n7 d-md-block" style="position:relative">
                         <v-img
                                 max-height="50vh"
                                 src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"
-                                class="d-flex "
+                                class="d-flex"
                         >
                             <v-icon class="ml-6 mt-4" large color="blue">
                                 mdi-heart-outline
