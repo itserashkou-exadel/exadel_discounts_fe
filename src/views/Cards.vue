@@ -2,7 +2,7 @@
     <v-app>
     <v-container>
         <v-card>
-            <v-row no-gutters class="mx-12 justify-center">
+            <v-row class="mx-12 justify-center">
 
                 <v-col lg="4"
                        md="6"
