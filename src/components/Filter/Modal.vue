@@ -18,19 +18,19 @@
             </template>
             <v-card>
                 <v-card-title>
-                    <span class="headline">Filter</span>
+                    <span class="headline">{{$t('fFilter')}}</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
 
                         <v-row>
                             <v-col cols="6" lg="6" md="6" sm="6" class="pa-0 pl-3">
-                                <v-subheader>From</v-subheader>
+                                <v-subheader>{{$t('adFrom')}}</v-subheader>
                                 <DataPicker/>
 
                             </v-col>
                             <v-col cols="6" lg="6" md="6" sm="6" class="pa-0 pl-3">
-                                <v-subheader>To</v-subheader>
+                                <v-subheader>{{$t('adTo')}}</v-subheader>
                                 <DataPicker/>
                             </v-col>
                         </v-row>
@@ -42,7 +42,7 @@
                                     md="12"
                                     lg="12"
                             >
-                                <h3 class="mb-2">Vendor</h3>
+                                <h3 class="mb-2">{{$t('fVendor')}}</h3>
                                 <v-text-field
                                         class="pt-0"
                                 >
@@ -56,13 +56,13 @@
                             </v-col>
 
                         </v-row>
-                        <h3 class="mb-4">Discount</h3>
+                        <h3 class="mb-4">{{$t('fDiscount')}}</h3>
                         <v-row>
                             <v-col cols="12">
                                 <RangeSlider/>
                             </v-col>
                         </v-row>
-                        <h3 class="pb-4">Rating</h3>
+                        <h3 class="pb-4">{{$t('fRating')}}</h3>
                         <v-row class="ml-2">
                             <v-col cols="12" md="12" sm="12">
                                     <StarSlider/>
@@ -78,14 +78,14 @@
                             text
                             @click="dialog = false"
                     >
-                        Close
+                        {{$t('fClose')}}
                     </v-btn>
                     <v-btn
                             color="blue darken-1"
                             text
                             @click="dialog = false"
                     >
-                        Save
+                        {{$t('fSave')}}
                     </v-btn>
                 </v-card-actions>
             </v-card>
