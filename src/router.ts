@@ -9,7 +9,7 @@ import FavoritesPage from "@/views/FavoritesPage.vue";
 import AppTemplate from "@/views/AppTemplate.vue";
 import Table from '@/components/Table.vue';
 import AddingDiscount from '@/views/AddingDiscount.vue';
-import Map from '@/components/Map/Map.vue';
+import Map2 from '@/components/Map/Map2.vue';
 
 Vue.use(VueRouter);
 
@@ -75,6 +75,11 @@ const router = new VueRouter({
                     component: MapPage
                 }
             ]
+        },
+        {
+          path: '/map2',
+          name: 'map2',
+          component: Map2
         },
 
         {
