@@ -40,4 +40,12 @@
     #app {
 
     }
+    .zero{
+        margin: 0 !important;
+        max-height: 95% !important;
+    }
+
+    .slider-margin{
+        margin: 0 16px !important;
+    }
 </style>

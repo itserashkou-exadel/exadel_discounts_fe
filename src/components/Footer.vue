@@ -2,6 +2,7 @@
   <v-footer absolute color="primary"  dark app
   >
     <v-container fluid>
+    <!--      TODO: Fix problem with Footer-->
       <v-row no-gutters>
         <v-col cols="9"
                align-self="center">
@@ -14,8 +15,8 @@
         >
           <v-card color="primary" flat tile class="d-flex justify-end mr-3">
           <v-switch
-              v-model="english"
-              :label="`${english ? 'EN' : 'RU'}`"
+              v-model="isRuLocale"
+              :label="`${isRuLocale ? 'RU' : 'EN'}`"
           ></v-switch>
           </v-card>
         </v-col>
@@ -25,11 +26,27 @@
 </template>
 
 <script>
+
 export default {
   name: "Footer",
   data() {
     return {
-      english: false
+      isRuLocale: true
+    }
+  },
+  watch: {
+    isRuLocale (){
+      if (this.isRuLocale) {
+        import(`../langs/ru.json`).then((msg) =>{
+        this.$i18n.setLocaleMessage('ru', msg);
+        this.$i18n.locale = 'ru';
+        })
+      } else {
+        import(`../langs/en.json`).then((msg) =>{
+          this.$i18n.setLocaleMessage('en', msg);
+          this.$i18n.locale = 'ru';this.$i18n.locale = 'en';
+        })
+      }
     }
   }
 }

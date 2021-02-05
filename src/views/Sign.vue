@@ -4,7 +4,7 @@
             <v-card-text >
                 <v-list-group eager>
                     <template v-slot:activator>
-                        <v-list-item-title>Choose your location</v-list-item-title>
+                        <v-list-item-title>{{$t('sChooseLocation')}}</v-list-item-title>
                     </template>
 
                     <!--            Первая группа            -->
@@ -39,7 +39,7 @@
                 <v-container class="d-flex justify-center">
 
                     <v-btn >
-                        <router-link to="/home">Login</router-link>
+                        <router-link to="/home">{{$t('sLogIn')}}</router-link>
                     </v-btn>
                 </v-container>
 
