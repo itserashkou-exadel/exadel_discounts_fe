@@ -7,49 +7,14 @@
             <SwitchButton></SwitchButton>
         </v-col>
         <v-col cols="4" lg="2" md="2" sm="2">
-            <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    offset-x
-                    min-width="auto"
-            >
-               <template v-slot:activator="{on}">
                     <v-btn
                             color="primary"
                             dark
                             class="mb-2"
-                            v-on="on"
+                            @click="goToPageAd()"
                     >
                         {{$t('dtNewItem')}}
                     </v-btn>
-                </template>
-             <v-container>
-                            <v-card
-                                    color="#385F73"
-                                    dark
-                            >
-                                <v-card-actions>
-                                    <v-btn text
-                                    @click="goToPageInRus()"
-                                    >
-                                        Russian
-                                    </v-btn>
-                                </v-card-actions>
-                                <v-card-actions>
-                                    <v-btn text
-                                    @click="goToPageInEn()"
-                                    >
-                                        English
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-
-                </v-container>
-
-            </v-menu>
         </v-col>
     </v-row>
 </template>
@@ -72,12 +37,10 @@
             ...mapGetters(['language'])
         },
         methods: {
-            goToPageInRus() {
-                this.$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount', lang: 'Ru'}})
-            },
-            goToPageInEn() {
-                this.$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount', lang: 'En'}})
+            goToPageAd() {
+                this.$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})
             }
+
         }
     }
 </script>

@@ -13,73 +13,46 @@
                     <div class="d-flex">
                         <h1>{{titleOfPage()}}</h1>
                         <country-flag country='fr'/>
+                        <v-switch
+                                v-model="switchInAd"
+                                :label="`${switchInAd ? 'RU' : 'EN'}`"
+                        ></v-switch>
                     </div>
-
                 </v-col>
             </v-row>
-<!--            <v-row>-->
-<!--                <h2 class="mb-7">{{$t('adEnteringData')}} {{languageInAd()}} </h2>-->
-<!--            </v-row>-->
             <v-row
-                    no-gutters
+                    no-gutsters
                     class="d-flex justify-space-between"
             >
                 <v-col cols="12" md="5">
                     <div
-                            class="d-flex align-content-center"
-                    >
-                    <v-text-field
-                            placeholder="title"
-                            v-model="title"
-                            :label="this.$t('adLabelOfDiscountTitle')"
-                            outlined
-                            :counter="10"
-                            :rules="nameRules"
-
-                    ></v-text-field>
-                        <v-icon
-                                large
-                                color="orange darken-2"
-                                @click="expand = !expand"
-                        >
-                            mdi-arrow-down-bold-box-outline
-                        </v-icon>
+                            v-for="(item, i) in fieldsForDiscount()"
+                            :key="i">
+                        <div class="d-flex align-content-center">
+                            <v-text-field
+                                    :placeholder=item.placeholderAd
+                                    v-model="item.modelRu"
+                                    :label=item.labelAd
+                                    outlined>
+                            </v-text-field>
+                            <v-icon
+                                    large
+                                    color="orange darken-2"
+                                    @click="changeExpand(item)"
+                            >
+                                mdi-arrow-down-bold-box-outline
+                            </v-icon>
+                        </div>
+                        <v-expand-transition>
+                            <v-text-field
+                                    :v-show='item.expand'
+                                    :placeholder=item.placeholderAd
+                                    v-model=item.modelEn
+                                    :label=item.labelAd
+                                    outlined
+                            ></v-text-field>
+                        </v-expand-transition>
                     </div>
-                    <v-expand-transition>
-                    <v-text-field
-                            v-show="expand"
-                            placeholder="title"
-                            v-model="title"
-                            :label="this.$t('adLabelOfDiscountTitle')"
-                            outlined
-                            :counter="10"
-                            :rules="nameRules"
-                    ></v-text-field>
-                    </v-expand-transition>
-                    <v-text-field
-                            :label="this.$t('adLabelOfDiscountDiscount')"
-                            v-model="valueOfDiscount"
-                            outlined
-                    ></v-text-field>
-
-                    <v-text-field
-                            placeholder="vendor"
-                            v-model="vendor"
-                            :label="this.$t('adLabelOfDiscountVendor')"
-                            outlined
-                    ></v-text-field>
-                    <v-text-field
-                            :label="this.$t('adLabelOfDiscountTags')"
-                            outlined
-                    ></v-text-field>
-                    <v-textarea
-                            v-model="description"
-                            :label="this.$t('adLabelOfDiscountDescription')"
-                            outlined
-                    >
-                        <template>
-                        </template>
-                    </v-textarea>
                     <div
                             class="d-flex align-content-center"
                     >
@@ -171,6 +144,10 @@
                             </v-date-picker>
                         </v-menu>
                     </div>
+                    <v-text-field
+                            :label="this.$t('adLabelOfDiscountPicture')"
+                            outlined
+                    ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
@@ -179,14 +156,12 @@
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                     ></v-text-field>
-                    <v-text-field
-                            :label="this.$t('adLabelOfDiscountPicture')"
-                            outlined
-                    ></v-text-field>
+
                 </v-col>
             </v-row>
-            <v-row align-content="start">
-                <v-col cols="12" md="6">
+            <v-row
+            class="d-flex">
+                <v-col cols="12" md="4">
                     <v-btn class="mb-8"
                            color="info"
                            block
@@ -196,6 +171,9 @@
                     >
                         {{titleOfButton()}}
                     </v-btn>
+                </v-col>
+                <v-col cols="12" md="3"></v-col>
+                <v-col cols="12" md="4">
                     <v-btn
                             color="info"
                             block
@@ -214,6 +192,7 @@
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
+    import Vue from 'vuex'
     //import Disc from "../discounts.json"
 
     export default {
@@ -221,11 +200,22 @@
         components: {ChooseOfTown, CountryFlag},
         data() {
              return {
-                 expand: false,
-                 title: '',
-                 valueOfDiscount: '',
-                 vendor: '55',
-                 description: '',
+                 switchInAd: true,
+                 titleRu: '',
+                 titleEn: '',
+                 expandT: false,
+                 valueOfDiscountRu: '',
+                 valueOfDiscountEn: '',
+                 expandVD: false,
+                 vendorRu: '',
+                 vendorEn: '',
+                 expandV: false,
+                 tagsRu: '',
+                 tagsEn: '',
+                 expandTags: false,
+                 descriptionRu: '',
+                 descriptionEn: '',
+                 expandD: false,
                  dialog: false,
                  valid: true,
                  nameRules: [],
@@ -242,6 +232,27 @@
         },
 
         methods: {
+            showWindow(item){return item.expand},
+            changeExpand(item) {console.log(item.expand); item.expand = !item.expand; set(this.fieldsForDiscount()[0],'expand', false)},
+            fieldsForDiscount(){return [
+                {
+            placeholderAd: this.$t('adLabelOfDiscountTitle'), modelRu: this.titleRu, modelEn: this.titleEn, labelAd: this.$t('adLabelOfDiscountTitle'), expand: false
+                },
+                {
+                    placeholder: this.$t('adLabelOfDiscountDiscount'), modelRu: this.valueOfDiscountRu, modelEn: this.valueOfDiscountEn, labelAd: this.$t('adLabelOfDiscountDiscount'), expand: false
+                },
+                {
+                    placeholder: this.$t('adLabelOfDiscountVendor'), modelRu: this.vendorRu, modelEn: this.vendorEn, labelAd: this.$t('adLabelOfDiscountVendor'), expand: false
+                },
+                {
+                    placeholder: this.$t('adLabelOfDiscountTags'), modelRu: this.tagsRu, modelEn: this.tagsEn, labelAd: this.$t('adLabelOfDiscountTags'), expand: false
+                },
+                {
+                    placeholder: this.$t('adLabelOfDiscountDescription'), modelRu: this.descriptionRu, modelEn: this.descriptionEn, labelAd: this.$t('adLabelOfDiscountDescription'), expand: false
+                },
+
+            ]},
+            moduleEn(item) {if (this.switchInAd) {return item.modelEn} else {return item.modelRu}},
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
             languageInAd(){
               if (this.$route.params.lang == "Ru") {return "русском языке"} else {return "English"}
@@ -250,7 +261,7 @@
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall == 'newDiscount') {
                         this.addDiscount({
-                            title: this.title,
+                            titleRu: this.titleRu,
                             id: Date.now()
                         })
                     } else {

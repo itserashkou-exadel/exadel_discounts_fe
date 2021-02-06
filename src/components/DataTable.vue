@@ -16,7 +16,9 @@
                 <v-toolbar
                         flat
                 >
-                    <v-toolbar-title><h3>{{$t('Services')}}</h3></v-toolbar-title>
+                    <v-toolbar-title>
+                        <h3>{{$t('dtServices')}}</h3>
+                    </v-toolbar-title>
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
 
