@@ -3,7 +3,7 @@
         <MglMap
                 :accessToken="accessToken"
                 :mapStyle.sync="mapStyle"
-                :center="[27.5666700, 53.9000000]"
+                :center="[29.5666700, 53.9000000]"
                 :zoom="9"
         >
             <div>

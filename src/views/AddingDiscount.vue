@@ -12,8 +12,9 @@
                 >
                     <div class="d-flex">
                         <h1>{{titleOfPage()}}</h1>
-                        <country-flag country='fr'/>
+
                         <v-switch
+                                class="ml-10"
                                 v-model="switchInAd"
                                 :label="`${switchInAd ? 'RU' : 'EN'}`"
                         ></v-switch>
@@ -29,28 +30,41 @@
                             v-for="(item, i) in fieldsForDiscount()"
                             :key="i">
                         <div class="d-flex align-content-center">
-                            <v-text-field
+                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
                                     :placeholder=item.placeholderAd
                                     v-model="item.modelRu"
                                     :label=item.labelAd
                                     outlined>
                             </v-text-field>
+                            <v-textarea v-if="i === 4"
+                                          :placeholder=item.placeholderAd
+                                          v-model="item.modelRu"
+                                          :label=item.labelAd
+                                          outlined>
+                            </v-textarea>
                             <v-icon
                                     large
                                     color="orange darken-2"
-                                    @click="changeExpand(item)"
+                                    @click="changeExpand(item, i)"
                             >
                                 mdi-arrow-down-bold-box-outline
                             </v-icon>
                         </div>
                         <v-expand-transition>
-                            <v-text-field
-                                    :v-show='item.expand'
+                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
+                                    v-show='trueOrFalseArr[i]'
                                     :placeholder=item.placeholderAd
                                     v-model=item.modelEn
                                     :label=item.labelAd
                                     outlined
                             ></v-text-field>
+                            <v-textarea v-if="i === 4"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder=item.placeholderAd
+                                          v-model=item.modelEn
+                                          :label=item.labelAd
+                                          outlined
+                            ></v-textarea>
                         </v-expand-transition>
                     </div>
                     <div
@@ -156,11 +170,11 @@
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                     ></v-text-field>
-
+                    <Map/>
                 </v-col>
             </v-row>
             <v-row
-            class="d-flex">
+                    class="d-flex">
                 <v-col cols="12" md="4">
                     <v-btn class="mb-8"
                            color="info"
@@ -172,7 +186,7 @@
                         {{titleOfButton()}}
                     </v-btn>
                 </v-col>
-                <v-col cols="12" md="3"></v-col>
+                <v-col cols="12" md="2"></v-col>
                 <v-col cols="12" md="4">
                     <v-btn
                             color="info"
@@ -192,72 +206,99 @@
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
-    import Vue from 'vuex'
-    //import Disc from "../discounts.json"
+    import Map from "@/components/Map/Map";
+
 
     export default {
         name: "AddingDiscount",
-        components: {ChooseOfTown, CountryFlag},
+        components: {ChooseOfTown, CountryFlag, Map},
         data() {
-             return {
-                 switchInAd: true,
-                 titleRu: '',
-                 titleEn: '',
-                 expandT: false,
-                 valueOfDiscountRu: '',
-                 valueOfDiscountEn: '',
-                 expandVD: false,
-                 vendorRu: '',
-                 vendorEn: '',
-                 expandV: false,
-                 tagsRu: '',
-                 tagsEn: '',
-                 expandTags: false,
-                 descriptionRu: '',
-                 descriptionEn: '',
-                 expandD: false,
-                 dialog: false,
-                 valid: true,
-                 nameRules: [],
-                 picker: new Date().toISOString().substr(0, 10),
-                 dateStart: new Date().toISOString().substr(0, 10),
-                 dateFinish: new Date().toISOString().substr(0, 10),
-                 menu: false,
-                 menuFinish: false,
-                 countriesAndTowns: [
-                     {id: 1, town: 'Grodno', country: 'Belarus'},
-                     {id: 2, town: 'Minsk', country: 'Belarus'},
-                     {id: 3, town: 'Kiev', country: 'Ukraine'}]
-             }
+            return {
+                switchInAd: true,
+                titleRu: '',
+                titleEn: '',
+                expandT: false,
+                valueOfDiscountRu: '',
+                valueOfDiscountEn: '',
+                vendorRu: '',
+                vendorEn: '',
+                tagsRu: '',
+                tagsEn: '',
+                descriptionRu: '',
+                descriptionEn: '',
+                trueOrFalseArr: [false, false, false, false, false],
+                dialog: false,
+                valid: true,
+                nameRules: [],
+                picker: new Date().toISOString().substr(0, 10),
+                dateStart: new Date().toISOString().substr(0, 10),
+                dateFinish: new Date().toISOString().substr(0, 10),
+                menu: false,
+                menuFinish: false,
+                countriesAndTowns: [
+                    {id: 1, town: 'Grodno', country: 'Belarus'},
+                    {id: 2, town: 'Minsk', country: 'Belarus'},
+                    {id: 3, town: 'Kiev', country: 'Ukraine'}]
+            }
         },
-
         methods: {
-            showWindow(item){return item.expand},
-            changeExpand(item) {console.log(item.expand); item.expand = !item.expand; set(this.fieldsForDiscount()[0],'expand', false)},
-            fieldsForDiscount(){return [
-                {
-            placeholderAd: this.$t('adLabelOfDiscountTitle'), modelRu: this.titleRu, modelEn: this.titleEn, labelAd: this.$t('adLabelOfDiscountTitle'), expand: false
-                },
-                {
-                    placeholder: this.$t('adLabelOfDiscountDiscount'), modelRu: this.valueOfDiscountRu, modelEn: this.valueOfDiscountEn, labelAd: this.$t('adLabelOfDiscountDiscount'), expand: false
-                },
-                {
-                    placeholder: this.$t('adLabelOfDiscountVendor'), modelRu: this.vendorRu, modelEn: this.vendorEn, labelAd: this.$t('adLabelOfDiscountVendor'), expand: false
-                },
-                {
-                    placeholder: this.$t('adLabelOfDiscountTags'), modelRu: this.tagsRu, modelEn: this.tagsEn, labelAd: this.$t('adLabelOfDiscountTags'), expand: false
-                },
-                {
-                    placeholder: this.$t('adLabelOfDiscountDescription'), modelRu: this.descriptionRu, modelEn: this.descriptionEn, labelAd: this.$t('adLabelOfDiscountDescription'), expand: false
-                },
-
-            ]},
-            moduleEn(item) {if (this.switchInAd) {return item.modelEn} else {return item.modelRu}},
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
-            languageInAd(){
-              if (this.$route.params.lang == "Ru") {return "русском языке"} else {return "English"}
+            changeExpand(item, i) {
+                this.trueOrFalseArr[i] = !this.trueOrFalseArr[i]
+                this.expandT = !this.expandT;
             },
-             submit(item) {
+            fieldsForDiscount() {
+                return [
+                    {
+                        placeholderAd: this.$t('adLabelOfDiscountTitle'),
+                        modelRu: this.titleRu,
+                        modelEn: this.titleEn,
+                        labelAd: this.$t('adLabelOfDiscountTitle'),
+                        expand: this.expandT
+                    },
+                    {
+                        placeholder: this.$t('adLabelOfDiscountDiscount'),
+                        modelRu: this.valueOfDiscountRu,
+                        modelEn: this.valueOfDiscountEn,
+                        labelAd: this.$t('adLabelOfDiscountDiscount')
+                    },
+                    {
+                        placeholder: this.$t('adLabelOfDiscountVendor'),
+                        modelRu: this.vendorRu,
+                        modelEn: this.vendorEn,
+                        labelAd: this.$t('adLabelOfDiscountVendor')
+                    },
+                    {
+                        placeholder: this.$t('adLabelOfDiscountTags'),
+                        modelRu: this.tagsRu,
+                        modelEn: this.tagsEn,
+                        labelAd: this.$t('adLabelOfDiscountTags')
+
+                    },
+                    {
+                        placeholder: this.$t('adLabelOfDiscountDescription'),
+                        modelRu: this.descriptionRu,
+                        modelEn: this.descriptionEn,
+                        labelAd: this.$t('adLabelOfDiscountDescription')
+                    },
+
+                ]
+            },
+            moduleEn(item) {
+                if (this.switchInAd) {
+                    return item.modelEn
+                } else {
+                    return item.modelRu
+                }
+            },
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+            languageInAd() {
+                if (this.$route.params.lang == "Ru") {
+                    return "русском языке"
+                } else {
+                    return "English"
+                }
+            },
+            submit(item) {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall == 'newDiscount') {
                         this.addDiscount({
@@ -268,7 +309,8 @@
                         this.updateDiscount(item)
                     }
                     this.$refs.form.reset()
-             }},
+                }
+            },
             resetForm() {
                 this.$refs.form.reset()
             },
@@ -288,10 +330,10 @@
             }
         },
 
-        computed: mapGetters(['allDiscounts','discountById', 'language']),
+        computed: mapGetters(['allDiscounts', 'discountById', 'language']),
         mounted() {
 
-           this.goFetch('');
+            this.goFetch('');
         },
         created() {
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
