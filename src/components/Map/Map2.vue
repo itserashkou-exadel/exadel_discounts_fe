@@ -17,8 +17,12 @@
             };
         },
         methods: {
-            flyToMyPoint() {
-
+            myMarker() {
+                new mapboxgl.Marker({
+                    color: "#FFFFFF",
+                    draggable: true
+                }).setLngLat([30.98333, 52.44167])
+                    .addTo(map);
             }
         },
         mounted() {
@@ -30,6 +34,12 @@
                 center: [23.8223, 53.6688],
                 zoom: 7,
             })
+
+            new mapboxgl.Marker({
+                color: "blue",
+                draggable: true
+            }).setLngLat([30.98333, 52.44167])
+                .addTo(map);
 
             geocodingClient
                 .forwardGeocode({
@@ -52,13 +62,16 @@
                 })
                 .then(res => {
                     const geoData = res
-                    console.log('WORK')
+                    console.log('FlyTo new Point!')
                     map.flyTo({
                         center: geoData,
                         zoom: 12,
-                        speed: 0.2,
+                        speed: 0.5,
                     })
                 })
+            .then(() => {
+                //this.methods.myMarker()
+            })
         },
     };
 </script>
