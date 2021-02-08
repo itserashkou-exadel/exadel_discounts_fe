@@ -1,7 +1,6 @@
 <template>
     <div>
         <div id="mapContainer" class="basemap"></div>
-        <pre id="coordinates" class="coordinates"></pre>
     </div>
 
 </template>
@@ -12,22 +11,16 @@
     const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
     const geocodingClient = mbxGeocoding({accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA'});
 
+
+
     export default {
+        marker: null,
         name: "BaseMap",
         data() {
             return {
                 accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA',
                 fetchedGeoData: []
             };
-        },
-        methods: {
-            onDragEnd() {
-                let lngLat = this.marker.getLngLat();
-                console.log('Marker coordinates', lngLat)
-                coordinates.style.display = 'block';
-                coordinates.innerHTML =
-                    'Longitude: ' + lngLat.lng + '<br />Latitude: ' + lngLat.lat;
-            }
         },
         mounted() {
             mapboxgl.accessToken = this.accessToken;
@@ -79,16 +72,40 @@
                 })
                 .then(res => {
                     let newMarker = res
-                    console.log('set marker')
-                    new mapboxgl.Marker({
+                    console.log('Set marker from local state')
+
+                    //Draw marker
+                    this.marker = new mapboxgl.Marker({
                         color: "yellow",
                         draggable: true
-                    }).setLngLat(newMarker)
+                    })
+                        .setLngLat(newMarker)
                         .addTo(map);
+                    console.log('Marker coordinates: ', this.marker._lngLat)
+                    console.log('Marker coordinates: ', this.marker)
+                    this.marker.on('dragend', () => {
+                        console.log('WORKING')
+                    })
+                    return this.marker
 
                 })
         },
+        methods: {
+            // newMarkerPoint(){
+            //     let lngLat = this.marker.getLngLat();
+            //     console.log(lngLat)
+            // }
+        },
+        watch: {
+
+            }
+            // fetchedGeoData(){
+            //     let lngLat = marker.getLngLat();
+            // //
+            // }
+
     };
+
 </script>
 
 <style scoped>
