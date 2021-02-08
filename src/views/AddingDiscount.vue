@@ -31,16 +31,16 @@
                             :key="i">
                         <div class="d-flex align-content-center">
                             <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
-                                    :placeholder=item.placeholderAd
-                                    v-model="item.modelRu"
-                                    :label=item.labelAd
+                                    :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                    v-model="switchInAd ? item.modelRu : item.modelEn"
+                                    :label='switchInAd ? item.labelRu : item.labelEn'
                                     outlined>
                             </v-text-field>
                             <v-textarea v-if="i === 4"
-                                          :placeholder=item.placeholderAd
-                                          v-model="item.modelRu"
-                                          :label=item.labelAd
-                                          outlined>
+                                        :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                        v-model="switchInAd ? item.modelRu : item.modelEn"
+                                        :label='switchInAd ? item.labelRu : item.labelEn'
+                                        outlined>
                             </v-textarea>
                             <v-icon
                                     large
@@ -53,17 +53,17 @@
                         <v-expand-transition>
                             <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
                                     v-show='trueOrFalseArr[i]'
-                                    :placeholder=item.placeholderAd
-                                    v-model=item.modelEn
-                                    :label=item.labelAd
+                                    :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                    v-model="switchInAd ? item.modelEn : item.modelRu"
+                                    :label='switchInAd ? item.labelEn : item.labelRu'
                                     outlined
                             ></v-text-field>
                             <v-textarea v-if="i === 4"
-                                          v-show='trueOrFalseArr[i]'
-                                          :placeholder=item.placeholderAd
-                                          v-model=item.modelEn
-                                          :label=item.labelAd
-                                          outlined
+                                        v-show='trueOrFalseArr[i]'
+                                        :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                        v-model="switchInAd ? item.modelEn : item.modelRu"
+                                        :label='switchInAd ? item.labelEn : item.labelRu'
+                                        outlined
                             ></v-textarea>
                         </v-expand-transition>
                     </div>
@@ -162,6 +162,14 @@
                             :label="this.$t('adLabelOfDiscountPicture')"
                             outlined
                     ></v-text-field>
+                    <v-text-field
+                            label="координаты"
+                            outlined
+                    ></v-text-field>
+                    <v-text-field
+                            label="координаты"
+                            outlined
+                    ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
@@ -170,7 +178,9 @@
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                     ></v-text-field>
-                    <Map/>
+                    <div class="mr-10">
+                    <Map class="mr-10"/>
+                    </div>
                 </v-col>
             </v-row>
             <v-row
@@ -249,55 +259,51 @@
             fieldsForDiscount() {
                 return [
                     {
-                        placeholderAd: this.$t('adLabelOfDiscountTitle'),
+                        placeholderRu: this.$t('adLabelOfDiscountTitleRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountTitleEn'),
                         modelRu: this.titleRu,
                         modelEn: this.titleEn,
-                        labelAd: this.$t('adLabelOfDiscountTitle'),
+                        labelRu: this.$t('adLabelOfDiscountTitleRu'),
+                        labelEn: this.$t('adLabelOfDiscountTitleEn'),
                         expand: this.expandT
                     },
                     {
-                        placeholder: this.$t('adLabelOfDiscountDiscount'),
+                        placeholderRu: this.$t('adLabelOfDiscountDiscountRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountDiscountEn'),
                         modelRu: this.valueOfDiscountRu,
                         modelEn: this.valueOfDiscountEn,
-                        labelAd: this.$t('adLabelOfDiscountDiscount')
+                        labelRu: this.$t('adLabelOfDiscountDiscountRu'),
+                        labelEn: this.$t('adLabelOfDiscountDiscountEn'),
                     },
                     {
-                        placeholder: this.$t('adLabelOfDiscountVendor'),
+                        placeholderRu: this.$t('adLabelOfDiscountVendorRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountVendorEn'),
                         modelRu: this.vendorRu,
                         modelEn: this.vendorEn,
-                        labelAd: this.$t('adLabelOfDiscountVendor')
+                        labelRu: this.$t('adLabelOfDiscountVendorRu'),
+                        labelEn: this.$t('adLabelOfDiscountVendorEn'),
                     },
                     {
-                        placeholder: this.$t('adLabelOfDiscountTags'),
+                        placeholderRu: this.$t('adLabelOfDiscountTagsRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountTagsEn'),
                         modelRu: this.tagsRu,
                         modelEn: this.tagsEn,
-                        labelAd: this.$t('adLabelOfDiscountTags')
+                        labelRu: this.$t('adLabelOfDiscountTagsRu'),
+                        labelEn: this.$t('adLabelOfDiscountTagsEn'),
 
                     },
                     {
-                        placeholder: this.$t('adLabelOfDiscountDescription'),
+                        placeholderRu: this.$t('adLabelOfDiscountDescriptionRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountDescriptionEn'),
                         modelRu: this.descriptionRu,
                         modelEn: this.descriptionEn,
-                        labelAd: this.$t('adLabelOfDiscountDescription')
+                        labelRu: this.$t('adLabelOfDiscountDescriptionRu'),
+                        labelEn: this.$t('adLabelOfDiscountDescriptionEn'),
                     },
 
                 ]
             },
-            moduleEn(item) {
-                if (this.switchInAd) {
-                    return item.modelEn
-                } else {
-                    return item.modelRu
-                }
-            },
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
-            languageInAd() {
-                if (this.$route.params.lang == "Ru") {
-                    return "русском языке"
-                } else {
-                    return "English"
-                }
-            },
             submit(item) {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall == 'newDiscount') {
@@ -332,7 +338,6 @@
 
         computed: mapGetters(['allDiscounts', 'discountById', 'language']),
         mounted() {
-
             this.goFetch('');
         },
         created() {

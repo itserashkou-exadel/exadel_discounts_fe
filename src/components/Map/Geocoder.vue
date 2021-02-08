@@ -9,6 +9,7 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 
+
     const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl
