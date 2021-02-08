@@ -1,13 +1,12 @@
 <template>
-  <v-app-bar color="primary" flat
-  >
+  <v-app-bar color="primary" flat>
     <v-toolbar-title class="headline text-uppercase">
         <span class="text--accent-4"
               color="blue lighten-5">Crazy</span>
       <span class="font-weight-light"
             color="blue lighten-5">Price</span>
     </v-toolbar-title>
-    <v-toolbar-items v-for="(item, i) in headerButtons"
+    <v-toolbar-items v-for="(item, i) in headerButtons()"
                      :key="i">
       <HeaderButton v-bind:headerButton="item"
       />
@@ -55,12 +54,6 @@ export default {
   components: {Searching, Avatar, HeaderButton},
   data() {
     return {
-      headerButtons: [
-        {id: 1, text: "Карта", route: "map", icon: "mdi-map-search-outline"},
-        {id: 2, text: "Скидки", route: "home", icon: "mdi-clipboard-text"},
-        {id: 3, text: "Подписки", route: "subscriptions", icon: "mdi-tag"},
-        {id: 4, text: "Избранное", route: "favorites", icon: "mdi-star"},
-      ],
       signIn: "sign",
       user: {
         initials: 'JD',
@@ -68,6 +61,14 @@ export default {
         email: 'john.doe@doe.com',
       },
     }
+  },
+  methods: {
+    headerButtons(){ return [
+      {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
+      {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
+      {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
+      {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
+    ]}
   }
 }
 </script>

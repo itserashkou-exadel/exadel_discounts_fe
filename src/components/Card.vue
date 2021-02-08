@@ -1,7 +1,7 @@
 <template>
     <v-card
-            class="mx-4 my-12"
-            max-width="374"
+            class="my-12"
+            max-width="350"
             height="570"
     >
         <div>
@@ -62,10 +62,10 @@
                 <router-link to="/details">Choose</router-link>
             </v-btn>
             <div class="mr-12">
-                <v-icon @click="f" >
+                <v-icon>
                     mdi-pencil
                 </v-icon>
-                <v-icon @click="f" class="mr-2 ml-2" >
+                <v-icon class="mr-2 ml-2" >
                     mdi-delete
                 </v-icon>
             </div>

@@ -29,7 +29,6 @@
     /*#nav {*/
     /*  padding: 30px;*/
     /*}*/
-
     /*#nav a {*/
     /*  font-weight: bold;*/
     /*  color: #2c3e50;*/
@@ -40,5 +39,13 @@
     /*}*/
     #app {
 
+    }
+    .zero{
+        margin: 0 !important;
+        max-height: 95% !important;
+    }
+
+    .slider-margin{
+        margin: 0 16px !important;
     }
 </style>

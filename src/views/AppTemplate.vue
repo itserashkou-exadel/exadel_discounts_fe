@@ -13,7 +13,7 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-    <v-footer app flat color="primary">
+    <v-footer absolute app flat color="primary">
       <Footer/>
     </v-footer>
   </v-app>

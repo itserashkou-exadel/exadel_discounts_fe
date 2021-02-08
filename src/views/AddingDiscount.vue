@@ -1,8 +1,8 @@
 <template>
     <v-container
-
-            class="mb-6 ml-10 pr-10 font-weight-regular"
-    >  <router-view/>
+            class="mb-6 ml-10 mb-15 pr-10 font-weight-regular"
+    >
+        <router-view/>
         <v-form v-model="valid" ref="form">
             <v-row
                     align-content="center"
@@ -10,32 +10,69 @@
             >
                 <v-col cols="12" class="pb-5 pt-5"
                 >
-                    <h1>Добавление услуги</h1>
+                    <div class="d-flex">
+                        <h1>{{titleOfPage()}}</h1>
+
+                        <v-switch
+                                class="ml-10"
+                                v-model="switchInAd"
+                                :label="`${switchInAd ? 'RU' : 'EN'}`"
+                        ></v-switch>
+                    </div>
                 </v-col>
             </v-row>
             <v-row
-                    no-gutters
+                    no-gutsters
                     class="d-flex justify-space-between"
             >
                 <v-col cols="12" md="5">
-                    <v-text-field
-                            placeholder="title"
-                            v-model="title"
-                            label="Название услуги"
-                            outlined
-                            :counter="10"
-                            :rules="nameRules"
-                    ></v-text-field>
-                    <v-text-field
-                            label="Скидка"
-                            outlined
-                    ></v-text-field>
+                    <div
+                            v-for="(item, i) in fieldsForDiscount()"
+                            :key="i">
+                        <div class="d-flex align-content-center">
+                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
+                                    :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                    v-model="switchInAd ? item.modelRu : item.modelEn"
+                                    :label='switchInAd ? item.labelRu : item.labelEn'
+                                    outlined>
+                            </v-text-field>
+                            <v-textarea v-if="i === 4"
+                                        :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                        v-model="switchInAd ? item.modelRu : item.modelEn"
+                                        :label='switchInAd ? item.labelRu : item.labelEn'
+                                        outlined>
+                            </v-textarea>
+                            <v-icon
+                                    large
+                                    color="orange darken-2"
+                                    @click="changeExpand(item, i)"
+                            >
+                                mdi-arrow-down-bold-box-outline
+                            </v-icon>
+                        </div>
+                        <v-expand-transition>
+                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
+                                    v-show='trueOrFalseArr[i]'
+                                    :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                    v-model="switchInAd ? item.modelEn : item.modelRu"
+                                    :label='switchInAd ? item.labelEn : item.labelRu'
+                                    outlined
+                            ></v-text-field>
+                            <v-textarea v-if="i === 4"
+                                        v-show='trueOrFalseArr[i]'
+                                        :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                        v-model="switchInAd ? item.modelEn : item.modelRu"
+                                        :label='switchInAd ? item.labelEn : item.labelRu'
+                                        outlined
+                            ></v-textarea>
+                        </v-expand-transition>
+                    </div>
                     <div
                             class="d-flex align-content-center"
                     >
                         <span
                                 class="pt-4 pr-2"
-                        >C</span>
+                        >{{$t('adFrom')}}</span>
                         <v-menu
                                 ref="menu"
                                 v-model="menu"
@@ -65,20 +102,20 @@
                                         color="primary"
                                         @click="menu = false"
                                 >
-                                    Cancel
+                                    {{$t('dtCancel')}}
                                 </v-btn>
                                 <v-btn
                                         text
                                         color="primary"
                                         @click="$refs.menu.save(dateStart)"
                                 >
-                                    OK
+                                    {{$t('dtOk')}}
                                 </v-btn>
                             </v-date-picker>
                         </v-menu>
                         <span
                                 class="pt-4 pr-2"
-                        >По</span>
+                        >{{$t('adTo')}}</span>
                         <v-menu
                                 ref="menuFinish"
                                 v-model="menuFinish"
@@ -109,81 +146,65 @@
                                         color="primary"
                                         @click="menuFinish = false"
                                 >
-                                    Cancel
+                                    {{$t('dtCancel')}}
                                 </v-btn>
                                 <v-btn
                                         text
                                         color="primary"
                                         @click="$refs.menuFinish.save(dateFinish)"
                                 >
-                                    OK
+                                    {{$t('dtOk')}}
                                 </v-btn>
                             </v-date-picker>
                         </v-menu>
-                        <!--                       -->
                     </div>
                     <v-text-field
-                            placeholder="vendor"
-                            v-model="vendor"
-                            label="Вендор"
+                            :label="this.$t('adLabelOfDiscountPicture')"
                             outlined
                     ></v-text-field>
                     <v-text-field
-                            label="Список тегов"
+                            label="координаты"
                             outlined
                     ></v-text-field>
                     <v-text-field
-                            height="150px"
-                            label="Описание услуги"
+                            label="координаты"
                             outlined
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
                             v-bind:countriesAndTowns="countriesAndTowns"/>
-                    <!--                            @select="select"-->
-
-<!--                    <v-text-field-->
-<!--                            readonly-->
-<!--                            label="Страна"-->
-<!--                            outlined>-->
-<!--                        &lt;!&ndash;                            v-model="selected.country"&ndash;&gt;-->
-
-<!--                    </v-text-field>-->
-<!--                    <v-text-field-->
-<!--                            readonly-->
-<!--                            label="Город"-->
-<!--                            outlined>-->
-<!--                        &lt;!&ndash;                            v-model="selected.town"&ndash;&gt;-->
-
-<!--                    </v-text-field>-->
                     <v-text-field
-                            label="Улица"
+                            :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                     ></v-text-field>
-                    <v-text-field
-                            label="Ссылка на изображение"
-                            outlined
-                    ></v-text-field>
+                    <div class="mr-10">
+                    <Map class="mr-10"/>
+                    </div>
                 </v-col>
             </v-row>
-            <v-row align-content="start">
-                <v-col cols="12" md="6">
+            <v-row
+                    class="d-flex">
+                <v-col cols="12" md="4">
                     <v-btn class="mb-8"
                            color="info"
                            block
                            elevation="2"
-                           large>
-                        <!--                           @click="submit"-->
-                        Добавить
+                           large
+                           @click="submit"
+                    >
+                        {{titleOfButton()}}
                     </v-btn>
+                </v-col>
+                <v-col cols="12" md="2"></v-col>
+                <v-col cols="12" md="4">
                     <v-btn
                             color="info"
                             block
                             elevation="2"
                             large
                             @click="resetForm"
-                    >Отменить
+                    >{{$t('adCancel')}}
                     </v-btn>
                 </v-col>
             </v-row>
@@ -194,14 +215,28 @@
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
+    import CountryFlag from 'vue-country-flag'
+    import Map from "@/components/Map/Map";
+
 
     export default {
         name: "AddingDiscount",
-        components: {ChooseOfTown},
+        components: {ChooseOfTown, CountryFlag, Map},
         data() {
             return {
-                title: '',
-                vendor: '',
+                switchInAd: true,
+                titleRu: '',
+                titleEn: '',
+                expandT: false,
+                valueOfDiscountRu: '',
+                valueOfDiscountEn: '',
+                vendorRu: '',
+                vendorEn: '',
+                tagsRu: '',
+                tagsEn: '',
+                descriptionRu: '',
+                descriptionEn: '',
+                trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
                 nameRules: [],
@@ -213,45 +248,107 @@
                 countriesAndTowns: [
                     {id: 1, town: 'Grodno', country: 'Belarus'},
                     {id: 2, town: 'Minsk', country: 'Belarus'},
-                    {id: 3, town: 'Kiev', country: 'Ukraine'}],
-                // selected: {},
+                    {id: 3, town: 'Kiev', country: 'Ukraine'}]
+            }
+        },
+        methods: {
+            changeExpand(item, i) {
+                this.trueOrFalseArr[i] = !this.trueOrFalseArr[i]
+                this.expandT = !this.expandT;
+            },
+            fieldsForDiscount() {
+                return [
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountTitleRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountTitleEn'),
+                        modelRu: this.titleRu,
+                        modelEn: this.titleEn,
+                        labelRu: this.$t('adLabelOfDiscountTitleRu'),
+                        labelEn: this.$t('adLabelOfDiscountTitleEn'),
+                        expand: this.expandT
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountDiscountRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountDiscountEn'),
+                        modelRu: this.valueOfDiscountRu,
+                        modelEn: this.valueOfDiscountEn,
+                        labelRu: this.$t('adLabelOfDiscountDiscountRu'),
+                        labelEn: this.$t('adLabelOfDiscountDiscountEn'),
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountVendorRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountVendorEn'),
+                        modelRu: this.vendorRu,
+                        modelEn: this.vendorEn,
+                        labelRu: this.$t('adLabelOfDiscountVendorRu'),
+                        labelEn: this.$t('adLabelOfDiscountVendorEn'),
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountTagsRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountTagsEn'),
+                        modelRu: this.tagsRu,
+                        modelEn: this.tagsEn,
+                        labelRu: this.$t('adLabelOfDiscountTagsRu'),
+                        labelEn: this.$t('adLabelOfDiscountTagsEn'),
+
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountDescriptionRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountDescriptionEn'),
+                        modelRu: this.descriptionRu,
+                        modelEn: this.descriptionEn,
+                        labelRu: this.$t('adLabelOfDiscountDescriptionRu'),
+                        labelEn: this.$t('adLabelOfDiscountDescriptionEn'),
+                    },
+
+                ]
+            },
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+            submit(item) {
+                if (this.$refs.form.validate()) {
+                    if (this.$route.params.placeOfCall == 'newDiscount') {
+                        this.addDiscount({
+                            titleRu: this.titleRu,
+                            id: Date.now()
+                        })
+                    } else {
+                        this.updateDiscount(item)
+                    }
+                    this.$refs.form.reset()
+                }
+            },
+            resetForm() {
+                this.$refs.form.reset()
+            },
+            titleOfPage() {
+                if (this.$route.params.placeOfCall == 'newDiscount') {
+                    return this.$tc('adEditingNewDiscount', 2)
+                } else {
+                    return this.$tc('adEditingNewDiscount', 1)
+                }
+            },
+            titleOfButton() {
+                if (this.$route.params.placeOfCall == 'newDiscount') {
+                    return this.$tc('adAddSave', 1)
+                } else {
+                    return this.$tc('adAddSave', 2);
+                }
             }
         },
 
-        methods: {
-            // ...mapActions(['goFetch']),
-            // ...mapMutations(['createDiscount']),
-            // submit() {
-            //     if (this.$refs.form.validate()) {
-            //         this.createDiscount({
-            //             title: this.title,
-            //             id: Date.now()
-            //         });
-            //         this.$refs.form.reset()
-            //     }
-            // },
-            resetForm() {
-                this.$refs.form.reset()
+        computed: mapGetters(['allDiscounts', 'discountById', 'language']),
+        mounted() {
+            this.goFetch('');
+        },
+        created() {
+            if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+                const id = this.$router.params.idOfDiscount;
+                const discount = this.discountById(id);
+                this.title = discount.title;
             }
-            // redirectToIS4() {
-            //     console.log('You was redirected')
-            //     this.$router.push('/identity')
-            // },
-            //     select (town) {
-            //         this.selected = town
-            //         this.listmodel = false
-            //     }
-            // },
-
-            // computed: mapGetters(['allDiscounts']),
-            // async mounted() {
-            //     this.goFetch('https://jsonplaceholder.typicode.com/posts')
-            // }
         }
     }
 </script>
-
-
 <style scoped>
 
 </style>
