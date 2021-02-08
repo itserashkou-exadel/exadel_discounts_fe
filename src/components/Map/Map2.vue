@@ -84,7 +84,9 @@
                     console.log('Marker coordinates: ', this.marker._lngLat)
                     console.log('Marker coordinates: ', this.marker)
                     this.marker.on('dragend', () => {
-                        console.log('WORKING')
+                        let lngLat = this.marker.getLngLat();
+                        console.log('New marker coordinates', lngLat)
+
                     })
                     return this.marker
 

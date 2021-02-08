@@ -76,6 +76,7 @@ const router = new VueRouter({
                 }
             ]
         },
+
         {
           path: '/map2',
           name: 'map2',
