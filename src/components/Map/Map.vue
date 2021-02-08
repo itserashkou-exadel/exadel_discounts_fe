@@ -1,80 +1,132 @@
-<template class="pt-15">
-    <div id="map">
-        <MglMap
-                :accessToken="accessToken"
-                :mapStyle.sync="mapStyle"
-                :center="[29.5666700, 53.9000000]"
-                :zoom="9"
-        >
-            <div>
-                !
-            </div>
-            <MglMarker :coordinates="coordinates1" color="blue">
-                <MglPopup :coordinates="coordinates1" anchor="top">
-                    <VCard>
-                        <v-card-text>Marker 1</v-card-text>
-                    </VCard>
-                </MglPopup>
-
-                <MglMarker :coordinates="coordinates2" color="blue">
-                    <MglPopup :coordinates="coordinates2" anchor="top">
-                        <VCard>
-                            <v-card-text>Marker 2</v-card-text>
-                        </VCard>
-                    </MglPopup>
-                </MglMarker>
-
-                <MglMarker :coordinates="coordinates3" color="blue"/>
-                <MglPopup :coordinates="coordinates3" anchor="top">
-                    <VCard>
-                        <v-card-text>Marker 3</v-card-text>
-                    </VCard>
-                </MglPopup>
-            </MglMarker>
-
-            <!--            <Footer/>-->
-        </MglMap>
+<template>
+    <div>
+        <div id="mapContainer" class="basemap"></div>
     </div>
-
 
 </template>
 
 <script>
-    import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-    import Mapbox from "mapbox-gl";
-    import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
-    import Footer from "@/components/Footer";
+    import mapboxgl from "mapbox-gl";
+
+    const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+    const geocodingClient = mbxGeocoding({accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA'});
+
+
 
     export default {
-        components: {
-            Footer,
-            MglMap,
-            MglMarker,
-            MglPopup
-        },
+        marker: null,
+        name: "BaseMap",
         data() {
             return {
-                accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA', // your access token. Needed if you using Mapbox maps
-                mapStyle: 'mapbox://styles/mapbox/streets-v11', // your map style
-                coordinates1: [27.579803466796875, 53.921324836434714],
-                coordinates2: [27.605552673339844, 53.88430926904454],
-                coordinates3: [27.47920989990234, 53.88572576837868]
+                accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA',
+                fetchedGeoData: []
             };
         },
-        created() {
-            // We need to set mapbox-gl library here in order to use it in template
-            this.mapbox = Mapbox;
+        mounted() {
+            mapboxgl.accessToken = this.accessToken;
+
+            //Map init
+            let map = new mapboxgl.Map({
+                container: "mapContainer",
+                style: "mapbox://styles/mapbox/streets-v11",
+                center: [23.8223, 53.6688],
+                zoom: 7,
+            })
+
+            //ForwardGeoCodding logic
+            geocodingClient
+                .forwardGeocode({
+                    query: 'Belarus, Homel',
+                })
+                .send()
+                .then(response => {
+                    const match = response.body;
+                    console.log('match: ', match)
+                    let result = match.features[0].center
+
+                    let latitude = match.features[0].center[0]
+                    console.log(latitude)
+
+                    let longitude = match.features[0].center[1]
+                    console.log(longitude)
+                    console.log('Coordinates from query', result)
+
+                    this.fetchedGeoData.push({
+                        //result
+                        latitude,
+                        longitude,
+                    })
+                    console.log('Fetched Geo Data: ', this.fetchedGeoData)
+                    return result
+                })
+                .then(res => {
+                    const geoData = res
+                    console.log('response: ', res)
+                    console.log('FlyTo new Point!')
+                    map.flyTo({
+                        center: geoData,
+                        zoom: 12,
+                        speed: 0.5,
+                    })
+                    return geoData
+                })
+                .then(res => {
+                    let newMarker = res
+                    console.log('Set marker from local state')
+
+                    //Draw marker
+                    this.marker = new mapboxgl.Marker({
+                        color: "yellow",
+                        draggable: true
+                    })
+                        .setLngLat(newMarker)
+                        .addTo(map);
+                    console.log('Marker coordinates: ', this.marker._lngLat)
+                    console.log('Marker coordinates: ', this.marker)
+                    this.marker.on('dragend', () => {
+                        let lngLat = this.marker.getLngLat();
+                        console.log('New marker coordinates', lngLat)
+
+                    })
+                    return this.marker
+
+                })
         },
         methods: {
-            showPopUp() {
+            // newMarkerPoint(){
+            //     let lngLat = this.marker.getLngLat();
+            //     console.log(lngLat)
+            // }
+        },
+        watch: {
 
             }
-        }
-    }
+            // fetchedGeoData(){
+            //     let lngLat = marker.getLngLat();
+            // //
+            // }
+
+    };
+
 </script>
-<style>
-    #map {
+
+<style scoped>
+    .basemap {
         width: 100vw;
         height: 100vh;
+    }
+
+    .coordinates {
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        position: absolute;
+        bottom: 40px;
+        left: 10px;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 11px;
+        line-height: 18px;
+        border-radius: 3px;
+        display: none;
     }
 </style>
