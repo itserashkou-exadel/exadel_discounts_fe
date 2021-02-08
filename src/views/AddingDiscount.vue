@@ -208,12 +208,15 @@
                     </v-btn>
                 </v-col>
             </v-row>
+            <p v-for="(disc, i) in allDiscounts" :key="i">
+                {{disc.name}}
+            </p>
         </v-form>
     </v-container>
 </template>
 
 <script>
-    import {mapGetters, mapMutations, mapActions} from 'vuex'
+    import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
     import Map from "@/components/Map/Map";
@@ -224,6 +227,7 @@
         components: {ChooseOfTown, CountryFlag, Map},
         data() {
             return {
+                ...mapState(['discounts']),
                 switchInAd: true,
                 titleRu: '',
                 titleEn: '',
@@ -304,18 +308,20 @@
                 ]
             },
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
-            submit(item) {
+            submit() {
                 if (this.$refs.form.validate()) {
-                    if (this.$route.params.placeOfCall == 'newDiscount') {
+                    if (this.$route.params.placeOfCall === 'newDiscount') {
+                        console.log(55);
                         this.addDiscount({
-                            titleRu: this.titleRu,
-                            id: Date.now()
+                            name: 'jjjj',
+                            _id: Date.now()
                         })
                     } else {
                         this.updateDiscount(item)
                     }
                     this.$refs.form.reset()
-                }
+                };
+                console.log(this.$store.state.discounts)
             },
             resetForm() {
                 this.$refs.form.reset()
@@ -338,7 +344,7 @@
 
         computed: mapGetters(['allDiscounts', 'discountById', 'language']),
         mounted() {
-            this.goFetch('');
+            this.goFetch('http://localhost:3000/discounts');
         },
         created() {
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
