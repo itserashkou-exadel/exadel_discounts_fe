@@ -4,6 +4,8 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
+const urlDiscounts = 'http://localhost:3000/discounts';
+
 let store = new Vuex.Store({
     state: {
         discounts: [],
@@ -18,6 +20,7 @@ let store = new Vuex.Store({
             return state.discounts
         },
         discountById (state, id) {
+            // @ts-ignore
             return state.discounts.find(element => element.id = id)
         },
         language: state => {
@@ -31,12 +34,15 @@ let store = new Vuex.Store({
         setDiscounts (state, discounts) {
             state.discounts = discounts
         },
-        createDiscount (state, disc) {
-            state.discounts.unshift(disc)
+        createDiscount (state, newDiscount) {
+            // @ts-ignore
+            state.discounts.push(newDiscount)
         },
         updTask (state, updatedDiscount)  {
+            // @ts-ignore
             const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
             if(index !== -1) {
+                // @ts-ignore
                 state.discounts.splice(index, 1, updatedDiscount);
             }
         },
@@ -56,9 +62,9 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async addDiscount ({ commit }, newDiscount) {
-            const response = await axios.post('../../discount.json', newDiscount);
-            commit('createDiscount', response.data);
+        addDiscount ({commit}, newDiscount) {
+           // const response = await axios.post(urlDiscounts, newDiscount);
+            commit('createDiscount', newDiscount);
         },
         async updateDiscount ( { commit }, discount) {
             const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
