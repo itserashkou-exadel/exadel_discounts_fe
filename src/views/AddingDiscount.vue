@@ -10,202 +10,182 @@
             >
                 <v-col cols="12" class="pb-5 pt-5"
                 >
-                    <h1>{{titleOfPage()}}</h1>
+                    <div class="d-flex">
+                        <h1>{{titleOfPage()}}</h1>
+
+                        <v-switch
+                                class="ml-10"
+                                v-model="switchInAd"
+                                :label="`${switchInAd ? 'RU' : 'EN'}`"
+                        ></v-switch>
+                    </div>
                 </v-col>
             </v-row>
             <v-row
-                    no-gutters
+                    no-gutsters
                     class="d-flex justify-space-between"
             >
                 <v-col cols="12" md="5">
-                    <h2 class="mb-7">Ввод данных на русском языке</h2>
-                    <v-text-field
-                            placeholder="title"
-                            v-model="title"
-                            :label="this.$t('adLabelOfDiscountTitle')"
-                            outlined
-                            :counter="10"
-                            :rules="nameRules"
-                    ></v-text-field>
-                    <v-text-field
-                            :label="this.$t('adLabelOfDiscountDiscount')"
-                            v-model="valueOfDiscount"
-                            outlined
-                    ></v-text-field>
-
-                    <v-text-field
-                            placeholder="vendor"
-                            v-model="vendor"
-                            :label="this.$t('adLabelOfDiscountVendor')"
-                            outlined
-                    ></v-text-field>
-                    <v-text-field
-                            :label="this.$t('adLabelOfDiscountTags')"
-                            outlined
-                    ></v-text-field>
-                    <v-textarea
-                            v-model="description"
-                            :label="this.$t('adLabelOfDiscountDescription')"
-                            outlined
+                    <div
+                            v-for="(item, i) in fieldsForDiscount()"
+                            :key="i">
+                        <div class="d-flex align-content-center">
+                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
+                                    :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                    v-model="switchInAd ? item.modelRu : item.modelEn"
+                                    :label='switchInAd ? item.labelRu : item.labelEn'
+                                    outlined>
+                            </v-text-field>
+                            <v-textarea v-if="i === 4"
+                                        :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                        v-model="switchInAd ? item.modelRu : item.modelEn"
+                                        :label='switchInAd ? item.labelRu : item.labelEn'
+                                        outlined>
+                            </v-textarea>
+                            <v-icon
+                                    large
+                                    color="orange darken-2"
+                                    @click="changeExpand(item, i)"
+                            >
+                                mdi-arrow-down-bold-box-outline
+                            </v-icon>
+                        </div>
+                        <v-expand-transition>
+                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
+                                    v-show='trueOrFalseArr[i]'
+                                    :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                    v-model="switchInAd ? item.modelEn : item.modelRu"
+                                    :label='switchInAd ? item.labelEn : item.labelRu'
+                                    outlined
+                            ></v-text-field>
+                            <v-textarea v-if="i === 4"
+                                        v-show='trueOrFalseArr[i]'
+                                        :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                        v-model="switchInAd ? item.modelEn : item.modelRu"
+                                        :label='switchInAd ? item.labelEn : item.labelRu'
+                                        outlined
+                            ></v-textarea>
+                        </v-expand-transition>
+                    </div>
+                    <div
+                            class="d-flex align-content-center"
                     >
-                        <template>
-                        </template>
-                    </v-textarea>
-                    <ChooseOfTown
-                            v-bind:countriesAndTowns="countriesAndTowns"/>
+                        <span
+                                class="pt-4 pr-2"
+                        >{{$t('adFrom')}}</span>
+                        <v-menu
+                                ref="menu"
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                :return-value.sync="dateStart"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                        >
+                            <template v-slot:activator="{on}">
+                                <v-text-field
+                                        v-model="dateStart"
+                                        append-outer-icon="mdi-calendar"
+                                        outlined
+                                        readonly
+                                        v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                    v-model="dateStart"
+                                    no-title
+                                    scrollable
+                            >
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                        text
+                                        color="primary"
+                                        @click="menu = false"
+                                >
+                                    {{$t('dtCancel')}}
+                                </v-btn>
+                                <v-btn
+                                        text
+                                        color="primary"
+                                        @click="$refs.menu.save(dateStart)"
+                                >
+                                    {{$t('dtOk')}}
+                                </v-btn>
+                            </v-date-picker>
+                        </v-menu>
+                        <span
+                                class="pt-4 pr-2"
+                        >{{$t('adTo')}}</span>
+                        <v-menu
+                                ref="menuFinish"
+                                v-model="menuFinish"
+                                :close-on-content-click="false"
+                                :return-value.sync="dateFinish"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                        v-model="dateFinish"
+                                        append-outer-icon="mdi-calendar"
+                                        outlined
+                                        readonly
+                                        v-bind="attrs"
+                                        v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                    v-model="dateFinish"
+                                    no-title
+                                    scrollable
+                            >
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                        text
+                                        color="primary"
+                                        @click="menuFinish = false"
+                                >
+                                    {{$t('dtCancel')}}
+                                </v-btn>
+                                <v-btn
+                                        text
+                                        color="primary"
+                                        @click="$refs.menuFinish.save(dateFinish)"
+                                >
+                                    {{$t('dtOk')}}
+                                </v-btn>
+                            </v-date-picker>
+                        </v-menu>
+                    </div>
                     <v-text-field
-                            :label="this.$t('adLabelOfDiscountStreet')"
+                            :label="this.$t('adLabelOfDiscountPicture')"
+                            outlined
+                    ></v-text-field>
+                    <v-text-field
+                            label="координаты"
+                            outlined
+                    ></v-text-field>
+                    <v-text-field
+                            label="координаты"
                             outlined
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="5">
-                    <h2 class="mb-7">Ввод данных на английском языке</h2>
-                    <v-text-field
-                            placeholder="title"
-                            v-model="title"
-                            :label="this.$t('adLabelOfDiscountTitle')"
-                            outlined
-                            :counter="10"
-                            :rules="nameRules"
-                    ></v-text-field>
-                    <v-text-field
-                            :label="this.$t('adLabelOfDiscountDiscount')"
-                            v-model="valueOfDiscount"
-                            outlined
-                    ></v-text-field>
-                    <v-text-field
-                            placeholder="vendor"
-                            v-model="vendor"
-                            :label="this.$t('adLabelOfDiscountVendor')"
-                            outlined
-                    ></v-text-field>
-                    <v-text-field
-                            :label="this.$t('adLabelOfDiscountTags')"
-                            outlined
-                    ></v-text-field>
-                    <v-textarea
-                            v-model="description"
-                            :label="this.$t('adLabelOfDiscountDescription')"
-                            outlined
-                    >
-                        <template>
-                        </template>
-                    </v-textarea>
                     <ChooseOfTown
                             v-bind:countriesAndTowns="countriesAndTowns"/>
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                     ></v-text-field>
+                    <div class="mr-10">
+                    <Map class="mr-10"/>
+                    </div>
                 </v-col>
             </v-row>
             <v-row
-                    class="mb-7">
-                <h2>Общие реквизиты</h2>
-            </v-row>
-            <v-row>
-                <v-col cols="12" sm="6">
-                <div
-                        class="d-flex align-content-center"
-                >
-                        <span
-                                class="pt-4 pr-2"
-                        >{{$t('adFrom')}}</span>
-                    <v-menu
-                            ref="menu"
-                            v-mode l="menu"
-                            :close-on-content-click="false"
-                            :return-value.sync="dateStart"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="auto"
-                    >
-                        <template v-slot:activator="{on}">
-                            <v-text-field
-                                    v-model="dateStart"
-                                    append-outer-icon="mdi-calendar"
-                                    outlined
-                                    readonly
-                                    v-on="on"
-                            ></v-text-field>
-                        </template>
-                        <v-date-picker
-                                v-model="dateStart"
-                                no-title
-                                scrollable
-                        >
-                            <v-spacer></v-spacer>
-                            <v-btn
-                                    text
-                                    color="primary"
-                                    @click="menu = false"
-                            >
-                                {{$t('dtCancel')}}
-                            </v-btn>
-                            <v-btn
-                                    text
-                                    color="primary"
-                                    @click="$refs.menu.save(dateStart)"
-                            >
-                                {{$t('dtOk')}}
-                            </v-btn>
-                        </v-date-picker>
-                    </v-menu>
-                    <span
-                            class="pt-4 pr-2"
-                    >{{$t('adTo')}}</span>
-                    <v-menu
-                            ref="menuFinish"
-                            v-model="menuFinish"
-                            :close-on-content-click="false"
-                            :return-value.sync="dateFinish"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="auto"
-                    >
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                    v-model="dateFinish"
-                                    append-outer-icon="mdi-calendar"
-                                    outlined
-                                    readonly
-                                    v-bind="attrs"
-                                    v-on="on"
-                            ></v-text-field>
-                        </template>
-                        <v-date-picker
-                                v-model="dateFinish"
-                                no-title
-                                scrollable
-                        >
-                            <v-spacer></v-spacer>
-                            <v-btn
-                                    text
-                                    color="primary"
-                                    @click="menuFinish = false"
-                            >
-                                {{$t('dtCancel')}}
-                            </v-btn>
-                            <v-btn
-                                    text
-                                    color="primary"
-                                    @click="$refs.menuFinish.save(dateFinish)"
-                            >
-                                {{$t('dtOk')}}
-                            </v-btn>
-                        </v-date-picker>
-                    </v-menu>
-                </div>
-
-
-                <v-text-field
-                        :label="this.$t('adLabelOfDiscountPicture')"
-                        outlined
-                ></v-text-field>
-                </v-col>
-            </v-row>
-            <v-row align-content="start">
-                <v-col cols="12" md="6">
+                    class="d-flex">
+                <v-col cols="12" md="4">
                     <v-btn class="mb-8"
                            color="info"
                            block
@@ -215,6 +195,9 @@
                     >
                         {{titleOfButton()}}
                     </v-btn>
+                </v-col>
+                <v-col cols="12" md="2"></v-col>
+                <v-col cols="12" md="4">
                     <v-btn
                             color="info"
                             block
@@ -232,19 +215,28 @@
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
+    import CountryFlag from 'vue-country-flag'
+    import Map from "@/components/Map/Map";
+
 
     export default {
         name: "AddingDiscount",
-        components: {ChooseOfTown},
+        components: {ChooseOfTown, CountryFlag, Map},
         data() {
-
             return {
-
-                check: 'ddd',
-                title: '',
-                valueOfDiscount: '',
-                vendor: '55',
-                description: '',
+                switchInAd: true,
+                titleRu: '',
+                titleEn: '',
+                expandT: false,
+                valueOfDiscountRu: '',
+                valueOfDiscountEn: '',
+                vendorRu: '',
+                vendorEn: '',
+                tagsRu: '',
+                tagsEn: '',
+                descriptionRu: '',
+                descriptionEn: '',
+                trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
                 nameRules: [],
@@ -259,14 +251,64 @@
                     {id: 3, town: 'Kiev', country: 'Ukraine'}]
             }
         },
-
         methods: {
+            changeExpand(item, i) {
+                this.trueOrFalseArr[i] = !this.trueOrFalseArr[i]
+                this.expandT = !this.expandT;
+            },
+            fieldsForDiscount() {
+                return [
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountTitleRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountTitleEn'),
+                        modelRu: this.titleRu,
+                        modelEn: this.titleEn,
+                        labelRu: this.$t('adLabelOfDiscountTitleRu'),
+                        labelEn: this.$t('adLabelOfDiscountTitleEn'),
+                        expand: this.expandT
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountDiscountRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountDiscountEn'),
+                        modelRu: this.valueOfDiscountRu,
+                        modelEn: this.valueOfDiscountEn,
+                        labelRu: this.$t('adLabelOfDiscountDiscountRu'),
+                        labelEn: this.$t('adLabelOfDiscountDiscountEn'),
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountVendorRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountVendorEn'),
+                        modelRu: this.vendorRu,
+                        modelEn: this.vendorEn,
+                        labelRu: this.$t('adLabelOfDiscountVendorRu'),
+                        labelEn: this.$t('adLabelOfDiscountVendorEn'),
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountTagsRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountTagsEn'),
+                        modelRu: this.tagsRu,
+                        modelEn: this.tagsEn,
+                        labelRu: this.$t('adLabelOfDiscountTagsRu'),
+                        labelEn: this.$t('adLabelOfDiscountTagsEn'),
+
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountDescriptionRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountDescriptionEn'),
+                        modelRu: this.descriptionRu,
+                        modelEn: this.descriptionEn,
+                        labelRu: this.$t('adLabelOfDiscountDescriptionRu'),
+                        labelEn: this.$t('adLabelOfDiscountDescriptionEn'),
+                    },
+
+                ]
+            },
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
             submit(item) {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall == 'newDiscount') {
                         this.addDiscount({
-                            title: this.title,
+                            titleRu: this.titleRu,
                             id: Date.now()
                         })
                     } else {
@@ -294,9 +336,9 @@
             }
         },
 
-        computed: mapGetters(['allDiscounts', ['discountById']]),
-        async mounted() {
-            this.goFetch('../discount.json');
+        computed: mapGetters(['allDiscounts', 'discountById', 'language']),
+        mounted() {
+            this.goFetch('');
         },
         created() {
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {

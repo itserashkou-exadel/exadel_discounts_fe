@@ -7,13 +7,14 @@
             <SwitchButton></SwitchButton>
         </v-col>
         <v-col cols="4" lg="2" md="2" sm="2">
-            <v-btn  @click="$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})"
-                    color="primary"
-                    dark
-                    class="mb-2"
-            >
-                {{$t('dtNewItem')}}
-            </v-btn>
+                    <v-btn
+                            color="primary"
+                            dark
+                            class="mb-2"
+                            @click="goToPageAd()"
+                    >
+                        {{$t('dtNewItem')}}
+                    </v-btn>
         </v-col>
     </v-row>
 </template>
@@ -21,6 +22,8 @@
 <script>
     import SwitchButton from "./SwitchButton";
     import Modal from "../components/Filter/Modal";
+    import {mapGetters} from "vuex"
+
     export default {
         name: "ToolBar",
         components: {
@@ -31,6 +34,13 @@
             is_screen_small() {
                 return this.$vuetify.breakpoint.smOnly
             },
+            ...mapGetters(['language'])
+        },
+        methods: {
+            goToPageAd() {
+                this.$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})
+            }
+
         }
     }
 </script>

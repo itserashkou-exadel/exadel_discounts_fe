@@ -7,7 +7,8 @@ Vue.use(Vuex);
 let store = new Vuex.Store({
     state: {
         discounts: [],
-        switch: true
+        switch: true,
+        language: 'Ru'
     },
     getters: {
         switcher: state => {
@@ -18,6 +19,9 @@ let store = new Vuex.Store({
         },
         discountById (state, id) {
             return state.discounts.find(element => element.id = id)
+        },
+        language: state => {
+            return state.language
         }
     },
     mutations: {
@@ -34,6 +38,13 @@ let store = new Vuex.Store({
             const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
             if(index !== -1) {
                 state.discounts.splice(index, 1, updatedDiscount);
+            }
+        },
+        setLanguage (state, lang) {
+            if (lang) {
+                state.language = "Ru"
+            } else {
+                state.language = "En"
             }
         }
     },
