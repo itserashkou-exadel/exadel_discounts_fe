@@ -234,16 +234,20 @@
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
+                            v-bind:countriesAndTowns="countriesAndTowns"
+                            v-bind:selectCity="selectCity"
+                            v-bind:selectCountry="selectCountry"
                             v-on:selectedCountry = 'selCountry'
                             v-on:selectedCity = 'selCity'
-                            v-bind:countriesAndTowns="countriesAndTowns"/>
+                            />
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                             v-model="street"
+                            @input="selectLine"
                     ></v-text-field>
                     <div class="mr-10">
-                        <Map class="mr-10"/>
+                      <AddDiscountMap v-bind:address="address"/>
                     </div>
                 </v-col>
             </v-row>
@@ -283,10 +287,12 @@
     import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
-    import Map from "@/components/Map/Map";
+    import AddDiscountMap from "@/components/Map/AddDiscountMap";
+
+
     export default {
         name: "AddingDiscount",
-        components: {ChooseOfTown, CountryFlag, Map},
+        components: {ChooseOfTown, CountryFlag, AddDiscountMap},
         data() {
             return {
                 street: null,
@@ -323,7 +329,12 @@
                 countriesAndTowns: [
                     {id: 1, town: 'Grodno', country: 'Belarus'},
                     {id: 2, town: 'Minsk', country: 'Belarus'},
-                    {id: 3, town: 'Kiev', country: 'Ukraine'}]
+                    {id: 3, town: 'Kiev', country: 'Ukraine'}],
+                address: {
+                     country: null,
+                     city: null,
+                     line: null
+              }
             }
         },
         methods: {
@@ -448,6 +459,15 @@
             resetForm() {
                 this.$refs.form.reset()
             },
+            selectLine(value) {
+                 this.address.line = value;
+            },
+            selectCountry(value) {
+                this.address.country = value;
+            },
+            selectCity(value) {
+                 this.address.city = value;
+            },
             titleOfPage() {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
                     return this.$tc('adEditingNewDiscount', 2)
@@ -477,4 +497,8 @@
     }
 </script>
 <style scoped>
+#addDiscountMap {
+  width: 32vw;
+  height: 49vh;
+}
 </style>
