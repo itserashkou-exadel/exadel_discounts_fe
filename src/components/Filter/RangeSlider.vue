@@ -14,6 +14,7 @@
                             hide-details
                             class="align-center slider-margin"
                             thumb-label="always"
+
                     >
 
                     </v-range-slider>
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
     export default {
         name: "RangeSlider",
         data () {
@@ -33,6 +35,17 @@
                 range: [20, 100],
             }
         },
+        watch:{
+            range: function(){
+                this.changeFilter({
+                    ...this.$store.getters.filterData,
+                    range: [this.range[0], this.range[1]]
+                })
+            }
+        },
+        methods: {
+            ...mapActions(['changeFilter']),
+        }
     }
 </script>
 

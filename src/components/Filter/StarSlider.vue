@@ -31,6 +31,7 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
     export default {
         name: "StarSlider",
         data() {
@@ -43,6 +44,17 @@
 
             }
         },
+        watch:{
+            range: function(){
+                this.changeFilter({
+                    ...this.$store.getters.filterData,
+                    starRange: [this.range[0], this.range[1]]
+                })
+            }
+        },
+        methods: {
+            ...mapActions(['changeFilter']),
+        }
 
     }
 </script>

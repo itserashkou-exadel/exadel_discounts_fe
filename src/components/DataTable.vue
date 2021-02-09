@@ -2,14 +2,14 @@
     <v-col cols="12" lg="10" md="12" sm="10" class="pa-0">
         <v-data-table
                 :headers="headers()"
-                :items="offers"
+                :items="result"
                 class="elevation-8"
-
-                show-expand
-                item-key="name"
+                :data="filterData"
+                item-key="id"
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
-                mobile-breakpoint="900px"
+                show-expand
+
         >
 
             <template v-slot:top>
@@ -49,30 +49,24 @@
                     mdi-delete
                 </v-icon>
             </template>
-            <template v-slot:no-data>
-                <v-btn
-                        color="primary"
-                        @click="initialize"
-                >
-                    Reset
-                </v-btn>
-            </template>
+
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
-                    <v-row justify="center" align="center" class="my-5">
-                        <v-col cols="1">
+                    <v-row class="d-flex justify-end my-5">
+                        <v-col cols="1" lg="1" >
                             <v-btn>
                                 <v-icon color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
+
+                        <v-col cols="7" lg="11" class="d-flex justify-center">
+                            <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
+                        </v-col>
                         <v-spacer></v-spacer>
-                        <v-col cols="7" align-self="start">
-                            <h2 >{{$t('dtDetailsAbout')}} "{{item.name}}"</h2>
+                        <v-col  cols="11" lg="11" class="d-flex justify-center">
+                            <p class="mb-0">{{ item.description }}</p>
                         </v-col>
-                        <v-col  cols="12" md="9" class="inform">
-                            <p class="mb-0">More info about {{ item.info }}</p>
-                        </v-col>
-                        <v-col cols="12"  class="text-center">
+                        <v-col cols="11" lg="11" class="text-center">
                             <v-btn
                                     color="primary"
                                     @click="$router.push({name:'detail'})"
@@ -88,6 +82,8 @@
 </template>
 
 <script>
+
+    import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
     export default {
         components: {Modal},
@@ -101,6 +97,8 @@
                 icon: "mdi-star"
             },
             offers: [],
+            info: [],
+            result: [],
             editedIndex: -1,
             editedItem: {
                 name: '',
@@ -118,11 +116,39 @@
                 finish_date: '',
                 raring: 0
             },
+
         }),
+
+        mounted() {
+            this.goFetch(`http://localhost:3000/discounts`);
+        },
         computed: {
-            formTitle() {
-                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+            filterData: function (){
+                const arr = [];
+                this.info = this.$store.state.discounts;
+                this.info.map((item) => {
+                    arr.push(
+                        {
+                            id: item._id,
+                            service: item.name,
+                            vendor: item.company.name,
+                            amountOfDiscount: item.amountOfDiscount,
+                            startDate: item.startDate.$date,
+                            endDate: item.endDate.$date,
+                            rating: item.ratingTotal,
+                            description: item.description,
+                        }
+                    )
+
+                })
+                this.result = arr;
+                return this.result;
+
+
             },
+            hello: () => {
+                console.log('heh');
+            }
         },
         watch: {
             dialog(val) {
@@ -132,114 +158,25 @@
                 val || this.closeDelete()
             },
         },
-        created() {
-            this.initialize()
-        },
+
         methods: {
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
             headers(){return [
                 {
                     text: this.$t('dtOffer'),
                     align: 'left',
                     sortable: false,
-                    value: 'name',
+                    value: 'service',
                 },
                 {text: this.$t('dtVendor'), value: 'vendor'},
-                {text: this.$t('dtDiscount'), value: 'discount'},
-                {text: this.$t('dtStartDate'), value: 'start_date'},
-                {text: this.$t('dtFinishDate'), value: 'finish_date'},
+                {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
+                {text: this.$t('dtStartDate'), value: 'startDate'},
+                {text: this.$t('dtFinishDate'), value: 'endDate'},
                 {text: this.$t('dtRating'), value: 'rating'},
                 {text: this.$t('dtActions'), value: 'actions', sortable: false},
             ]},
-            initialize() {
-                this.offers = [
-                    {
-                        name: 'Hamburger',
-                        discount: 50,
-                        vendor: 'MacDonalds',
-                        start_date: '20.01.2021',
-                        finish_date: '25.01.2021',
-                        rating: 5.0,
-                        info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-                            'sesd do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-                            'Id neque aliquam vestibulum morbi. Lacus vestibulum sed arcu non odio. ' +
-                            'Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. ' +
-                            'Duis ut diam quam nulla porttitor massa id. ' +
-                            'Erat nam at lectus urna duis convallis convallis tellus.'
-                    },
-                    {
-                        name: 'Nuggets',
-                        discount: 60,
-                        vendor: 'KFC',
-                        start_date: '20.01.2021',
-                        finish_date: '25.01.2021',
-                        rating: 4.0,
-                        info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-                            'sesd do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-                            'Id neque aliquam vestibulum morbi. Lacus vestibulum sed arcu non odio. ' +
-                            'Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. ' +
-                            'Duis ut diam quam nulla porttitor massa id. ' +
-                            'Erat nam at lectus urna duis convallis convallis tellus.'
-                    }, {
-                        name: 'Iced Coffee',
-                        discount: 50,
-                        vendor: 'MacDonalds',
-                        start_date: '20.01.2021',
-                        finish_date: '25.01.2021',
-                        rating: 4.0,
-                        info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-                            'sesd do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-                            'Id neque aliquam vestibulum morbi. Lacus vestibulum sed arcu non odio. ' +
-                            'Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. ' +
-                            'Duis ut diam quam nulla porttitor massa id. ' +
-                            'Erat nam at lectus urna duis convallis convallis tellus.'
-                    }, {
-                        name: 'Sausage Burrito',
-                        discount: 50,
-                        vendor: 'MacDonalds',
-                        start_date: '20.01.2021',
-                        finish_date: '25.01.2021',
-                        rating: 4.0,
-                        info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-                            'sesd do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-                            'Id neque aliquam vestibulum morbi. Lacus vestibulum sed arcu non odio. ' +
-                            'Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. ' +
-                            'Duis ut diam quam nulla porttitor massa id. ' +
-                            'Erat nam at lectus urna duis convallis convallis tellus.'
-                    },
-                    {
-                        name: 'Egg McMuffin',
-                        discount: 50,
-                        vendor: 'MacDonalds',
-                        start_date: '20.01.2021',
-                        finish_date: '25.01.2021',
-                        rating: 4.0,
-                        info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-                            'sesd do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-                            'Id neque aliquam vestibulum morbi. Lacus vestibulum sed arcu non odio. ' +
-                            'Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. ' +
-                            'Duis ut diam quam nulla porttitor massa id. ' +
-                            'Erat nam at lectus urna duis convallis convallis tellus.'
-                    },
-                    {
-                        name: 'Big Mac®',
-                        discount: 50,
-                        vendor: 'MacDonalds',
-                        start_date: '20.01.2021',
-                        finish_date: '25.01.2021',
-                        rating: 4.0,
-                        info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-                            'sesd do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-                            'Id neque aliquam vestibulum morbi. Lacus vestibulum sed arcu non odio. ' +
-                            'Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. ' +
-                            'Duis ut diam quam nulla porttitor massa id. ' +
-                            'Erat nam at lectus urna duis convallis convallis tellus.'
-                    },
-                ]
-            },
+
             editItem(item) {
-                // this.editedIndex = this.offers.indexOf(item)
-                // this.editedItem = Object.assign({}, item)
-                // this.dialog = true
                 this.$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}});
             },
             deleteItem(item) {
@@ -278,7 +215,5 @@
 </script>
 
 <style scoped>
-    .inform{
-        text-align: left;
-    }
+
 </style>

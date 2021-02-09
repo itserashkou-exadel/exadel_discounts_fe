@@ -8,11 +8,11 @@
             transition="scale-transition"
             offset-y
             min-width="auto"
+
     >
         <template v-slot:activator="{ on, attrs }">
 
             <v-text-field
-
                     v-model="date"
                     prepend-icon="mdi-calendar"
                     readonly
@@ -22,31 +22,32 @@
         </template>
         <v-date-picker
                 v-model="date"
+                range
                 no-title
-                scrollable
+        ></v-date-picker>
+        <v-spacer></v-spacer>
+        <v-btn
+                text
+                color="primary"
+                @click="menu = false"
         >
-            <v-spacer></v-spacer>
-            <v-btn
-                    text
-                    color="primary"
-                    @click="menu = false"
+            Cancel
+        </v-btn>
+        <v-btn
+                text
+                color="primary"
+                @click="[$refs.menu.save(date), saveData()]"
+        >
+            Save
+        </v-btn>
 
-            >
-                Cancel
-            </v-btn>
-            <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.menu.save(date)"
-            >
-                Save
-            </v-btn>
-        </v-date-picker>
     </v-menu>
 
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+
     export default {
 
         name: "DataPicker",
@@ -55,8 +56,22 @@
             menu: false,
             modal: false,
             menu2: false,
-
         }),
+        methods: {
+            ...mapActions(['changeFilter']),
+            saveData(){
+                this.changeFilter({
+                    ...this.$store.getters.filterData,
+                    rangeDate: this.date
+                });
+                console.log(this.$store.getters.filterData)
+            },
+        },
+        computed: {
+            dateRangeText () {
+                console.log(this.$store.getters.allDiscounts);
+            },
+        },
 
     }
 </script>
