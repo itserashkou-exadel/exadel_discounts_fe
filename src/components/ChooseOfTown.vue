@@ -10,6 +10,7 @@
                 :items="getSelectedCountry()"
                 :label="this.$t('adLabelOfDiscountCity')"
                 outlined
+                v-model="selectedCity"
         ></v-select>
     </div>
 </template>
@@ -19,7 +20,8 @@
         name: "ChooseOfTown",
         data() {
             return {
-                selectedCountry: null
+                selectedCountry: null,
+                selectedCity: null
             }
         },
         props: ['countriesAndTowns'],
@@ -32,6 +34,14 @@
                 const towns = this.countriesAndTowns.filter(element => element.country === this.selectedCountry)
                 .map(element => element.town)
                 return towns
+            }
+        },
+        watch: {
+            selectedCountry () {
+                this.$emit('selectedCountry', this.selectedCountry);
+            },
+            selectedTown () {
+                this.$emit('selectedCity', this.selectedCity);
             }
         }
     }

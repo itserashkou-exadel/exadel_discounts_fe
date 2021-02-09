@@ -30,15 +30,33 @@
                             v-for="(item, i) in fieldsForDiscount()"
                             :key="i">
                         <div class="d-flex align-content-center">
-                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
+                            <v-text-field v-if="i === 0"
                                     :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                    v-model="switchInAd ? item.modelRu : item.modelEn"
+                                    v-model="switchInAd ? titleRu : titleEn"
                                     :label='switchInAd ? item.labelRu : item.labelEn'
                                     outlined>
                             </v-text-field>
+                            <v-text-field v-if="i === 1"
+                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                          v-model="switchInAd ? vendorRu : vendorEn"
+                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                                          outlined>
+                            </v-text-field>
+                            <v-text-field v-if="i === 2"
+                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                          v-model="switchInAd ? vendorDescrRu : vendorDescrEn"
+                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                                          outlined>
+                            </v-text-field>
+                            <v-text-field v-if="i === 3"
+                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                          v-model="switchInAd ? tagsRu : tagsEn"
+                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                                          outlined>
+                            </v-text-field>
                             <v-textarea v-if="i === 4"
                                         :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                        v-model="switchInAd ? item.modelRu : item.modelEn"
+                                        v-model="switchInAd ? descriptionRu : descriptionEn"
                                         :label='switchInAd ? item.labelRu : item.labelEn'
                                         outlined>
                             </v-textarea>
@@ -51,22 +69,63 @@
                             </v-icon>
                         </div>
                         <v-expand-transition>
-                            <v-text-field v-if="i === 0 || i === 1 || i === 2 || i === 3"
-                                    v-show='trueOrFalseArr[i]'
-                                    :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                    v-model="switchInAd ? item.modelEn : item.modelRu"
-                                    :label='switchInAd ? item.labelEn : item.labelRu'
-                                    outlined
+                            <v-text-field v-if="i === 0"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                          v-model="switchInAd ? titleEn : titleRu"
+                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          outlined
+                            ></v-text-field>
+                            <v-text-field v-if="i === 1"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                          v-model="switchInAd ? valueOfDiscountEn : valueOfDiscountRu"
+                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          outlined
+                            ></v-text-field>
+                            <v-text-field v-if="i === 2"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                          v-model="switchInAd ? vendorEn : vendorRu"
+                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          outlined
+                            ></v-text-field>
+                            <v-text-field v-if="i === 3"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                          v-model="switchInAd ? tagsEn: tagsRu"
+                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          outlined
                             ></v-text-field>
                             <v-textarea v-if="i === 4"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                        v-model="switchInAd ? item.modelEn : item.modelRu"
+                                        v-model="switchInAd ? descriptionEn : descriptionRu"
                                         :label='switchInAd ? item.labelEn : item.labelRu'
                                         outlined
                             ></v-textarea>
                         </v-expand-transition>
                     </div>
+                    <v-text-field
+                            :label="this.$t('adLabelOfDiscountVendorPhone')"
+                            outlined
+                            v-model="vendorPhone"
+                    ></v-text-field>
+                    <v-text-field
+                            :label="this.$t('adLabelOfDiscountVendorEmail')"
+                            outlined
+                            v-model="vendorEmail"
+                    ></v-text-field>
+                    <v-text-field
+                            :label="this.$t('adLabelOfDiscountVendorWorkHours')"
+                            outlined
+                            v-model="vendorWorkHours"
+                    ></v-text-field>
+                    <v-text-field
+                            :label="this.$t('adLabelOfDiscountDiscount')"
+                            outlined
+                            v-model="valueOfDiscount"
+                    ></v-text-field>
                     <div
                             class="d-flex align-content-center"
                     >
@@ -163,20 +222,25 @@
                             outlined
                     ></v-text-field>
                     <v-text-field
-                            label="координаты"
+                            label="координаты1"
                             outlined
+                            v-model="coordinate1"
                     ></v-text-field>
                     <v-text-field
-                            label="координаты"
+                            label="координаты2"
                             outlined
+                            v-model="coordinate2"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
+                            v-on:selectedCountry = 'selCountry'
+                            v-on:selectedCity = 'selCity'
                             v-bind:countriesAndTowns="countriesAndTowns"/>
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
+                            v-model="street"
                     ></v-text-field>
                     <div class="mr-10">
                     <Map class="mr-10"/>
@@ -227,19 +291,28 @@
         components: {ChooseOfTown, CountryFlag, Map},
         data() {
             return {
+                street: null,
+                coordinate1: null,
+                coordinate2: null,
+                selectedCountry: null,
+                selectedCity: null,
                 ...mapState(['discounts']),
                 switchInAd: true,
                 titleRu: '',
                 titleEn: '',
                 expandT: false,
-                valueOfDiscountRu: '',
-                valueOfDiscountEn: '',
+                valueOfDiscount: '',
                 vendorRu: '',
                 vendorEn: '',
+                vendorDescrRu: '',
+                vendorDescrEn: '',
                 tagsRu: '',
                 tagsEn: '',
                 descriptionRu: '',
                 descriptionEn: '',
+                vendorPhone: '',
+                vendorEmail: '',
+                vendorWorkHours: '',
                 trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
@@ -256,6 +329,12 @@
             }
         },
         methods: {
+            selCountry : function (country) {
+                this.selectedCountry = country
+            },
+            selCity : function (city) {
+                this.selectedCity = city
+            },
             changeExpand(item, i) {
                 this.trueOrFalseArr[i] = !this.trueOrFalseArr[i]
                 this.expandT = !this.expandT;
@@ -272,20 +351,20 @@
                         expand: this.expandT
                     },
                     {
-                        placeholderRu: this.$t('adLabelOfDiscountDiscountRu'),
-                        placeholderEn: this.$t('adLabelOfDiscountDiscountEn'),
-                        modelRu: this.valueOfDiscountRu,
-                        modelEn: this.valueOfDiscountEn,
-                        labelRu: this.$t('adLabelOfDiscountDiscountRu'),
-                        labelEn: this.$t('adLabelOfDiscountDiscountEn'),
-                    },
-                    {
                         placeholderRu: this.$t('adLabelOfDiscountVendorRu'),
                         placeholderEn: this.$t('adLabelOfDiscountVendorEn'),
                         modelRu: this.vendorRu,
                         modelEn: this.vendorEn,
                         labelRu: this.$t('adLabelOfDiscountVendorRu'),
                         labelEn: this.$t('adLabelOfDiscountVendorEn'),
+                    },
+                    {
+                        placeholderRu: this.$t('adLabelOfDiscountVendorDescrRu'),
+                        placeholderEn: this.$t('adLabelOfDiscountVendorDescrEn'),
+                        modelRu: this.vendorDescrRu,
+                        modelEn: this.vendorDescrEn,
+                        labelRu: this.$t('adLabelOfDiscountVendorDescrRu'),
+                        labelEn: this.$t('adLabelOfDiscountVendorDescrEn'),
                     },
                     {
                         placeholderRu: this.$t('adLabelOfDiscountTagsRu'),
@@ -313,8 +392,55 @@
                     if (this.$route.params.placeOfCall === 'newDiscount') {
                         console.log(55);
                         this.addDiscount({
-                            name: 'jjjj',
-                            _id: Date.now()
+                            _id: Date.now(),
+                            name: this.titleRu,
+                            description: this.descriptionRu,
+                            amountOfDiscount: this.valueOfDiscount,
+                            startDate: {
+                                $date: this.dateStart
+                            },
+                            endDate: {
+                                $date: this.dateFinish
+                            },
+                            address: {
+                                country: this.selectedCountry,
+                                city: this.selectedCity,
+                                street: this.street,
+                                location: {
+                                    latitude: this.coordinate1,
+                                    longitude: this.coordinate2
+                                }
+                            },
+                            company: {
+                                name: this.vendorRu,
+                                description: this.vendorDescrRu,
+                                phoneNumber: this.vendorPhone,
+                                mail: this.vendorEmail
+                            },
+                            workingHours: this.vendorWorkHours,
+                            tags: [
+                               this.tagsRu
+                            ],
+                            language: "Ru",
+                            translations: [
+                                {
+                                    language: "En",
+                                    name: this.titleEn,
+                                    description: this.descriptionEn,
+                                    address: {
+                                        country: this.selectedCountry,
+                                        city: this.selectedCity,
+                                        street: this.street
+                                    },
+                                    company: {
+                                        name: this.titleEn,
+                                        description: this.descriptionEn
+                                    },
+                                    tags: [
+                                        this.tagsEn
+                                    ]
+                                }
+                            ]
                         })
                     } else {
                         this.updateDiscount(item)
