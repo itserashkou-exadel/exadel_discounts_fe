@@ -31,10 +31,10 @@
                             :key="i">
                         <div class="d-flex align-content-center">
                             <v-text-field v-if="i === 0"
-                                    :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                    v-model="switchInAd ? titleRu : titleEn"
-                                    :label='switchInAd ? item.labelRu : item.labelEn'
-                                    outlined>
+                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                          v-model="switchInAd ? titleRu : titleEn"
+                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                                          outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1"
                                           :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
@@ -79,14 +79,14 @@
                             <v-text-field v-if="i === 1"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? vendorEn : vendorRu"
+                                          v-model="switchInAd ? valueOfDiscountEn : valueOfDiscountRu"
                                           :label='switchInAd ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? vendorDescrEn : vendorDescrRu"
+                                          v-model="switchInAd ? vendorEn : vendorRu"
                                           :label='switchInAd ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
@@ -242,6 +242,9 @@
                             outlined
                             v-model="street"
                     ></v-text-field>
+                    <div class="mr-10">
+                        <Map class="mr-10"/>
+                    </div>
                 </v-col>
             </v-row>
             <v-row
@@ -281,8 +284,6 @@
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
     import Map from "@/components/Map/Map";
-
-
     export default {
         name: "AddingDiscount",
         components: {ChooseOfTown, CountryFlag, Map},
@@ -295,8 +296,8 @@
                 selectedCity: null,
                 ...mapState(['discounts']),
                 switchInAd: true,
-                titleRu: '888',
-                titleEn: '999',
+                titleRu: '',
+                titleEn: '',
                 expandT: false,
                 valueOfDiscount: '',
                 vendorRu: '',
@@ -370,7 +371,6 @@
                         modelEn: this.tagsEn,
                         labelRu: this.$t('adLabelOfDiscountTagsRu'),
                         labelEn: this.$t('adLabelOfDiscountTagsEn'),
-
                     },
                     {
                         placeholderRu: this.$t('adLabelOfDiscountDescriptionRu'),
@@ -380,14 +380,13 @@
                         labelRu: this.$t('adLabelOfDiscountDescriptionRu'),
                         labelEn: this.$t('adLabelOfDiscountDescriptionEn'),
                     },
-
                 ]
             },
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
             submit() {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        console.log(this.titleRu);
+                        console.log(55);
                         this.addDiscount({
                             _id: Date.now(),
                             name: this.titleRu,
@@ -416,7 +415,7 @@
                             },
                             workingHours: this.vendorWorkHours,
                             tags: [
-                               this.tagsRu
+                                this.tagsRu
                             ],
                             language: "Ru",
                             translations: [
@@ -444,7 +443,7 @@
                     }
                     this.$refs.form.reset()
                 };
-              //  console.log(this.$store.state.discounts)
+                console.log(this.$store.state.discounts)
             },
             resetForm() {
                 this.$refs.form.reset()
@@ -464,7 +463,6 @@
                 }
             }
         },
-
         computed: mapGetters(['allDiscounts', 'discountById', 'language']),
         mounted() {
             this.goFetch('http://localhost:3000/discounts');
@@ -473,11 +471,10 @@
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                 const id = this.$router.params.idOfDiscount;
                 const discount = this.discountById(id);
-                this.titleRu = discount.name;
+                this.title = discount.title;
             }
         }
     }
 </script>
 <style scoped>
-
 </style>

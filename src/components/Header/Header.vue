@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     headerButtons(){ return [
-      {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
       {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
+      {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
       {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
       {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
     ]}
