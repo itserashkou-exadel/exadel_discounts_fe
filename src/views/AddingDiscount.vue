@@ -79,14 +79,14 @@
                             <v-text-field v-if="i === 1"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? valueOfDiscountEn : valueOfDiscountRu"
+                                          v-model="switchInAd ? vendorEn : vendorRu"
                                           :label='switchInAd ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? vendorEn : vendorRu"
+                                          v-model="switchInAd ? vendorDescrEn : vendorDescrRu"
                                           :label='switchInAd ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
@@ -242,9 +242,6 @@
                             outlined
                             v-model="street"
                     ></v-text-field>
-                    <div class="mr-10">
-                    <Map class="mr-10"/>
-                    </div>
                 </v-col>
             </v-row>
             <v-row
@@ -298,8 +295,8 @@
                 selectedCity: null,
                 ...mapState(['discounts']),
                 switchInAd: true,
-                titleRu: '',
-                titleEn: '',
+                titleRu: '888',
+                titleEn: '999',
                 expandT: false,
                 valueOfDiscount: '',
                 vendorRu: '',
@@ -390,7 +387,7 @@
             submit() {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        console.log(55);
+                        console.log(this.titleRu);
                         this.addDiscount({
                             _id: Date.now(),
                             name: this.titleRu,
@@ -447,7 +444,7 @@
                     }
                     this.$refs.form.reset()
                 };
-                console.log(this.$store.state.discounts)
+              //  console.log(this.$store.state.discounts)
             },
             resetForm() {
                 this.$refs.form.reset()
@@ -476,7 +473,7 @@
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                 const id = this.$router.params.idOfDiscount;
                 const discount = this.discountById(id);
-                this.title = discount.title;
+                this.titleRu = discount.name;
             }
         }
     }
