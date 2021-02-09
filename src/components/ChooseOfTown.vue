@@ -12,6 +12,7 @@
                 :label="this.$t('adLabelOfDiscountCity')"
                 outlined
                 @change="selectCityHandler"
+                v-model="selectedCity"
         ></v-select>
     </div>
 </template>
@@ -21,14 +22,16 @@
         name: "ChooseOfTown",
         data() {
             return {
-                selectedCountry: null
+                selectedCountry: null,
+                selectedCity: null
             }
         },
         props: ['countriesAndTowns', 'selectCountry', 'selectCity'],
         methods: {
             getCountry(arr) {
                 const countries = arr.map(element => element.country)
-                return countries
+                return countries;
+
             },
             getSelectedCountry() {
                 const towns = this.countriesAndTowns.filter(element => element.country === this.selectedCountry)
@@ -36,12 +39,22 @@
                 return towns
             },
             selectCountryHandler(value){
+                this.$emit('selectedCountryForObj', value);
                this.selectCountry(value);
             },
             selectCityHandler(value){
+                this.$emit('selectedCityForObj', value);
                this.selectCity(value);
             }
         }
+        // watch: {
+        //     selectedCountry () {
+        //         this.$emit('selectedCountry', this.selectedCountry);
+        //     },
+        //     selectedTown () {
+        //         this.$emit('selectedCity', this.selectedCity);
+        //     }
+        // }
     }
 </script>
 
