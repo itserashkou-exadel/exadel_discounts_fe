@@ -79,14 +79,14 @@
                             <v-text-field v-if="i === 1"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? valueOfDiscountEn : valueOfDiscountRu"
+                                          v-model="switchInAd ? vendorEn : vendorRu"
                                           :label='switchInAd ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? vendorEn : vendorRu"
+                                          v-model="switchInAd ? vendorDescrEn : vendorDescrRu"
                                           :label='switchInAd ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
