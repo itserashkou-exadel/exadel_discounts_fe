@@ -3,7 +3,7 @@
     <v-app-bar app
                flat
                dark
-               color="primary"
+               color="#40bfef"
     >
       <HeadermMobile class="hidden-md-and-up"/>
       <Header class="hidden-sm-and-down"/>
@@ -13,7 +13,7 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-    <v-footer absolute app flat color="primary">
+    <v-footer absolute app flat color="#40bfef">
       <Footer/>
     </v-footer>
   </v-app>

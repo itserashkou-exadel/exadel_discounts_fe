@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar color="primary"
+    <v-toolbar color="#40bfef"
                flat
     >
         <!-- dropdown menu -->
@@ -21,7 +21,7 @@
                 <v-card>
                     <v-toolbar
                             dark
-                            color="primary"
+                            color="#40bfef"
                     >
                         <v-btn class="ml-2"
                                icon

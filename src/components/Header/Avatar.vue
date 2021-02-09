@@ -3,7 +3,7 @@
     <v-list-item-content>
       <div class="mx-auto text-center">
         <v-avatar class="mb-2"
-            color="primary"
+            color="#40bfef"
         >
           <span class="white--text headline">{{ user.initials }}</span>
         </v-avatar>
@@ -15,7 +15,7 @@
         <v-btn @click="$router.push({name: signIn})"
                rounded
                outlined
-               color="primary"
+               color="#40bfef"
         >
           {{$t('hLogOut')}}
         </v-btn>

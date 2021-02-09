@@ -1,19 +1,18 @@
 <template>
-  <v-footer absolute color="primary"  dark app
+  <v-footer absolute color="#40bfef"  dark app
   >
     <v-container fluid>
-    <!--      TODO: Fix problem with Footer-->
-      <v-row no-gutters>
+      <v-row>
         <v-col cols="9"
                align-self="center">
-          <v-card color="primary" flat class="ml-3">
+          <v-card color="#40bfef" flat class="ml-3">
           <strong color="white">EXADEL</strong>{{ new Date().getFullYear() }}
           </v-card>
         </v-col>
         <v-col align-self="center" class="justify-end"
             cols="3"
         >
-          <v-card color="primary" flat tile class="d-flex justify-end mr-3">
+          <v-card color="#40bfef" flat tile class="d-flex justify-end mr-3">
           <v-switch
               v-model="isRuLocale"
               :label="`${isRuLocale ? 'RU' : 'EN'}`"
