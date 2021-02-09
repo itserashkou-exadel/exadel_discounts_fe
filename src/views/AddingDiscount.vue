@@ -237,8 +237,8 @@
                             v-bind:countriesAndTowns="countriesAndTowns"
                             v-bind:selectCity="selectCity"
                             v-bind:selectCountry="selectCountry"
-                            v-on:selectedCountry = 'selCountry'
-                            v-on:selectedCity = 'selCity'
+                            v-on:selectedCountryForObj = 'selCountry'
+                            v-on:selectedCityForObj = 'selCity'
                             />
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountStreet')"
@@ -397,7 +397,7 @@
             submit() {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        console.log(55);
+                        console.log(this.selectedCountry);
                         this.addDiscount({
                             _id: Date.now(),
                             name: this.titleRu,
