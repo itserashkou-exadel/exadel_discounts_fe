@@ -30,7 +30,7 @@
                             </v-list-item-content>
                         </template>
                         <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in ukraine ">
+                            <v-list-item v-bind:key="town" v-for="town in ukraine" @click="getLocation(town)">
                                 <v-list-item-title >{{ town }}</v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
@@ -56,11 +56,16 @@
             fictionalSelected: null,
             ukraine: ['Kiew'],
             realSelected: null,
+            userLocation: ''
         }),
         methods: {
             redirectToIS4(){
-                console.log('You was redirected')
-                this.$router.push('/identity')
+                // console.log('You was redirected')
+                // this.$router.push('/identity')
+            },
+            getLocation(town){
+                this.userLocation = town
+                console.log(this.userLocation)
             }
         },
     };
