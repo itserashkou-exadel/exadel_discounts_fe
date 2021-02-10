@@ -4,7 +4,7 @@ export default class AuthService {
     private userManager: UserManager;
 
     constructor() {
-        const STS_DOMAIN: string = 'https://localhost:44301';
+        const STS_DOMAIN: string = 'https://localhost:8001';
 
         const settings: any = {
             userStore: new WebStorageStateStore({ store: window.localStorage }),
