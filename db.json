@@ -1,0 +1,569 @@
+{"discounts": [
+  {
+    "_id": "e0c659d7-dc46-48df-b376-628a768f92c4",
+    "name": "Невероятный Бетонный Куртка",
+    "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+    "amountOfDiscount": "47",
+    "startDate": {
+      "$date": "2021-01-10T07:43:42.805Z"
+    },
+    "endDate": {
+      "$date": "2021-12-15T15:45:44.596Z"
+    },
+    "address": {
+      "country": "Украина",
+      "city": "Пенза",
+      "street": "Энергетиков ул., 515",
+      "location": {
+        "latitude": 43.4112,
+        "longitude": -161.3009
+      }
+    },
+    "company": {
+      "name": "Блохина, Силин and Филиппов",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "phoneNumber": "+629 92 888-68-87",
+      "mail": "Marina.Zakharova@yahoo.com"
+    },
+    "workingHours": "1010100",
+    "tags": [
+      "Электроника",
+      "компьютеры",
+      "красота",
+      "Фильмы",
+      "Спорт",
+      "Игрушки",
+      "Книги",
+      "Меха",
+      "игры",
+      "промышленное"
+    ],
+    "ratingTotal": 3,
+    "viewTotal": 92,
+    "reservationTotal": 30,
+    "favoritePersonsId": [
+      "67c39246-12b0-4bc5-8e6a-3dbb24cba479",
+      "3c76d026-dabc-455e-b763-cfdd43aaf99a"
+    ],
+    "reservationPersonsId": [
+      "eb257967-be37-468e-a74c-aed7721e1e6a",
+      "365b61bb-b4c3-4a15-811f-cdf6b7352a95"
+    ],
+    "viewPersonsId": [
+      "8774e83a-b2e0-4cac-ac36-8845b3f2e491",
+      "fef3995a-ac68-4639-9996-fca232f667a9"
+    ],
+    "createDate": {
+      "$date": "2020-03-17T08:30:40.183Z"
+    },
+    "personCreateDate": {
+      "_id": "70a04f74-0c61-4296-9e42-0d37c08c1ed8",
+      "name": "Эдуард",
+      "surname": "Семенов",
+      "phoneNumber": "+462 82 972-22-35",
+      "mail": "Eduard_Semenov@hotmail.com",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "lastChangeDate": {
+      "$date": "2020-12-08T01:00:54.544Z"
+    },
+    "personLastChangeDate": {
+      "_id": "5444ee72-09bb-41b7-9e42-28f2b30a0b52",
+      "name": "Степан",
+      "surname": "Ковалев",
+      "phoneNumber": "+892 37 858-86-57",
+      "mail": "Stepan.Kovalev@ya.ru",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "hidden": false,
+    "language": "russian",
+    "translations": [
+      {
+        "language": "english",
+        "name": "Tasty Metal Cheese",
+        "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+        "address": {
+          "country": "Grenada",
+          "city": "Lake Carey",
+          "street": "204 O'Hara Ports"
+        },
+        "company": {
+          "name": "Orn - Armstrong",
+          "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J"
+        },
+        "tags": [
+          "Outdoors",
+          "Baby",
+          "Kids",
+          "Music",
+          "Clothing",
+          "Books",
+          "Movies",
+          "Jewelery",
+          "Home",
+          "Games"
+        ]
+      }
+    ]
+  },{
+    "_id": "65c6c011-d96f-4efe-bf3f-2c51362a6465",
+    "name": "Интеллектуальный Гранитный Свитер",
+    "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+    "amountOfDiscount": "60",
+    "startDate": {
+      "$date": "2021-01-11T20:07:23.155Z"
+    },
+    "endDate": {
+      "$date": "2021-10-20T20:58:03.735Z"
+    },
+    "address": {
+      "country": "Того",
+      "city": "Тольятти",
+      "street": "проспект Труда, 215",
+      "location": {
+        "latitude": 81.5854,
+        "longitude": 117.9498
+      }
+    },
+    "company": {
+      "name": "Калашников Торг",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "phoneNumber": "+484 47 465-68-93",
+      "mail": "Artyom.Panov52@gmail.com"
+    },
+    "workingHours": "0010110",
+    "tags": [
+      "туризм",
+      "Пряжа",
+      "Фильмы",
+      "Дом",
+      "обувь",
+      "Книги",
+      "Галантерея",
+      "Меха",
+      "игры",
+      "компьютеры",
+      "красота",
+      "детское",
+      "Электроника"
+    ],
+    "ratingTotal": 3,
+    "viewTotal": 44,
+    "reservationTotal": 43,
+    "favoritePersonsId": [
+      "d5577450-4fd7-4ea7-a93a-8598670d569c",
+      "383049fa-ed13-4fec-bad4-cb4c59e0aa40"
+    ],
+    "reservationPersonsId": [
+      "58c2510a-4bab-4ea6-9efb-6f128680163d",
+      "673534f4-5de2-4e06-b993-495021742ca0"
+    ],
+    "viewPersonsId": [
+      "c68e2288-3b5d-46c4-a208-4ebaf1e34ba7",
+      "7f11673c-158c-4cf2-b9fe-2753508afeb4"
+    ],
+    "createDate": {
+      "$date": "2020-03-01T09:31:31.825Z"
+    },
+    "personCreateDate": {
+      "_id": "1f978f83-1569-4eb3-810d-d7086129fb54",
+      "name": "Алёна",
+      "surname": "Ефремова",
+      "phoneNumber": "+924 66 879-53-84",
+      "mail": "Alyona.Efremova@yandex.ru",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "lastChangeDate": {
+      "$date": "2021-01-01T02:12:26.204Z"
+    },
+    "personLastChangeDate": {
+      "_id": "51790cf6-9a24-4e87-8fce-281b07805cc6",
+      "name": "Людмила",
+      "surname": "Рогова",
+      "phoneNumber": "+626 52 549-36-64",
+      "mail": "Lyudmila.Rogova39@yandex.ru",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "hidden": false,
+    "language": "russian",
+    "translations": [
+      {
+        "language": "english",
+        "name": "Small Wooden Cheese",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "address": {
+          "country": "Portugal",
+          "city": "East Kayden",
+          "street": "531 Wilson Divide"
+        },
+        "company": {
+          "name": "DuBuque - Mueller",
+          "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive"
+        },
+        "tags": [
+          "Home",
+          "Health",
+          "Books",
+          "Clothing",
+          "Baby",
+          "Computers",
+          "Grocery",
+          "Garden",
+          "Music",
+          "Sports"
+        ]
+      }
+    ]},
+  {
+    "_id": "65c6c011-d96f-4efe-bf3f-2c51362a6465",
+    "name": "Интеллектуальный Гранитный Свитер",
+    "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+    "amountOfDiscount": "60",
+    "startDate": {
+      "$date": "2021-01-11T20:07:23.155Z"
+    },
+    "endDate": {
+      "$date": "2021-10-20T20:58:03.735Z"
+    },
+    "address": {
+      "country": "Того",
+      "city": "Тольятти",
+      "street": "проспект Труда, 215",
+      "location": {
+        "latitude": 81.5854,
+        "longitude": 117.9498
+      }
+    },
+    "company": {
+      "name": "Калашников Торг",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "phoneNumber": "+484 47 465-68-93",
+      "mail": "Artyom.Panov52@gmail.com"
+    },
+    "workingHours": "0010110",
+    "tags": [
+      "туризм",
+      "Пряжа",
+      "Фильмы",
+      "Дом",
+      "обувь",
+      "Книги",
+      "Галантерея",
+      "Меха",
+      "игры",
+      "компьютеры",
+      "красота",
+      "детское",
+      "Электроника"
+    ],
+    "ratingTotal": 3,
+    "viewTotal": 44,
+    "reservationTotal": 43,
+    "favoritePersonsId": [
+      "d5577450-4fd7-4ea7-a93a-8598670d569c",
+      "383049fa-ed13-4fec-bad4-cb4c59e0aa40"
+    ],
+    "reservationPersonsId": [
+      "58c2510a-4bab-4ea6-9efb-6f128680163d",
+      "673534f4-5de2-4e06-b993-495021742ca0"
+    ],
+    "viewPersonsId": [
+      "c68e2288-3b5d-46c4-a208-4ebaf1e34ba7",
+      "7f11673c-158c-4cf2-b9fe-2753508afeb4"
+    ],
+    "createDate": {
+      "$date": "2020-03-01T09:31:31.825Z"
+    },
+    "personCreateDate": {
+      "_id": "1f978f83-1569-4eb3-810d-d7086129fb54",
+      "name": "Алёна",
+      "surname": "Ефремова",
+      "phoneNumber": "+924 66 879-53-84",
+      "mail": "Alyona.Efremova@yandex.ru",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "lastChangeDate": {
+      "$date": "2021-01-01T02:12:26.204Z"
+    },
+    "personLastChangeDate": {
+      "_id": "51790cf6-9a24-4e87-8fce-281b07805cc6",
+      "name": "Людмила",
+      "surname": "Рогова",
+      "phoneNumber": "+626 52 549-36-64",
+      "mail": "Lyudmila.Rogova39@yandex.ru",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "hidden": false,
+    "language": "russian",
+    "translations": [
+      {
+        "language": "english",
+        "name": "Small Wooden Cheese",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "address": {
+          "country": "Portugal",
+          "city": "East Kayden",
+          "street": "531 Wilson Divide"
+        },
+        "company": {
+          "name": "DuBuque - Mueller",
+          "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive"
+        },
+        "tags": [
+          "Home",
+          "Health",
+          "Books",
+          "Clothing",
+          "Baby",
+          "Computers",
+          "Grocery",
+          "Garden",
+          "Music",
+          "Sports"
+        ]
+      }
+    ]
+  },{
+    "_id": "f7a546f0-3ee4-4d33-9810-37ab9bd34420",
+    "name": "Великолепный Гранитный Портмоне",
+    "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+    "amountOfDiscount": "38",
+    "startDate": {
+      "$date": "2019-12-22T21:07:34.625Z"
+    },
+    "endDate": {
+      "$date": "2021-03-06T03:59:04.594Z"
+    },
+    "address": {
+      "country": "Кувейт",
+      "city": "Чебоксары",
+      "street": "пр. Гагарина, 499",
+      "location": {
+        "latitude": -17.1941,
+        "longitude": -167.3508
+      }
+    },
+    "company": {
+      "name": "Комаров - Абрамов",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "phoneNumber": "+945 43 389-97-64",
+      "mail": "Makar1@hotmail.com"
+    },
+    "workingHours": "1010110",
+    "tags": [
+      "промышленное",
+      "Игрушки",
+      "Меха",
+      "Галантерея",
+      "компьютеры",
+      "Спорт",
+      "детское",
+      "Одежда",
+      "красота",
+      "игры",
+      "Электроника",
+      "Пряжа",
+      "украшения"
+    ],
+    "ratingTotal": 1,
+    "viewTotal": 53,
+    "reservationTotal": 37,
+    "favoritePersonsId": [
+      "413f2244-6cee-4dff-868e-352ba23206d6",
+      "f322c55e-b0a3-402d-bf39-cf149fc656ea"
+    ],
+    "reservationPersonsId": [
+      "66822b4b-dd21-4ba3-9dcc-a9dee7b6b68f",
+      "b9fb0b9f-32ab-48e7-87e4-2bb81c3d3a9d"
+    ],
+    "viewPersonsId": [
+      "3b7053ed-59d4-4bb6-99e2-6183c38d34c2",
+      "9c027662-53a1-4483-974c-c31e2f8133e5"
+    ],
+    "createDate": {
+      "$date": "2020-10-11T09:38:20.039Z"
+    },
+    "personCreateDate": {
+      "_id": "4e597427-36a4-4f0a-8190-17b72e7d5066",
+      "name": "Варвара",
+      "surname": "Лыткина",
+      "phoneNumber": "+593 62 323-24-78",
+      "mail": "Varvara.Lytkina@ya.ru",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "lastChangeDate": {
+      "$date": "2021-01-18T03:25:45.394Z"
+    },
+    "personLastChangeDate": {
+      "_id": "f5d3bafe-a3c7-4b5a-a7b6-955d65d4fa6d",
+      "name": "Алевтина",
+      "surname": "Ситникова",
+      "phoneNumber": "+656 22 223-55-95",
+      "mail": "Alevtina_Sitnikova@hotmail.com",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "hidden": false,
+    "language": "russian",
+    "translations": [
+      {
+        "language": "english",
+        "name": "Rustic Granite Pizza",
+        "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+        "address": {
+          "country": "San Marino",
+          "city": "Moorefort",
+          "street": "44023 Sanford Shore"
+        },
+        "company": {
+          "name": "Corwin - Tromp",
+          "description": "The Football Is Good For Training And Recreational Purposes"
+        },
+        "tags": [
+          "Baby",
+          "Outdoors",
+          "Sports",
+          "Electronics",
+          "Shoes",
+          "Jewelery",
+          "Grocery",
+          "Books",
+          "Home",
+          "Automotive",
+          "Toys",
+          "Clothing"
+        ]
+      }
+    ]
+  },{
+    "_id": "477f5656-6512-404f-9cc7-17ebe88990d5",
+    "name": "Невероятный Натуральный Стол",
+    "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+    "amountOfDiscount": "61",
+    "startDate": {
+      "$date": "2019-10-16T07:53:39.397Z"
+    },
+    "endDate": {
+      "$date": "2021-08-08T12:11:58.384Z"
+    },
+    "address": {
+      "country": "Зимбабве",
+      "city": "Волгоград",
+      "street": "Майская пл., 875",
+      "location": {
+        "latitude": 19.2092,
+        "longitude": 110.6713
+      }
+    },
+    "company": {
+      "name": "Хохлова, Константинов and Киселев",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "phoneNumber": "+342 76 385-44-23",
+      "mail": "Igor20@mail.ru"
+    },
+    "workingHours": "1001110",
+    "tags": [
+      "садинструмент",
+      "Одежда",
+      "Автомобильное",
+      "Спорт",
+      "для малышей",
+      "украшения",
+      "Электроника",
+      "детское",
+      "Игрушки",
+      "красота",
+      "Галантерея",
+      "Меха",
+      "Бакалея"
+    ],
+    "ratingTotal": 2,
+    "viewTotal": 65,
+    "reservationTotal": 48,
+    "favoritePersonsId": [
+      "26349789-d0fd-4607-a276-8448e70603fe",
+      "bcb14286-480f-4fa9-b74a-a9c6495e10bb"
+    ],
+    "reservationPersonsId": [
+      "458cc8b3-94fa-45b0-8515-b1e11dc050ad",
+      "d48a79cb-bf04-46a1-b432-bc757c30cfab"
+    ],
+    "viewPersonsId": [
+      "d8f7c9a1-460b-49d0-9735-561cb697d11e",
+      "acf91ee6-705e-4a88-a384-79fac862aedc"
+    ],
+    "createDate": {
+      "$date": "2020-01-14T13:04:43.655Z"
+    },
+    "personCreateDate": {
+      "_id": "32996ee6-fb69-4a20-963b-2fc788bf2f16",
+      "name": "Фёдор",
+      "surname": "Власов",
+      "phoneNumber": "+533 53 653-37-36",
+      "mail": "Fyodor_Vlasov28@yandex.ru",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "lastChangeDate": {
+      "$date": "2021-01-02T19:42:24.080Z"
+    },
+    "personLastChangeDate": {
+      "_id": "a8764aeb-0eb7-4b90-ad67-4d29e996392d",
+      "name": "Артём",
+      "surname": "Лихачев",
+      "phoneNumber": "+346 85 862-58-22",
+      "mail": "Artyom.Likhachev@gmail.com",
+      "hashPassword": null,
+      "salt": null,
+      "roles": 0
+    },
+    "hidden": false,
+    "language": "russian",
+    "translations": [
+      {
+        "language": "english",
+        "name": "Refined Rubber Tuna",
+        "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+        "address": {
+          "country": "French Southern Territories",
+          "city": "Port Amyahaven",
+          "street": "19397 Steuber Corners"
+        },
+        "company": {
+          "name": "McDermott LLC",
+          "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles"
+        },
+        "tags": [
+          "Games",
+          "Garden",
+          "Home",
+          "Automotive",
+          "Grocery",
+          "Kids",
+          "Toys",
+          "Clothing",
+          "Baby",
+          "Health",
+          "Tools"
+        ]
+      }
+    ]
+  }
+]}
+
