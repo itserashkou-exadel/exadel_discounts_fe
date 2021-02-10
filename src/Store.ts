@@ -27,10 +27,6 @@ let store = new Vuex.Store({
         allDiscounts (state) {
             return state.discounts
         },
-        discountById (state, id) {
-            // @ts-ignore
-            return state.discounts.find(element => element.id = id)
-        },
         language: state => {
             return state.language
         }
@@ -51,7 +47,7 @@ let store = new Vuex.Store({
         },
         updTask (state, updatedDiscount)  {
             // @ts-ignore
-            const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
+            const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
             if(index !== -1) {
                 // @ts-ignore
                 state.discounts.splice(index, 1, updatedDiscount);
@@ -77,12 +73,12 @@ let store = new Vuex.Store({
             commit('setDiscounts', response.data);
         },
         addDiscount ({commit}, newDiscount) {
-           // const response = await axios.post(urlDiscounts, newDiscount);
+          //  await axios.post(urlDiscounts, newDiscount);
             commit('createDiscount', newDiscount);
         },
-        async updateDiscount ( { commit }, discount) {
-            const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
-            commit('updTask', response.data);
+        updateDiscount ( { commit }, discount) {
+          //  const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
+            commit('updTask', discount);
         }
     }
 
