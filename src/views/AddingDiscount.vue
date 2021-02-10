@@ -458,17 +458,14 @@
                     }
                 ]
             }},
-            objectForAdd (){return {...{_id: '8888'}, ...this.objectWithoutId()}},
             submit() {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        //console.log(this.titleRu);
                         this.addDiscount(
-                            this.objectWithoutId(this.objectForAdd())
+                            {...{_id: '8888'}, ...(this.objectWithoutId())}
                         )
-                        console.log(this.objectForAdd());
                     } else {
-                        this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...this.objectWithoutId()})
+                        this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                     this.$refs.form.reset()
                 };
@@ -502,15 +499,18 @@
             }
         },
         computed: mapGetters(['allDiscounts', 'discountById', 'language']),
-        mounted() {
-            this.goFetch('http://localhost:3000/discounts');
+        async mounted() {
+            await this.goFetch('http://localhost:3000/discounts');
+            if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+                const id = this.$route.params.idOfDiscount;
+                const discount = this.allDiscounts.find(element => element._id = id);
+                this.titleRu = discount.name;
+                //const s = {...(this.objectWithoutId()), ...discount};
+                //Object.keys(this.objectWithoutId()).map(function(a) { if (a in discount) this.objectWithoutId()[a] = discount[a]; });
+            }
         },
         created() {
-            if (this.$route.params.placeOfCall == 'editingOfDiscount') {
-                const id = this.$router.params.idOfDiscount;
-                const discount = this.discountById(id);
-                this.title = discount.title;
-            }
+
         }
     }
 </script>
