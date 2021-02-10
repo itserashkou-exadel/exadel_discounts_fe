@@ -1,100 +1,96 @@
 <template>
 
-        <v-dialog
-                content-class="zero"
-                v-model="dialog"
-                max-width="600px"
+    <v-dialog
+            content-class="zero"
+            v-model="dialog"
+            max-width="600px"
 
-        >
-            <template v-slot:activator="{ on, attrs }">
+    >
+        <template v-slot:activator="{ on, attrs }">
 
-                <v-img max-height="15"
-                       max-width="25"
-                       src="../../assets/filter.png"
-                       v-bind="attrs"
-                       v-on="on"
-                       class="pointer"
-                ></v-img>
-            </template>
-            <v-card>
-                <v-card-title>
-                    <span class="headline">{{$t('fFilter')}}</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
+            <v-img max-height="15"
+                   max-width="25"
+                   src="../../assets/filter.png"
+                   v-bind="attrs"
+                   v-on="on"
+                   class="pointer"
+            ></v-img>
+        </template>
+        <v-card>
+            <v-card-title>
+                <span class="headline">{{$t('fFilter')}}</span>
+            </v-card-title>
+            <v-card-text>
+                <v-container>
 
-                        <v-row>
-                            <v-col cols="6" lg="6" md="6" sm="6" class="pa-0 pl-3">
-                                <v-subheader>{{$t('adFrom')}}</v-subheader>
-                                <DataPicker/>
+                    <v-row>
+                        <v-col cols="6" lg="6" md="6" sm="6" class="pa-0 pl-3">
+                            <h3 class="mt-2">{{$t('dtDate')}}</h3>
+                            <DataPicker/>
+                        </v-col>
+                    </v-row>
 
-                            </v-col>
-                            <v-col cols="6" lg="6" md="6" sm="6" class="pa-0 pl-3">
-                                <v-subheader>{{$t('adTo')}}</v-subheader>
-                                <DataPicker/>
-                            </v-col>
-                        </v-row>
-
-                        <v-row>
-                            <v-col
-                                    cols="12"
-                                    sm="12"
-                                    md="12"
-                                    lg="12"
+                    <v-row>
+                        <v-col
+                                cols="12"
+                                sm="12"
+                                md="12"
+                                lg="12"
+                        >
+                            <h3 class="mb-2">{{$t('fVendor')}}</h3>
+                            <v-text-field
+                                    class="pt-0"
+                                    v-model="vendor"
                             >
-                                <h3 class="mb-2">{{$t('fVendor')}}</h3>
-                                <v-text-field
-                                        class="pt-0"
+                                <v-icon
+                                        slot="append"
+                                        color="blue"
                                 >
-                                    <v-icon
-                                            slot="append"
-                                            color="blue"
-                                    >
-                                        mdi-domain
-                                    </v-icon>
-                                </v-text-field>
-                            </v-col>
+                                    mdi-domain
+                                </v-icon>
+                            </v-text-field>
+                        </v-col>
 
-                        </v-row>
-                        <h3 class="mb-4">{{$t('fDiscount')}}</h3>
-                        <v-row>
-                            <v-col cols="12">
-                                <RangeSlider/>
-                            </v-col>
-                        </v-row>
-                        <h3 class="pb-4">{{$t('fRating')}}</h3>
-                        <v-row class="ml-2">
-                            <v-col cols="12" md="12" sm="12">
-                                    <StarSlider/>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                    </v-row>
+                    <h3 class="mb-4">{{$t('fDiscount')}}</h3>
+                    <v-row>
+                        <v-col cols="12">
+                            <RangeSlider/>
+                        </v-col>
+                    </v-row>
+                    <h3 class="pb-4">{{$t('fRating')}}</h3>
+                    <v-row class="ml-2">
+                        <v-col cols="12" md="12" sm="12">
+                            <StarSlider/>
+                        </v-col>
+                    </v-row>
+                </v-container>
 
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="dialog = false"
-                    >
-                        {{$t('fClose')}}
-                    </v-btn>
-                    <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="dialog = false"
-                    >
-                        {{$t('fSave')}}
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="dialog = false"
+                >
+                    {{$t('fClose')}}
+                </v-btn>
+                <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="dialog = false"
+                >
+                    {{$t('fSave')}}
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 
 </template>
 
 <script>
-
+    import {mapActions} from "vuex";
     import DataPicker from "@/components/Filter/DataPicker";
     import RangeSlider from "@/components/Filter/RangeSlider";
     import StarSlider from "@/components/Filter/StarSlider";
@@ -105,8 +101,20 @@
         data: () => ({
             dialog: false,
             from: null,
-            title: 'From'
+            title: 'From',
+            vendor: ''
         }),
+        watch:{
+            vendor: function(){
+                this.changeFilter({
+                    ...this.$store.getters.filterData,
+                    vendor: this.vendor
+                })
+            }
+        },
+        methods: {
+            ...mapActions(['changeFilter']),
+        }
     }
 </script>
 
