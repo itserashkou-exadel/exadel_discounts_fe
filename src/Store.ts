@@ -10,9 +10,17 @@ let store = new Vuex.Store({
     state: {
         discounts: [],
         switch: true,
-        language: 'Ru'
+        language: 'Ru',
+        filtered: [],
+        filteredDiscounts: []
     },
     getters: {
+        filterData: state => {
+            return state.filtered;
+        },
+        setFilter (state, filteredData){
+            state.filtered = filteredData;
+        },
         switcher: state => {
             return state.switch;
         },
@@ -28,6 +36,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setFilter (state, filteredData){
+            state.filtered = filteredData;
+        },
         changeSwitcher: state => {
             state.switch = !state.switch;
         },
@@ -55,6 +66,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        changeFilter({commit}, state){
+            commit("setFilter", state);
+        },
         changeSwitcher({commit}, state){
           commit('setSwitcher', state);
         },

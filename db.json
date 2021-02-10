@@ -1,0 +1,262 @@
+{
+  "discounts": [
+    {
+      "_id": "e0c659d7-dc46-48df-b376-628a768f92c4",
+      "name": "Невероятный Бетонный Куртка",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "47",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 4,
+      "viewTotal": 92,
+      "reservationTotal": 30
+    },
+    {
+      "_id": "65c6c011-d96f-4efe-bf3f-2c51362a6465",
+      "name": "Невероятный ",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki ",
+      "amountOfDiscount": "56",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 3,
+      "viewTotal": 92,
+      "reservationTotal": 30
+    },
+    {
+      "_id": "e0c659d7-dc46-48df-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30
+    },
+    {
+      "_id": "e0c659d7-dc46-48f-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30
+    },
+    {
+      "_id": "e0c65d7-dc46-48df-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30
+    },
+    {
+      "_id": "e0c69d7-dc46-48df-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30
+    }
+  ]
+}
