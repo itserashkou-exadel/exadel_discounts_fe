@@ -82,7 +82,7 @@
 </template>
 
 <script>
-
+    const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
     export default {
@@ -133,8 +133,8 @@
                             service: item.name,
                             vendor: item.company.name,
                             amountOfDiscount: item.amountOfDiscount,
-                            startDate: item.startDate.$date,
-                            endDate: item.endDate.$date,
+                            startDate: moment(item.startDate.$date).format('L'),
+                            endDate: moment(item.endDate.$date).format('L'),
                             rating: item.ratingTotal,
                             description: item.description,
                         }
