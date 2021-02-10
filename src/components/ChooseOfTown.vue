@@ -47,14 +47,6 @@
                this.selectCity(value);
             }
         }
-        // watch: {
-        //     selectedCountry () {
-        //         this.$emit('selectedCountry', this.selectedCountry);
-        //     },
-        //     selectedTown () {
-        //         this.$emit('selectedCity', this.selectedCity);
-        //     }
-        // }
     }
 </script>
 

@@ -30,9 +30,15 @@
                             v-for="(item, i) in fieldsForDiscount()"
                             :key="i">
                         <div class="d-flex align-content-center">
-                            <v-text-field v-if="i === 0"
+                            <v-text-field v-if="i === 0 && switchInAd"
                                           :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                          v-model="switchInAd ? titleRu : titleEn"
+                                          v-model='titleRu'
+                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                                          outlined>
+                            </v-text-field>
+                            <v-text-field v-if="i === 0 && !switchInAd"
+                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                                          v-model='titleEn'
                                           :label='switchInAd ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
@@ -69,10 +75,17 @@
                             </v-icon>
                         </div>
                         <v-expand-transition>
-                            <v-text-field v-if="i === 0"
+                            <v-text-field v-if="i === 0 && switchInAd"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? titleEn : titleRu"
+                                          v-model="titleEn"
+                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          outlined
+                            ></v-text-field>
+                            <v-text-field v-if="i === 0 && !switchInAd"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                          v-model="titleRu"
                                           :label='switchInAd ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
@@ -277,7 +290,7 @@
                 </v-col>
             </v-row>
             <p v-for="(disc, i) in allDiscounts" :key="i">
-                {{disc.name}}
+                {{disc.name}}{{disc._id}}
             </p>
         </v-form>
     </v-container>
@@ -338,6 +351,7 @@
             }
         },
         methods: {
+            modelForTitle() {return (this.switchInAd ? this.titleRu : this.titleEn)},
             selCountry : function (country) {
                 this.selectedCountry = country
             },
@@ -394,63 +408,67 @@
                 ]
             },
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+            objectWithoutId(){return {
+                name: this.titleRu,
+                description: this.descriptionRu,
+                amountOfDiscount: this.valueOfDiscount,
+                startDate: {
+                    $date: this.dateStart
+                },
+                endDate: {
+                    $date: this.dateFinish
+                },
+                address: {
+                    country: this.selectedCountry,
+                    city: this.selectedCity,
+                    street: this.street,
+                    location: {
+                        latitude: this.coordinate1,
+                        longitude: this.coordinate2
+                    }
+                },
+                company: {
+                    name: this.vendorRu,
+                    description: this.vendorDescrRu,
+                    phoneNumber: this.vendorPhone,
+                    mail: this.vendorEmail
+                },
+                workingHours: this.vendorWorkHours,
+                tags: [
+                    this.tagsRu
+                ],
+                language: "Ru",
+                translations: [
+                    {
+                        language: "En",
+                        name: this.titleEn,
+                        description: this.descriptionEn,
+                        address: {
+                            country: this.selectedCountry,
+                            city: this.selectedCity,
+                            street: this.street
+                        },
+                        company: {
+                            name: this.titleEn,
+                            description: this.descriptionEn
+                        },
+                        tags: [
+                            this.tagsEn
+                        ]
+                    }
+                ]
+            }},
+            objectForAdd (){return {...{_id: '8888'}, ...this.objectWithoutId()}},
             submit() {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        console.log(this.selectedCountry);
-                        this.addDiscount({
-                            _id: Date.now(),
-                            name: this.titleRu,
-                            description: this.descriptionRu,
-                            amountOfDiscount: this.valueOfDiscount,
-                            startDate: {
-                                $date: this.dateStart
-                            },
-                            endDate: {
-                                $date: this.dateFinish
-                            },
-                            address: {
-                                country: this.selectedCountry,
-                                city: this.selectedCity,
-                                street: this.street,
-                                location: {
-                                    latitude: this.coordinate1,
-                                    longitude: this.coordinate2
-                                }
-                            },
-                            company: {
-                                name: this.vendorRu,
-                                description: this.vendorDescrRu,
-                                phoneNumber: this.vendorPhone,
-                                mail: this.vendorEmail
-                            },
-                            workingHours: this.vendorWorkHours,
-                            tags: [
-                                this.tagsRu
-                            ],
-                            language: "Ru",
-                            translations: [
-                                {
-                                    language: "En",
-                                    name: this.titleEn,
-                                    description: this.descriptionEn,
-                                    address: {
-                                        country: this.selectedCountry,
-                                        city: this.selectedCity,
-                                        street: this.street
-                                    },
-                                    company: {
-                                        name: this.titleEn,
-                                        description: this.descriptionEn
-                                    },
-                                    tags: [
-                                        this.tagsEn
-                                    ]
-                                }
-                            ]
-                        })
+                        //console.log(this.titleRu);
+                        this.addDiscount(
+                            this.objectWithoutId(this.objectForAdd())
+                        )
+                        console.log(this.objectForAdd());
                     } else {
-                        this.updateDiscount(item)
+                        this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...this.objectWithoutId()})
                     }
                     this.$refs.form.reset()
                 };

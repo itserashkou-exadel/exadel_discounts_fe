@@ -63,12 +63,12 @@ let store = new Vuex.Store({
             commit('setDiscounts', response.data);
         },
         addDiscount ({commit}, newDiscount) {
-           // const response = await axios.post(urlDiscounts, newDiscount);
+          //  await axios.post(urlDiscounts, newDiscount);
             commit('createDiscount', newDiscount);
         },
         async updateDiscount ( { commit }, discount) {
             const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
-            commit('updTask', response.data);
+            commit('updTask', discount);
         }
     }
 
