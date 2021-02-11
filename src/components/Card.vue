@@ -1,8 +1,8 @@
 <template>
     <v-card
-            class="my-12"
-            max-width="350"
-            height="570"
+            class="mx-4 my-12"
+            max-width="374"
+            max-height="800px"
     >
         <div>
             <v-img
@@ -11,16 +11,16 @@
                     class="white--text "
             >
                 <div>
-                    <v-avatar size="59" color="red" class=" mx-3 my-3"><b>{{description.discount}}%</b>
+                    <v-avatar size="59" color="red" class=" mx-3 my-3"><b>{{description.amountOfDiscount}}%</b>
                     </v-avatar>
                 </div>
             </v-img>
         </div>
-        <v-row align="center" justify="space-between">
+        <v-row align="start" justify="space-between">
             <v-col>
                 <div>
                     <v-card-title>
-                        {{ description.name }}
+                        {{ description.service }}
                     </v-card-title>
                 </div>
                 <v-row
@@ -41,31 +41,37 @@
                 </v-row>
             </v-col>
             <v-icon
+
                     v-on:click="iconSwitch"
-                    class="mr-13" large>
+                    class="mr-7 mt-7" large>
                 {{ card }}
             </v-icon>
         </v-row>
         <v-divider></v-divider>
-        <v-card-subtitle>
+        <v-card-subtitle v-if="description.description.length<120">
             <b>Description:<br></b>
-            {{description.info}}
+            {{description.description.substring(0,120)}}
         </v-card-subtitle>
-        <v-chip-group active-class="light-blue accent-4 white--text">
+        <v-card-subtitle v-else>
+            <b>Description:<br></b>
+            {{description.description.substring(0,120) + " ..."}}
+        </v-card-subtitle>
+        <v-chip-group
+                show-arrows active-class="light-blue accent-4 white--text">
             <v-chip v-for="tag in description.tags"
                     :key="tag"
-                    class="ml-4"> tag
+                    class=""> {{tag}}
             </v-chip>
         </v-chip-group>
-        <v-row class="mt-4 ml-4" align="center" justify="space-between">
+        <v-row class="mt-4 ml-4 pb-4" align="center" justify="space-between">
             <v-btn color="blue" raised>
-                <router-link to="/details">Choose</router-link>
+                Choose
             </v-btn>
             <div class="mr-12">
-                <v-icon>
+                <v-icon @click="">
                     mdi-pencil
                 </v-icon>
-                <v-icon class="mr-2 ml-2" >
+                <v-icon class="ml-4" @click="">
                     mdi-delete
                 </v-icon>
             </div>
