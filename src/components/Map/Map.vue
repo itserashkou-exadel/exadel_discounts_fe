@@ -12,14 +12,45 @@
     const geocodingClient = mbxGeocoding({accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA'});
 
 
-
     export default {
         marker: null,
         name: "BaseMap",
         data() {
             return {
                 accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA',
-                fetchedGeoData: []
+                fetchedGeoData: [],
+                fakeDataPoints: [
+                    {
+                        id: 1,
+                        name: '',
+                        description: '',
+                        coordinates: [27.554179, 53.906461]
+                    },
+                    {
+                        id: 2,
+                        name: '',
+                        description: '',
+                        coordinates: [27.496666, 53.912810]
+                    },
+                    {
+                        id: 3,
+                        name: '',
+                        description: '',
+                        coordinates: [27.594500, 53.927107]
+                    },
+                    {
+                        id: 4,
+                        name: '',
+                        description: '',
+                        coordinates: [27.509685, 53.929633]
+                    },
+                    {
+                        id: 5,
+                        name: '',
+                        description: '',
+                        coordinates: [27.588133, 53.933288]
+                    },
+                ]
             };
         },
         mounted() {
@@ -29,68 +60,76 @@
             let map = new mapboxgl.Map({
                 container: "mapContainer",
                 style: "mapbox://styles/mapbox/streets-v11",
-                center: [23.8223, 53.6688],
-                zoom: 7,
+                center: [27.544592, 53.898477],
+                zoom: 11,
+            })
+
+            this.fakeDataPoints.forEach((point) => {
+                new mapboxgl.Marker({
+                    color: 'red'
+                })
+                    .setLngLat(point.coordinates)
+                    .addTo(map)
             })
 
             //ForwardGeoCodding logic
-            geocodingClient
-                .forwardGeocode({
-                    query: 'Belarus, Homel',
-                })
-                .send()
-                .then(response => {
-                    const match = response.body;
-                    console.log('match: ', match)
-                    let result = match.features[0].center
-
-                    let latitude = match.features[0].center[0]
-                    console.log(latitude)
-
-                    let longitude = match.features[0].center[1]
-                    console.log(longitude)
-                    console.log('Coordinates from query', result)
-
-                    this.fetchedGeoData.push({
-                        //result
-                        latitude,
-                        longitude,
-                    })
-                    console.log('Fetched Geo Data: ', this.fetchedGeoData)
-                    return result
-                })
-                .then(res => {
-                    const geoData = res
-                    console.log('response: ', res)
-                    console.log('FlyTo new Point!')
-                    map.flyTo({
-                        center: geoData,
-                        zoom: 12,
-                        speed: 0.5,
-                    })
-                    return geoData
-                })
-                .then(res => {
-                    let newMarker = res
-                    console.log('Set marker from local state')
-
-                    //Draw marker
-                    this.marker = new mapboxgl.Marker({
-                        color: "yellow",
-                        draggable: true
-                    })
-                        .setLngLat(newMarker)
-                        .addTo(map);
-                    console.log('Marker coordinates: ', this.marker._lngLat)
-                    console.log('Marker coordinates: ', this.marker)
-                    this.marker.on('dragend', () => {
-                        let lngLat = this.marker.getLngLat();
-                        console.log('New marker coordinates', lngLat)
-
-                    })
-                    return this.marker
-
-                })
+            // geocodingClient
+            //     .forwardGeocode({
+            //         query: 'Belarus, Homel',
+            //     })
+            //     .send()
+            //     .then(response => {
+            //         const match = response.body;
+            //         console.log('match: ', match)
+            //         let result = match.features[0].center
+            //
+            //         let latitude = match.features[0].center[0]
+            //         console.log(latitude)
+            //
+            //         let longitude = match.features[0].center[1]
+            //         console.log(longitude)
+            //         console.log('Coordinates from query', result)
+            //
+            //         this.fetchedGeoData.push({
+            //             //result
+            //             latitude,
+            //             longitude,
+            //         })
+            //         console.log('Fetched Geo Data: ', this.fetchedGeoData)
+            //         return result
+            //     })
+            //     .then(res => {
+            //         const geoData = res
+            //         console.log('response: ', res)
+            //         console.log('FlyTo new Point!')
+            //         map.flyTo({
+            //             center: geoData,
+            //             zoom: 12,
+            //             speed: 0.5,
+            //         })
+            //         return geoData
+            //     })
+            //     .then(res => {
+            //         let newMarker = res
+            //         console.log('Set marker from local state')
+            //
+            //         //Draw marker
+            //         this.marker = new mapboxgl.Marker({
+            //             color: "yellow",
+            //             draggable: true
+            //         })
+            //             .setLngLat(newMarker)
+            //             .addTo(map);
+            //         console.log('Marker coordinates: ', this.marker._lngLat)
+            //         console.log('Marker coordinates: ', this.marker)
+            //         this.marker.on('dragend', () => {
+            //             let lngLat = this.marker.getLngLat();
+            //             console.log('New marker coordinates', lngLat)
+            //
+            //         })
+            //         return this.marker
+            //
+            //     })
         },
         methods: {
             // newMarkerPoint(){
@@ -98,13 +137,11 @@
             //     console.log(lngLat)
             // }
         },
-        watch: {
-
-            }
-            // fetchedGeoData(){
-            //     let lngLat = marker.getLngLat();
-            // //
-            // }
+        watch: {}
+        // fetchedGeoData(){
+        //     let lngLat = marker.getLngLat();
+        // //
+        // }
 
     };
 
