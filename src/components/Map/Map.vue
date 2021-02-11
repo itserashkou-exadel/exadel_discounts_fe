@@ -1,11 +1,11 @@
 <template>
     <div class="mapWrapper">
-        <div class="mapNavigation" >
-            <div class="objectWrapper" v-for="point in fakeDataPoints">
+        <div class="mapNavigation">
+            <div class="objectWrapper" v-for="point in fakeDataPoints" @click="getMarkerFromNav">
                 <h2>{{point.name}}</h2>
                 <p>{{point.description}}</p>
                 <p>{{point.address}}</p>
-                <button class="primary mapAddButton" >Добавить</button>
+                <button class="primary mapAddButton">Добавить</button>
             </div>
         </div>
         <div id="mapContainer" class="basemap"></div>
@@ -18,7 +18,6 @@
 
     const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
     const geocodingClient = mbxGeocoding({accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA'});
-
 
     export default {
         marker: null,
@@ -77,14 +76,18 @@
                 zoom: 11,
             })
 
-            this.fakeDataPoints.forEach((point) => {
+            let myMarker = this.fakeDataPoints.forEach((point) => {
                 new mapboxgl.Marker({
                     color: 'red'
                 })
                     .setLngLat(point.coordinates)
+
                     .addTo(map)
             })
 
+            let popup = new mapboxgl.Popup({closeOnClick: false})
+                .setHTML('<h1>Hello World!</h1>')
+                .addTo(map);
             //ForwardGeoCodding logic
             // geocodingClient
             //     .forwardGeocode({
@@ -149,9 +152,12 @@
             //     let lngLat = this.marker.getLngLat();
             //     console.log(lngLat)
             // }
-            showPopUp(){
+            showPopUp() {
 
-            }
+            },
+            getMarkerFromNav(id) {
+                console.log('Marker ID: ', id)
+            },
         },
         watch: {}
         // fetchedGeoData(){
@@ -168,7 +174,8 @@
         width: 80%;
         height: 100vh;
     }
-    .objectWrapper{
+
+    .objectWrapper {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -178,17 +185,21 @@
         margin: 10px;
         padding: 8px;
     }
-    .mapAddButton{
+
+    .mapAddButton {
         border-radius: 5px;
         padding: 5px;
     }
-    .mapWrapper{
+
+    .mapWrapper {
         display: flex;
     }
-    .mapNavigation{
+
+    .mapNavigation {
         width: 20%;
         background: lightgray;
     }
+
     .coordinates {
         background: rgba(0, 0, 0, 0.5);
         color: #fff;
