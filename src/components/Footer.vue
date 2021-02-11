@@ -1,8 +1,8 @@
 <template>
-  <v-footer absolute color="primary"  dark app
+  <v-footer fixed color="primary"  dark app padless
   >
     <v-container fluid>
-      <v-row>
+      <v-row no-gutters>
         <v-col cols="9"
                align-self="center">
           <v-card color="primary" flat class="ml-3">
@@ -58,7 +58,11 @@ export default {
 
 <style scoped>
 .row {
-  margin: -18px;
+  margin-bottom: 0;
+}
+
+col-9 {
+  margin: 0;
 }
 </style>
 
