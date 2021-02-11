@@ -1,7 +1,7 @@
 <template>
     <v-card
             class="mx-4 my-12"
-            max-width="374"
+            max-width="370px"
             max-height="800px"
     >
         <div>
@@ -20,7 +20,7 @@
             <v-col>
                 <div>
                     <v-card-title>
-                        {{ description.service }}
+                        {{ description.service +" dadasdaskjdsakjdndadsadadasdasdasdasdasda"}}
                     </v-card-title>
                 </div>
                 <v-row
@@ -40,10 +40,9 @@
                     </div>
                 </v-row>
             </v-col>
-            <v-icon
+            <v-icon v-on:click="iconSwitch"
+                    class="mr-7 mt-7" large>>
 
-                    v-on:click="iconSwitch"
-                    class="mr-7 mt-7" large>
                 {{ card }}
             </v-icon>
         </v-row>
@@ -91,7 +90,9 @@
             return {
                 card: "mdi-heart-outline"
             }
+
         },
+
         methods: {
             iconSwitch() {
                 if (this.card === "mdi-heart-outline")
@@ -99,7 +100,9 @@
                 else
                     this.card = "mdi-heart-outline"
             }
+
         }
+
     }
 </script>
 

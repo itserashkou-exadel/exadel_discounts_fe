@@ -1,13 +1,12 @@
 <template>
-    <v-container v-if="results.length > 0">
+    <v-container fluid>
         <v-card>
-            <v-row>
+            <v-row :data="filterData" >
                 <v-col lg="4"
                        sm="12"
                        md="6"
-                       v-for="(result,idx) in results"
-                       :key="idx"
-                       :data="filterData"
+                       v-for="result in results"
+                       :key="result.id"
                        class="d-flex justify-center">
                     <Card
                             :description="result"
