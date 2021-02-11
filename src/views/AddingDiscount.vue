@@ -354,7 +354,7 @@
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
-   // import i18n from "@/plugins/i18n.ts"
+    // import i18n from "@/plugins/i18n.ts"
 
 
     export default {
@@ -559,62 +559,90 @@
                     return this.$tc('adAddSave', 2);
                 }
             },
-            fillingFields () {
+            fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
-                const id = this.$route.params.idOfDiscount;
-                const discount = this.allDiscounts.find(element => element._id = id);
-                this.titleRu = discount.name;
-                this.titleEn = discount.translations[0].name;
-                this.vendorRu = discount.company.name;
-                this.vendorEn = discount.translations[0].company.name;
-                this.vendorDescrRu = discount.company.description;
-                this.vendorDescrEn = discount.translations[0].company.description;
-                this.tagsRu = discount.tags;
-                this.tagsEn = discount.translations[0].tags;
-                this.descriptionRu = discount.description;
-                this.descriptionEn = discount.translations[0].description;
-                this.vendorPhone = discount.company.phoneNumber;
-                this.vendorEmail = discount.company.mail;
-                this.transformateToDays(discount.workingHours);
-                this.valueOfDiscount = discount.amountOfDiscount;
-                this.dateStart = discount.startDate.$date;
-                this.dateFinish = discount.endDate.$date;
-                this.selectedCountry = discount.address.country;
+                    const id = this.$route.params.idOfDiscount;
+                    const discount = this.allDiscounts.find(element => element._id = id);
+                    this.titleRu = discount.name;
+                    this.titleEn = discount.translations[0].name;
+                    this.vendorRu = discount.company.name;
+                    this.vendorEn = discount.translations[0].company.name;
+                    this.vendorDescrRu = discount.company.description;
+                    this.vendorDescrEn = discount.translations[0].company.description;
+                    this.tagsRu = discount.tags;
+                    this.tagsEn = discount.translations[0].tags;
+                    this.descriptionRu = discount.description;
+                    this.descriptionEn = discount.translations[0].description;
+                    this.vendorPhone = discount.company.phoneNumber;
+                    this.vendorEmail = discount.company.mail;
+                    this.transformateToDays(discount.workingHours);
+                    this.valueOfDiscount = discount.amountOfDiscount;
+                    this.dateStart = discount.startDate.$date;
+                    this.dateFinish = discount.endDate.$date;
+                    this.selectedCountry = discount.address.country;
 
-            }
-        },
-            transformateToDays (str) {
-                if (str[0] === '1') {this.vendorSelectedDays.push(this.$t('Monday'))}
-                if (str[1] === '1') {this.vendorSelectedDays.push(this.$t('Tuesday'))}
-                if (str[2] === '1') {this.vendorSelectedDays.push(this.$t('Wednesday'))}
-                if (str[3] === '1') {this.vendorSelectedDays.push(this.$t('Thursday'))}
-                if (str[4] === '1') {this.vendorSelectedDays.push(this.$t('Friday'))}
-                if (str[5] === '1') {this.vendorSelectedDays.push(this.$t('Saturday'))}
-                if (str[6] === '1') {this.vendorSelectedDays.push(this.$t('Sunday'))}
+                }
             },
-            transformateDays () {
+            transformateToDays(str) {
+                if (str[0] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Monday'))
+                }
+                if (str[1] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Tuesday'))
+                }
+                if (str[2] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Wednesday'))
+                }
+                if (str[3] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Thursday'))
+                }
+                if (str[4] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Friday'))
+                }
+                if (str[5] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Saturday'))
+                }
+                if (str[6] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Sunday'))
+                }
+            },
+            transformateDays() {
                 let str = '';
-                if (this.vendorSelectedDays.indexOf(this.$t('Monday')) != -1){
+                if (this.vendorSelectedDays.indexOf(this.$t('Monday')) != -1) {
                     str = '1'
-                } else {str = '0'}
-                if (this.vendorSelectedDays.indexOf(this.$t('Tuesday')) != -1){
+                } else {
+                    str = '0'
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Tuesday')) != -1) {
                     str = `${str}1`
-                } else {str = `${str}0`}
-                if (this.vendorSelectedDays.indexOf(this.$t('Wednesday')) != -1){
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Wednesday')) != -1) {
                     str = `${str}1`
-                } else {str = `${str}0`}
-                if (this.vendorSelectedDays.indexOf(this.$t('Thursday')) != -1){
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Thursday')) != -1) {
                     str = `${str}1`
-                } else {str = `${str}0`}
-                if (this.vendorSelectedDays.indexOf(this.$t('Friday')) != -1){
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Friday')) != -1) {
                     str = `${str}1`
-                } else {str = `${str}0`}
-                if (this.vendorSelectedDays.indexOf(this.$t('Saturday')) != -1){
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Saturday')) != -1) {
                     str = `${str}1`
-                } else {str = `${str}0`}
-                if (this.vendorSelectedDays.indexOf(this.$t('Sunday')) != -1){
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Sunday')) != -1) {
                     str = `${str}1`
-                } else {str = `${str}0`}
+                } else {
+                    str = `${str}0`
+                }
                 return str
             }
         },
@@ -622,7 +650,7 @@
         async mounted() {
             await this.goFetch('http://localhost:3000/discounts');
             this.fillingFields();
-            },
+        },
         created() {
 
         }
