@@ -342,19 +342,17 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <p v-for="(disc, i) in allDiscounts" :key="i">
-                {{disc.name}}{{disc._id}}
-            </p>
         </v-form>
     </v-container>
 </template>
 
 <script>
+    const moment = require('moment')
     import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
-    // import i18n from "@/plugins/i18n.ts"
+    import { v4 as uuidv4 } from 'uuid'
 
 
     export default {
@@ -521,16 +519,16 @@
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
                         this.addDiscount(
-                            {...{_id: '8888'}, ...(this.objectWithoutId())}
+                           {...{_id: uuidv4()}, ...(this.objectWithoutId())}
+                           // {name: "gggg"}
                         )
+                        console.log({...{_id: uuidv4()}, ...(this.objectWithoutId())})
                     } else {
                         this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                     this.$refs.form.reset()
                 }
-                ;
-                console.log(this.$store.state.discounts)
-            },
+                           },
             resetForm() {
                 this.transformateDays();
                 this.$refs.form.reset();
@@ -577,13 +575,13 @@
                     this.vendorEmail = discount.company.mail;
                     this.transformateToDays(discount.workingHours);
                     this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = discount.startDate.$date;
-                    this.dateFinish = discount.endDate.$date;
+                    this.dateStart = moment(discount.startDate.$date).format('L'),
+                    this.dateFinish = moment(discount.endDate.$date).format('L'),
                     this.selectedCountry = discount.address.country;
-
                 }
             },
             transformateToDays(str) {
+
                 if (str[0] === '1') {
                     this.vendorSelectedDays.push(this.$t('Monday'))
                 }
