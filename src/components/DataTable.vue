@@ -1,5 +1,5 @@
 <template>
-    <v-col cols="12" lg="10" md="12" sm="10" class="pa-0">
+    <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
         <v-data-table
                 :headers="headers()"
                 :items="result"
