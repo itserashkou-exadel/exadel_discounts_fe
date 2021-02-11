@@ -343,6 +343,7 @@
                 </v-col>
             </v-row>
         </v-form>
+        <p>{{allCountries}}</p>
     </v-container>
 </template>
 
@@ -360,6 +361,7 @@
         components: {ChooseOfTown, CountryFlag, AddDiscountMap},
         data() {
             return {
+                countriesMy: [],
                 switchAd: true,
                 daysOfWeek: [`${this.$t('Monday')}`, `${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
                 street: null,
@@ -462,7 +464,7 @@
                     },
                 ]
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries']),
             objectWithoutId() {
                 return {
                     name: this.titleRu,
@@ -644,13 +646,11 @@
                 return str
             }
         },
-        computed: mapGetters(['allDiscounts', 'language']),
+        computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
         async mounted() {
             await this.goFetch('http://localhost:3000/discounts');
+            await this.goFetchForCountries('https://localhost:9001/api/v1/addresses/get/countries/B');
             this.fillingFields();
-        },
-        created() {
-
         }
     }
 </script>

@@ -86,7 +86,7 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForcountries ({commit}, str) {
+        async goFetchForCountries ({commit}, str) {
             const response = await axios.get(str);
             commit('setCountries', response.data);
         },
