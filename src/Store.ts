@@ -12,7 +12,9 @@ let store = new Vuex.Store({
         switch: true,
         language: 'Ru',
         filtered: [],
-        filteredDiscounts: []
+        filteredDiscounts: [],
+        countries: [],
+        cities: []
     },
     getters: {
         filterData: state => {
@@ -27,9 +29,11 @@ let store = new Vuex.Store({
         allDiscounts (state) {
             return state.discounts
         },
-        discountById (state, id) {
-            // @ts-ignore
-            return state.discounts.find(element => element.id = id)
+        allCountries (state) {
+            return state.countries
+        },
+        allCities (state) {
+            return state.cities
         },
         language: state => {
             return state.language
@@ -45,13 +49,19 @@ let store = new Vuex.Store({
         setDiscounts (state, discounts) {
             state.discounts = discounts
         },
+        setCountries (state, countries) {
+            state.countries = countries
+        },
+        setCities (state, cities) {
+            state.cities = cities
+        },
         createDiscount (state, newDiscount) {
             // @ts-ignore
             state.discounts.push(newDiscount)
         },
         updTask (state, updatedDiscount)  {
             // @ts-ignore
-            const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
+            const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
             if(index !== -1) {
                 // @ts-ignore
                 state.discounts.splice(index, 1, updatedDiscount);
@@ -76,13 +86,21 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
+        async goFetchForcountries ({commit}, str) {
+            const response = await axios.get(str);
+            commit('setCountries', response.data);
+        },
+        async goFetchForCities ({commit}, str) {
+            const response = await axios.get(str);
+            commit('setCities', response.data);
+        },
         addDiscount ({commit}, newDiscount) {
-           // const response = await axios.post(urlDiscounts, newDiscount);
+          //  await axios.post(urlDiscounts, newDiscount);
             commit('createDiscount', newDiscount);
         },
-        async updateDiscount ( { commit }, discount) {
-            const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
-            commit('updTask', response.data);
+        updateDiscount ( { commit }, discount) {
+          //  const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
+            commit('updTask', discount);
         }
     }
 
