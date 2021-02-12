@@ -55,13 +55,18 @@
             <b>Description:<br></b>
             {{description.description.substring(0,120) + " ..."}}
         </v-card-subtitle>
-        <v-chip-group
-                show-arrows active-class="light-blue accent-4 white--text">
-            <v-chip v-for="tag in description.tags"
-                    :key="tag"
-                    class=""> {{tag}}
-            </v-chip>
-        </v-chip-group>
+        <v-sheet class="px-1 mx-1">
+            <v-chip-group
+                    show-arrows
+                    class="v-slide-group--has-affixes"
+                    active-class="light-blue accent-4 white--text">
+                <v-chip v-for="tag in description.tags"
+                        :key="tag"
+                > {{tag}}
+                </v-chip>
+            </v-chip-group>
+        </v-sheet>
+
         <v-row class="mt-4 ml-4 pb-4" align="center" justify="space-between">
             <v-btn color="blue" raised>
                 Choose
