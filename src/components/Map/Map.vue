@@ -8,14 +8,14 @@
                 :mapStyle="mapStyle"
                 @load="onMapLoaded"
                 :center="coordinates"
-                zoom="11"
+                :zoom=11
         />
     </div>
 </template>
 
 <script>
     import Mapbox from "mapbox-gl";
-    import { MglMap } from "vue-mapbox";
+    import {MglMap} from "vue-mapbox";
     import LeftSideBar from "@/components/Map/LeftSideBar/LeftSideBar";
 
     export default {
@@ -48,7 +48,7 @@
 </script>
 
 <style scoped>
-    #map{
+    #map {
         width: 100vw;
         height: 100vh;
         display: flex;
