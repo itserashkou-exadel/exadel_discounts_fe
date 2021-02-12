@@ -7,10 +7,12 @@
                        md="6"
                        v-for="result in results"
                        :key="result.id"
-                       class="d-flex justify-center">
-                    <Card
-                            :description="result"
-                    />
+                       >
+                    <div class="d-flex justify-center">
+                        <Card
+                                :description="result"
+                        />
+                    </div>
                 </v-col>
             </v-row>
         </v-card>

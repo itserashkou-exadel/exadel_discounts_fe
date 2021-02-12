@@ -55,10 +55,10 @@
             <b>Description:<br></b>
             {{description.description.substring(0,120) + " ..."}}
         </v-card-subtitle>
-        <v-sheet class="px-1 mx-1">
+        <v-sheet>
             <v-chip-group
                     show-arrows
-                    class="v-slide-group--has-affixes"
+                    class="v-slide-group--has-affixes v-slide-group__next"
                     active-class="light-blue accent-4 white--text">
                 <v-chip v-for="tag in description.tags"
                         :key="tag"
@@ -67,7 +67,7 @@
             </v-chip-group>
         </v-sheet>
 
-        <v-row class="mt-4 ml-4 pb-4" align="center" justify="space-between">
+        <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
             <v-btn color="blue" raised>
                 Choose
             </v-btn>
