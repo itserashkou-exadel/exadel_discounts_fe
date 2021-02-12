@@ -118,10 +118,6 @@
             },
 
         }),
-
-        mounted() {
-            this.goFetch(`http://localhost:3000/discounts`);
-        },
         computed: {
             filterData: function (){
                 const arr = [];
