@@ -12,7 +12,9 @@ let store = new Vuex.Store({
         switch: true,
         language: 'Ru',
         filtered: [],
-        filteredDiscounts: []
+        filteredDiscounts: [],
+        countries: [],
+        cities: []
     },
     getters: {
         filterData: state => {
@@ -27,6 +29,12 @@ let store = new Vuex.Store({
         allDiscounts (state) {
             return state.discounts
         },
+        allCountries (state) {
+            return state.countries
+        },
+        allCities (state) {
+            return state.cities
+        },
         language: state => {
             return state.language
         }
@@ -40,6 +48,12 @@ let store = new Vuex.Store({
         },
         setDiscounts (state, discounts) {
             state.discounts = discounts
+        },
+        setCountries (state, countries) {
+            state.countries = countries
+        },
+        setCities (state, cities) {
+            state.cities = cities
         },
         createDiscount (state, newDiscount) {
             // @ts-ignore
@@ -71,6 +85,14 @@ let store = new Vuex.Store({
         async goFetch ({commit}, str) {
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
+        },
+        async goFetchForcountries ({commit}, str) {
+            const response = await axios.get(str);
+            commit('setCountries', response.data);
+        },
+        async goFetchForCities ({commit}, str) {
+            const response = await axios.get(str);
+            commit('setCities', response.data);
         },
         addDiscount ({commit}, newDiscount) {
           //  await axios.post(urlDiscounts, newDiscount);
