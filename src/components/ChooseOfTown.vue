@@ -1,14 +1,14 @@
 <template>
     <div>
         <v-select
-                :items="getCountry(countriesAndTowns)"
+                :items="countries"
                 :label="this.$t('adLabelOfDiscountCountry')"
                 outlined
                 v-model="selectedCountry"
                 @change="selectCountryHandler"
         ></v-select>
         <v-select
-                :items="getSelectedCountry()"
+                :items="cities"
                 :label="this.$t('adLabelOfDiscountCity')"
                 outlined
                 @change="selectCityHandler"
@@ -26,21 +26,12 @@
                 selectedCity: null
             }
         },
-        props: ['countriesAndTowns', 'selectCountry', 'selectCity'],
+        props: ['countries', 'cities','selectCountry', 'selectCity'],
         methods: {
-            getCountry(arr) {
-                const countries = arr.map(element => element.country)
-                return countries;
-
-            },
-            getSelectedCountry() {
-                const towns = this.countriesAndTowns.filter(element => element.country === this.selectedCountry)
-                .map(element => element.town)
-                return towns
-            },
             selectCountryHandler(value){
                 this.$emit('selectedCountryForObj', value);
                this.selectCountry(value);
+
             },
             selectCityHandler(value){
                 this.$emit('selectedCityForObj', value);

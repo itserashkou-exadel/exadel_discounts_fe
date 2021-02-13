@@ -21,6 +21,7 @@
     "mapbox-gl-vue": "^2.0.4",
     "moment": "^2.29.1",
     "oidc-client": "^1.9.1",
+    "uuid": "^8.3.2",
     "vue": "^2.6.10",
     "vue-class-component": "^7.1.0",
     "vue-country-flag": "^2.0.3",

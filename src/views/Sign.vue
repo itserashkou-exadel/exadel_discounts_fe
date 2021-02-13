@@ -38,8 +38,14 @@
                 </v-list-group>
                 <v-container class="d-flex justify-center">
 
-                    <v-btn >
-                        <router-link to="/home">{{$t('sLogIn')}}</router-link>
+                    <v-btn @click="login()">
+                        <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
+                    </v-btn>
+                    <v-btn @click="logout()">
+                        <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
+                    </v-btn>
+                    <v-btn @click="getProtectedApiData()">
+                        <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                     </v-btn>
                 </v-container>
 
@@ -49,6 +55,11 @@
 </template>
 
 <script>
+    import AuthService from '@/services/auth.service';
+    import axios from 'axios';
+    const auth = new AuthService();
+
+
     export default {
         name: 'Test2',
         data: () => ({
@@ -61,7 +72,30 @@
             redirectToIS4(){
                 console.log('You was redirected')
                 this.$router.push('/identity')
-            }
+            },
+            login()
+            {
+                auth.login();
+            },
+            logout()
+            {
+                auth.logout();
+            },
+            getProtectedApiData() {
+
+            const authorizationHeader = 'Authorization';
+            auth.getAccessToken().then((userToken) => {
+                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+
+                axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
+                    .then((response) => {
+                        this.dataEventRecordsItems = response.data;
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
+            });
+        }
         },
     };
 </script>
