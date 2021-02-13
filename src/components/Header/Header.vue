@@ -9,6 +9,7 @@
     <v-toolbar-items v-for="(item, i) in headerButtons()"
                      :key="i">
       <HeaderButton v-bind:headerButton="item"
+                    v-slot:extension
       />
     </v-toolbar-items>
     <v-spacer></v-spacer>

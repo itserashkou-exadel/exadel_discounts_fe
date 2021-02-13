@@ -73,7 +73,6 @@
                 color="blue lighten-5"
                 multiple
         ></v-text-field>
-
     </v-toolbar>
 </template>
 
