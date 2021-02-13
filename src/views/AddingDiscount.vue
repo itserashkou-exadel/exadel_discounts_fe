@@ -287,7 +287,8 @@
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
-                            v-bind:countriesAndTowns="countriesAndTowns"
+                            v-bind:countries="countries"
+                            v-bind:cities="cities"
                             v-bind:selectCity="selectCity"
                             v-bind:selectCountry="selectCountry"
                             v-on:selectedCountryForObj='selCountry'
@@ -343,17 +344,20 @@
                 </v-col>
             </v-row>
         </v-form>
-        <p>{{allCountries}}</p>
+<!--        <p>{{allCountries}}</p>-->
     </v-container>
 </template>
 
 <script>
+    import AuthService from "@/services/auth.service";
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
     import { v4 as uuidv4 } from 'uuid'
+    import axios from 'axios'
+    const auth = new AuthService();
 
 
     export default {
@@ -361,7 +365,8 @@
         components: {ChooseOfTown, CountryFlag, AddDiscountMap},
         data() {
             return {
-                countriesMy: [],
+                countries: [],
+                cities: [],
                 switchAd: true,
                 daysOfWeek: [`${this.$t('Monday')}`, `${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
                 street: null,
@@ -411,6 +416,10 @@
             },
             selCountry: function (country) {
                 this.selectedCountry = country
+                axios.get(`https://localhost:9001/api/v1/addresses/all/Ru/cities/${this.selectedCountry}`)
+                    .then((response) => {
+                        this.cities = response.data
+                    })
             },
             selCity: function (city) {
                 this.selectedCity = city
@@ -464,7 +473,7 @@
                     },
                 ]
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries']),
+
             objectWithoutId() {
                 return {
                     name: this.titleRu,
@@ -491,7 +500,7 @@
                         phoneNumber: this.vendorPhone,
                         mail: this.vendorEmail
                     },
-                    workingHours: this.vendorSelectedDays,
+                    workingHours: this.transformateDays(),
                     tags: [
                         this.tagsRu
                     ],
@@ -522,17 +531,17 @@
                     if (this.$route.params.placeOfCall === 'newDiscount') {
                         this.addDiscount(
                            {...{_id: uuidv4()}, ...(this.objectWithoutId())}
-                           // {name: "gggg"}
+
                         )
-                        console.log({...{_id: uuidv4()}, ...(this.objectWithoutId())})
+                        // console.log({...{_id: uuidv4()}, ...(this.objectWithoutId())})
                     } else {
                         this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                     this.$refs.form.reset()
                 }
+
                            },
             resetForm() {
-                this.transformateDays();
                 this.$refs.form.reset();
                 this.fillingFields();
             },
@@ -561,8 +570,10 @@
             },
             fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+
                     const id = this.$route.params.idOfDiscount;
                     const discount = this.allDiscounts.find(element => element._id = id);
+                    console.log(discount);
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
@@ -644,12 +655,24 @@
                     str = `${str}0`
                 }
                 return str
-            }
+            },
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries'])
         },
         computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
         async mounted() {
-            await this.goFetch('http://localhost:3000/discounts');
-            await this.goFetchForCountries('https://localhost:9001/api/v1/addresses/get/countries/B');
+            const authorizationHeader = 'Authorization';
+            auth.getAccessToken().then((userToken) => {
+                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+                this.goFetch('http://localhost:3000/discounts');
+                axios.get('https://localhost:9001/api/v1/addresses/all/Ru/countries')
+                    .then((response) => {
+                        this.countries = response.data;
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
+
+            });
             this.fillingFields();
         }
     }
