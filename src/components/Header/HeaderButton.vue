@@ -1,9 +1,7 @@
 <template>
-  <router-link :to="{name:headerButton.route}" class="nav-links" active-class="router-link-active">
+  <router-link :to="{name:headerButton.route}" class="nav-links pt-3" active-class="router-link-active">
   <v-btn class="font-weight-light"
          text>
-<!--         @click="$router.push({name:headerButton.route})"-->
-
     <div class="flex-column">
     <div>
         <v-icon> {{ headerButton.icon }}</v-icon>
@@ -31,5 +29,6 @@ export default {
 {
   background-color: #2196f3;
   cursor: pointer;
+  text-decoration: none;
 }
 </style>
