@@ -10,15 +10,7 @@
             >
                 <v-col cols="12" class="pb-5 pt-5"
                 >
-                    <div class="d-flex">
-                        <h1>{{titleOfPage()}}</h1>
-
-                        <v-switch
-                                class="ml-10"
-                                v-model="switchInAd"
-                                :label="`${switchInAd ? 'RU' : 'EN'}`"
-                        ></v-switch>
-                    </div>
+                    <h1>{{titleOfPage()}}</h1>
                 </v-col>
             </v-row>
             <v-row
@@ -30,40 +22,64 @@
                             v-for="(item, i) in fieldsForDiscount()"
                             :key="i">
                         <div class="d-flex align-content-center">
-                            <v-text-field v-if="i === 0 && switchInAd"
-                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                            <v-text-field v-if="i === 0 && $i18n.locale === 'ru'"
+                                          :placeholder='$i18n.locale === "ru" ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleRu'
-                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                                          :label='$i18n.locale === "ru" ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 0 && !switchInAd"
-                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
+                            <v-text-field v-if="i === 0 && $i18n.locale === 'en'"
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleEn'
-                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 1"
-                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                          v-model="switchInAd ? vendorRu : vendorEn"
-                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                            <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          v-model='vendorRu'
+                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 2"
-                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                          v-model="switchInAd ? vendorDescrRu : vendorDescrEn"
-                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                            <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          v-model='vendorEn'
+                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 3"
-                                          :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                          v-model="switchInAd ? tagsRu : tagsEn"
-                                          :label='switchInAd ? item.labelRu : item.labelEn'
+                            <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          v-model='vendorDescrRu'
+                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
-                            <v-textarea v-if="i === 4"
-                                        :placeholder='switchInAd ? item.placeholderRu : item.placeholderEn'
-                                        v-model="switchInAd ? descriptionRu : descriptionEn"
-                                        :label='switchInAd ? item.labelRu : item.labelEn'
+                            <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          v-model='vendorDescrEn'
+                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          outlined>
+                            </v-text-field>
+                            <v-text-field v-if="i === 3 && $i18n.locale === 'ru'"
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          v-model='tagsRu'
+                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          outlined>
+                            </v-text-field>
+                            <v-text-field v-if="i === 3 && $i18n.locale === 'en'"
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          v-model='tagsEn'
+                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          outlined>
+                            </v-text-field>
+                            <v-textarea v-if="i === 4 && $i18n.locale === 'ru'"
+                                        :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                        v-model='descriptionRu'
+                                        :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                        outlined>
+                            </v-textarea>
+                            <v-textarea v-if="i === 4 && $i18n.locale === 'en'"
+                                        :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                        v-model='descriptionEn'
+                                        :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                         outlined>
                             </v-textarea>
                             <v-icon
@@ -75,67 +91,101 @@
                             </v-icon>
                         </div>
                         <v-expand-transition>
-                            <v-text-field v-if="i === 0 && switchInAd"
+                            <v-text-field v-if="i === 0 && ($i18n.locale === 'ru')"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleEn"
-                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 0 && !switchInAd"
+                            <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleRu"
-                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 1"
+                            <v-text-field v-if="i === 1 && ($i18n.locale === 'ru')"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? vendorEn : vendorRu"
-                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          v-model='vendorEn'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 2"
+                            <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? vendorDescrEn : vendorDescrRu"
-                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          v-model='vendorRu'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 3"
+                            <v-text-field v-if="i === 2 && ($i18n.locale === 'ru')"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                          v-model="switchInAd ? tagsEn: tagsRu"
-                                          :label='switchInAd ? item.labelEn : item.labelRu'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          v-model='vendorDescrEn'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
-                            <v-textarea v-if="i === 4"
+                            <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          v-model='vendorDescrRu'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          outlined
+                            ></v-text-field>
+                            <v-text-field v-if="i === 3 && ($i18n.locale === 'ru')"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          v-model='tagsEn'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          outlined
+                            ></v-text-field>
+                            <v-text-field v-if="i === 3 && ($i18n.locale === 'en')"
+                                          v-show='trueOrFalseArr[i]'
+                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          v-model='tagsRu'
+                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          outlined
+                            ></v-text-field>
+                            <v-textarea v-if="i === 4 && ($i18n.locale === 'ru')"
                                         v-show='trueOrFalseArr[i]'
-                                        :placeholder='switchInAd ? item.placeholderEn : item.placeholderRu'
-                                        v-model="switchInAd ? descriptionEn : descriptionRu"
-                                        :label='switchInAd ? item.labelEn : item.labelRu'
+                                        :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                        v-model='descriptionEn'
+                                        :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                        outlined
+                            ></v-textarea>
+                            <v-textarea v-if="i === 4 && ($i18n.locale === 'en')"
+                                        v-show='trueOrFalseArr[i]'
+                                        :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                        v-model='descriptionRu'
+                                        :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                         outlined
                             ></v-textarea>
                         </v-expand-transition>
                     </div>
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountVendorPhone')"
+                            :placeholder="this.$t('adLabelOfDiscountVendorPhone')"
                             outlined
                             v-model="vendorPhone"
                     ></v-text-field>
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountVendorEmail')"
+                            :placeholder="this.$t('adLabelOfDiscountVendorEmail')"
                             outlined
                             v-model="vendorEmail"
                     ></v-text-field>
-                    <v-text-field
+                    <v-combobox
+                            v-model="vendorSelectedDays"
+                            :items="daysOfWeek"
                             :label="this.$t('adLabelOfDiscountVendorWorkHours')"
+                            :placeholder="this.$t('adLabelOfDiscountVendorWorkHours')"
+                            multiple
                             outlined
-                            v-model="vendorWorkHours"
-                    ></v-text-field>
+                    ></v-combobox>
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountDiscount')"
+                            :placeholder="this.$t('adLabelOfDiscountDiscount')"
                             outlined
                             v-model="valueOfDiscount"
                     ></v-text-field>
@@ -234,25 +284,16 @@
                             :label="this.$t('adLabelOfDiscountPicture')"
                             outlined
                     ></v-text-field>
-                    <v-text-field
-                            label="координаты1"
-                            outlined
-                            v-model="coordinate1"
-                    ></v-text-field>
-                    <v-text-field
-                            label="координаты2"
-                            outlined
-                            v-model="coordinate2"
-                    ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
-                            v-bind:countriesAndTowns="countriesAndTowns"
+                            v-bind:countries="countries"
+                            v-bind:cities="cities"
                             v-bind:selectCity="selectCity"
                             v-bind:selectCountry="selectCountry"
-                            v-on:selectedCountryForObj = 'selCountry'
-                            v-on:selectedCityForObj = 'selCity'
-                            />
+                            v-on:selectedCountryForObj='selCountry'
+                            v-on:selectedCityForObj='selCity'
+                    />
                     <v-text-field
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
@@ -260,8 +301,21 @@
                             @input="selectLine"
                     ></v-text-field>
                     <div class="mr-10">
-                      <AddDiscountMap v-bind:address="address"/>
+                        <AddDiscountMap v-bind:address="address"/>
                     </div>
+                    <v-text-field
+                            class="mt-10"
+                            :label="this.$t('adLabelOfDiscountCoordinatesLatitude')"
+                            :placeholder="this.$t('adLabelOfDiscountCoordinatesLatitude')"
+                            outlined
+                            v-model="coordinate1"
+                    ></v-text-field>
+                    <v-text-field
+                            :label="this.$t('adLabelOfDiscountCoordinatesLongitude')"
+                            :placeholder="this.$t('adLabelOfDiscountCoordinatesLongitude')"
+                            outlined
+                            v-model="coordinate2"
+                    ></v-text-field>
                 </v-col>
             </v-row>
             <v-row
@@ -289,18 +343,21 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <p v-for="(disc, i) in allDiscounts" :key="i">
-                {{disc.name}}{{disc._id}}
-            </p>
         </v-form>
+<!--        <p>{{allCountries}}</p>-->
     </v-container>
 </template>
 
 <script>
+    import AuthService from "@/services/auth.service";
+    const moment = require('moment')
     import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
+    import { v4 as uuidv4 } from 'uuid'
+    import axios from 'axios'
+    const auth = new AuthService();
 
 
     export default {
@@ -308,13 +365,16 @@
         components: {ChooseOfTown, CountryFlag, AddDiscountMap},
         data() {
             return {
+                countries: [],
+                cities: [],
+                switchAd: true,
+                daysOfWeek: [`${this.$t('Monday')}`, `${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
                 street: null,
                 coordinate1: null,
                 coordinate2: null,
                 selectedCountry: null,
                 selectedCity: null,
                 ...mapState(['discounts']),
-                switchInAd: true,
                 titleRu: '',
                 titleEn: '',
                 expandT: false,
@@ -329,7 +389,7 @@
                 descriptionEn: '',
                 vendorPhone: '',
                 vendorEmail: '',
-                vendorWorkHours: '',
+                vendorSelectedDays: [],
                 trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
@@ -344,18 +404,24 @@
                     {id: 2, town: 'Minsk', country: 'Belarus'},
                     {id: 3, town: 'Kiev', country: 'Ukraine'}],
                 address: {
-                     country: null,
-                     city: null,
-                     line: null
-              }
+                    country: null,
+                    city: null,
+                    line: null
+                }
             }
         },
         methods: {
-            modelForTitle() {return (this.switchInAd ? this.titleRu : this.titleEn)},
-            selCountry : function (country) {
-                this.selectedCountry = country
+            modelForTitle() {
+                return (this.switchInAd ? this.titleRu : this.titleEn)
             },
-            selCity : function (city) {
+            selCountry: function (country) {
+                this.selectedCountry = country
+                axios.get(`https://localhost:9001/api/v1/addresses/all/Ru/cities/${this.selectedCountry}`)
+                    .then((response) => {
+                        this.cities = response.data
+                    })
+            },
+            selCity: function (city) {
                 this.selectedCity = city
             },
             changeExpand(item, i) {
@@ -407,81 +473,86 @@
                     },
                 ]
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
-            objectWithoutId(){return {
-                name: this.titleRu,
-                description: this.descriptionRu,
-                amountOfDiscount: this.valueOfDiscount,
-                startDate: {
-                    $date: this.dateStart
-                },
-                endDate: {
-                    $date: this.dateFinish
-                },
-                address: {
-                    country: this.selectedCountry,
-                    city: this.selectedCity,
-                    street: this.street,
-                    location: {
-                        latitude: this.coordinate1,
-                        longitude: this.coordinate2
-                    }
-                },
-                company: {
-                    name: this.vendorRu,
-                    description: this.vendorDescrRu,
-                    phoneNumber: this.vendorPhone,
-                    mail: this.vendorEmail
-                },
-                workingHours: this.vendorWorkHours,
-                tags: [
-                    this.tagsRu
-                ],
-                language: "Ru",
-                translations: [
-                    {
-                        language: "En",
-                        name: this.titleEn,
-                        description: this.descriptionEn,
-                        address: {
-                            country: this.selectedCountry,
-                            city: this.selectedCity,
-                            street: this.street
-                        },
-                        company: {
+
+            objectWithoutId() {
+                return {
+                    name: this.titleRu,
+                    description: this.descriptionRu,
+                    amountOfDiscount: this.valueOfDiscount,
+                    startDate: {
+                        $date: this.dateStart
+                    },
+                    endDate: {
+                        $date: this.dateFinish
+                    },
+                    address: {
+                        country: this.selectedCountry,
+                        city: this.selectedCity,
+                        street: this.street,
+                        location: {
+                            latitude: this.coordinate1,
+                            longitude: this.coordinate2
+                        }
+                    },
+                    company: {
+                        name: this.vendorRu,
+                        description: this.vendorDescrRu,
+                        phoneNumber: this.vendorPhone,
+                        mail: this.vendorEmail
+                    },
+                    workingHours: this.transformateDays(),
+                    tags: [
+                        this.tagsRu
+                    ],
+                    language: "Ru",
+                    translations: [
+                        {
+                            language: "En",
                             name: this.titleEn,
-                            description: this.descriptionEn
-                        },
-                        tags: [
-                            this.tagsEn
-                        ]
-                    }
-                ]
-            }},
+                            description: this.descriptionEn,
+                            address: {
+                                country: this.selectedCountry,
+                                city: this.selectedCity,
+                                street: this.street
+                            },
+                            company: {
+                                name: this.titleEn,
+                                description: this.descriptionEn
+                            },
+                            tags: [
+                                this.tagsEn
+                            ]
+                        }
+                    ]
+                }
+            },
             submit() {
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
                         this.addDiscount(
-                            {...{_id: '8888'}, ...(this.objectWithoutId())}
+                           {...{_id: uuidv4()}, ...(this.objectWithoutId())}
+
                         )
+                        // console.log({...{_id: uuidv4()}, ...(this.objectWithoutId())})
                     } else {
                         this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                     this.$refs.form.reset()
-                };
-                console.log(this.$store.state.discounts)
-            },
+                }
+
+                           },
             resetForm() {
-                this.$refs.form.reset()
+                this.$refs.form.reset();
+                this.fillingFields();
             },
             selectLine(value) {
-                 this.address.line = value;
+                this.address.line = value;
             },
             selectCountry(value) {
                 this.address.country = value;
             },
             selectCity(value) {
-                 this.address.city = value;
+                this.address.city = value;
             },
             titleOfPage() {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
@@ -496,27 +567,119 @@
                 } else {
                     return this.$tc('adAddSave', 2);
                 }
-            }
-        },
-        computed: mapGetters(['allDiscounts', 'discountById', 'language']),
-        async mounted() {
-            await this.goFetch('http://localhost:3000/discounts');
-            if (this.$route.params.placeOfCall == 'editingOfDiscount') {
-                const id = this.$route.params.idOfDiscount;
-                const discount = this.allDiscounts.find(element => element._id = id);
-                this.titleRu = discount.name;
-                //const s = {...(this.objectWithoutId()), ...discount};
-                //Object.keys(this.objectWithoutId()).map(function(a) { if (a in discount) this.objectWithoutId()[a] = discount[a]; });
-            }
-        },
-        created() {
+            },
+            fillingFields() {
+                if (this.$route.params.placeOfCall == 'editingOfDiscount') {
 
+                    const id = this.$route.params.idOfDiscount;
+                    const discount = this.allDiscounts.find(element => element._id = id);
+                    console.log(discount);
+                    this.titleRu = discount.name;
+                    this.titleEn = discount.translations[0].name;
+                    this.vendorRu = discount.company.name;
+                    this.vendorEn = discount.translations[0].company.name;
+                    this.vendorDescrRu = discount.company.description;
+                    this.vendorDescrEn = discount.translations[0].company.description;
+                    this.tagsRu = discount.tags;
+                    this.tagsEn = discount.translations[0].tags;
+                    this.descriptionRu = discount.description;
+                    this.descriptionEn = discount.translations[0].description;
+                    this.vendorPhone = discount.company.phoneNumber;
+                    this.vendorEmail = discount.company.mail;
+                    this.transformateToDays(discount.workingHours);
+                    this.valueOfDiscount = discount.amountOfDiscount;
+                    this.dateStart = moment(discount.startDate.$date).format('L'),
+                    this.dateFinish = moment(discount.endDate.$date).format('L'),
+                    this.selectedCountry = discount.address.country;
+                }
+            },
+            transformateToDays(str) {
+
+                if (str[0] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Monday'))
+                }
+                if (str[1] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Tuesday'))
+                }
+                if (str[2] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Wednesday'))
+                }
+                if (str[3] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Thursday'))
+                }
+                if (str[4] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Friday'))
+                }
+                if (str[5] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Saturday'))
+                }
+                if (str[6] === '1') {
+                    this.vendorSelectedDays.push(this.$t('Sunday'))
+                }
+            },
+            transformateDays() {
+                let str = '';
+                if (this.vendorSelectedDays.indexOf(this.$t('Monday')) != -1) {
+                    str = '1'
+                } else {
+                    str = '0'
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Tuesday')) != -1) {
+                    str = `${str}1`
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Wednesday')) != -1) {
+                    str = `${str}1`
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Thursday')) != -1) {
+                    str = `${str}1`
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Friday')) != -1) {
+                    str = `${str}1`
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Saturday')) != -1) {
+                    str = `${str}1`
+                } else {
+                    str = `${str}0`
+                }
+                if (this.vendorSelectedDays.indexOf(this.$t('Sunday')) != -1) {
+                    str = `${str}1`
+                } else {
+                    str = `${str}0`
+                }
+                return str
+            },
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries'])
+        },
+        computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
+        async mounted() {
+            const authorizationHeader = 'Authorization';
+            auth.getAccessToken().then((userToken) => {
+                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+                this.goFetch('http://localhost:3000/discounts');
+                axios.get('https://localhost:9001/api/v1/addresses/all/Ru/countries')
+                    .then((response) => {
+                        this.countries = response.data;
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
+
+            });
+            this.fillingFields();
         }
     }
 </script>
 <style scoped>
-#addDiscountMap {
-  width: 32vw;
-  height: 49vh;
-}
+    #addDiscountMap {
+        width: 32vw;
+        height: 49vh;
+    }
 </style>
