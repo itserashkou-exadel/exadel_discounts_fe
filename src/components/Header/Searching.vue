@@ -32,7 +32,7 @@
                   "searchText": this.searchResult,
                   "searchDiscountOption": "All",
                   "searchAddressCountry": "Украина",
-                  "searchAddressCity": "Брянск",
+                  "searchAddressCity": "Вінниця",
                   "searchSortFieldOption": "NameDiscount",
                   "searchSortOption": "Asc",
                   "searchPaginationPageNumber": 1,

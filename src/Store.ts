@@ -15,7 +15,8 @@ let store = new Vuex.Store({
         filtered: [],
         filteredDiscounts: [],
         countries: [],
-        cities: []
+        cities: [],
+        itemsPerPage: 5
     },
     getters: {
         filterData: state => {
@@ -41,6 +42,10 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setItemsPerPage(state, item){
+            // @ts-ignore
+            state.itemsPerPage = item;
+        },
         receiveSearch (state, dis){
             state.discounts = dis;
         },
@@ -80,6 +85,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        changeItemsPerPage({commit}, state){
+            commit('setItemsPerPage', state);
+        },
         changeFilter({commit}, state){
             commit("setFilter", state);
         },

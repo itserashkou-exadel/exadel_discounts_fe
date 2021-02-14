@@ -5,11 +5,14 @@
                 :items="result"
                 class="elevation-8"
                 :data="filterData"
-                item-key="id"
+                item-key="vendor"
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
-
+                :page.sync="page"
+                hide-default-footer
+                @page-count="pageCount = $event"
+                :items-per-page="itemsPerPage"
         >
 
             <template v-slot:top>
@@ -53,17 +56,17 @@
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
                     <v-row class="d-flex justify-end my-5">
-                        <v-col cols="1" lg="1" >
+                        <v-col cols="1" lg="1">
                             <v-btn>
                                 <v-icon color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
                         <v-col cols="7" lg="11" class="d-flex justify-center">
-                            <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
+                            <h2>{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
                         </v-col>
                         <v-spacer></v-spacer>
-                        <v-col  cols="11" lg="11" class="d-flex justify-center">
+                        <v-col cols="11" lg="11" class="d-flex justify-center">
                             <p class="mb-0">{{ item.description }}</p>
                         </v-col>
                         <v-col cols="11" lg="11" class="text-center">
@@ -77,7 +80,35 @@
                     </v-row>
                 </td>
             </template>
+
         </v-data-table>
+        <div>
+            <v-pagination
+                    v-model="page"
+                    :length="pageCount"
+                    @input="next"
+            ></v-pagination>
+        </div>
+        <v-select
+                v-model="itemsPerPage"
+                :items="itmPer"
+                label="items per page"
+                dense
+                solo
+
+        ></v-select>
+        <!--@input="itemsPerPage = parseInt($event, 10)"-->
+        <v-btn @click="showSelect()">
+            !!!
+        </v-btn>
+        <!--        <v-text-field
+
+                        label="Items per page"
+                        type="number"
+                        min="-1"
+                        max="15"
+
+                ></v-text-field>-->
     </v-col>
 </template>
 
@@ -85,10 +116,15 @@
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
+
     export default {
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            itmPer: [5, 10, 15],
+            page: 1,
+            pageCount: 1,
+            itemsPerPage: null,
             expanded: [],
             singleExpand: true,
             dialog: false,
@@ -119,9 +155,10 @@
 
         }),
         computed: {
-            filterData: function (){
+            filterData: function () {
                 const arr = [];
                 this.info = this.$store.state.discounts;
+                console.log(this.info)
                 this.info.map((item) => {
                     arr.push(
                         {
@@ -140,8 +177,17 @@
                 this.result = arr;
                 return this.result;
 
-
             },
+           /* itemsPerPage: {
+                get () {
+                    console.log(this.$store.state.itemsPerPage)
+                },
+                set (itemsPerPage) {
+                    this.$store.commit('setItemsPerPage', itemsPerPage)
+                }
+            },*/
+
+
             hello: () => {
                 console.log('heh');
             }
@@ -153,27 +199,70 @@
             dialogDelete(val) {
                 val || this.closeDelete()
             },
+
+            itemsPerPage: function(){
+                console.log(this.itemsPerPage)
+                this.changeItemsPerPage(this.itemsPerPage);
+                this.inputPost(
+                    {
+                        "searchText": 'Меха',
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Вінниця",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                        "searchLanguage": "Ru"
+                    }
+                )
+            }
+          /*  itemsPerPage: function () {
+                this.inputPost(
+                    {
+                        "searchText": 'Меха',
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Вінниця",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                        "searchLanguage": "Ru"
+                    }
+                )
+            }*/
         },
 
         methods: {
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
-            headers(){return [
-                {
-                    text: this.$t('dtOffer'),
-                    align: 'left',
-                    sortable: false,
-                    value: 'service',
-                },
-                {text: this.$t('dtVendor'), value: 'vendor'},
-                {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
-                {text: this.$t('dtStartDate'), value: 'startDate'},
-                {text: this.$t('dtFinishDate'), value: 'endDate'},
-                {text: this.$t('dtRating'), value: 'rating'},
-                {text: this.$t('dtActions'), value: 'actions', sortable: false},
-            ]},
-
+            ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost']),
+            headers() {
+                return [
+                    {
+                        text: this.$t('dtOffer'),
+                        align: 'left',
+                        sortable: false,
+                        value: 'service',
+                    },
+                    {text: this.$t('dtVendor'), value: 'vendor'},
+                    {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
+                    {text: this.$t('dtStartDate'), value: 'startDate'},
+                    {text: this.$t('dtFinishDate'), value: 'endDate'},
+                    {text: this.$t('dtRating'), value: 'rating'},
+                    {text: this.$t('dtActions'), value: 'actions', sortable: false},
+                ]
+            },
+            next() {
+                console.log('asdasd')
+            },
+            showSelect() {
+                console.log(this.$store.state.itemsPerPage);
+            },
             editItem(item) {
-                this.$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}});
+                this.$router.push({
+                    name: 'add_discount',
+                    params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
+                });
             },
             deleteItem(item) {
                 this.editedIndex = this.offers.indexOf(item);
