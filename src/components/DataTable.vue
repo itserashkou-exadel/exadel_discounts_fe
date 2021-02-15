@@ -137,46 +137,51 @@
             result: [],
             editedIndex: -1,
             editedItem: {
-                name: '',
+                id: '',
+                service: '',
                 vendor: '',
-                discount: 0,
-                start_date: 0,
-                finish_date: 0,
-                raring: 0
+                amountOfDiscount: 0,
+                startDate: '',
+                endDate: '',
+                rating: 0,
+                description: ''
             },
             defaultItem: {
-                name: '',
+                id: '',
+                service: '',
                 vendor: '',
-                discount: 0,
-                start_date: '',
-                finish_date: '',
-                raring: 0
+                amountOfDiscount: 0,
+                startDate: '',
+                endDate: '',
+                rating: 0,
+                description: ''
             },
 
         }),
         computed: {
             filterData: function () {
-                const arr = [];
-                this.info = this.$store.state.discounts;
-                console.log(this.info)
-                this.info.map((item) => {
-                    arr.push(
-                        {
-                            id: item._id,
-                            service: item.name,
-                            vendor: item.company.name,
-                            amountOfDiscount: item.amountOfDiscount,
-                            startDate: moment(item.startDate.$date).format('L'),
-                            endDate: moment(item.endDate.$date).format('L'),
-                            rating: item.ratingTotal,
-                            description: item.description,
-                        }
-                    )
+                if(this.$store.state.discounts.length>0){
+                    const arr = [];
+                    this.info = this.$store.state.discounts;
+                    console.log(this.info)
+                    this.info.map((item) => {
+                        arr.push(
+                            {
+                                id: item._id,
+                                service: item.name,
+                                vendor: item.company.name,
+                                amountOfDiscount: item.amountOfDiscount,
+                                startDate: moment(item.startDate.$date).format('L'),
+                                endDate: moment(item.endDate.$date).format('L'),
+                                rating: item.ratingTotal,
+                                description: item.description,
+                            }
+                        )
 
-                })
-                this.result = arr;
-                return this.result;
-
+                    })
+                    this.result = arr;
+                    return this.result;
+                }
             },
            /* itemsPerPage: {
                 get () {
@@ -265,12 +270,12 @@
                 });
             },
             deleteItem(item) {
-                this.editedIndex = this.offers.indexOf(item);
+                this.editedIndex = this.result.indexOf(item);
                 this.editedItem = Object.assign({}, item);
                 this.dialogDelete = true;
             },
             deleteItemConfirm() {
-                this.offers.splice(this.editedIndex, 1);
+                this.result.splice(this.editedIndex, 1);
                 this.closeDelete();
             },
             close() {
@@ -289,9 +294,9 @@
             },
             save() {
                 if (this.editedIndex > -1) {
-                    Object.assign(this.offers[this.editedIndex], this.editedItem)
+                    Object.assign(this.result[this.editedIndex], this.editedItem)
                 } else {
-                    this.offers.push(this.editedItem)
+                    this.result.push(this.editedItem)
                 }
                 this.close()
             },
