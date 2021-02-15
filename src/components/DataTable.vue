@@ -124,7 +124,7 @@
             itmPer: [5, 10, 15],
             page: 1,
             pageCount: 1,
-            itemsPerPage: null,
+            itemsPerPage: 5,
             expanded: [],
             singleExpand: true,
             dialog: false,
