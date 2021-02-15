@@ -1,4 +1,4 @@
-const fakeDataPoints =  [
+export const fakeTestData =  [
     {
         id: '1',
         name: 'Burger King 1',

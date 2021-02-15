@@ -9,7 +9,8 @@
     "dev": "vue-cli-service serve",
     "build-production": "vue-cli-service build --mode production",
     "build-watch": "vue-cli-service build --watch",
-    "json:server": "json-server --watch db.json"
+    "json:server": "json-server --watch db.json",
+    "json:server2": "json-server --watch fakeDataPoints.json"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^4.7.0",
