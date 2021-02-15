@@ -112,6 +112,7 @@
                 info: [],
                 results:[]
         }),
+
         computed: {
             ...mapGetters(["allDiscounts"]),
             filterData: function (){
