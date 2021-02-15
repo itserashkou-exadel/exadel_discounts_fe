@@ -12,6 +12,8 @@
 </template>
 
 <script>
+
+
 export default {
 name: "Searching"
 }
