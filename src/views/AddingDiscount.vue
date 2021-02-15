@@ -287,7 +287,8 @@
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
-                            v-bind:countriesAndTowns="countriesAndTowns"
+                            v-bind:countries="countries"
+                            v-bind:cities="cities"
                             v-bind:selectCity="selectCity"
                             v-bind:selectCountry="selectCountry"
                             v-on:selectedCountryForObj='selCountry'
@@ -342,19 +343,21 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <p v-for="(disc, i) in allDiscounts" :key="i">
-                {{disc.name}}{{disc._id}}
-            </p>
         </v-form>
+<!--        <p>{{allCountries}}</p>-->
     </v-container>
 </template>
 
 <script>
+    import AuthService from "@/services/auth.service";
+    const moment = require('moment')
     import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import CountryFlag from 'vue-country-flag'
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
-    // import i18n from "@/plugins/i18n.ts"
+    import { v4 as uuidv4 } from 'uuid'
+    import axios from 'axios'
+    const auth = new AuthService();
 
 
     export default {
@@ -362,6 +365,8 @@
         components: {ChooseOfTown, CountryFlag, AddDiscountMap},
         data() {
             return {
+                countries: [],
+                cities: [],
                 switchAd: true,
                 daysOfWeek: [`${this.$t('Monday')}`, `${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
                 street: null,
@@ -411,6 +416,10 @@
             },
             selCountry: function (country) {
                 this.selectedCountry = country
+                axios.get(`https://localhost:9001/api/v1/addresses/all/Ru/cities/${this.selectedCountry}`)
+                    .then((response) => {
+                        this.cities = response.data
+                    })
             },
             selCity: function (city) {
                 this.selectedCity = city
@@ -464,7 +473,7 @@
                     },
                 ]
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+
             objectWithoutId() {
                 return {
                     name: this.titleRu,
@@ -491,7 +500,7 @@
                         phoneNumber: this.vendorPhone,
                         mail: this.vendorEmail
                     },
-                    workingHours: this.vendorSelectedDays,
+                    workingHours: this.transformateDays(),
                     tags: [
                         this.tagsRu
                     ],
@@ -521,18 +530,18 @@
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
                         this.addDiscount(
-                            {...{_id: '8888'}, ...(this.objectWithoutId())}
+                           {...{_id: uuidv4()}, ...(this.objectWithoutId())}
+
                         )
+                        // console.log({...{_id: uuidv4()}, ...(this.objectWithoutId())})
                     } else {
                         this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                     this.$refs.form.reset()
                 }
-                ;
-                console.log(this.$store.state.discounts)
-            },
+
+                           },
             resetForm() {
-                this.transformateDays();
                 this.$refs.form.reset();
                 this.fillingFields();
             },
@@ -561,8 +570,10 @@
             },
             fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+
                     const id = this.$route.params.idOfDiscount;
                     const discount = this.allDiscounts.find(element => element._id = id);
+                    console.log(discount);
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
@@ -577,13 +588,13 @@
                     this.vendorEmail = discount.company.mail;
                     this.transformateToDays(discount.workingHours);
                     this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = discount.startDate.$date;
-                    this.dateFinish = discount.endDate.$date;
+                    this.dateStart = moment(discount.startDate.$date).format('L'),
+                    this.dateFinish = moment(discount.endDate.$date).format('L'),
                     this.selectedCountry = discount.address.country;
-
                 }
             },
             transformateToDays(str) {
+
                 if (str[0] === '1') {
                     this.vendorSelectedDays.push(this.$t('Monday'))
                 }
@@ -644,15 +655,25 @@
                     str = `${str}0`
                 }
                 return str
-            }
+            },
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries'])
         },
-        computed: mapGetters(['allDiscounts', 'language']),
+        computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
         async mounted() {
-            await this.goFetch('http://localhost:3000/discounts');
-            this.fillingFields();
-        },
-        created() {
+            const authorizationHeader = 'Authorization';
+            auth.getAccessToken().then((userToken) => {
+                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+                this.goFetch('http://localhost:3000/discounts');
+                axios.get('https://localhost:9001/api/v1/addresses/all/Ru/countries')
+                    .then((response) => {
+                        this.countries = response.data;
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
 
+            });
+            this.fillingFields();
         }
     }
 </script>
