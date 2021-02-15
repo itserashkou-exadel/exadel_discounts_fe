@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{name:headerButton.route}" class="nav-links pt-3" active-class="router-link-active">
+  <router-link :to="{name:headerButton.route}" class="nav-links" active-class="router-link-active">
   <v-btn class="font-weight-light"
          text>
     <div class="flex-column">
@@ -30,5 +30,9 @@ export default {
   background-color: #2196f3;
   cursor: pointer;
   text-decoration: none;
+}
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 67px;
+  width: 120px;
 }
 </style>
