@@ -10,7 +10,8 @@
         !
       </div>
       <MglMarker :coordinates="coordinates" color="red"
-                 :draggable="true"/>
+                 :draggable="true"
+                 @dragend="dragEnd"/>
     </MglMap>
   </div>
 </template>
@@ -53,6 +54,7 @@ export default {
         console.log(JSON.stringify(addr));
         let fullAddress = [addr.country, addr.city, addr.line].join(' ');
         this.callGeocoderApi(fullAddress);
+
       }
     },
     callGeocoderApi(address) {
@@ -62,6 +64,7 @@ export default {
       const updateCoordinates = (coords) => {
         this.coordinates = coords;
       }
+
       axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${params.access_token}&limit=1`)
           .then(function (response) {
             console.log(response)
@@ -73,6 +76,10 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
+    },
+    dragEnd(e) {
+      const { lng, lat } = e.marker.getLngLat();
+
     },
     created() {
       this.mapbox = Mapbox;
