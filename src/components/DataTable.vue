@@ -95,10 +95,9 @@
                 label="items per page"
                 dense
                 solo
-
         ></v-select>
         <!--@input="itemsPerPage = parseInt($event, 10)"-->
-        <v-btn @click="showSelect()">
+        <v-btn @click="test">
             !!!
         </v-btn>
         <!--        <v-text-field
@@ -113,6 +112,9 @@
 </template>
 
 <script>
+    const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
+    import axios from "axios";
+
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
@@ -160,7 +162,7 @@
         }),
         computed: {
             filterData: function () {
-                if(this.$store.state.discounts.length>0){
+                if (this.$store.state.discounts.length > 0) {
                     const arr = [];
                     this.info = this.$store.state.discounts;
                     console.log(this.info)
@@ -183,14 +185,14 @@
                     return this.result;
                 }
             },
-           /* itemsPerPage: {
-                get () {
-                    console.log(this.$store.state.itemsPerPage)
-                },
-                set (itemsPerPage) {
-                    this.$store.commit('setItemsPerPage', itemsPerPage)
-                }
-            },*/
+            /* itemsPerPage: {
+                 get () {
+                     console.log(this.$store.state.itemsPerPage)
+                 },
+                 set (itemsPerPage) {
+                     this.$store.commit('setItemsPerPage', itemsPerPage)
+                 }
+             },*/
 
 
             hello: () => {
@@ -222,25 +224,25 @@
                     }
                 )
             }*/
-          /*  itemsPerPage: function () {
-                this.inputPost(
-                    {
-                        "searchText": 'Меха',
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Вінниця",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                        "searchLanguage": "Ru"
-                    }
-                )
-            }*/
+            /*  itemsPerPage: function () {
+                  this.inputPost(
+                      {
+                          "searchText": 'Меха',
+                          "searchDiscountOption": "All",
+                          "searchAddressCountry": "Украина",
+                          "searchAddressCity": "Вінниця",
+                          "searchSortFieldOption": "NameDiscount",
+                          "searchSortOption": "Asc",
+                          "searchPaginationPageNumber": 1,
+                          "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                          "searchLanguage": "Ru"
+                      }
+                  )
+              }*/
         },
 
         methods: {
-            ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost']),
+            ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             headers() {
                 return [
                     {
@@ -258,7 +260,63 @@
                 ]
             },
             next() {
-                console.log('asdasd')
+                console.log(this.$store.state.discounts)
+                console.log(this.page, this.pageCount);
+                if (this.page === this.pageCount && this.$store.state.discounts.length%5===0){
+                    this.nextDiscount(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": "Украина",
+                            "searchAddressCity": "Вінниця",
+                            "searchSortFieldOption": "NameDiscount",
+                            "searchSortOption": "Asc",
+                            "searchPaginationPageNumber": this.page + 1,
+                            "searchPaginationCountElementPerPage": 5,
+                            "searchLanguage": "Ru"
+                        }
+                    )
+                }
+
+
+                console.log(this.result)
+            },
+            test(){
+                this.inputPost(
+                    {
+                        "searchText": 'Меха',
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Вінниця",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 15,
+                        "searchLanguage": "Ru"
+                    }
+                )
+
+                console.log(this.$store.state.discounts)
+
+                setTimeout(this.test_2,1000)
+            },
+
+            test_2(){
+                this.inputPost(
+                    {
+                        "searchText": 'Меха',
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Вінниця",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 2,
+                        "searchPaginationCountElementPerPage": 5,
+                        "searchLanguage": "Ru"
+                    }
+                )
+
+                console.log(this.$store.state.discounts)
             },
             showSelect() {
                 console.log(this.$store.state.itemsPerPage);
