@@ -33,6 +33,5 @@ export default {
 }
 .v-btn:not(.v-btn--round).v-size--default {
   height: 67px;
-  width: 120px;
 }
 </style>
