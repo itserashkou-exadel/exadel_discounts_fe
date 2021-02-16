@@ -39,6 +39,8 @@
     import Mapbox from "mapbox-gl";
     import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
     import LeftSideBar from "@/components/Map/LeftSideBar/LeftSideBar";
+    import {AxiosInstance as axios} from "axios";
+
 
     export default {
         components: {
@@ -95,20 +97,25 @@
         },
         mounted() {
             // fetch('http://localhost:3000/fakeDataPoints')
-            //     .then(res => {
-            //         this.fakeData = res.data
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         this.fakeData = data
             //         console.log(this.fakeData)
             //     })
+            // .then(res => {
+            //     this.fakeData = res.data
+            //     console.log(this.fakeData)
+            // })
         },
-        created() {
+        async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
             // try {
             //     this.fakeData = await axios.get('http://localhost:3000/fakeDataPoints')
+            //     console.log('ES7', this.fakeData)
             // } catch (e) {
             //     console.error(e)
             // }
-
         },
         methods: {
             onMapLoaded(event) {
@@ -117,7 +124,7 @@
                 // or just to store if you want have access from other components
                 //this.$store.map = event.map;
             },
-            jumpToMarker(coordinates){
+            jumpToMarker(coordinates) {
                 this.map.flyTo({
                     center: coordinates,
                     zoom: 16,
