@@ -4,7 +4,7 @@ export default class AuthService {
     private userManager: UserManager;
 
     constructor() {
-        const STS_DOMAIN: string = 'https://localhost:44301';
+        const STS_DOMAIN: string = 'https://localhost:8001';
 
         const settings: any = {
             userStore: new WebStorageStateStore({ store: window.localStorage }),
@@ -14,8 +14,8 @@ export default class AuthService {
             automaticSilentRenew: true,
             silent_redirect_uri: 'https://localhost:44357/silent-renew.html',
             response_type: 'code',
-            scope: 'openid profile role crazypriceapi',
-            post_logout_redirect_uri: 'https://localhost:44357/',
+            scope: 'openid profile role crazy_price_api1',
+            post_logout_redirect_uri: 'https://localhost:44357',
             filterProtocolClaims: true,
         };
 

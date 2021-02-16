@@ -2,10 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 
+
+
 Vue.use(Vuex);
 
 const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
+const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 
 let store = new Vuex.Store({
     state: {
@@ -80,7 +83,7 @@ let store = new Vuex.Store({
         }
     },
     actions: {
-        changeFilter({commit}, state){
+        changeFilter({commit}, state) {
             commit("setFilter", state);
         },
         changeSwitcher({commit}, state){
@@ -90,16 +93,16 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForcountries ({commit}, str) {
-            const response = await axios.get(str);
+        async goFetchForCountries ({commit}) {
+            const response = await axios.get(urlCountries);
             commit('setCountries', response.data);
         },
         async goFetchForCities ({commit}, str) {
             const response = await axios.get(str);
             commit('setCities', response.data);
         },
-        addDiscount ({commit}, newDiscount) {
-          //  await axios.post(urlDiscounts, newDiscount);
+        async addDiscount ({commit}, newDiscount) {
+            axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
         updateDiscount ( { commit }, discount) {

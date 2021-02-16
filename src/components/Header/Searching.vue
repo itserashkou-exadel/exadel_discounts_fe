@@ -44,6 +44,11 @@
       }
     }
   }
+
+
+export default {
+name: "Searching"
+}
 </script>
 
 <style scoped>
