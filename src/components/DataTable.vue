@@ -205,7 +205,7 @@
                 val || this.closeDelete()
             },
 
-            itemsPerPage: function(){
+            /*itemsPerPage: function(){
                 console.log(this.itemsPerPage)
                 this.changeItemsPerPage(this.itemsPerPage);
                 this.inputPost(
@@ -221,7 +221,7 @@
                         "searchLanguage": "Ru"
                     }
                 )
-            }
+            }*/
           /*  itemsPerPage: function () {
                 this.inputPost(
                     {
