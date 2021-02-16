@@ -2,12 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 
-
-
 Vue.use(Vuex);
 
 const urlDiscounts = 'http://localhost:3000/discounts';
-const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
+const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 
 let store = new Vuex.Store({
     state: {
@@ -43,6 +41,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        receiveSearch (state, dis){
+            state.discounts = dis;
+        },
         setFilter (state, filteredData){
             state.filtered = filteredData;
         },
@@ -79,7 +80,7 @@ let store = new Vuex.Store({
         }
     },
     actions: {
-        changeFilter({commit}, state) {
+        changeFilter({commit}, state){
             commit("setFilter", state);
         },
         changeSwitcher({commit}, state){
@@ -89,21 +90,26 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForCountries ({commit}) {
-            const response = await axios.get(urlCountries);
+        async goFetchForcountries ({commit}, str) {
+            const response = await axios.get(str);
             commit('setCountries', response.data);
         },
         async goFetchForCities ({commit}, str) {
             const response = await axios.get(str);
             commit('setCities', response.data);
         },
-        async addDiscount ({commit}, newDiscount) {
-            axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
+        addDiscount ({commit}, newDiscount) {
+          //  await axios.post(urlDiscounts, newDiscount);
             commit('createDiscount', newDiscount);
         },
         updateDiscount ( { commit }, discount) {
           //  const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
+        },
+
+        async inputPost({commit}, search){
+            const response = await axios.post(searchDiscount, search);
+            commit('receiveSearch', response.data)
         }
     }
 
