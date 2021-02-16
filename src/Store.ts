@@ -2,9 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 
+
+
 Vue.use(Vuex);
 
 const urlDiscounts = 'http://localhost:3000/discounts';
+const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 
 let store = new Vuex.Store({
     state: {
@@ -12,7 +15,9 @@ let store = new Vuex.Store({
         switch: true,
         language: 'Ru',
         filtered: [],
-        filteredDiscounts: []
+        filteredDiscounts: [],
+        countries: [],
+        cities: []
     },
     getters: {
         filterData: state => {
@@ -27,6 +32,12 @@ let store = new Vuex.Store({
         allDiscounts (state) {
             return state.discounts
         },
+        allCountries (state) {
+            return state.countries
+        },
+        allCities (state) {
+            return state.cities
+        },
         language: state => {
             return state.language
         }
@@ -40,6 +51,12 @@ let store = new Vuex.Store({
         },
         setDiscounts (state, discounts) {
             state.discounts = discounts
+        },
+        setCountries (state, countries) {
+            state.countries = countries
+        },
+        setCities (state, cities) {
+            state.cities = cities
         },
         createDiscount (state, newDiscount) {
             // @ts-ignore
@@ -62,7 +79,7 @@ let store = new Vuex.Store({
         }
     },
     actions: {
-        changeFilter({commit}, state){
+        changeFilter({commit}, state) {
             commit("setFilter", state);
         },
         changeSwitcher({commit}, state){
@@ -72,8 +89,16 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        addDiscount ({commit}, newDiscount) {
-          //  await axios.post(urlDiscounts, newDiscount);
+        async goFetchForCountries ({commit}) {
+            const response = await axios.get(urlCountries);
+            commit('setCountries', response.data);
+        },
+        async goFetchForCities ({commit}, str) {
+            const response = await axios.get(str);
+            commit('setCities', response.data);
+        },
+        async addDiscount ({commit}, newDiscount) {
+            axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
         updateDiscount ( { commit }, discount) {
