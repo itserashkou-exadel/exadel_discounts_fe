@@ -1,6 +1,6 @@
 <template>
     <div id="map">
-        <nav>
+        <nav class="mapNavPanel">
             <LeftSideBar
                     v-bind:markersData="markersData"
                     v-bind:jumpToMarker="jumpToMarker"
@@ -204,7 +204,10 @@
 <style scoped>
     #map {
         width: 100vw;
-        height: 100vh;
+        height: 90vh;
         display: flex;
+    }
+    .mapNavPanel{
+        margin-bottom: 25px;
     }
 </style>
