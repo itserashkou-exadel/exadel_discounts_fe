@@ -22,14 +22,20 @@
 
             <v-divider></v-divider>
 
-            <v-expansion-panels class="d-flex mx-auto" >
+            <v-expansion-panels class="d-flex mx-auto"  >
+
                 <v-expansion-panel
                         v-for="(item,i) in markersData"
                         :key="i"
                         @click="jumpToMarker([item.address.location.latitude, item.address.location.longitude])"
 
                 >
-                    <v-expansion-panel-header>{{item.name}}</v-expansion-panel-header >
+                    <v-expansion-panel-header >
+                        <v-list-item-icon v-for="item in items" >
+                            <v-icon class="d-flex mx-auto">{{ item.icon }}</v-icon>
+                        </v-list-item-icon>
+                        {{item.name}}</v-expansion-panel-header >
+
                     <v-expansion-panel-content>{{item.company.description}}</v-expansion-panel-content>
                     <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
                     <!--                    <v-btn class="primary  d-flex mx-auto my-5"> Accept</v-btn>-->
