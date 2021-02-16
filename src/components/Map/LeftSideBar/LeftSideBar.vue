@@ -24,13 +24,14 @@
 
             <v-expansion-panels class="d-flex mx-auto" >
                 <v-expansion-panel
-                        v-for="(item,i) in fakeTestData"
+                        v-for="(item,i) in markersData"
                         :key="i"
-                        @click="jumpToMarker(item.coordinates)"
+                        @click="jumpToMarker([item.address.location.latitude, item.address.location.longitude])"
+
                 >
                     <v-expansion-panel-header>{{item.name}}</v-expansion-panel-header >
-                    <v-expansion-panel-content>{{item.description}}</v-expansion-panel-content>
-                    <v-expansion-panel-content>{{item.address}}</v-expansion-panel-content>
+                    <v-expansion-panel-content>{{item.company.description}}</v-expansion-panel-content>
+                    <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
                     <!--                    <v-btn class="primary  d-flex mx-auto my-5"> Accept</v-btn>-->
                 </v-expansion-panel>
             </v-expansion-panels>
@@ -55,7 +56,7 @@
 
     export default {
         name: "LeftSideBar",
-        props:['fakeTestData', 'jumpToMarker'],
+        props:['markersData', 'jumpToMarker'],
         data() {
             return {
                 drawer: true,
