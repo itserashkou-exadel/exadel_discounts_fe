@@ -6,6 +6,8 @@ import store from "@/Store";
 import {i18n} from "@/plugins/i18n";
 import { v4 as uuidv4 } from 'uuid'
 
+Vue.use(uuidv4);
+
 Vue.config.productionTip = false;
 new Vue({
   router,
