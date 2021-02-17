@@ -2,11 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 
-
-
 Vue.use(Vuex);
 
-const urlDiscounts = 'http://localhost:3000/discounts';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 
 let store = new Vuex.Store({
@@ -101,8 +98,8 @@ let store = new Vuex.Store({
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
-        updateDiscount ( { commit }, discount) {
-          //  const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
+        async updateDiscount ( { commit }, discount) {
+            await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         }
     }

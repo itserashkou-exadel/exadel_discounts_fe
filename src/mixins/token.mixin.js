@@ -3,6 +3,11 @@ import axios from "axios";
 import {functionalThemeClasses} from "vuetify/lib/mixins/themeable";
 const auth = new AuthService();
 export default {
+    data() {
+        return {
+            version: 1
+        }
+    },
     methods: {
         async getToken (func) {
             const authorizationHeader = 'Authorization';
