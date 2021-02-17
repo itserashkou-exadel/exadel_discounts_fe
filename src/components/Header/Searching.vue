@@ -14,9 +14,13 @@
 </template>
 
 <script>
-  import axios from "axios"
-  import {mapActions} from "vuex";
 
+  import {mapActions} from "vuex";
+    import AuthService from "@/services/auth.service";
+  const moment = require('moment')
+  import {mapGetters, mapMutations,  mapState} from 'vuex'
+  import axios from 'axios'
+  const auth = new AuthService();
   export default {
     name: "Searching",
     data() {
@@ -27,28 +31,37 @@
     methods: {
       ...mapActions(['inputPost']),
       showSearch() {
-        this.inputPost(
-                {
-                  "searchText": this.searchResult,
-                  "searchDiscountOption": "All",
-                  "searchAddressCountry": "Украина",
-                  "searchAddressCity": "Вінниця",
-                  "searchSortFieldOption": "NameDiscount",
-                  "searchSortOption": "Asc",
-                  "searchPaginationPageNumber": 1,
-                  "searchPaginationCountElementPerPage": 5,
-                  "searchLanguage": "Ru"
-                }
-        )
+        const authorizationHeader = 'Authorization';
+        auth.getAccessToken().then((userToken) => {
+          axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+          this.inputPost(
+                  {
+                    "searchText": "Игр",
+                    "searchDiscountOption": "All",
+                    "searchAddressCountry": "Беларусь",
+                    "searchAddressCity": "Минск",
+                    "searchSortFieldOption": "NameDiscount",
+                    "searchSortOption": "Asc",
+                    "searchPaginationPageNumber": 1,
+                    "searchPaginationCountElementPerPage": 10,
+                    "searchLanguage": "Ru"
+                  }
+          )
+                  .then((response) => {
+                    this.countries = response.data;
+                  })
+                  .catch((error) => {
+                    alert(error);
+                  });
+
+        });
+
         this.searchResult = '';
       }
     }
   }
 
 
-export default {
-name: "Searching"
-}
 </script>
 
 <style scoped>

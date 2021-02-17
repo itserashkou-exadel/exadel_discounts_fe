@@ -20,7 +20,7 @@
             <v-col>
                 <div>
                     <v-card-title>
-                        {{ description.service +" dadasdaskjdsakjdndadsadadasdasdasdasdasda"}}
+                        {{ description.service}}
                     </v-card-title>
                 </div>
                 <v-row
