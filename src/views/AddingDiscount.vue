@@ -430,7 +430,6 @@
                 }
             }
         },
-
         methods: {
             selCountry: function (country) {
                 this.selectedCountry = country
@@ -444,7 +443,8 @@
             },
             changeExpand(item, i) {
                 this.trueOrFalseArr[i] = !this.trueOrFalseArr[i];
-                this.componentKey += 1;
+                this.expandT = !this.expandT;
+               // this.componentKey += 1;
             },
             fieldsForDiscount() {
                 return [
@@ -454,7 +454,8 @@
                         modelRu: this.titleRu,
                         modelEn: this.titleEn,
                         labelRu: this.$t('adLabelOfDiscountTitleRu'),
-                        labelEn: this.$t('adLabelOfDiscountTitleEn')
+                        labelEn: this.$t('adLabelOfDiscountTitleEn'),
+                        expandT: this.expandT
                     },
                     {
                         placeholderRu: this.$t('adLabelOfDiscountVendorRu'),
@@ -493,133 +494,182 @@
 
             objectWithoutId() {
                 return {
+                    //id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
                     name: this.titleRu,
-                    description: this.descriptionRu,
-                    amountOfDiscount: this.valueOfDiscount,
-                    startDate: {
-                        $date: this.dateStart
-                    },
-                    endDate: {
-                        $date: this.dateFinish
-                    },
+                    description: "string",
+                    amountOfDiscount: 0,
+                    startDate: "2021-02-17T08:26:34.109Z",
+                    endDate: "2022-02-17T08:26:34.109Z",
                     address: {
-                        country: this.selectedCountry,
-                        city: this.selectedCity,
-                        street: this.street,
+                        country: "Беларусь",
+                        city: "Белгород",
+                        street: "string",
                         location: {
-                            latitude: this.coordinate1,
-                            longitude: this.coordinate2
+                            latitude: 85,
+                            longitude: 33
                         }
                     },
                     company: {
-                        name: this.vendorRu,
-                        description: this.vendorDescrRu,
-                        phoneNumber: this.vendorPhone,
-                        mail: this.vendorEmail
+                        name: "string",
+                        description: "string",
+                        phoneNumber: "string",
+                        mail: "string"
                     },
-                    workingHours: this.transformateDays(),
+                    workingDaysOfTheWeek: "0011001",
                     tags: [
-                        this.tagsRu
+                        "Меха"
                     ],
                     language: "Ru",
                     translations: [
                         {
-                            language: "En",
-                            name: this.titleEn,
-                            description: this.descriptionEn,
+                            name: "string",
+                            description: "string",
                             address: {
-                                country: this.selectedCountry,
-                                city: this.selectedCity,
-                                street: this.street
+                                country: "Belarus",
+                                city: "Belgorod",
+                                street: "string",
+                                location: {
+                                    latitude: 0,
+                                    longitude: 0
+                                }
                             },
                             company: {
-                                name: this.titleEn,
-                                description: this.descriptionEn
+                                name: "string",
+                                description: "string",
+                                phoneNumber: "string",
+                                mail: "string"
                             },
                             tags: [
-                                this.tagsEn
-                            ]
+                                "String"
+                            ],
+                            language: "Ru"
                         }
                     ]
+                    // id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
+                    // name: "string",//this.titleRu,
+                    // description: "string", //this.descriptionRu,
+                    // amountOfDiscount: 20, //this.valueOfDiscount,
+                    // startDate: "2021-02-17T08:26:34.109Z",//{$date: this.dateStart},
+                    // endDate: "2022-02-17T08:26:34.109Z",//{$date: this.dateFinish},
+                    // address: {
+                    //     country: "Беларусь", //this.selectedCountry,
+                    //     city: "Белгород",//this.selectedCity,
+                    //     street: "string", //this.street,
+                    //     location: {
+                    //         latitude: 85,//this.coordinate1,
+                    //         longitude: 33, //this.coordinate2
+                    //     }
+                    // },
+                    // company: {
+                    //     name: "string", //this.vendorRu,
+                    //     description: "string", //this.vendorDescrRu,
+                    //     phoneNumber: "string", //this.vendorPhone,
+                    //     mail: "string", //this.vendorEmail
+                    // },
+                    // workingHours: '0110111',//this.transformateDays(),
+                    // tags: [
+                    //     'Меха', //this.tagsRu
+                    // ],
+                    // language: "Ru",
+                    // translations: [
+                    //     {
+                    //         name: "string", //this.titleEn,
+                    //         description: "string", //this.descriptionEn,
+                    //         address: {
+                    //             country: 'Belarus', //this.selectedCountry,
+                    //             city: 'Belgorod', //this.selectedCity,
+                    //             street: "string", //this.street,
+                    //             location: {
+                    //                   latitude: 0,
+                    //                   longitude: 0
+                    //                             }
+                    //         },
+                    //         company: {
+                    //             name: "string", //this.titleEn,
+                    //             description: "string", //this.descriptionEn
+                    //         },
+                    //         tags: [
+                    //             'Hhhh', //this.tagsEn
+                    //         ],
+                    //         language: "Ru"
+                    //     }
+                    // ]
                 }
+
             },
             submit() {
                 const postDiscount = () => {
+                    const obj = {
+                        id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
+                        name: "string",
+                        description: "string",
+                        amountOfDiscount: 0,
+                        startDate: "2021-02-17T08:26:34.109Z",
+                        endDate: "2022-02-17T08:26:34.109Z",
+                        address: {
+                            country: "Беларусь",
+                            city: "Белгород",
+                            street: "string",
+                            location: {
+                                latitude: 85,
+                                longitude: 33
+                            }
+                        },
+                        company: {
+                            name: "string",
+                            description: "string",
+                            phoneNumber: "string",
+                            mail: "string"
+                        },
+                        workingDaysOfTheWeek: "0011001",
+                        tags: [
+                            "Меха"
+                        ],
+                        language: "Ru",
+                        translations: [
+                            {
+                                name: "string",
+                                description: "string",
+                                address: {
+                                    country: "Belarus",
+                                    city: "Belgorod",
+                                    street: "string",
+                                    location: {
+                                        latitude: 0,
+                                        longitude: 0
+                                    }
+                                },
+                                company: {
+                                    name: "string",
+                                    description: "string",
+                                    phoneNumber: "string",
+                                    mail: "string"
+                                },
+                                tags: [
+                                    "String"
+                                ],
+                                language: "Ru"
+                            }
+                        ]
+                    };
                     this.addDiscount(
-                        {...{_id: uuidv4()}, ...(this.objectWithoutId())}
+                      //  {...{id: uuidv4()}, ...(this.objectWithoutId())}
+                       {...{id: "3fa85f64-5717-4562-b3fc-2c963f67afa6"}, ...(this.objectWithoutId())}
+                       // this.objectWithoutId()
                     )
-                    // console.log(this);
+
                 }
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        const authorizationHeader = 'Authorization';
-                        auth.getAccessToken().then((userToken) => {
-                            axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-                            // this.addDiscount(
-                            //     {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                            // )
-                            // console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
-                            axios.post('https://localhost:9001/api/v1/discounts/upsert',
-                                {
-                                    "id": "3fa85f64-5717-4562-b3fc-2c967f66afa6",
-                                    "name": "string",
-                                    "description": "string",
-                                    "amountOfDiscount": 0,
-                                    "startDate": "2021-02-16T21:26:49.033Z",
-                                    "endDate": "2021-02-16T21:26:49.033Z",
-                                    "address": {
-                                        "country": "string",
-                                        "city": "string",
-                                        "street": "string",
-                                        "location": {
-                                            "latitude": 0,
-                                            "longitude": 0
-                                        }
-                                    },
-                                    "company": {
-                                        "name": "string",
-                                        "description": "string",
-                                        "phoneNumber": "string",
-                                        "mail": "string"
-                                    },
-                                    "workingDaysOfTheWeek": "string",
-                                    "tags": [
-                                        "string"
-                                    ],
-                                    "language": "Ru",
-                                    "translations": [
-                                        {
-                                            "name": "string",
-                                            "description": "string",
-                                            "address": {
-                                                "country": "string",
-                                                "city": "string",
-                                                "street": "string",
-                                                "location": {
-                                                    "latitude": 0,
-                                                    "longitude": 0
-                                                }
-                                            },
-                                            "company": {
-                                                "name": "string",
-                                                "description": "string",
-                                                "phoneNumber": "string",
-                                                "mail": "string"
-                                            },
-                                            "tags": [
-                                                "string"
-                                            ],
-                                            "language": "En"
-                                        }
-                                    ]
-                                }
-                            )
-                        }) } else {
+
+                        //     //     {...{id: uuidv4()}, ...(this.objectWithoutId())}
+
+                        this.getToken(postDiscount);
+                    } else {
                         this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                     this.$refs.form.reset()
                 }
-
                            },
             resetForm() {
                 this.$refs.form.reset();
@@ -667,10 +717,9 @@
                     this.vendorEmail = discount.company.mail;
                     this.transformateToDays(discount.workingHours);
                     this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = moment(discount.startDate.$date).format('L'),
-                    this.dateFinish = moment(discount.endDate.$date).format('L'),
+                    this.dateStart = discount.startDate.$date.substr(0, 10),
+                    this.dateFinish =discount.endDate.$date.substr(0, 10),
                     this.selectedCountry = discount.address.country;
-
                 }
             },
             transformateToDays(str) {
@@ -751,7 +800,7 @@
             };
             this.getToken(getCountries);
             this.fillingFields();
-            // this.consoleL();
+
         }
     }
 </script>
