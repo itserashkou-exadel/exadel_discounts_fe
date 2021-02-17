@@ -379,7 +379,7 @@
     import axios from 'axios'
     const auth = new AuthService();
     import Vue from 'vue'
-    import paginationMixin from '@/mixins/pagination.mixin'
+    import paginationMixin from '@/mixins/token.mixin'
 
 
     export default {
