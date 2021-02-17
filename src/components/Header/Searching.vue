@@ -10,7 +10,10 @@
       multiple
       v-model="searchResult"
       @keydown.enter="showSearch()"
-  ></v-text-field>
+      :class="{'closed' : searchClosed}"
+      @focus="searchClosed = false"
+      @blur.native="searchClosed = true"
+      ></v-text-field>
 </template>
 
 <script>
@@ -21,8 +24,15 @@
     name: "Searching",
     data() {
       return {
-        searchResult: ''
-      }
+        searchResult: '',
+        sideNav: false,
+        dialog: false,
+        notifications: false,
+        sound: true,
+        widgets: false,
+        drawer: false,
+        searchClosed: true
+        }
     },
     methods: {
       ...mapActions(['inputPost']),
@@ -41,11 +51,22 @@
                 }
         )
         this.searchResult = '';
-      }
-    }
+      },
+        onResize() {
+          this.searchClosed = document.documentElement.clientWidth < 1080 ? true  : false;
+        },
+      },
+      created() {
+        window.addEventListener('resize', this.onResize);
+        this.onResize();
+      },
+      beforeDestroy() {
+        window.removeEventListener('resize', this.onResize);
+      },
+
   }
+
+
+
 </script>
 
-<style scoped>
-
-</style>
