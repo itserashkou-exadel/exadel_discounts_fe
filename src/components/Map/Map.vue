@@ -14,9 +14,11 @@
                 :zoom=11
         >
             <MglMarker :coordinates="[marker.address.location.latitude, marker.address.location.longitude]"
-                       v-for="marker in markersData">
+                       v-for="marker in markersData"
+
+            >
                 <MglPopup>
-                    <VCard outlined>
+                    <VCard flat >
                         <v-card-title>
                             <div>{{marker.name}}</div>
                         </v-card-title>
@@ -33,7 +35,6 @@
                     </VCard>
                 </MglPopup>
             </MglMarker>
-
         </MglMap>
     </div>
 </template>
@@ -99,7 +100,6 @@
                 //         coordinates: [27.588133, 53.933288]
                 //     },
                 // ]
-
             };
         },
         async mounted() {
@@ -127,7 +127,6 @@
 
             });
             this.fillingFields();
-
             // fetch('http://localhost:3000/fakeDataPoints')
             //     .then(response => response.json())
             //     .then(data => {
@@ -158,6 +157,10 @@
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
+
+            map.addLayer({
+
+            })
             // try {
             //     this.fakeData = await axios.get('http://localhost:3000/fakeDataPoints')
             //     console.log('ES7', this.fakeData)
@@ -196,6 +199,9 @@
                     speed: 2
                 })
                 console.log('WORK', coordinates)
+            },
+            showMarkerName(){
+                console.log('MARKER')
             }
         }
     };
@@ -205,9 +211,14 @@
     #map {
         width: 100vw;
         height: 90vh;
-        display: flex;
+
+
     }
     .mapNavPanel{
+        position: fixed;
+        z-index: 1;
+        /*left: 5px;*/
+
         margin-bottom: 25px;
     }
 </style>

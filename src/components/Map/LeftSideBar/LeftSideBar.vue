@@ -1,78 +1,52 @@
 <template>
-
-        <v-navigation-drawer
-                v-model="drawer"
-                :mini-variant.sync="mini"
-                permanent
-                class="d-flex"
+    <div>
+        <v-btn
+                color="primary"
+                dark
+                @mouseover="drawer = !drawer"
+                class="mapMenuToggleBtn mt-5 ml-5"
         >
-            <v-list-item class="px-2">
-                <v-list-item-avatar>
-                    <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
-                </v-list-item-avatar>
-
-                <v-list-item-title>John Doe</v-list-item-title>
-
-                <v-btn
-                        icon
-                        @click.stop="mini = !mini"
+            Show menu
+        </v-btn>
+        <div @mouseleave="mouseOverMethod">
+            <v-navigation-drawer
+                    fixed
+                    v-model="drawer"
+                    class="navDrawer mt-10"
+            >
                 >
-                    <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
-            </v-list-item>
+                <v-expansion-panels class="d-flex mx-auto">
+                    <v-expansion-panel
+                            v-for="(item,i) in markersData"
+                            :key="i"
+                            @click="jumpToMarker([item.address.location.latitude, item.address.location.longitude])"
+                    >
+                        <v-expansion-panel-header>
+                            {{item.name}}
+                        </v-expansion-panel-header>
 
-            <v-divider></v-divider>
-
-            <v-expansion-panels class="d-flex mx-auto"  >
-
-                <v-expansion-panel
-                        v-for="(item,i) in markersData"
-                        :key="i"
-                        @click="jumpToMarker([item.address.location.latitude, item.address.location.longitude])"
-
-                >
-                    <v-expansion-panel-header >
-                        <v-list-item-icon v-for="item in items" >
-                            <v-icon class="d-flex mx-auto">{{ item.icon }}</v-icon>
-                        </v-list-item-icon>
-                        {{item.name}}</v-expansion-panel-header >
-
-                    <v-expansion-panel-content>{{item.company.description}}</v-expansion-panel-content>
-                    <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
-                    <!--                    <v-btn class="primary  d-flex mx-auto my-5"> Accept</v-btn>-->
-                </v-expansion-panel>
-            </v-expansion-panels>
-
-
-            <!--                        <v-list dense>-->
-            <!--                            <v-list-item>-->
-            <!--                                <v-list-item-icon>-->
-            <!--                                    <v-icon>{{ item.name }}</v-icon>-->
-            <!--                                </v-list-item-icon>-->
-
-            <!--                                <v-list-item-content>-->
-            <!--                                    <v-list-item-title>{{ item.description }}</v-list-item-title>-->
-            <!--                                </v-list-item-content>-->
-            <!--                            </v-list-item>-->
-            <!--                        </v-list>-->
-        </v-navigation-drawer>
-
+                        <v-expansion-panel-content>{{item.company.description}}</v-expansion-panel-content>
+                        <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+            </v-navigation-drawer>
+        </div>
+    </div>
 </template>
 
 <script>
-
     export default {
         name: "LeftSideBar",
-        props:['markersData', 'jumpToMarker'],
+        props: ['markersData', 'jumpToMarker'],
         data() {
             return {
-                drawer: true,
+                something: 0,
+                drawer: false,
                 items: [
                     {title: 'Home', icon: 'mdi-home-city'},
                     // {title: 'My Account', icon: 'mdi-account'},
                     // {title: 'Users', icon: 'mdi-account-group-outline'},
                 ],
-                mini: false,
                 // fakeDataPoints2: [
                 //     {
                 //         id: '1',
@@ -117,9 +91,25 @@
                 // ]
             }
         },
+        methods: {
+            test() {
+                console.log('TEST!')
+            },
+            mouseOverMethod() {
+                this.drawer = !this.drawer;
+                this.something += 1;
+                console.log('Mouse Over !!!', this.drawer)
+            }
+        },
     }
 </script>
 
 <style scoped>
+    .mapMenuToggleBtn {
 
+    }
+
+    .navDrawer {
+        border-radius: 3px;
+    }
 </style>
