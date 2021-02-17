@@ -23,60 +23,70 @@
                             :key="i">
                         <div class="d-flex align-content-center">
                             <v-text-field v-if="i === 0 && $i18n.locale === 'ru'"
+                                          :key="componentKey"
                                           :placeholder='$i18n.locale === "ru" ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleRu'
                                           :label='$i18n.locale === "ru" ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 0 && $i18n.locale === 'en'"
+                                          :key="componentKey"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
+                                          :key="componentKey"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
+                                          :key="componentKey"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
+                                          :key="componentKey"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
+                                          :key="componentKey"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'ru'"
+                                          :key="componentKey"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'en'"
+                                          :key="componentKey"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'ru'"
+                                        :key="componentKey"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionRu'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                         outlined>
                             </v-textarea>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'en'"
+                                        :key="componentKey"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionEn'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
@@ -92,6 +102,7 @@
                         </div>
                         <v-expand-transition>
                             <v-text-field v-if="i === 0 && ($i18n.locale === 'ru')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleEn"
@@ -99,6 +110,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleRu"
@@ -106,6 +118,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'ru')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorEn'
@@ -113,6 +126,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorRu'
@@ -120,6 +134,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'ru')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrEn'
@@ -127,6 +142,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrRu'
@@ -134,6 +150,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'ru')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsEn'
@@ -141,6 +158,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'en')"
+                                          :key="componentKey"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsRu'
@@ -148,6 +166,7 @@
                                           outlined
                             ></v-text-field>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'ru')"
+                                        :key="componentKey"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionEn'
@@ -155,6 +174,7 @@
                                         outlined
                             ></v-textarea>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'en')"
+                                        :key="componentKey"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionRu'
@@ -358,13 +378,17 @@
     import { v4 as uuidv4 } from 'uuid'
     import axios from 'axios'
     const auth = new AuthService();
+    import Vue from 'vue'
+    import paginationMixin from '@/mixins/token.mixin'
 
 
     export default {
         name: "AddingDiscount",
+        mixins: [paginationMixin],
         components: {ChooseOfTown, CountryFlag, AddDiscountMap},
         data() {
             return {
+                componentKey: 0,
                 countries: [],
                 cities: [],
                 switchAd: true,
@@ -399,10 +423,6 @@
                 dateFinish: new Date().toISOString().substr(0, 10),
                 menu: false,
                 menuFinish: false,
-                countriesAndTowns: [
-                    {id: 1, town: 'Grodno', country: 'Belarus'},
-                    {id: 2, town: 'Minsk', country: 'Belarus'},
-                    {id: 3, town: 'Kiev', country: 'Ukraine'}],
                 address: {
                     country: null,
                     city: null,
@@ -411,9 +431,6 @@
             }
         },
         methods: {
-            modelForTitle() {
-                return (this.switchInAd ? this.titleRu : this.titleEn)
-            },
             selCountry: function (country) {
                 this.selectedCountry = country
                 axios.get(`https://localhost:9001/api/v1/addresses/all/Ru/cities/${this.selectedCountry}`)
@@ -425,8 +442,9 @@
                 this.selectedCity = city
             },
             changeExpand(item, i) {
-                this.trueOrFalseArr[i] = !this.trueOrFalseArr[i]
+                this.trueOrFalseArr[i] = !this.trueOrFalseArr[i];
                 this.expandT = !this.expandT;
+               // this.componentKey += 1;
             },
             fieldsForDiscount() {
                 return [
@@ -437,7 +455,7 @@
                         modelEn: this.titleEn,
                         labelRu: this.$t('adLabelOfDiscountTitleRu'),
                         labelEn: this.$t('adLabelOfDiscountTitleEn'),
-                        expand: this.expandT
+                        expandT: this.expandT
                     },
                     {
                         placeholderRu: this.$t('adLabelOfDiscountVendorRu'),
@@ -476,74 +494,187 @@
 
             objectWithoutId() {
                 return {
+                    //id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
                     name: this.titleRu,
-                    description: this.descriptionRu,
-                    amountOfDiscount: this.valueOfDiscount,
-                    startDate: {
-                        $date: this.dateStart
-                    },
-                    endDate: {
-                        $date: this.dateFinish
-                    },
+                    description: "string",
+                    amountOfDiscount: 0,
+                    startDate: "2021-02-17T08:26:34.109Z",
+                    endDate: "2022-02-17T08:26:34.109Z",
                     address: {
-                        country: this.selectedCountry,
-                        city: this.selectedCity,
-                        street: this.street,
+                        country: "Беларусь",
+                        city: "Белгород",
+                        street: "string",
                         location: {
-                            latitude: this.coordinate1,
-                            longitude: this.coordinate2
+                            latitude: 85,
+                            longitude: 33
                         }
                     },
                     company: {
-                        name: this.vendorRu,
-                        description: this.vendorDescrRu,
-                        phoneNumber: this.vendorPhone,
-                        mail: this.vendorEmail
+                        name: "string",
+                        description: "string",
+                        phoneNumber: "string",
+                        mail: "string"
                     },
-                    workingHours: this.transformateDays(),
+                    workingDaysOfTheWeek: "0011001",
                     tags: [
-                        this.tagsRu
+                        "Меха"
                     ],
                     language: "Ru",
                     translations: [
                         {
-                            language: "En",
-                            name: this.titleEn,
-                            description: this.descriptionEn,
+                            name: "string",
+                            description: "string",
                             address: {
-                                country: this.selectedCountry,
-                                city: this.selectedCity,
-                                street: this.street
+                                country: "Belarus",
+                                city: "Belgorod",
+                                street: "string",
+                                location: {
+                                    latitude: 0,
+                                    longitude: 0
+                                }
                             },
                             company: {
-                                name: this.titleEn,
-                                description: this.descriptionEn
+                                name: "string",
+                                description: "string",
+                                phoneNumber: "string",
+                                mail: "string"
                             },
                             tags: [
-                                this.tagsEn
-                            ]
+                                "String"
+                            ],
+                            language: "Ru"
                         }
                     ]
+                    // id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
+                    // name: "string",//this.titleRu,
+                    // description: "string", //this.descriptionRu,
+                    // amountOfDiscount: 20, //this.valueOfDiscount,
+                    // startDate: "2021-02-17T08:26:34.109Z",//{$date: this.dateStart},
+                    // endDate: "2022-02-17T08:26:34.109Z",//{$date: this.dateFinish},
+                    // address: {
+                    //     country: "Беларусь", //this.selectedCountry,
+                    //     city: "Белгород",//this.selectedCity,
+                    //     street: "string", //this.street,
+                    //     location: {
+                    //         latitude: 85,//this.coordinate1,
+                    //         longitude: 33, //this.coordinate2
+                    //     }
+                    // },
+                    // company: {
+                    //     name: "string", //this.vendorRu,
+                    //     description: "string", //this.vendorDescrRu,
+                    //     phoneNumber: "string", //this.vendorPhone,
+                    //     mail: "string", //this.vendorEmail
+                    // },
+                    // workingHours: '0110111',//this.transformateDays(),
+                    // tags: [
+                    //     'Меха', //this.tagsRu
+                    // ],
+                    // language: "Ru",
+                    // translations: [
+                    //     {
+                    //         name: "string", //this.titleEn,
+                    //         description: "string", //this.descriptionEn,
+                    //         address: {
+                    //             country: 'Belarus', //this.selectedCountry,
+                    //             city: 'Belgorod', //this.selectedCity,
+                    //             street: "string", //this.street,
+                    //             location: {
+                    //                   latitude: 0,
+                    //                   longitude: 0
+                    //                             }
+                    //         },
+                    //         company: {
+                    //             name: "string", //this.titleEn,
+                    //             description: "string", //this.descriptionEn
+                    //         },
+                    //         tags: [
+                    //             'Hhhh', //this.tagsEn
+                    //         ],
+                    //         language: "Ru"
+                    //     }
+                    // ]
                 }
+
             },
             submit() {
+                const postDiscount = () => {
+                    const obj = {
+                        id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
+                        name: "string",
+                        description: "string",
+                        amountOfDiscount: 0,
+                        startDate: "2021-02-17T08:26:34.109Z",
+                        endDate: "2022-02-17T08:26:34.109Z",
+                        address: {
+                            country: "Беларусь",
+                            city: "Белгород",
+                            street: "string",
+                            location: {
+                                latitude: 85,
+                                longitude: 33
+                            }
+                        },
+                        company: {
+                            name: "string",
+                            description: "string",
+                            phoneNumber: "string",
+                            mail: "string"
+                        },
+                        workingDaysOfTheWeek: "0011001",
+                        tags: [
+                            "Меха"
+                        ],
+                        language: "Ru",
+                        translations: [
+                            {
+                                name: "string",
+                                description: "string",
+                                address: {
+                                    country: "Belarus",
+                                    city: "Belgorod",
+                                    street: "string",
+                                    location: {
+                                        latitude: 0,
+                                        longitude: 0
+                                    }
+                                },
+                                company: {
+                                    name: "string",
+                                    description: "string",
+                                    phoneNumber: "string",
+                                    mail: "string"
+                                },
+                                tags: [
+                                    "String"
+                                ],
+                                language: "Ru"
+                            }
+                        ]
+                    };
+                    this.addDiscount(
+                      //  {...{id: uuidv4()}, ...(this.objectWithoutId())}
+                       {...{id: "3fa85f64-5717-4562-b3fc-2c963f67afa6"}, ...(this.objectWithoutId())}
+                       // this.objectWithoutId()
+                    )
+
+                }
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        this.addDiscount(
-                           {...{_id: uuidv4()}, ...(this.objectWithoutId())}
 
-                        )
-                        // console.log({...{_id: uuidv4()}, ...(this.objectWithoutId())})
+                        //     //     {...{id: uuidv4()}, ...(this.objectWithoutId())}
+
+                        this.getToken(postDiscount);
                     } else {
                         this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                     this.$refs.form.reset()
                 }
-
                            },
             resetForm() {
                 this.$refs.form.reset();
                 this.fillingFields();
+                this.componentKey += 1;
             },
             selectLine(value) {
                 this.address.line = value;
@@ -570,10 +701,8 @@
             },
             fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
-
                     const id = this.$route.params.idOfDiscount;
                     const discount = this.allDiscounts.find(element => element._id = id);
-                    console.log(discount);
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
@@ -588,8 +717,8 @@
                     this.vendorEmail = discount.company.mail;
                     this.transformateToDays(discount.workingHours);
                     this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = moment(discount.startDate.$date).format('L'),
-                    this.dateFinish = moment(discount.endDate.$date).format('L'),
+                    this.dateStart = discount.startDate.$date.substr(0, 10),
+                    this.dateFinish =discount.endDate.$date.substr(0, 10),
                     this.selectedCountry = discount.address.country;
                 }
             },
@@ -659,21 +788,19 @@
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries'])
         },
         computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
-        async mounted() {
-            const authorizationHeader = 'Authorization';
-            auth.getAccessToken().then((userToken) => {
-                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-                this.goFetch('http://localhost:3000/discounts');
+        mounted() {
+            const getCountries = () => {
                 axios.get('https://localhost:9001/api/v1/addresses/all/Ru/countries')
-                    .then((response) => {
-                        this.countries = response.data;
-                    })
-                    .catch((error) => {
-                        alert(error);
-                    });
-
-            });
+                .then((response) => {
+                    this.countries = response.data;
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            };
+            this.getToken(getCountries);
             this.fillingFields();
+
         }
     }
 </script>

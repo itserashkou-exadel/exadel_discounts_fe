@@ -102,7 +102,7 @@ let store = new Vuex.Store({
             commit('setCities', response.data);
         },
         async addDiscount ({commit}, newDiscount) {
-            axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
+            await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
         updateDiscount ( { commit }, discount) {
