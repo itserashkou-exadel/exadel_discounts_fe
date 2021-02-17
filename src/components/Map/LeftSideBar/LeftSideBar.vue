@@ -3,18 +3,27 @@
         <v-btn
                 color="primary"
                 dark
-                @mouseover="drawer = !drawer"
-                class="mapMenuToggleBtn mt-5 ml-5"
+                @click="drawer = !drawer"
+                class="ml-13 mt-2"
+                v-bind:class="{'btnShowMenu': drawer}"
         >
             Show menu
         </v-btn>
-        <div @mouseleave="mouseOverMethod">
+        <div >
             <v-navigation-drawer
                     fixed
                     v-model="drawer"
                     class="navDrawer mt-10"
             >
+                <v-btn
+                        color="primary"
+                        dark
+                        class="mapMenuToggleBtn mt-8 mb-2"
+                        @click="drawer = !drawer"
                 >
+                    Hide menu
+                </v-btn>
+                <v-divider></v-divider>
                 <v-expansion-panels class="d-flex mx-auto">
                     <v-expansion-panel
                             v-for="(item,i) in markersData"
@@ -96,9 +105,9 @@
                 console.log('TEST!')
             },
             mouseOverMethod() {
-                this.drawer = !this.drawer;
-                this.something += 1;
-                console.log('Mouse Over !!!', this.drawer)
+                // this.drawer = !this.drawer;
+                // this.something += 1;
+                // console.log('Mouse Over !!!', this.drawer)
             }
         },
     }
@@ -106,7 +115,10 @@
 
 <style scoped>
     .mapMenuToggleBtn {
-
+        margin-left: 60px;
+    }
+    .btnShowMenu{
+        visibility: hidden;
     }
 
     .navDrawer {

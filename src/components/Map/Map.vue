@@ -211,8 +211,7 @@
     #map {
         width: 100vw;
         height: 90vh;
-
-
+        display: flex;
     }
     .mapNavPanel{
         position: fixed;
