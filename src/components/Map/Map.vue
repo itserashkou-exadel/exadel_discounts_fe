@@ -136,61 +136,10 @@
 
             });
             this.fillingFields();
-            // fetch('http://localhost:3000/fakeDataPoints')
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         this.fakeData = data
-            //         console.log(this.fakeData)
-            //     })
-            // .then(res => {
-            //     this.fakeData = res.data
-            //     console.log(this.fakeData)
-            // })
-            // axios.post('https://localhost:9001/api/v1/discounts/search', {
-            //     "searchText": "Меха",
-            //     "searchDiscountOption": "All",
-            //     "searchAddressCountry": "Беларусь",
-            //     "searchAddressCity": "Минск",
-            //     "searchSortFieldOption": "NameDiscount",
-            //     "searchSortOption": "Asc",
-            //     "searchPaginationPageNumber": 1,
-            //     "searchPaginationCountElementPerPage": 20,
-            //     "searchLanguage": "Ru"
-            // })
-            //     .then(res => {
-            //         this.markersData = res.data
-            //         console.log(res)
-            //     })
-
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
-
-            map.addLayer({})
-            // try {
-            //     this.fakeData = await axios.get('http://localhost:3000/fakeDataPoints')
-            //     console.log('ES7', this.fakeData)
-            // } catch (e) {
-            //     console.error(e)
-            // }
-
-            // try {
-            //     this.markersData = await axios.post('https://localhost:9001/api/v1/discounts/search', {
-            //         "searchText": "Меха",
-            //         "searchDiscountOption": "All",
-            //         "searchAddressCountry": "Беларусь",
-            //         "searchAddressCity": "Минск",
-            //         "searchSortFieldOption": "NameDiscount",
-            //         "searchSortOption": "Asc",
-            //         "searchPaginationPageNumber": 1,
-            //         "searchPaginationCountElementPerPage": 20,
-            //         "searchLanguage": "Ru"
-            //     })
-            //     console.log(this.markersData)
-            // } catch (e) {
-            //     console.error(e)
-            // }
         },
         methods: {
             onMapLoaded(event) {
@@ -206,9 +155,6 @@
                     speed: 2
                 })
                 console.log('WORK', coordinates)
-            },
-            showMarkerName() {
-                console.log('MARKER')
             },
         }
     };
