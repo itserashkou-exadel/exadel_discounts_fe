@@ -29,57 +29,67 @@
                                           :placeholder='$i18n.locale === "ru" ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleRu'
                                           :label='$i18n.locale === "ru" ? item.labelRu : item.labelEn'
+                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 0 && $i18n.locale === 'en'"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'ru'"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'en'"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'ru'"
+                                        @keydown.enter="nothing"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionRu'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                         outlined>
                             </v-textarea>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'en'"
+                                        @keydown.enter="nothing"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionEn'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
@@ -95,6 +105,7 @@
                         </div>
                         <v-expand-transition>
                             <v-text-field v-if="i === 0 && ($i18n.locale === 'ru')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleEn"
@@ -102,6 +113,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleRu"
@@ -109,6 +121,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'ru')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorEn'
@@ -116,6 +129,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorRu'
@@ -123,6 +137,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'ru')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrEn'
@@ -130,6 +145,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrRu'
@@ -137,6 +153,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'ru')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsEn'
@@ -144,6 +161,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'en')"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsRu'
@@ -151,6 +169,7 @@
                                           outlined
                             ></v-text-field>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'ru')"
+                                        @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionEn'
@@ -158,6 +177,7 @@
                                         outlined
                             ></v-textarea>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'en')"
+                                        @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionRu'
@@ -167,12 +187,14 @@
                         </v-expand-transition>
                     </div>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountVendorPhone')"
                             :placeholder="this.$t('adLabelOfDiscountVendorPhone')"
                             outlined
                             v-model="vendorPhone"
                     ></v-text-field>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountVendorEmail')"
                             :placeholder="this.$t('adLabelOfDiscountVendorEmail')"
                             outlined
@@ -187,6 +209,7 @@
                             outlined
                     ></v-combobox>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountDiscount')"
                             :placeholder="this.$t('adLabelOfDiscountDiscount')"
                             outlined
@@ -284,6 +307,7 @@
                         </v-menu>
                     </div>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountPicture')"
                             outlined
                     ></v-text-field>
@@ -296,6 +320,7 @@
                             v-on:selectedCityForObj='selCity'
                     />
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                             v-model="street"
@@ -305,6 +330,7 @@
                         <AddDiscountMap v-bind:address="address"/>
                     </div>
                     <v-text-field
+                            @keydown.enter="nothing"
                             class="mt-10"
                             :label="this.$t('adLabelOfDiscountCoordinatesLatitude')"
                             :placeholder="this.$t('adLabelOfDiscountCoordinatesLatitude')"
@@ -312,6 +338,7 @@
                             v-model="coordinate1"
                     ></v-text-field>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountCoordinatesLongitude')"
                             :placeholder="this.$t('adLabelOfDiscountCoordinatesLongitude')"
                             outlined
@@ -353,6 +380,7 @@
                                     Нет
                                 </v-btn>
                                 <v-btn
+
                                         color="green darken-1"
                                         text
                                         @click="agree"
@@ -383,9 +411,9 @@
     import {mapGetters, mapActions, mapState} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
-    import {v4 as uuidv4} from 'uuid'
+    import { v4 as uuidv4 } from 'uuid';
     import token from '@/mixins/token.mixin'
-
+    //const { v4: uuidv4 } = require('uuid');
 
     export default {
         name: "AddingDiscount",
@@ -423,7 +451,7 @@
                 trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
-                nameRules: [],
+                nameRules: [v => (v && v.length > 0) || 'Name must be less than 10 characters'],
                 picker: new Date().toISOString().substr(0, 10),
                 dateStart: new Date().toISOString().substr(0, 10),
                 dateFinish: new Date().toISOString().substr(0, 10),
@@ -436,8 +464,13 @@
                 }
             }
         },
+        watch: {
+            langGl () {console.log(1)}
+        },
         methods: {
-            nothing (event) {event.stopPropagation()},
+            nothing (event) {
+                event.preventDefault()
+            },
             agree () {
                 this.dialog = false;
                 this.$refs.form.reset();
@@ -606,23 +639,20 @@
                     }
             },
             submit() {
+
                 const postDiscount = () => {
                     this.addDiscount(
-                        {...{id: "3fa85f64-5717-4562-b3fc-2c963f67afa6"}, ...(this.objectWithoutId())}
+                        {...{id: uuidv4()}, ...(this.objectWithoutId())}
                     )
-                    console.log(this.titleRu);
-                    console.log({...{id: "3fa85f64-5717-4562-b3fc-2c963f67afa6"}, ...(this.objectWithoutId())})
                 }
                 if (this.$refs.form.validate()) {
                     if (this.$route.params.placeOfCall === 'newDiscount') {
-                        //     {...{id: uuidv4()}, ...(this.objectWithoutId())}
                         this.getToken(postDiscount);
                     } else {
                         this.updateDiscount({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                 }
                 this.dialog = true
-
             },
             resetForm() {
                 this.$refs.form.reset();

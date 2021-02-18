@@ -25,7 +25,9 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapActions, mapMutations} from 'vuex'
+import token from "@/mixins/token.mixin";
+
 export default {
   name: "Footer",
   data() {
@@ -33,8 +35,16 @@ export default {
       isRuLocale: true
     }
   },
+  mixins: [token],
   methods: {
-    ...mapMutations(['setLanguage'])
+    ...mapActions(['goFetchForCountries']),
+    ...mapMutations(['setLanguage']),
+    getCountries () {
+      const getCountries = () => {
+      let languageForCountries = (this.isRuLocale ? 'Ru' : 'En')
+      this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`)
+    };
+      this.getToken(getCountries);}
   },
   watch: {
     isRuLocale (){
@@ -51,7 +61,11 @@ export default {
           this.$i18n.locale = 'en';
         })
       }
+      this.getCountries()
     }
+  },
+  mounted() {
+    this.getCountries()
   }
 }
 </script>

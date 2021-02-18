@@ -1,11 +1,10 @@
 <template>
     <div>
         <v-select
-                :items="countries"
+                :items="allCountries"
                 :label="this.$t('adLabelOfDiscountCountry')"
                 outlined
                 v-model="selectedCountry"
-                @click="getCountries"
                 @change="selectCountryHandler"
         ></v-select>
         <v-select
@@ -13,7 +12,6 @@
                 :label="this.$t('adLabelOfDiscountCity')"
                 outlined
                 @change="selectCityHandler"
-                @click="getCities"
                 v-model="selectedCity"
         ></v-select>
     </div>
@@ -25,6 +23,8 @@
     import axios from 'axios'
     const auth = new AuthService();
     import token from '@/mixins/token.mixin'
+    import {mapGetters} from 'vuex'
+
     export default {
         name: "ChooseOfTown",
         data() {
@@ -35,29 +35,20 @@
                 cities: []
             }
         },
+        computed: {
+          ...mapGetters(['allCountries'])
+        },
         mixins: [token],
        props: ['selectCountry', 'selectCity'],
         methods: {
             selectCountryHandler(value){
                 this.$emit('selectedCountryForObj', value);
                 this.selectCountry(value);
+                this.getCities()
             },
             selectCityHandler(value){
                 this.$emit('selectedCityForObj', value);
                this.selectCity(value);
-            },
-            getCountries () {
-                const getCountries = () => {
-                    let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En')
-                    axios.get(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`)
-                        .then((response) => {
-                            this.countries = response.data
-                        })
-                        .catch((error) => {
-                            alert(error);
-                        });
-                };
-               this.getToken(getCountries);
             },
             getCities () {
                 const getCities = () => {
@@ -73,7 +64,6 @@
                 this.getToken(getCities);
             }
         },
-
     }
 </script>
 
