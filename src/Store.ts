@@ -18,7 +18,8 @@ let store = new Vuex.Store({
         filtered: [],
         filteredDiscounts: [],
         countries: [],
-        cities: []
+        cities: [],
+        subscriptions: [],
     },
     getters: {
         filterData: state => {
@@ -46,6 +47,9 @@ let store = new Vuex.Store({
     mutations: {
         receiveSearch (state, dis){
             state.discounts = dis;
+        },
+        receiveSubscription (state, subscr) {
+           state.subscriptions = subscr;
         },
         setFilter (state, filteredData){
             state.filtered = filteredData;
@@ -113,6 +117,10 @@ let store = new Vuex.Store({
         async inputPost({commit}, search){
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
+        },
+        async getSubscription ({commit}, searchSub) {
+            const response = await axios.post(searchDiscount, searchSub );
+            commit('receiveSubscription', response.data)
         }
     }
 

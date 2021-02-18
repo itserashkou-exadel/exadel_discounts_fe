@@ -194,9 +194,18 @@
 
 <script>
 import axios from "axios";
+import paginationMixin from '@/mixins/token.mixin'
+import AuthService from "@/services/auth.service";
+
+
+import {functionalThemeClasses} from "vuetify/lib/mixins/themeable";
+import {mapActions} from "vuex";
+const auth = new AuthService();
 
 export default {
   name: "Detail",
+  props: ["showSubscr"],
+  mixins: [paginationMixin],
   data: {
     subscriptions: [],
   },
@@ -204,18 +213,22 @@ export default {
     addToSubscr: function (event) {
       console.log('ПРИВЕТ');
       let discountId = this.$store.state.discounts.id
-      axios({
-        method: 'put',
-        url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${discountId}`,
-        headers: {
-          acceps: '*/*',
-          Authorization: 'j'
-        }
-      }).then(response => console.log("RESPONSE :" + response));
+      const putSubscr = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/subscriptions/add/4e734e64-4344-4fe0-9e5b-fb40b1a0d6f4`,
+        }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+      };
+      this.getToken(putSubscr);
+
     },
+
     computed: {
       discounts() {
         return this.$store.state.discounts
+      },
+      subscriptions() {
+        return this.$store.state.subscriptions
       }
     },
   }

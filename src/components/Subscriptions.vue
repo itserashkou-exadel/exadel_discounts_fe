@@ -1,16 +1,17 @@
 <template>
   <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
     <v-data-table
-        :headers="headers()"
-        :items="result"
-        class="elevation-8"
         :data="filterData"
-        item-key="id"
-        :single-expand="singleExpand"
-        :expanded.sync="expanded"
-        show-expand
+        :items="result"
+  :headers="headers()">
+<!--       -->
+<!--        class="elevation-8"-->
 
-    >
+<!--        item-key="id"-->
+<!--        :single-expand="singleExpand"-->
+<!--        :expanded.sync="expanded"-->
+<!--        show-expand-->
+
 
       <template v-slot:top>
         <v-toolbar
@@ -19,7 +20,7 @@
           <v-toolbar-title>
             <h3>{{$t('dtServices')}}</h3>
           </v-toolbar-title>
-          <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-dialog max-width="500px">
             <v-card>
               <v-card-title class="headline">{{$t('dtRemoval')}}
               </v-card-title>
@@ -36,13 +37,6 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
             small
-            class="mr-2"
-            @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-            small
             @click="deleteItem(item)"
         >
           mdi-delete
@@ -53,9 +47,9 @@
         <td :colspan="headers.length">
           <v-row class="d-flex justify-end my-5">
             <v-col cols="1" lg="1" >
-              <v-btn>
-                <v-icon color="orange">{{icons.icon}}</v-icon>
-              </v-btn>
+<!--              <v-btn>-->
+<!--                <v-icon color="orange">{{icons.icon}}</v-icon>-->
+<!--              </v-btn>-->
             </v-col>
 
             <v-col cols="7" lg="11" class="d-flex justify-center">
@@ -81,32 +75,22 @@
 </template>
 
 <script>
+import axios from "axios";
+import AuthService from "@/services/auth.service";
+
+const auth = new AuthService();
 const moment = require('moment')
+
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 import Modal from "@/components/Filter/Modal";
 export default {
   components: {Modal},
   name: "Subscriptions",
   data: () => ({
-    expanded: [],
-    singleExpand: true,
-    dialog: false,
-    dialogDelete: false,
-    icons: {
-      icon: "mdi-star"
-    },
+    searchResult: '',
     offers: [],
     info: [],
     result: [],
-    editedIndex: -1,
-    editedItem: {
-      name: '',
-      vendor: '',
-      discount: 0,
-      start_date: 0,
-      finish_date: 0,
-      raring: 0
-    },
     defaultItem: {
       name: '',
       vendor: '',
@@ -120,7 +104,7 @@ export default {
   computed: {
     filterData: function (){
       const arr = [];
-      this.info = this.$store.state.discounts;
+      this.info = this.$store.state.subscriptions;
       this.info.map((item) => {
         arr.push(
             {
@@ -139,7 +123,6 @@ export default {
       this.result = arr;
       return this.result;
 
-
     },
     hello: () => {
       console.log('heh');
@@ -153,9 +136,35 @@ export default {
       val || this.closeDelete()
     },
   },
-
   methods: {
-    ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+    ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'getSubscription']),
+    showSubscriptions() {
+      const authorizationHeader = 'Authorization';
+      auth.getAccessToken().then((userToken) => {
+        axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+        this.getSubscription(
+            {
+              "searchText": "Меха",
+              "searchDiscountOption": "Subscriptions",
+              "searchAddressCountry": "Украина",
+              "searchAddressCity": "Вінниця",
+              "searchSortFieldOption": "NameDiscount",
+              "searchSortOption": "Asc",
+              "searchPaginationPageNumber": 1,
+              "searchPaginationCountElementPerPage": 5,
+              "searchLanguage": "Ru"
+            }
+        )
+            .then((response) => {
+              this.subscriptions = response.data;
+              console.log("RESPONSE :" + JSON.stringify(response))
+            })
+            .catch((error) => {
+              alert(error);
+            });
+      });
+      this.searchResult = '';
+    },
     headers(){return [
       {
         text: this.$t('dtOffer'),
@@ -171,9 +180,6 @@ export default {
       {text: this.$t('dtActions'), value: 'actions', sortable: false},
     ]},
 
-    editItem(item) {
-      this.$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}});
-    },
     deleteItem(item) {
       this.editedIndex = this.offers.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -197,16 +203,12 @@ export default {
         this.editedIndex = -1;
       })
     },
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.offers[this.editedIndex], this.editedItem)
-      } else {
-        this.offers.push(this.editedItem)
-      }
-      this.close()
-    },
+  },
+  mounted() {
+    this.showSubscriptions();
   },
 }
+
 </script>
 
 <style scoped>
