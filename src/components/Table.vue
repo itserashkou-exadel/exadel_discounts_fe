@@ -1,11 +1,11 @@
 <template>
     <v-container fill-height>
-      <router-view/>
+        <router-view/>
         <ToolBar/>
-        <v-row v-if="this.$store.state.switch" class="justify-center align-center">
+        <v-row v-show="this.$store.state.switch === true" class="justify-center align-center">
             <DataTable/>
         </v-row>
-        <v-row v-else class="justify-center align-center">
+        <v-row v-show="this.$store.state.switch === false" class="justify-center align-center">
             <Cards/>
         </v-row>
     </v-container>
