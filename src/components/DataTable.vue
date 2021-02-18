@@ -14,7 +14,6 @@
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
         >
-
             <template v-slot:top>
                 <v-toolbar
                         flat
