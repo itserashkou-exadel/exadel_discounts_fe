@@ -320,24 +320,20 @@
             <v-row
                     class="d-flex">
                 <v-col cols="12" md="4">
-                    <v-dialog
-                            v-model="dialog"
-                            persistent
-                            max-width="290"
-                    >
-                        <template v-slot:activator="{ on, attrs }">
                     <v-btn class="mb-8"
                            color="info"
                            block
                            elevation="2"
                            large
-                           v-on="on"
-                           v-bind="attrs"
                            @click="submit"
                     >
                         {{titleOfButton()}}
                     </v-btn>
-                        </template>
+                    <v-dialog
+                            v-model="dialog"
+                            persistent
+                            max-width="290"
+                    >
                         <v-card>
                             <v-card-title class="headline">
                                 Услуга была добавлена
@@ -364,7 +360,6 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-
                 </v-col>
                 <v-col cols="12" md="2"></v-col>
                 <v-col cols="12" md="4">
@@ -609,7 +604,6 @@
                     }
             },
             submit() {
-                this.componentKey += 1;
                 const postDiscount = () => {
                     this.addDiscount(
                         {...{id: "3fa85f64-5717-4562-b3fc-2c963f67afa6"}, ...(this.objectWithoutId())}
@@ -625,6 +619,8 @@
                         this.updateDiscount({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
                     }
                 }
+                this.dialog = true
+
             },
             resetForm() {
                 this.$refs.form.reset();
