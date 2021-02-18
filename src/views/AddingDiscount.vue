@@ -4,7 +4,8 @@
             class="mb-6 ml-10 mb-15 pr-10 font-weight-regular"
     >
         <router-view/>
-        <v-form v-model="valid" ref="form">
+        <v-form v-model="valid" ref="form"
+                @keydown.enter="nothing">
             <v-row
                     align-content="center"
                     no-gutters
@@ -24,6 +25,7 @@
                             :key="i">
                         <div class="d-flex align-content-center">
                             <v-text-field v-if="i === 0 && $i18n.locale === 'ru'"
+                                          @keydown.enter="nothing"
                                           :placeholder='$i18n.locale === "ru" ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleRu'
                                           :label='$i18n.locale === "ru" ? item.labelRu : item.labelEn'
@@ -389,7 +391,6 @@
         name: "AddingDiscount",
         mixins: [token],
         components: {ChooseOfTown, AddDiscountMap},
-
         data() {
             return {
                 dialog: false,
@@ -436,6 +437,7 @@
             }
         },
         methods: {
+            nothing (event) {event.stopPropagation()},
             agree () {
                 this.dialog = false;
                 this.$refs.form.reset();
