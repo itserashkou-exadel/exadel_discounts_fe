@@ -4,12 +4,12 @@
                 color="primary"
                 dark
                 @click="drawer = !drawer"
-                class="ml-13 mt-2"
-                v-bind:class="{'btnShowMenu': drawer}"
+                class="showMenuBtn ml-13 mt-2"
+                v-bind:class="{'showMenuBtn': drawer}"
         >
             Show menu
         </v-btn>
-        <div >
+
             <v-navigation-drawer
                     fixed
                     v-model="drawer"
@@ -40,7 +40,7 @@
                 </v-expansion-panels>
             </v-navigation-drawer>
         </div>
-    </div>
+
 </template>
 
 <script>
@@ -117,11 +117,12 @@
     .mapMenuToggleBtn {
         margin-left: 60px;
     }
-    .btnShowMenu{
-        visibility: hidden;
+    .showMenuBtn{
+        /*visibility: hidden;*/
     }
 
     .navDrawer {
         border-radius: 3px;
+        z-index: 5;
     }
 </style>

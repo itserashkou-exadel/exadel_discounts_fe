@@ -1,10 +1,16 @@
 <template>
     <div id="map">
+        <div class="filter">
+            <Modal class="modal"/>
+        </div>
+
         <nav class="mapNavPanel">
             <LeftSideBar
                     v-bind:markersData="markersData"
                     v-bind:jumpToMarker="jumpToMarker"
-            />
+            >
+
+            </LeftSideBar>
         </nav>
         <MglMap
                 :accessToken="accessToken"
@@ -18,7 +24,7 @@
 
             >
                 <MglPopup>
-                    <VCard flat >
+                    <VCard flat>
                         <v-card-title>
                             <div>{{marker.name}}</div>
                         </v-card-title>
@@ -44,14 +50,17 @@
     import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
     import LeftSideBar from "@/components/Map/LeftSideBar/LeftSideBar";
     import axios from "axios";
+    import Modal from "@/components/Filter/Modal";
 
     import AuthService from "@/services/auth.service";
+
 
     const auth = new AuthService();
 
 
     export default {
         components: {
+            Modal,
             LeftSideBar,
             MglMarker,
             MglPopup,
@@ -158,9 +167,7 @@
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
 
-            map.addLayer({
-
-            })
+            map.addLayer({})
             // try {
             //     this.fakeData = await axios.get('http://localhost:3000/fakeDataPoints')
             //     console.log('ES7', this.fakeData)
@@ -200,9 +207,9 @@
                 })
                 console.log('WORK', coordinates)
             },
-            showMarkerName(){
+            showMarkerName() {
                 console.log('MARKER')
-            }
+            },
         }
     };
 </script>
@@ -213,11 +220,30 @@
         height: 90vh;
         display: flex;
     }
-    .mapNavPanel{
+
+    .mapNavPanel {
         position: fixed;
         z-index: 1;
-        /*left: 5px;*/
-
         margin-bottom: 25px;
+    }
+
+    .testBtn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+    }
+    .filter{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        z-index: 10;
+        top: 100px;
+        right: 100px;
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        background: royalblue;
     }
 </style>
