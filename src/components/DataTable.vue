@@ -80,26 +80,35 @@
                     </v-row>
                 </td>
             </template>
-
+            <template v-slot:footer>
+                    <v-row class="mt-5">
+                        <v-col xl="7" lg="7" md="7" sm="7" class="d-flex justify-end mr-xl-10">
+                            <v-pagination
+                                    v-model="page"
+                                    :length="pageCount"
+                                    @input="next"
+                            ></v-pagination>
+                        </v-col>
+                        <v-spacer>
+                        </v-spacer>
+                        <v-col xl="1" lg="2" md="2" sm="2">
+                            <v-select
+                                    v-model="itemsPerPage"
+                                    :items="itmPer"
+                                    label="items per page"
+                                    dense
+                                    solo
+                            ></v-select>
+                        </v-col>
+                        <v-col xl="1" lg="1"></v-col>
+                    </v-row>
+            </template>
         </v-data-table>
-        <div>
-            <v-pagination
-                    v-model="page"
-                    :length="pageCount"
-                    @input="next"
-            ></v-pagination>
-        </div>
-        <v-select
-                v-model="itemsPerPage"
-                :items="itmPer"
-                label="items per page"
-                dense
-                solo
-        ></v-select>
+
         <!--@input="itemsPerPage = parseInt($event, 10)"-->
-        <v-btn @click="test">
+        <!--<v-btn @click="test">
             !!!
-        </v-btn>
+        </v-btn>-->
         <!--        <v-text-field
 
                         label="Items per page"
@@ -123,7 +132,9 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
-            itmPer: [5, 10, 15],
+            searchWord: '',
+            itmPer: [5, 10],
+            selectedPages: [],
             page: 1,
             pageCount: 1,
             itemsPerPage: 5,
@@ -164,6 +175,8 @@
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     const arr = [];
+                    this.searchWord = this.$store.state.keyWord;
+                    console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
                     console.log(this.info)
                     this.info.map((item) => {
@@ -184,6 +197,7 @@
                     this.result = arr;
                     return this.result;
                 }
+
             },
             /* itemsPerPage: {
                  get () {
@@ -206,7 +220,13 @@
             dialogDelete(val) {
                 val || this.closeDelete()
             },
-
+            searchWord: function(){
+                this.selectedPages = [1];
+            },
+            // result: function(){
+            //     console.log('res')
+            //     this.selectedPages.push(this.page)
+            // }
             /*itemsPerPage: function(){
                 console.log(this.itemsPerPage)
                 this.changeItemsPerPage(this.itemsPerPage);
@@ -260,9 +280,15 @@
                 ]
             },
             next() {
-                console.log(this.$store.state.discounts)
-                console.log(this.page, this.pageCount);
-                if (this.page === this.pageCount && this.$store.state.discounts.length%5===0){
+                console.log(this.page, this.pageCount)
+                console.log(this.selectedPages)
+                console.log(this.selectedPages.indexOf(this.page))
+                // console.log(this.$store.state.discounts)
+                // console.log(this.page, this.pageCount);
+                    // console.log(this.page,this.pageCount)
+                if(this.selectedPages.indexOf(this.page) === -1){
+                    console.log('Hello')
+                    this.selectedPages.push(this.page);
                     this.nextDiscount(
                         {
                             "searchText": this.$store.state.keyWord,
@@ -271,15 +297,16 @@
                             "searchAddressCity": "Вінниця",
                             "searchSortFieldOption": "NameDiscount",
                             "searchSortOption": "Asc",
-                            "searchPaginationPageNumber": this.page + 1,
-                            "searchPaginationCountElementPerPage": 5,
+                            "searchPaginationPageNumber": this.pageCount + 1,
+                            "searchPaginationCountElementPerPage": this.itemsPerPage,
                             "searchLanguage": "Ru"
                         }
                     )
                 }
 
 
-                console.log(this.result)
+
+                // console.log(this.result)
             },
             test(){
                 this.inputPost(

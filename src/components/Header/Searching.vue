@@ -32,8 +32,10 @@
       }
     },
     methods: {
-      ...mapActions(['inputPost', 'setKeyWord']),
+      ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount']),
       showSearch() {
+        console.log(this.search)
+        this.$store.state.discounts = [];
         this.inputPost(
                 {
                   "searchText": this.search,
@@ -43,12 +45,37 @@
                   "searchSortFieldOption": "NameDiscount",
                   "searchSortOption": "Asc",
                   "searchPaginationPageNumber": 1,
-                  "searchPaginationCountElementPerPage": 15,
+                  "searchPaginationCountElementPerPage": 5,
                   "searchLanguage": "Ru"
                 }
-        )
-
-
+        );
+        setTimeout(this.nextDiscount(
+                {
+                  "searchText": this.search,
+                  "searchDiscountOption": "All",
+                  "searchAddressCountry": "Украина",
+                  "searchAddressCity": "Вінниця",
+                  "searchSortFieldOption": "NameDiscount",
+                  "searchSortOption": "Asc",
+                  "searchPaginationPageNumber": 2,
+                  "searchPaginationCountElementPerPage": 5,
+                  "searchLanguage": "Ru"
+                }
+        ), 1000);
+        setTimeout(this.nextDiscount(
+                {
+                  "searchText": this.search,
+                  "searchDiscountOption": "All",
+                  "searchAddressCountry": "Украина",
+                  "searchAddressCity": "Вінниця",
+                  "searchSortFieldOption": "NameDiscount",
+                  "searchSortOption": "Asc",
+                  "searchPaginationPageNumber": 3,
+                  "searchPaginationCountElementPerPage": 5,
+                  "searchLanguage": "Ru"
+                }
+        ), 1000);
+        console.log(this.$store.state.discounts)
       }
     }
   }

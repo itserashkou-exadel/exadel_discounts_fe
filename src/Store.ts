@@ -46,10 +46,11 @@ let store = new Vuex.Store({
             state.keyWord = key;
         },
         receiveSearch(state, dis) {
-            state.discounts = dis;
+            // @ts-ignore
+            state.discounts.push(...dis);
         },
 
-        addnextDis(state, nextDis){
+        addNextDis(state, nextDis){
           // @ts-ignore
             state.discounts.push(...nextDis);
         },
@@ -126,9 +127,13 @@ let store = new Vuex.Store({
         async nextDiscount({commit}, search) {
             try{
                 const response = await axios.post(searchDiscount, search);
-                commit('addnextDis', response.data)
+                commit('addNextDis', response.data)
             } catch (e) {
-                console.log('');
+                // if(e.response && e.response.status === 404) {
+                //     console.clear();
+                // }
+                console.log(e)
+
             }
         }
     }
