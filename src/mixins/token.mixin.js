@@ -5,7 +5,8 @@ const auth = new AuthService();
 export default {
     data() {
         return {
-            version: 1
+            version: 1,
+            langGl: 'ru'
         }
     },
     methods: {
