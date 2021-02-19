@@ -5,12 +5,15 @@
                 :items="result"
                 class="elevation-8"
                 :data="filterData"
-                item-key="id"
+                item-key="vendor"
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
+                :page.sync="page"
+                hide-default-footer
+                @page-count="pageCount = $event"
+                :items-per-page="itemsPerPage"
         >
-
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -61,7 +64,7 @@
                             <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
                         </v-col>
                         <v-spacer></v-spacer>
-                        <v-col  cols="11" lg="11" class="d-flex justify-center">
+                        <v-col cols="11" lg="11" class="d-flex justify-center">
                             <p class="mb-0">{{ item.description }}</p>
                         </v-col>
                         <v-col cols="11" lg="11" class="text-center">
@@ -75,18 +78,51 @@
                     </v-row>
                 </td>
             </template>
+            <template v-slot:footer>
+                    <v-row class="mt-5">
+                        <v-col xl="7" lg="7" md="7" sm="7" class="d-flex justify-end mr-xl-10">
+                            <v-pagination
+                                    v-model="page"
+                                    :length="pageCount"
+                                    @input="next"
+                            ></v-pagination>
+                        </v-col>
+                        <v-spacer>
+                        </v-spacer>
+                        <v-col xl="1" lg="2" md="2" sm="2">
+                            <v-select
+                                    v-model="itemsPerPage"
+                                    :items="itmPer"
+                                    label="items per page"
+                                    dense
+                                    solo
+                            ></v-select>
+                        </v-col>
+                        <v-col xl="1" lg="1"></v-col>
+                    </v-row>
+            </template>
         </v-data-table>
     </v-col>
 </template>
 
 <script>
+    import axios from "axios";
+    import AuthService from "@/services/auth.service";
+    const auth = new AuthService();
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
+    import token from '@/mixins/token.mixin'
     export default {
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            searchWord: '',
+            itmPer: [5, 10],
+            selectedPages: [],
+            page: 1,
+            pageCount: 1,
+            itemsPerPage: 5,
             expanded: [],
             singleExpand: true,
             dialog: false,
@@ -99,45 +135,54 @@
             result: [],
             editedIndex: -1,
             editedItem: {
-                name: '',
+                id: '',
+                service: '',
                 vendor: '',
-                discount: 0,
-                start_date: 0,
-                finish_date: 0,
-                raring: 0
+                amountOfDiscount: 0,
+                startDate: '',
+                endDate: '',
+                rating: 0,
+                description: ''
             },
             defaultItem: {
-                name: '',
+                id: '',
+                service: '',
                 vendor: '',
-                discount: 0,
-                start_date: '',
-                finish_date: '',
-                raring: 0
+                amountOfDiscount: 0,
+                startDate: '',
+                endDate: '',
+                rating: 0,
+                description: ''
             },
 
         }),
+        mixins: [token],
         computed: {
-            filterData: function (){
-                const arr = [];
-                this.info = this.$store.state.discounts;
-                this.info.map((item) => {
-                    arr.push(
-                        {
-                            id: item.id,
-                            service: item.name,
-                            vendor: item.company.name,
-                            amountOfDiscount: item.amountOfDiscount,
-                            startDate: moment(item.startDate.$date).format('L'),
-                            endDate: moment(item.endDate.$date).format('L'),
-                            rating: item.ratingTotal,
-                            description: item.description,
-                        }
-                    )
+            filterData: function () {
+                if (this.$store.state.discounts.length > 0) {
+                    const arr = [];
+                    this.searchWord = this.$store.state.keyWord;
+                    console.log(this.searchWord)
+                    this.info = this.$store.state.discounts;
+                    console.log(this.info)
+                    this.info.map((item) => {
+                        arr.push(
+                            {
+                                id: item._id,
+                                service: item.name,
+                                vendor: item.company.name,
+                                amountOfDiscount: item.amountOfDiscount,
+                                startDate: moment(item.startDate.$date).format('L'),
+                                endDate: moment(item.endDate.$date).format('L'),
+                                rating: item.ratingTotal,
+                                description: item.description,
+                            }
+                        )
 
-                })
-                this.result = arr;
-                return this.result;
-
+                    })
+                    this.result = arr;
+                    return this.result;
+                }
 
             },
             hello: () => {
@@ -151,35 +196,146 @@
             dialogDelete(val) {
                 val || this.closeDelete()
             },
+            searchWord: function(){
+                this.selectedPages = [1];
+            },
+            // result: function(){
+            //     console.log('res')
+            //     this.selectedPages.push(this.page)
+            // }
+            /*itemsPerPage: function(){
+                console.log(this.itemsPerPage)
+                this.changeItemsPerPage(this.itemsPerPage);
+                this.inputPost(
+                    {
+                        "searchText": 'Меха',
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Вінниця",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                        "searchLanguage": "Ru"
+                    }
+                )
+            }*/
+            /*  itemsPerPage: function () {
+                  this.inputPost(
+                      {
+                          "searchText": 'Меха',
+                          "searchDiscountOption": "All",
+                          "searchAddressCountry": "Украина",
+                          "searchAddressCity": "Вінниця",
+                          "searchSortFieldOption": "NameDiscount",
+                          "searchSortOption": "Asc",
+                          "searchPaginationPageNumber": 1,
+                          "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                          "searchLanguage": "Ru"
+                      }
+                  )
+              }*/
         },
 
         methods: {
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
-            headers(){return [
-                {
-                    text: this.$t('dtOffer'),
-                    align: 'left',
-                    sortable: false,
-                    value: 'service',
-                },
-                {text: this.$t('dtVendor'), value: 'vendor'},
-                {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
-                {text: this.$t('dtStartDate'), value: 'startDate'},
-                {text: this.$t('dtFinishDate'), value: 'endDate'},
-                {text: this.$t('dtRating'), value: 'rating'},
-                {text: this.$t('dtActions'), value: 'actions', sortable: false},
-            ]},
+            ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
+            headers() {
+                return [
+                    {
+                        text: this.$t('dtOffer'),
+                        align: 'left',
+                        sortable: false,
+                        value: 'service',
+                    },
+                    {text: this.$t('dtVendor'), value: 'vendor'},
+                    {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
+                    {text: this.$t('dtStartDate'), value: 'startDate'},
+                    {text: this.$t('dtFinishDate'), value: 'endDate'},
+                    {text: this.$t('dtRating'), value: 'rating'},
+                    {text: this.$t('dtActions'), value: 'actions', sortable: false},
+                ]
+            },
+            next() {
+                console.log(this.page, this.pageCount)
+                console.log(this.selectedPages)
+                console.log(this.selectedPages.indexOf(this.page))
+                // console.log(this.$store.state.discounts)
+                // console.log(this.page, this.pageCount);
+                    // console.log(this.page,this.pageCount)
+                const goNext = () => {
+                    if(this.selectedPages.indexOf(this.page) === -1){
+                        console.log('Hello')
+                        this.selectedPages.push(this.page);
+                        this.nextDiscount(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": this.pageCount + 1,
+                                "searchPaginationCountElementPerPage": this.itemsPerPage,
+                                "searchLanguage": "Ru"
+                            }
+                        )
+                    }
+                }
+                this.getToken(goNext)
+            },
+            test(){
+                this.inputPost(
+                    {
+                        "searchText": 'Меха',
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Вінниця",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 15,
+                        "searchLanguage": "Ru"
+                    }
+                )
 
+                console.log(this.$store.state.discounts)
+
+                setTimeout(this.test_2,1000)
+            },
+
+            test_2(){
+                this.inputPost(
+                    {
+                        "searchText": 'Меха',
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Вінниця",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 2,
+                        "searchPaginationCountElementPerPage": 5,
+                        "searchLanguage": "Ru"
+                    }
+                )
+
+                console.log(this.$store.state.discounts)
+            },
+            showSelect() {
+                console.log(this.$store.state.itemsPerPage);
+            },
             editItem(item) {
-                this.$router.push({name:'add_discount', params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}});
+                this.$router.push({
+                    name: 'add_discount',
+                    params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
+                });
             },
             deleteItem(item) {
-                this.editedIndex = this.offers.indexOf(item);
+                this.editedIndex = this.result.indexOf(item);
                 this.editedItem = Object.assign({}, item);
                 this.dialogDelete = true;
             },
             deleteItemConfirm() {
-                this.offers.splice(this.editedIndex, 1);
+                this.result.splice(this.editedIndex, 1);
                 this.closeDelete();
             },
             close() {
@@ -198,9 +354,9 @@
             },
             save() {
                 if (this.editedIndex > -1) {
-                    Object.assign(this.offers[this.editedIndex], this.editedItem)
+                    Object.assign(this.result[this.editedIndex], this.editedItem)
                 } else {
-                    this.offers.push(this.editedItem)
+                    this.result.push(this.editedItem)
                 }
                 this.close()
             },
