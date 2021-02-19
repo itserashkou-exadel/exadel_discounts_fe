@@ -54,14 +54,14 @@
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
                     <v-row class="d-flex justify-end my-5">
-                        <v-col cols="1" lg="1">
+                        <v-col cols="1" lg="1" >
                             <v-btn>
                                 <v-icon color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
                         <v-col cols="7" lg="11" class="d-flex justify-center">
-                            <h2>{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
+                            <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
                         </v-col>
                         <v-spacer></v-spacer>
                         <v-col cols="11" lg="11" class="d-flex justify-center">
@@ -102,19 +102,6 @@
                     </v-row>
             </template>
         </v-data-table>
-
-        <!--@input="itemsPerPage = parseInt($event, 10)"-->
-        <!--<v-btn @click="test">
-            !!!
-        </v-btn>-->
-        <!--        <v-text-field
-
-                        label="Items per page"
-                        type="number"
-                        min="-1"
-                        max="15"
-
-                ></v-text-field>-->
     </v-col>
 </template>
 
@@ -198,16 +185,6 @@
                 }
 
             },
-            /* itemsPerPage: {
-                 get () {
-                     console.log(this.$store.state.itemsPerPage)
-                 },
-                 set (itemsPerPage) {
-                     this.$store.commit('setItemsPerPage', itemsPerPage)
-                 }
-             },*/
-
-
             hello: () => {
                 console.log('heh');
             }
