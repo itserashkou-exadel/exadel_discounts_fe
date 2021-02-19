@@ -37,7 +37,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
@@ -45,7 +44,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
@@ -278,12 +276,12 @@
                             persistent
                             max-width="290"
                     >
-                        <v-card>
-                            <v-card-title class="headline">
-                                Услуга была добавлена
+                        <v-card >
+                            <v-card-title class="headline" v-if="val">
+                                {{$t('adServeAreAdded')}}
                             </v-card-title>
                             <v-card-text>
-                                Очистить поля?
+                                {{titleOfField()}}
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -292,13 +290,13 @@
                                         text
                                         @click="dialog = false"
                                 >
-                                    Нет
+                                    {{titleOfButtonOfCard()}}
                                 </v-btn>
                                 <v-btn
-
                                         color="green darken-1"
                                         text
                                         @click="agree"
+                                        v-if="val"
                                 >
                                     Agree
                                 </v-btn>
@@ -335,6 +333,7 @@
         name: "AddingDiscount",
         data() {
             return {
+                val: true,
                 dialog: false,
                 componentKey: 0,
                 countries: [],
@@ -377,6 +376,20 @@
         mixins: [token],
         components: {DatePiker, ChooseOfTown, AddDiscountMap},
         methods: {
+            titleOfField() {
+                if (this.val) {
+                    return this.$tc('adClearOrEdit', 1)
+                } else {
+                    return this.$tc('adClearOrEdit', 2);
+                }
+            },
+            titleOfButtonOfCard (){
+                if (this.val) {
+                    return this.$tc('adTitleOfButtonOfCard', 1)
+                } else {
+                    return this.$tc('adTitleOfButtonOfCard', 2);
+                }
+            },
             nothing (event) {
                 event.preventDefault()
             },
@@ -564,12 +577,15 @@
                         )}
                 }
                 if (this.$refs.form.validate()) {
+                    this.val = true;
                         this.getToken(postDiscount);
                         // console.log((this.objectWithoutId()));
                         // this.addDiscount(
                         //     {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
                         //     )
 
+                } else {
+                    this.val = false;
                 }
                 this.dialog = true
             },
