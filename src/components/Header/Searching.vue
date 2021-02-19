@@ -47,9 +47,6 @@
                     "searchLanguage": "Ru"
                   }
           )
-                  .then((response) => {
-                    this.countries = response.data;
-                  })
                   .catch((error) => {
                     alert(error);
                   });

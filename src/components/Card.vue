@@ -80,7 +80,8 @@
             </v-card>
         </v-dialog>
         <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
-            <v-btn @click="$router.push({name:'detail'})" color="blue" raised>
+<!--            <v-btn @click="$router.push({name:'detail'},detailView())" color="blue" raised>-->
+          <v-btn @click="$router.push({name:'detail',params:{_id:description.id}})" color="blue" raised>
                 Choose
             </v-btn>
             <div class="mr-12">
@@ -96,7 +97,10 @@
 </template>
 <script>
     import {mapActions} from "vuex";
+    import axios from "axios";
+    import AuthService from "@/services/auth.service";
     const moment = require('moment')
+    const auth = new AuthService();
     export default {
         name: "Card",
         data: () => ({
@@ -134,20 +138,23 @@
             },
 
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
+          ...mapActions(['getDiscountById']),
+          // detailView(id) {
+          //   const authorizationHeader = 'Authorization';
+          //   auth.getAccessToken().then((userToken) => {
+          //     axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+          //     this.getDiscountById(id)
+          //         .catch((error) => {
+          //           alert(error);
+          //         });
+          //
+          //   });
+          //
+          //   this.searchResult = '';
+          // },
             headers() {
                 return [
-                    {
-                        text: this.$t('dtOffer'),
-                        align: 'left',
-                        sortable: false,
-                        value: 'service',
-                    },
-                    {text: this.$t('dtVendor'), value: 'vendor'},
-                    {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
-                    {text: this.$t('dtStartDate'), value: 'startDate'},
-                    {text: this.$t('dtFinishDate'), value: 'endDate'},
-                    {text: this.$t('dtRating'), value: 'rating'},
-                    {text: this.$t('dtActions'), value: 'actions', sortable: false},
+
                 ]
             },
 

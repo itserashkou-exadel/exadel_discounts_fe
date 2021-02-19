@@ -50,6 +50,7 @@ const router = new VueRouter({
                     path: '/home/detail',
                     name: 'detail',
                     component: Detail,
+                    props: true
                 }]
         },
         {
