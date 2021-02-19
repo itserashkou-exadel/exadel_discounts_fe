@@ -152,9 +152,9 @@ import {mapActions, mapGetters} from "vuex";
 import axios from "axios";
 import AuthService from "@/services/auth.service";
 import paginationMixin from '@/mixins/token.mixin'
-import AuthService from "@/services/auth.service";
-import {mapActions} from "vuex";
-const auth = new AuthService();
+
+
+
 
 
 const auth = new AuthService();

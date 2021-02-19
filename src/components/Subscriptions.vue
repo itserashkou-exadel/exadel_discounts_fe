@@ -1,24 +1,23 @@
 <template>
   <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
     <v-data-table
-        :data="filterData"
-        :items="result"
+        :items="filterData"
         :headers="headers()">
       <template v-slot:top>
         <v-toolbar
             flat
         >
           <v-toolbar-title>
-            <h3>{{$t('dtServices')}}</h3>
+            <h3>{{ $t('dtServices') }}</h3>
           </v-toolbar-title>
           <v-dialog max-width="500px">
             <v-card>
-              <v-card-title class="headline">{{$t('dtRemoval')}}
+              <v-card-title class="headline">{{ $t('dtRemoval') }}
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">{{$t('dtCancel')}}</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{$t('dtOk')}}</v-btn>
+                <v-btn color="blue darken-1" text @click="closeDelete">{{ $t('dtCancel') }}</v-btn>
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{ $t('dtOk') }}</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -37,17 +36,14 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-row class="d-flex justify-end my-5">
-            <v-col cols="1" lg="1" >
-<!--              <v-btn>-->
-<!--                <v-icon color="orange">{{icons.icon}}</v-icon>-->
-<!--              </v-btn>-->
+            <v-col cols="1" lg="1">
             </v-col>
 
             <v-col cols="7" lg="11" class="d-flex justify-center">
-              <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
+              <h2>{{ $t('dtDetailsAbout') }} "{{ item.service }}"</h2>
             </v-col>
             <v-spacer></v-spacer>
-            <v-col  cols="11" lg="11" class="d-flex justify-center">
+            <v-col cols="11" lg="11" class="d-flex justify-center">
               <p class="mb-0">{{ item.description }}</p>
             </v-col>
             <v-col cols="11" lg="11" class="text-center">
@@ -55,7 +51,7 @@
                   color="primary"
                   @click="$router.push({name:'detail'})"
               >
-                {{$t('dtMoreInfo')}}
+                {{ $t('dtMoreInfo') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -74,6 +70,7 @@ const moment = require('moment')
 
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 import Modal from "@/components/Filter/Modal";
+
 export default {
   components: {Modal},
   name: "Subscriptions",
@@ -90,15 +87,13 @@ export default {
       finish_date: '',
       raring: 0
     },
-
   }),
   computed: {
-    filterData: function (){
-      const arr = [];
-      this.info = this.$store.state.subscriptions;
-      this.info.map((item) => {
-        arr.push(
-            {
+    ...mapGetters(["allSubscriptions"])
+  },
+  filterData: function () {
+    return this.allSubscriptions.map((item) =>
+        new Object({
               id: item._id,
               service: item.name,
               vendor: item.company.name,
@@ -106,18 +101,9 @@ export default {
               startDate: moment(item.startDate.$date).format('L'),
               endDate: moment(item.endDate.$date).format('L'),
               rating: item.ratingTotal,
-              description: item.description,
+              description: item.description
             }
-        )
-
-      })
-      this.result = arr;
-      return this.result;
-
-    },
-    hello: () => {
-      console.log('heh');
-    }
+        ))
   },
   watch: {
     dialog(val) {
@@ -128,7 +114,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'getSubscription']),
+    ...mapActions(['getSubscription']),
     showSubscriptions() {
       const authorizationHeader = 'Authorization';
       auth.getAccessToken().then((userToken) => {
@@ -145,29 +131,31 @@ export default {
               "searchPaginationCountElementPerPage": 5,
               "searchLanguage": "Ru"
             }
-        )
-            .then((response) => {
-            })
-            .catch((error) => {
-              alert(error);
-            });
+        ).then((response) => {
+          console.log("RESPONSE :" + JSON.stringify(response.data))
+          console.log("RESULT is :" + result)
+        })
+      }).catch((error) => {
+        alert(error);
       });
-
+      this.searchResult = '';
     },
-    headers(){return [
-      {
-        text: this.$t('dtOffer'),
-        align: 'left',
-        sortable: false,
-        value: 'service',
-      },
-      {text: this.$t('dtVendor'), value: 'vendor'},
-      {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
-      {text: this.$t('dtStartDate'), value: 'startDate'},
-      {text: this.$t('dtFinishDate'), value: 'endDate'},
-      {text: this.$t('dtRating'), value: 'rating'},
-      {text: this.$t('dtActions'), value: 'actions', sortable: false},
-    ]},
+    headers() {
+      return [
+        {
+          text: this.$t('dtOffer'),
+          align: 'left',
+          sortable: false,
+          value: 'service',
+        },
+        {text: this.$t('dtVendor'), value: 'vendor'},
+        {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
+        {text: this.$t('dtStartDate'), value: 'startDate'},
+        {text: this.$t('dtFinishDate'), value: 'endDate'},
+        {text: this.$t('dtRating'), value: 'rating'},
+        {text: this.$t('dtActions'), value: 'actions', sortable: false},
+      ]
+    },
 
     deleteItem(item) {
       this.editedIndex = this.offers.indexOf(item);
@@ -196,9 +184,11 @@ export default {
   mounted() {
     this.showSubscriptions();
   },
+
 }
 
 </script>
+
 
 <style scoped>
 .pb-10 {

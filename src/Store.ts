@@ -46,6 +46,9 @@ let store = new Vuex.Store({
         allCities (state) {
             return state.cities
         },
+        allSubscriptions (state) {
+            return state.subscriptions
+        },
         language: state => {
             return state.language
         }
