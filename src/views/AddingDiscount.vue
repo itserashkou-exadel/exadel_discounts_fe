@@ -37,6 +37,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
@@ -44,6 +45,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
@@ -215,97 +217,10 @@
                             outlined
                             v-model="valueOfDiscount"
                     ></v-text-field>
-                    <div
-                            class="d-flex align-content-center"
-                    >
-                        <span
-                                class="pt-4 pr-2"
-                        >{{$t('adFrom')}}</span>
-                        <v-menu
-                                ref="menu"
-                                v-model="menu"
-                                :close-on-content-click="false"
-                                :return-value.sync="dateStart"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                        >
-                            <template v-slot:activator="{on}">
-                                <v-text-field
-                                        v-model="dateStart"
-                                        append-outer-icon="mdi-calendar"
-                                        outlined
-                                        readonly
-                                        v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker
-                                    v-model="dateStart"
-                                    no-title
-                                    scrollable
-                            >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="menu = false"
-                                >
-                                    {{$t('dtCancel')}}
-                                </v-btn>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="$refs.menu.save(dateStart)"
-                                >
-                                    {{$t('dtOk')}}
-                                </v-btn>
-                            </v-date-picker>
-                        </v-menu>
-                        <span
-                                class="pt-4 pr-2"
-                        >{{$t('adTo')}}</span>
-                        <v-menu
-                                ref="menuFinish"
-                                v-model="menuFinish"
-                                :close-on-content-click="false"
-                                :return-value.sync="dateFinish"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field
-                                        v-model="dateFinish"
-                                        append-outer-icon="mdi-calendar"
-                                        outlined
-                                        readonly
-                                        v-bind="attrs"
-                                        v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker
-                                    v-model="dateFinish"
-                                    no-title
-                                    scrollable
-                            >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="menuFinish = false"
-                                >
-                                    {{$t('dtCancel')}}
-                                </v-btn>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="$refs.menuFinish.save(dateFinish)"
-                                >
-                                    {{$t('dtOk')}}
-                                </v-btn>
-                            </v-date-picker>
-                        </v-menu>
-                    </div>
+                    <date-piker
+                            v-on:selectedDateStart="selectedDateStart"
+                            v-on:selectedDateFinish="selectedDateFinish"
+                    />
                     <v-text-field
                             @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountPicture')"
@@ -408,17 +323,16 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions, mapState} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
     import { v4 as uuidv4 } from 'uuid';
     import token from '@/mixins/token.mixin'
-    //const { v4: uuidv4 } = require('uuid');
+    import DatePiker from "@/components/DatePiker";
+
 
     export default {
         name: "AddingDiscount",
-        mixins: [token],
-        components: {ChooseOfTown, AddDiscountMap},
         data() {
             return {
                 dialog: false,
@@ -428,11 +342,10 @@
                 switchAd: true,
                 daysOfWeek: [`${this.$t('Monday')}`,`${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
                 street: '',
-                coordinate1: 0,
-                coordinate2: 0,
+                coordinate1: null,
+                coordinate2: null,
                 selectedCountry: '',
                 selectedCity: '',
-                ...mapState(['discounts']),
                 titleRu: '',
                 titleEn: '',
                 expandT: false,
@@ -451,12 +364,9 @@
                 trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
-                nameRules: [v => (v && v.length > 0) || 'Name must be less than 10 characters'],
-                picker: new Date().toISOString().substr(0, 10),
-                dateStart: new Date().toISOString().substr(0, 10),
-                dateFinish: new Date().toISOString().substr(0, 10),
-                menu: false,
-                menuFinish: false,
+                nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
+                dateStart: '',
+                dateFinish: '',
                 address: {
                     country: null,
                     city: null,
@@ -464,9 +374,8 @@
                 }
             }
         },
-        watch: {
-            langGl () {console.log(1)}
-        },
+        mixins: [token],
+        components: {DatePiker, ChooseOfTown, AddDiscountMap},
         methods: {
             nothing (event) {
                 event.preventDefault()
@@ -480,6 +389,12 @@
             },
             selCity: function (city) {
                 this.selectedCity = city
+            },
+            selectedDateStart: function (dateStart) {
+                this.dateStart = dateStart
+            },
+            selectedDateFinish: function (dateFinish) {
+                this.dateFinish = dateFinish
             },
             changeExpand(item, i) {
                 this.trueOrFalseArr[i] = !this.trueOrFalseArr[i];
@@ -639,18 +554,22 @@
                     }
             },
             submit() {
-
                 const postDiscount = () => {
+                    if (this.$route.params.placeOfCall === 'newDiscount'){
                     this.addDiscount(
                         {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                    )
+                    )} else {
+                        this.addDiscount(
+                            {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
+                        )}
                 }
                 if (this.$refs.form.validate()) {
-                    if (this.$route.params.placeOfCall === 'newDiscount') {
                         this.getToken(postDiscount);
-                    } else {
-                        this.updateDiscount({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
-                    }
+                        // console.log((this.objectWithoutId()));
+                        // this.addDiscount(
+                        //     {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
+                        //     )
+
                 }
                 this.dialog = true
             },
@@ -685,7 +604,7 @@
             fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
-                    const discount = this.allDiscounts.find(element => element._id = id);
+                    const discount = this.getDiscountById(id);
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
@@ -701,8 +620,8 @@
                     this.transformateToDays(discount.workingHours);
                     this.valueOfDiscount = discount.amountOfDiscount;
                     this.dateStart = discount.startDate.$date.substr(0, 10),
-                        this.dateFinish = discount.endDate.$date.substr(0, 10),
-                        this.selectedCountry = discount.address.country;
+                    this.dateFinish = discount.endDate.$date.substr(0, 10),
+                    this.selectedCountry = discount.address.country;
                 }
             },
             transformateToDays(str) {
