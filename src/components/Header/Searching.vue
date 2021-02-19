@@ -8,9 +8,12 @@
       chips
       color="blue lighten-5"
       multiple
+      :class="{'closed' : searchClosed}"
+      @focus="searchClosed = false"
+      @blur.native="searchClosed = true"
       v-model="searchResult"
       @keydown.enter="showSearch()"
-  ></v-text-field>
+      ></v-text-field>
 </template>
 
 <script>
@@ -25,10 +28,20 @@
     name: "Searching",
     data() {
       return {
-        searchResult: ''
+        searchResult: '',
+        sideNav: false,
+        dialog: false,
+        notifications: false,
+        sound: true,
+        widgets: false,
+        drawer: false,
+        searchClosed: true
       }
     },
     methods: {
+      onResize() {
+        this.searchClosed = document.documentElement.clientWidth < 1080 ? true  : false;
+      },
       ...mapActions(['inputPost']),
       showSearch() {
         const authorizationHeader = 'Authorization';
@@ -55,8 +68,16 @@
 
         this.searchResult = '';
       }
-    }
+    },
+    created() {
+      window.addEventListener('resize', this.onResize);
+      this.onResize();
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.onResize);
+    },
   }
+
 
 
 </script>

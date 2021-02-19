@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 
-
-
 Vue.use(Vuex);
 
 const urlDiscounts = 'http://localhost:3000/discounts';
@@ -35,13 +33,13 @@ let store = new Vuex.Store({
         switcher: state => {
             return state.switch;
         },
-        allDiscounts(state) {
+        allDiscounts (state) {
             return state.discounts
         },
-        allCountries(state) {
+        allCountries (state) {
             return state.countries
         },
-        allCities(state) {
+        allCities (state) {
             return state.cities
         },
         language: state => {
@@ -62,28 +60,28 @@ let store = new Vuex.Store({
         changeSwitcher: state => {
             state.switch = !state.switch;
         },
-        setDiscounts(state, discounts) {
+        setDiscounts (state, discounts) {
             state.discounts = discounts
         },
-        setCountries(state, countries) {
+        setCountries (state, countries) {
             state.countries = countries
         },
-        setCities(state, cities) {
+        setCities (state, cities) {
             state.cities = cities
         },
-        createDiscount(state, newDiscount) {
+        createDiscount (state, newDiscount) {
             // @ts-ignore
             state.discounts.push(newDiscount)
         },
         updTask(state, updatedDiscount) {
             // @ts-ignore
             const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
-            if (index !== -1) {
+            if(index !== -1) {
                 // @ts-ignore
                 state.discounts.splice(index, 1, updatedDiscount);
             }
         },
-        setLanguage(state, lang) {
+        setLanguage (state, lang) {
             if (lang) {
                 state.language = "Ru"
             } else {
@@ -95,27 +93,27 @@ let store = new Vuex.Store({
         changeFilter({commit}, state) {
             commit("setFilter", state);
         },
-        changeSwitcher({commit}, state) {
-            commit('setSwitcher', state);
+        changeSwitcher({commit}, state){
+          commit('setSwitcher', state);
         },
-        async goFetch({commit}, str) {
+        async goFetch ({commit}, str) {
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForCountries({commit}) {
-            const response = await axios.get(urlCountries);
+        async goFetchForCountries ({commit}, str) {
+            const response = await axios.get(str);
             commit('setCountries', response.data);
         },
         async goFetchForCities({commit}, str) {
             const response = await axios.get(str);
             commit('setCities', response.data);
         },
-        async addDiscount({commit}, newDiscount) {
-            axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
+        async addDiscount ({commit}, newDiscount) {
+            await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
-        updateDiscount({commit}, discount) {
-            //  const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
+        async updateDiscount ( { commit }, discount) {
+            await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         },
 
