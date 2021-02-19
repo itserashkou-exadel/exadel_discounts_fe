@@ -1,9 +1,11 @@
 <template>
     <v-container
+            :key="componentKey"
             class="mb-6 ml-10 mb-15 pr-10 font-weight-regular"
     >
         <router-view/>
-        <v-form v-model="valid" ref="form">
+        <v-form v-model="valid" ref="form"
+                @keydown.enter="nothing">
             <v-row
                     align-content="center"
                     no-gutters
@@ -23,70 +25,73 @@
                             :key="i">
                         <div class="d-flex align-content-center">
                             <v-text-field v-if="i === 0 && $i18n.locale === 'ru'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='$i18n.locale === "ru" ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleRu'
                                           :label='$i18n.locale === "ru" ? item.labelRu : item.labelEn'
+                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 0 && $i18n.locale === 'en'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='titleEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :rules="nameRules"
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'ru'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'en'"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                           outlined>
                             </v-text-field>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'ru'"
-                                        :key="componentKey"
+                                        @keydown.enter="nothing"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionRu'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
                                         outlined>
                             </v-textarea>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'en'"
-                                        :key="componentKey"
+                                        @keydown.enter="nothing"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionEn'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
@@ -102,7 +107,7 @@
                         </div>
                         <v-expand-transition>
                             <v-text-field v-if="i === 0 && ($i18n.locale === 'ru')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleEn"
@@ -110,7 +115,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleRu"
@@ -118,7 +123,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'ru')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorEn'
@@ -126,7 +131,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorRu'
@@ -134,7 +139,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'ru')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrEn'
@@ -142,7 +147,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrRu'
@@ -150,7 +155,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'ru')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsEn'
@@ -158,7 +163,7 @@
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'en')"
-                                          :key="componentKey"
+                                          @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsRu'
@@ -166,7 +171,7 @@
                                           outlined
                             ></v-text-field>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'ru')"
-                                        :key="componentKey"
+                                        @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionEn'
@@ -174,7 +179,7 @@
                                         outlined
                             ></v-textarea>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'en')"
-                                        :key="componentKey"
+                                        @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionRu'
@@ -184,12 +189,14 @@
                         </v-expand-transition>
                     </div>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountVendorPhone')"
                             :placeholder="this.$t('adLabelOfDiscountVendorPhone')"
                             outlined
                             v-model="vendorPhone"
                     ></v-text-field>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountVendorEmail')"
                             :placeholder="this.$t('adLabelOfDiscountVendorEmail')"
                             outlined
@@ -204,117 +211,31 @@
                             outlined
                     ></v-combobox>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountDiscount')"
                             :placeholder="this.$t('adLabelOfDiscountDiscount')"
                             outlined
                             v-model="valueOfDiscount"
                     ></v-text-field>
-                    <div
-                            class="d-flex align-content-center"
-                    >
-                        <span
-                                class="pt-4 pr-2"
-                        >{{$t('adFrom')}}</span>
-                        <v-menu
-                                ref="menu"
-                                v-model="menu"
-                                :close-on-content-click="false"
-                                :return-value.sync="dateStart"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                        >
-                            <template v-slot:activator="{on}">
-                                <v-text-field
-                                        v-model="dateStart"
-                                        append-outer-icon="mdi-calendar"
-                                        outlined
-                                        readonly
-                                        v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker
-                                    v-model="dateStart"
-                                    no-title
-                                    scrollable
-                            >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="menu = false"
-                                >
-                                    {{$t('dtCancel')}}
-                                </v-btn>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="$refs.menu.save(dateStart)"
-                                >
-                                    {{$t('dtOk')}}
-                                </v-btn>
-                            </v-date-picker>
-                        </v-menu>
-                        <span
-                                class="pt-4 pr-2"
-                        >{{$t('adTo')}}</span>
-                        <v-menu
-                                ref="menuFinish"
-                                v-model="menuFinish"
-                                :close-on-content-click="false"
-                                :return-value.sync="dateFinish"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field
-                                        v-model="dateFinish"
-                                        append-outer-icon="mdi-calendar"
-                                        outlined
-                                        readonly
-                                        v-bind="attrs"
-                                        v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker
-                                    v-model="dateFinish"
-                                    no-title
-                                    scrollable
-                            >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="menuFinish = false"
-                                >
-                                    {{$t('dtCancel')}}
-                                </v-btn>
-                                <v-btn
-                                        text
-                                        color="primary"
-                                        @click="$refs.menuFinish.save(dateFinish)"
-                                >
-                                    {{$t('dtOk')}}
-                                </v-btn>
-                            </v-date-picker>
-                        </v-menu>
-                    </div>
+                    <date-piker
+                            v-on:selectedDateStart="selectedDateStart"
+                            v-on:selectedDateFinish="selectedDateFinish"
+                    />
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountPicture')"
                             outlined
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
-                            v-bind:countries="countries"
-                            v-bind:cities="cities"
                             v-bind:selectCity="selectCity"
                             v-bind:selectCountry="selectCountry"
                             v-on:selectedCountryForObj='selCountry'
                             v-on:selectedCityForObj='selCity'
                     />
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountStreet')"
                             outlined
                             v-model="street"
@@ -324,6 +245,7 @@
                         <AddDiscountMap v-bind:address="address"/>
                     </div>
                     <v-text-field
+                            @keydown.enter="nothing"
                             class="mt-10"
                             :label="this.$t('adLabelOfDiscountCoordinatesLatitude')"
                             :placeholder="this.$t('adLabelOfDiscountCoordinatesLatitude')"
@@ -331,6 +253,7 @@
                             v-model="coordinate1"
                     ></v-text-field>
                     <v-text-field
+                            @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountCoordinatesLongitude')"
                             :placeholder="this.$t('adLabelOfDiscountCoordinatesLongitude')"
                             outlined
@@ -350,6 +273,38 @@
                     >
                         {{titleOfButton()}}
                     </v-btn>
+                    <v-dialog
+                            v-model="dialog"
+                            persistent
+                            max-width="290"
+                    >
+                        <v-card>
+                            <v-card-title class="headline">
+                                Услуга была добавлена
+                            </v-card-title>
+                            <v-card-text>
+                                Очистить поля?
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                        color="green darken-1"
+                                        text
+                                        @click="dialog = false"
+                                >
+                                    Нет
+                                </v-btn>
+                                <v-btn
+
+                                        color="green darken-1"
+                                        text
+                                        @click="agree"
+                                >
+                                    Agree
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                 </v-col>
                 <v-col cols="12" md="2"></v-col>
                 <v-col cols="12" md="4">
@@ -364,41 +319,33 @@
                 </v-col>
             </v-row>
         </v-form>
-<!--        <p>{{allCountries}}</p>-->
     </v-container>
 </template>
 
 <script>
-    import AuthService from "@/services/auth.service";
-    const moment = require('moment')
-    import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
-    import CountryFlag from 'vue-country-flag'
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
-    import { v4 as uuidv4 } from 'uuid'
-    import axios from 'axios'
-    const auth = new AuthService();
-    import Vue from 'vue'
-    import paginationMixin from '@/mixins/token.mixin'
+    import { v4 as uuidv4 } from 'uuid';
+    import token from '@/mixins/token.mixin'
+    import DatePiker from "@/components/DatePiker";
 
 
     export default {
         name: "AddingDiscount",
-        mixins: [paginationMixin],
-        components: {ChooseOfTown, CountryFlag, AddDiscountMap},
         data() {
             return {
+                dialog: false,
                 componentKey: 0,
                 countries: [],
                 cities: [],
                 switchAd: true,
-                daysOfWeek: [`${this.$t('Monday')}`, `${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
-                street: null,
+                daysOfWeek: [`${this.$t('Monday')}`,`${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
+                street: '',
                 coordinate1: null,
                 coordinate2: null,
-                selectedCountry: null,
-                selectedCity: null,
-                ...mapState(['discounts']),
+                selectedCountry: '',
+                selectedCity: '',
                 titleRu: '',
                 titleEn: '',
                 expandT: false,
@@ -417,12 +364,9 @@
                 trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
-                nameRules: [],
-                picker: new Date().toISOString().substr(0, 10),
-                dateStart: new Date().toISOString().substr(0, 10),
-                dateFinish: new Date().toISOString().substr(0, 10),
-                menu: false,
-                menuFinish: false,
+                nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
+                dateStart: '',
+                dateFinish: '',
                 address: {
                     country: null,
                     city: null,
@@ -430,21 +374,31 @@
                 }
             }
         },
+        mixins: [token],
+        components: {DatePiker, ChooseOfTown, AddDiscountMap},
         methods: {
+            nothing (event) {
+                event.preventDefault()
+            },
+            agree () {
+                this.dialog = false;
+                this.$refs.form.reset();
+            },
             selCountry: function (country) {
                 this.selectedCountry = country
-                axios.get(`https://localhost:9001/api/v1/addresses/all/Ru/cities/${this.selectedCountry}`)
-                    .then((response) => {
-                        this.cities = response.data
-                    })
             },
             selCity: function (city) {
                 this.selectedCity = city
             },
+            selectedDateStart: function (dateStart) {
+                this.dateStart = dateStart
+            },
+            selectedDateFinish: function (dateFinish) {
+                this.dateFinish = dateFinish
+            },
             changeExpand(item, i) {
                 this.trueOrFalseArr[i] = !this.trueOrFalseArr[i];
                 this.expandT = !this.expandT;
-               // this.componentKey += 1;
             },
             fieldsForDiscount() {
                 return [
@@ -491,186 +445,134 @@
                     },
                 ]
             },
-
             objectWithoutId() {
-                return {
-                    //id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
+                    if (this.$i18n.locale === 'ru') {return {
                     name: this.titleRu,
-                    description: "string",
-                    amountOfDiscount: 0,
-                    startDate: "2021-02-17T08:26:34.109Z",
-                    endDate: "2022-02-17T08:26:34.109Z",
+                    description: this.descriptionRu,
+                    amountOfDiscount: this.valueOfDiscount,
+                    startDate: this.dateStart,
+                    endDate: this.dateFinish,
                     address: {
-                        country: "Беларусь",
-                        city: "Белгород",
-                        street: "string",
+                        country: this.selectedCountry,
+                        city: this.selectedCity,
+                        street: this.street,
                         location: {
-                            latitude: 85,
-                            longitude: 33
+                            latitude: this.coordinate1,
+                            longitude: this.coordinate2
                         }
                     },
                     company: {
-                        name: "string",
-                        description: "string",
-                        phoneNumber: "string",
-                        mail: "string"
+                        name: this.vendorRu,
+                        description: this.vendorDescrRu,
+                        phoneNumber: this.vendorPhone,
+                        mail: this.vendorEmail
                     },
-                    workingDaysOfTheWeek: "0011001",
+                    workingDaysOfTheWeek: this.transformateDays(),
                     tags: [
-                        "Меха"
+                        this.tagsRu
                     ],
                     language: "Ru",
                     translations: [
                         {
-                            name: "string",
-                            description: "string",
+                            name: this.titleEn,
+                            description: this.descriptionEn,
                             address: {
-                                country: "Belarus",
-                                city: "Belgorod",
-                                street: "string",
+                                country: '',
+                                city: '',
+                                street: this.street,
                                 location: {
-                                    latitude: 0,
-                                    longitude: 0
+                                    latitude: this.coordinate1,
+                                    longitude: this.coordinate2
                                 }
                             },
                             company: {
-                                name: "string",
-                                description: "string",
-                                phoneNumber: "string",
-                                mail: "string"
+                                name: this.vendorEn,
+                                description: this.vendorDescrEn,
+                                phoneNumber: this.vendorPhone,
+                                mail: this.vendorEmail
                             },
                             tags: [
-                                "String"
+                                this.tagsEn
                             ],
-                            language: "Ru"
+                            language: "En"
                         }
                     ]
-                    // id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
-                    // name: "string",//this.titleRu,
-                    // description: "string", //this.descriptionRu,
-                    // amountOfDiscount: 20, //this.valueOfDiscount,
-                    // startDate: "2021-02-17T08:26:34.109Z",//{$date: this.dateStart},
-                    // endDate: "2022-02-17T08:26:34.109Z",//{$date: this.dateFinish},
-                    // address: {
-                    //     country: "Беларусь", //this.selectedCountry,
-                    //     city: "Белгород",//this.selectedCity,
-                    //     street: "string", //this.street,
-                    //     location: {
-                    //         latitude: 85,//this.coordinate1,
-                    //         longitude: 33, //this.coordinate2
-                    //     }
-                    // },
-                    // company: {
-                    //     name: "string", //this.vendorRu,
-                    //     description: "string", //this.vendorDescrRu,
-                    //     phoneNumber: "string", //this.vendorPhone,
-                    //     mail: "string", //this.vendorEmail
-                    // },
-                    // workingHours: '0110111',//this.transformateDays(),
-                    // tags: [
-                    //     'Меха', //this.tagsRu
-                    // ],
-                    // language: "Ru",
-                    // translations: [
-                    //     {
-                    //         name: "string", //this.titleEn,
-                    //         description: "string", //this.descriptionEn,
-                    //         address: {
-                    //             country: 'Belarus', //this.selectedCountry,
-                    //             city: 'Belgorod', //this.selectedCity,
-                    //             street: "string", //this.street,
-                    //             location: {
-                    //                   latitude: 0,
-                    //                   longitude: 0
-                    //                             }
-                    //         },
-                    //         company: {
-                    //             name: "string", //this.titleEn,
-                    //             description: "string", //this.descriptionEn
-                    //         },
-                    //         tags: [
-                    //             'Hhhh', //this.tagsEn
-                    //         ],
-                    //         language: "Ru"
-                    //     }
-                    // ]
-                }
-
+                }}
+                    if (this.$i18n === 'en') {
+                        return {
+                            name: this.titleEn,
+                            description: this.descriptionEn,
+                            amountOfDiscount: this.valueOfDiscount,
+                            startDate: this.dateStart,
+                            endDate: this.dateFinish,
+                            address: {
+                                country: this.selectedCountry,
+                                city: this.selectedCity,
+                                street: this.street,
+                                location: {
+                                    latitude: this.coordinate1,
+                                    longitude: this.coordinate2
+                                }
+                            },
+                            company: {
+                                name: this.vendorEn,
+                                description: this.vendorDescrEn,
+                                phoneNumber: this.vendorPhone,
+                                mail: this.vendorEmail
+                            },
+                            workingDaysOfTheWeek: this.transformateDays(),
+                            tags: [
+                                this.tagsEn
+                            ],
+                            language: "En",
+                            translations: [
+                                {
+                                    name: this.titleRu,
+                                    description: this.descriptionRu,
+                                    address: {
+                                        country: '',
+                                        city: '',
+                                        street: this.street,
+                                        location: {
+                                            latitude: this.coordinate1,
+                                            longitude: this.coordinate2
+                                        }
+                                    },
+                                    company: {
+                                        name: this.vendorRu,
+                                        description: this.vendorDescrRu,
+                                        phoneNumber: this.vendorPhone,
+                                        mail: this.vendorEmail
+                                    },
+                                    tags: [
+                                        this.tagsRu
+                                    ],
+                                    language: "Ru"
+                                }
+                            ]
+                        }
+                    }
             },
             submit() {
                 const postDiscount = () => {
-                    const obj = {
-                        id: "3fa85f64-5717-4562-b3fc-2c963f67afa6",
-                        name: "string",
-                        description: "string",
-                        amountOfDiscount: 0,
-                        startDate: "2021-02-17T08:26:34.109Z",
-                        endDate: "2022-02-17T08:26:34.109Z",
-                        address: {
-                            country: "Беларусь",
-                            city: "Белгород",
-                            street: "string",
-                            location: {
-                                latitude: 85,
-                                longitude: 33
-                            }
-                        },
-                        company: {
-                            name: "string",
-                            description: "string",
-                            phoneNumber: "string",
-                            mail: "string"
-                        },
-                        workingDaysOfTheWeek: "0011001",
-                        tags: [
-                            "Меха"
-                        ],
-                        language: "Ru",
-                        translations: [
-                            {
-                                name: "string",
-                                description: "string",
-                                address: {
-                                    country: "Belarus",
-                                    city: "Belgorod",
-                                    street: "string",
-                                    location: {
-                                        latitude: 0,
-                                        longitude: 0
-                                    }
-                                },
-                                company: {
-                                    name: "string",
-                                    description: "string",
-                                    phoneNumber: "string",
-                                    mail: "string"
-                                },
-                                tags: [
-                                    "String"
-                                ],
-                                language: "Ru"
-                            }
-                        ]
-                    };
+                    if (this.$route.params.placeOfCall === 'newDiscount'){
                     this.addDiscount(
-                      //  {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                       {...{id: "3fa85f64-5717-4562-b3fc-2c963f67afa6"}, ...(this.objectWithoutId())}
-                       // this.objectWithoutId()
-                    )
-
+                        {...{id: uuidv4()}, ...(this.objectWithoutId())}
+                    )} else {
+                        this.addDiscount(
+                            {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
+                        )}
                 }
                 if (this.$refs.form.validate()) {
-                    if (this.$route.params.placeOfCall === 'newDiscount') {
-
-                        //     //     {...{id: uuidv4()}, ...(this.objectWithoutId())}
-
                         this.getToken(postDiscount);
-                    } else {
-                        this.updateDiscount({...{_id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())})
-                    }
-                    this.$refs.form.reset()
+                        // console.log((this.objectWithoutId()));
+                        // this.addDiscount(
+                        //     {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
+                        //     )
+
                 }
-                           },
+                this.dialog = true
+            },
             resetForm() {
                 this.$refs.form.reset();
                 this.fillingFields();
@@ -702,7 +604,7 @@
             fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
-                    const discount = this.allDiscounts.find(element => element._id = id);
+                    const discount = this.getDiscountById(id);
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
@@ -718,7 +620,7 @@
                     this.transformateToDays(discount.workingHours);
                     this.valueOfDiscount = discount.amountOfDiscount;
                     this.dateStart = discount.startDate.$date.substr(0, 10),
-                    this.dateFinish =discount.endDate.$date.substr(0, 10),
+                    this.dateFinish = discount.endDate.$date.substr(0, 10),
                     this.selectedCountry = discount.address.country;
                 }
             },
@@ -788,19 +690,9 @@
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries'])
         },
         computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
-        mounted() {
-            const getCountries = () => {
-                axios.get('https://localhost:9001/api/v1/addresses/all/Ru/countries')
-                .then((response) => {
-                    this.countries = response.data;
-                })
-                .catch((error) => {
-                    alert(error);
-                });
-            };
-            this.getToken(getCountries);
-            this.fillingFields();
 
+        mounted() {
+            this.fillingFields();
         }
     }
 </script>

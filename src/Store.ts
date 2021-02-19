@@ -2,16 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 
-
-
 Vue.use(Vuex);
+
 
 const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
+const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
+
 
 let store = new Vuex.Store({
     state: {
+        keyWord: null,
+        details: {},
         discounts: [],
         switch: true,
         language: 'Ru',
@@ -22,6 +25,9 @@ let store = new Vuex.Store({
         subscriptions: [],
     },
     getters: {
+        getDetailView(state) {
+            return state.details;
+        },
         filterData: state => {
             return state.filtered;
         },
@@ -45,13 +51,26 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
-        receiveSearch (state, dis){
-            state.discounts = dis;
+        changeKeyWord(state, key) {
+            state.keyWord = key;
+        },
+        receiveSearch(state, dis) {
+            // @ts-ignore
+            state.discounts.push(...dis);
+        },
+
+        addNextDis(state, nextDis){
+          // @ts-ignore
+            state.discounts.push(...nextDis);
+        },
+        receiveGetById(state, dis) {
+            state.details = {};
+            state.details = dis;
         },
         receiveSubscription (state, subscr) {
            state.subscriptions = subscr;
         },
-        setFilter (state, filteredData){
+        setFilter(state, filteredData) {
             state.filtered = filteredData;
         },
         changeSwitcher: state => {
@@ -87,6 +106,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        setKeyWord({commit}, state) {
+            commit('changeKeyWord', state);
+        },
         changeFilter({commit}, state) {
             commit("setFilter", state);
         },
@@ -97,11 +119,11 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForCountries ({commit}) {
-            const response = await axios.get(urlCountries);
+        async goFetchForCountries ({commit}, str) {
+            const response = await axios.get(str);
             commit('setCountries', response.data);
         },
-        async goFetchForCities ({commit}, str) {
+        async goFetchForCities({commit}, str) {
             const response = await axios.get(str);
             commit('setCities', response.data);
         },
@@ -109,8 +131,8 @@ let store = new Vuex.Store({
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
-        updateDiscount ( { commit }, discount) {
-          //  const response = await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
+        async updateDiscount ( { commit }, discount) {
+            await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         },
 
@@ -121,6 +143,24 @@ let store = new Vuex.Store({
         async getSubscription ({commit}, searchSub) {
             const response = await axios.post(searchDiscount, searchSub );
             commit('receiveSubscription', response.data)
+        },
+        async getDiscountById({commit},id) {
+            let url = urlGetDiscountsById;
+            url += id;
+            const response = await axios.get(url);
+            commit('receiveGetById', response.data)
+        },
+        async nextDiscount({commit}, search) {
+            try{
+                const response = await axios.post(searchDiscount, search);
+                commit('addNextDis', response.data)
+            } catch (e) {
+                // if(e.response && e.response.status === 404) {
+                //     console.clear();
+                // }
+                console.log(e)
+
+            }
         }
     }
 
