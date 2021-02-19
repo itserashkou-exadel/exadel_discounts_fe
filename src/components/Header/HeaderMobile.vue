@@ -60,29 +60,17 @@
             <span>Price</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-text-field
-                @focus="searchClosed = false"
-                @blur="searchClosed = true"
-                placeholder="Search"
-                prepend-inner-icon="mdi-magnify"
-                class="expanding-search mt-4"
-                :class="{'closed' : searchClosed}"
-                filled
-                dense
-                chips
-                color="blue lighten-5"
-                multiple
-        ></v-text-field>
-
+      <Searching/>
     </v-toolbar>
 </template>
 
 <script>
     import Avatar from "@/components/Header/Avatar";
+    import Searching from "@/components/Header/Searching";
 
     export default {
         name: "Header_mobile",
-        components: {Avatar},
+        components: {Searching, Avatar},
         methods: {
             links() {return [
         {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
@@ -99,7 +87,6 @@
             drawer: false,
             searchClosed: true
         })
-
     }
 </script>
 

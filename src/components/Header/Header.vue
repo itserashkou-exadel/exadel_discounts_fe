@@ -1,6 +1,6 @@
 <template>
   <v-app-bar color="primary" flat>
-    <v-toolbar-title class="headline text-uppercase">
+    <v-toolbar-title class="headline text-uppercase mr-6">
         <span class="text--accent-4"
               color="blue lighten-5">Crazy</span>
       <span class="font-weight-light"
@@ -9,6 +9,7 @@
     <v-toolbar-items v-for="(item, i) in headerButtons()"
                      :key="i">
       <HeaderButton v-bind:headerButton="item"
+                    v-slot:extension
       />
     </v-toolbar-items>
     <v-spacer></v-spacer>
