@@ -49,9 +49,10 @@ const router = new VueRouter({
             component: AppTemplate,
             children: [
                 {
-                    path: '/home/detail',
+                    path: '/home/detail/:_id',
                     name: 'detail',
                     component: Detail,
+                    props: true
                 }]
         },
         {

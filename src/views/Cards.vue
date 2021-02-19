@@ -29,86 +29,6 @@
         name: "Cards",
         components: {Modal, SwitchButton, Card},
         data: () => ({
-                // descriptions: [
-                //     {
-                //         id: 1,
-                //         name: "Burger",
-                //         discount: 50,
-                //         rating: 4,
-                //         info: " lorem ipsum balbalba orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalbaorem ipsum balbalba...",
-                //         tags: [
-                //             "tag", "tagz", "tagsd"
-                //         ]
-                //     },
-                //     {
-                //         id: 2,
-                //         name: "Burger",
-                //         discount: 50,
-                //         rating: 4,
-                //         info: " lorem ipsum balbalba orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalbaorem ipsum balbalba...",
-                //         tags: [
-                //             "tag", "tagz", "tagsd"
-                //         ]
-                //     },
-                //     {
-                //         id: 3,
-                //         name: "Burger",
-                //         discount: 50,
-                //         rating: 4,
-                //         info: " lorem ipsum balbalba orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalbaorem ipsum balbalba...",
-                //         tags: [
-                //             "tag", "tagz", "tagsd"
-                //         ]
-                //     },
-                //     {
-                //         id: 4,
-                //         name: "Burger",
-                //         discount: 50,
-                //         rating: 4,
-                //         info: " lorem ipsum balbalba orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalbaorem ipsum balbalba...",
-                //         tags: [
-                //             "tag", "tagz", "tagsd"
-                //         ]
-                //     },
-                //     {
-                //         id: 5,
-                //         name: "Burger",
-                //         discount: 50,
-                //         rating: 4,
-                //         info: " lorem ipsum balbalba orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalbaorem ipsum balbalba...",
-                //         tags: [
-                //             "tag", "tagz", "tagsd"
-                //         ]
-                //     },
-                //     {
-                //         id: 6,
-                //         name: "Burger",
-                //         discount: 50,
-                //         rating: 4,
-                //         info: " lorem ipsum balbalba orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalba\n" +
-                //             "            orem ipsum balbalbaorem ipsum balbalba...",
-                //         tags: [
-                //             "tag", "tagz", "tagsd"
-                //         ]
-                //     },
-                // ],
                 info: [],
                 results:[]
         }),
@@ -121,7 +41,7 @@
                 this.info.map((item) => {
                     arr.push(
                         {
-                            id: item._id,
+                            id: item.id,
                             service: item.name,
                             vendor: item.company.name,
                             amountOfDiscount: item.amountOfDiscount,
