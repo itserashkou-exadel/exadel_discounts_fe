@@ -44,6 +44,7 @@
             selectCountryHandler(value){
                 this.$emit('selectedCountryForObj', value);
                 this.selectCountry(value);
+                this.selectedCity = '';
                 this.getCities()
             },
             selectCityHandler(value){
