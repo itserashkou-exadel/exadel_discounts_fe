@@ -49,7 +49,7 @@
                 const resSearch = () => {
                     this.inputPost(
                         {
-                            "searchText": "Меха",
+                            "searchText": this.search,
                             "searchDiscountOption": "All",
                             "searchAddressCountry": "Украина",
                             "searchAddressCity": "Винница",
