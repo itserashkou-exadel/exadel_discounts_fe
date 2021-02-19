@@ -1,132 +1,159 @@
 <template>
-    <div>
-        <div id="mapContainer" class="basemap"></div>
-    </div>
+    <div id="map">
+        <div class="filter">
+            <Modal class="modal"/>
+        </div>
 
+        <nav class="mapNavPanel">
+            <LeftSideBar
+                    v-bind:markersData="markersData"
+                    v-bind:jumpToMarker="jumpToMarker"
+            >
+
+            </LeftSideBar>
+        </nav>
+        <MglMap
+                :accessToken="accessToken"
+                :mapStyle="mapStyle"
+                @load="onMapLoaded"
+                :center="coordinates"
+                :zoom=11
+        >
+            <MglMarker :coordinates="[marker.address.location.latitude, marker.address.location.longitude]"
+                       v-for="marker in markersData"
+
+            >
+                <MglPopup>
+                    <VCard flat>
+                        <v-card-title>
+                            <div>{{marker.name}}</div>
+                        </v-card-title>
+                        <v-card-text>
+                            <p>
+                                <span>
+                                    Company: {{marker.company.name}}
+                                </span>
+                            </p>
+                            <p>
+                                {{marker.company.description}}
+                            </p>
+                        </v-card-text>
+                    </VCard>
+                </MglPopup>
+            </MglMarker>
+        </MglMap>
+    </div>
 </template>
 
 <script>
-    import mapboxgl from "mapbox-gl";
+    import Mapbox from "mapbox-gl";
+    import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
+    import LeftSideBar from "@/components/Map/LeftSideBar/LeftSideBar";
+    import axios from "axios";
+    import Modal from "@/components/Filter/Modal";
 
-    const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-    const geocodingClient = mbxGeocoding({accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA'});
+    import AuthService from "@/services/auth.service";
+    import token from '@/mixins/token.mixin'
 
+    const auth = new AuthService();
 
 
     export default {
-        marker: null,
-        name: "BaseMap",
+        components: {
+            Modal,
+            LeftSideBar,
+            MglMarker,
+            MglPopup,
+            MglMap
+        },
         data() {
             return {
-                accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA',
-                fetchedGeoData: []
+                accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA', // your access token. Needed if you using Mapbox maps
+                mapStyle: 'mapbox://styles/mapbox/streets-v11', // your map style
+                coordinates: [27.544592, 53.898477],
+                markersData: [],
             };
         },
-        mounted() {
-            mapboxgl.accessToken = this.accessToken;
+        mixins: [token],
 
-            //Map init
-            let map = new mapboxgl.Map({
-                container: "mapContainer",
-                style: "mapbox://styles/mapbox/streets-v11",
-                center: [23.8223, 53.6688],
-                zoom: 7,
-            })
-
-            //ForwardGeoCodding logic
-            geocodingClient
-                .forwardGeocode({
-                    query: 'Belarus, Homel',
-                })
-                .send()
-                .then(response => {
-                    const match = response.body;
-                    console.log('match: ', match)
-                    let result = match.features[0].center
-
-                    let latitude = match.features[0].center[0]
-                    console.log(latitude)
-
-                    let longitude = match.features[0].center[1]
-                    console.log(longitude)
-                    console.log('Coordinates from query', result)
-
-                    this.fetchedGeoData.push({
-                        //result
-                        latitude,
-                        longitude,
+        async mounted() {
+                const getData = () => {
+                     axios.post('https://localhost:9001/api/v1/discounts/search', {
+                        "searchText": "Меха",
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Беларусь",
+                        "searchAddressCity": "Минск",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 20,
+                        "searchLanguage": "Ru"
                     })
-                    console.log('Fetched Geo Data: ', this.fetchedGeoData)
-                    return result
-                })
-                .then(res => {
-                    const geoData = res
-                    console.log('response: ', res)
-                    console.log('FlyTo new Point!')
-                    map.flyTo({
-                        center: geoData,
-                        zoom: 12,
-                        speed: 0.5,
-                    })
-                    return geoData
-                })
-                .then(res => {
-                    let newMarker = res
-                    console.log('Set marker from local state')
+                        .then((response) => {
+                            this.markersData = response.data;
+                            console.log(this.markersData)
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                }
 
-                    //Draw marker
-                    this.marker = new mapboxgl.Marker({
-                        color: "yellow",
-                        draggable: true
-                    })
-                        .setLngLat(newMarker)
-                        .addTo(map);
-                    console.log('Marker coordinates: ', this.marker._lngLat)
-                    console.log('Marker coordinates: ', this.marker)
-                    this.marker.on('dragend', () => {
-                        let lngLat = this.marker.getLngLat();
-                        console.log('New marker coordinates', lngLat)
-
-                    })
-                    return this.marker
-
-                })
+                await this.getToken(getData)
+        },
+        async created() {
+            // We need to set mapbox-gl library here in order to use it in template
+            this.mapbox = Mapbox;
         },
         methods: {
-            // newMarkerPoint(){
-            //     let lngLat = this.marker.getLngLat();
-            //     console.log(lngLat)
-            // }
-        },
-        watch: {
-
-            }
-            // fetchedGeoData(){
-            //     let lngLat = marker.getLngLat();
-            // //
-            // }
-
+            onMapLoaded(event) {
+                // in component
+                this.map = event.map;
+                // or just to store if you want have access from other components
+                //this.$store.map = event.map;
+            },
+            jumpToMarker(coordinates) {
+                this.map.flyTo({
+                    center: coordinates,
+                    zoom: 16,
+                    speed: 2
+                })
+                console.log('WORK', coordinates)
+            },
+        }
     };
-
 </script>
 
 <style scoped>
-    .basemap {
+    #map {
         width: 100vw;
-        height: 100vh;
+        height: 90vh;
+        display: flex;
     }
 
-    .coordinates {
-        background: rgba(0, 0, 0, 0.5);
-        color: #fff;
+    .mapNavPanel {
+        position: fixed;
+        z-index: 1;
+        margin-bottom: 25px;
+    }
+
+    .testBtn {
         position: absolute;
-        bottom: 40px;
+        top: 10px;
         left: 10px;
-        padding: 5px 10px;
-        margin: 0;
-        font-size: 11px;
-        line-height: 18px;
-        border-radius: 3px;
-        display: none;
+        z-index: 10;
+    }
+
+    .filter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        z-index: 10;
+        top: 100px;
+        right: 100px;
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        background: royalblue;
     }
 </style>
