@@ -119,13 +119,13 @@
 </template>
 
 <script>
-    const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
     import axios from "axios";
-
+    import AuthService from "@/services/auth.service";
+    const auth = new AuthService();
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
-
+    import token from '@/mixins/token.mixin'
     export default {
         components: {Modal},
         name: "DataTable",
@@ -169,6 +169,7 @@
             },
 
         }),
+        mixins: [token],
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
@@ -284,27 +285,26 @@
                 // console.log(this.$store.state.discounts)
                 // console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
-                if(this.selectedPages.indexOf(this.page) === -1){
-                    console.log('Hello')
-                    this.selectedPages.push(this.page);
-                    this.nextDiscount(
-                        {
-                            "searchText": this.$store.state.keyWord,
-                            "searchDiscountOption": "All",
-                            "searchAddressCountry": "Украина",
-                            "searchAddressCity": "Вінниця",
-                            "searchSortFieldOption": "NameDiscount",
-                            "searchSortOption": "Asc",
-                            "searchPaginationPageNumber": this.pageCount + 1,
-                            "searchPaginationCountElementPerPage": this.itemsPerPage,
-                            "searchLanguage": "Ru"
-                        }
-                    )
+                const goNext = () => {
+                    if(this.selectedPages.indexOf(this.page) === -1){
+                        console.log('Hello')
+                        this.selectedPages.push(this.page);
+                        this.nextDiscount(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": this.pageCount + 1,
+                                "searchPaginationCountElementPerPage": this.itemsPerPage,
+                                "searchLanguage": "Ru"
+                            }
+                        )
+                    }
                 }
-
-
-
-                // console.log(this.result)
+                this.getToken(goNext)
             },
             test(){
                 this.inputPost(
