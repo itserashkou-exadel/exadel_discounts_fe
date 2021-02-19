@@ -9,7 +9,6 @@
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
-
         >
 
             <template v-slot:top>
@@ -117,10 +116,6 @@
             },
 
         }),
-
-        mounted() {
-            this.goFetch(`http://localhost:3000/discounts`);
-        },
         computed: {
             filterData: function (){
                 const arr = [];
@@ -128,7 +123,7 @@
                 this.info.map((item) => {
                     arr.push(
                         {
-                            id: item._id,
+                            id: item.id,
                             service: item.name,
                             vendor: item.company.name,
                             amountOfDiscount: item.amountOfDiscount,
