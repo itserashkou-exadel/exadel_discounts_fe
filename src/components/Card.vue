@@ -139,19 +139,6 @@
 
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
           ...mapActions(['getDiscountById']),
-          // detailView(id) {
-          //   const authorizationHeader = 'Authorization';
-          //   auth.getAccessToken().then((userToken) => {
-          //     axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-          //     this.getDiscountById(id)
-          //         .catch((error) => {
-          //           alert(error);
-          //         });
-          //
-          //   });
-          //
-          //   this.searchResult = '';
-          // },
             headers() {
                 return [
 
