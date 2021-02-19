@@ -298,7 +298,7 @@
                                         @click="agree"
                                         v-if="val"
                                 >
-                                    Agree
+                                    {{$t('adAgree')}}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -621,6 +621,7 @@
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
                     const discount = this.getDiscountById(id);
+                    console.log(discount);
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
@@ -633,10 +634,10 @@
                     this.descriptionEn = discount.translations[0].description;
                     this.vendorPhone = discount.company.phoneNumber;
                     this.vendorEmail = discount.company.mail;
-                    this.transformateToDays(discount.workingHours);
+                    this.transformateToDays(discount.workingDaysOfTheWeek);
                     this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = discount.startDate.$date.substr(0, 10),
-                    this.dateFinish = discount.endDate.$date.substr(0, 10),
+                    this.dateStart = discount.startDate.substr(0, 10),
+                    this.dateFinish = discount.endDate.substr(0, 10),
                     this.selectedCountry = discount.address.country;
                 }
             },
@@ -708,7 +709,7 @@
         computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
 
         mounted() {
-            this.fillingFields();
+           this.fillingFields();
         }
     }
 </script>

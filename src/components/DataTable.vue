@@ -168,7 +168,7 @@
                     this.info.map((item) => {
                         arr.push(
                             {
-                                id: item._id,
+                                id: item.id,
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,

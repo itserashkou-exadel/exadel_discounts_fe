@@ -22,7 +22,7 @@ export default {
             });
         },
         getDiscountById (id) {
-            const discount = this.allDiscounts.find(element => element.id = id);
+            const discount = this.allDiscounts.find(element => element.id === id);
             return discount
         }
     }
