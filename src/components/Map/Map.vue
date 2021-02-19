@@ -53,7 +53,7 @@
     import Modal from "@/components/Filter/Modal";
 
     import AuthService from "@/services/auth.service";
-
+    import token from '@/mixins/token.mixin'
 
     const auth = new AuthService();
 
@@ -72,70 +72,33 @@
                 mapStyle: 'mapbox://styles/mapbox/streets-v11', // your map style
                 coordinates: [27.544592, 53.898477],
                 markersData: [],
-                // fakeTestData: [
-                //     {
-                //         id: '1',
-                //         name: 'Burger King 1',
-                //         description: 'Отличное место, чтио бы быстро покушать',
-                //         address: 'Сурганова 5',
-                //         coordinates: [27.554179, 53.906461]
-                //     },
-                //     {
-                //         id: 2,
-                //         name: 'Burger King 2',
-                //         description: 'Здесь лучшие бургеры',
-                //         address: 'Маяковского 15/2',
-                //         coordinates: [27.496666, 53.912810]
-                //     },
-                //     {
-                //         id: 3,
-                //         name: 'Burger King 3',
-                //         description: 'Ууууу луковые колечки',
-                //         address: 'Победы 34',
-                //         coordinates: [27.594500, 53.927107]
-                //     },
-                //     {
-                //         id: 4,
-                //         name: 'Burger King 4',
-                //         description: 'Комбо за 30 рублей на двоих',
-                //         address: 'Дзержинского 5',
-                //         coordinates: [27.509685, 53.929633]
-                //     },
-                //     {
-                //         id: 5,
-                //         name: 'Burger King 5',
-                //         description: 'Лучшее место что бы попить колы',
-                //         address: 'Брикеля 8',
-                //         coordinates: [27.588133, 53.933288]
-                //     },
-                // ]
             };
         },
-        async mounted() {
-            const authorizationHeader = 'Authorization';
-            auth.getAccessToken().then((userToken) => {
-                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-                axios.post('https://localhost:9001/api/v1/discounts/search', {
-                    "searchText": "Меха",
-                    "searchDiscountOption": "All",
-                    "searchAddressCountry": "Беларусь",
-                    "searchAddressCity": "Минск",
-                    "searchSortFieldOption": "NameDiscount",
-                    "searchSortOption": "Asc",
-                    "searchPaginationPageNumber": 1,
-                    "searchPaginationCountElementPerPage": 20,
-                    "searchLanguage": "Ru"
-                })
-                    .then((response) => {
-                        this.markersData = response.data;
-                        console.log(this.markersData)
-                    })
-                    .catch((error) => {
-                        alert(error);
-                    });
+        mixins: [token],
 
-            });
-            this.fillingFields();
+        async mounted() {
+                const getData = () => {
+                     axios.post('https://localhost:9001/api/v1/discounts/search', {
+                        "searchText": "Меха",
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Беларусь",
+                        "searchAddressCity": "Минск",
+                        "searchSortFieldOption": "NameDiscount",
+                        "searchSortOption": "Asc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 20,
+                        "searchLanguage": "Ru"
+                    })
+                        .then((response) => {
+                            this.markersData = response.data;
+                            console.log(this.markersData)
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                }
+
+                await this.getToken(getData)
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
@@ -179,7 +142,8 @@
         left: 10px;
         z-index: 10;
     }
-    .filter{
+
+    .filter {
         display: flex;
         justify-content: center;
         align-items: center;
