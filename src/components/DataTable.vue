@@ -9,7 +9,6 @@
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
-
         >
 
             <template v-slot:top>
