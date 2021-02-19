@@ -3,16 +3,7 @@
     <v-data-table
         :data="filterData"
         :items="result"
-  :headers="headers()">
-<!--       -->
-<!--        class="elevation-8"-->
-
-<!--        item-key="id"-->
-<!--        :single-expand="singleExpand"-->
-<!--        :expanded.sync="expanded"-->
-<!--        show-expand-->
-
-
+        :headers="headers()">
       <template v-slot:top>
         <v-toolbar
             flat
@@ -156,14 +147,12 @@ export default {
             }
         )
             .then((response) => {
-              this.subscriptions = response.data;
-              console.log("RESPONSE :" + JSON.stringify(response))
             })
             .catch((error) => {
               alert(error);
             });
       });
-      this.searchResult = '';
+
     },
     headers(){return [
       {
@@ -212,5 +201,7 @@ export default {
 </script>
 
 <style scoped>
-
+.pb-10 {
+  margin: 0 auto;
+}
 </style>
