@@ -119,12 +119,16 @@
             ...mapActions(['changeFilter', 'inputPost']),
 
             getFilteredData() {
-                console.log(this.search)
+                // console.log(this.search)
+                // console.log(this.$store.state.keyWord ? this.$store.state.filtered.rangeDate[0] : null)
                 this.$store.state.discounts = [];
+                console.log(this.$store.state.filtered.vendor)
+                console.log(this.$store.state.filtered.vendor ? this.$store.state.filtered.vendor : null)
+
                 const filterSearch = () => {
                     this.inputPost(
                         {
-                            "searchText": "Меха",
+                            "searchText": this.$store.state.keyWord,
                             "searchDiscountOption": "All",
                             "searchAddressCountry": "Украина",
                             "searchAddressCity": "Винница",
@@ -134,7 +138,7 @@
                             "searchPaginationCountElementPerPage": 5,
                             "searchLanguage": "Ru",
                             "searchAdvanced": {
-                                "companyName": "Авдеев Трейд",
+                                "companyName": this.$store.state.filtered.vendor ? this.$store.state.filtered.vendor : null,
                                 "searchDate": {
                                     "startDate": "2020-9-26",
                                     "endDate": "2022-02-10"
@@ -155,6 +159,14 @@
                 this.dialog = true;
                 console.log(this.$store.state.discounts)
             },
+
+            test: function () {
+                // this.$store.state.filtered.vendor === null ? this.$store.state.filtered.vendor : null;
+                // "startDate": this.$store.state.filtered.rangeDate[0] === null ? this.$store.state.filtered.rangeDate[0] : null,
+                //     "endDate": this.$store.state.filtered.rangeDate[1] === null ? this.$store.state.filtered.rangeDate[1] : null,
+                let res = this.$store.state.filtered.vendor === null ? 'I have this field' : 'Empty';
+                console.log(res)
+            }
         }
     }
 </script>

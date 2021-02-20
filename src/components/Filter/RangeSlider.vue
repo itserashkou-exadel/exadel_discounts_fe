@@ -31,8 +31,8 @@
         data () {
             return {
                 min: 0,
-                max: 100,
-                range: [20, 100],
+                max: 99,
+                range: [20, 99],
             }
         },
         watch:{
