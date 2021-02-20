@@ -107,7 +107,7 @@
         watch:{
             vendor: function(){
                 this.changeFilter({
-                    ...this.$store.getters.filterData,
+                    ...this.$store.getters.getFilterData,
                     vendor: this.vendor
                 })
             }

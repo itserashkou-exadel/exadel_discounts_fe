@@ -24,7 +24,7 @@ let store = new Vuex.Store({
         getDetailView(state) {
             return state.details;
         },
-        filterData: state => {
+        getFilterData: state => {
             return state.filtered;
         },
         setFilter(state, filteredData) {

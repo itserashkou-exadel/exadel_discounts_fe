@@ -61,10 +61,10 @@
             ...mapActions(['changeFilter']),
             saveData(){
                 this.changeFilter({
-                    ...this.$store.getters.filterData,
+                    ...this.$store.getters.getFilterData,
                     rangeDate: this.date
                 });
-                console.log(this.$store.getters.filterData)
+                console.log(this.$store.getters.getFilterData)
             },
         },
         computed: {

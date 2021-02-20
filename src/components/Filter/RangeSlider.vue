@@ -38,7 +38,7 @@
         watch:{
             range: function(){
                 this.changeFilter({
-                    ...this.$store.getters.filterData,
+                    ...this.$store.getters.getFilterData,
                     range: [this.range[0], this.range[1]]
                 })
             }
