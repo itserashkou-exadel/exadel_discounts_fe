@@ -79,7 +79,7 @@
                 <v-btn
                         color="blue darken-1"
                         text
-                        @click="dialog = false"
+                        @click="getFilteredData"
                 >
                     {{$t('fSave')}}
                 </v-btn>
@@ -94,7 +94,9 @@
     import DataPicker from "@/components/Filter/DataPicker";
     import RangeSlider from "@/components/Filter/RangeSlider";
     import StarSlider from "@/components/Filter/StarSlider";
-
+    import token from '@/mixins/token.mixin'
+    import AuthService from "@/services/auth.service";
+    const auth = new AuthService();
     export default {
         name: "Modal.vue",
         components: {StarSlider, RangeSlider, DataPicker},
@@ -104,6 +106,7 @@
             title: 'From',
             vendor: ''
         }),
+        mixins: [token],
         watch:{
             vendor: function(){
                 this.changeFilter({
@@ -113,7 +116,45 @@
             }
         },
         methods: {
-            ...mapActions(['changeFilter']),
+            ...mapActions(['changeFilter', 'inputPost']),
+
+            getFilteredData() {
+                console.log(this.search)
+                this.$store.state.discounts = [];
+                const filterSearch = () => {
+                    this.inputPost(
+                        {
+                            "searchText": "Меха",
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": "Украина",
+                            "searchAddressCity": "Винница",
+                            "searchSortFieldOption": "NameDiscount",
+                            "searchSortOption": "Asc",
+                            "searchPaginationPageNumber": 1,
+                            "searchPaginationCountElementPerPage": 5,
+                            "searchLanguage": "Ru",
+                            "searchAdvanced": {
+                                "companyName": "Авдеев Трейд",
+                                "searchDate": {
+                                    "startDate": "2020-9-26",
+                                    "endDate": "2022-02-10"
+                                },
+                                "searchAmountOfDiscount": {
+                                    "searchAmountOfDiscountMin": 0,
+                                    "searchAmountOfDiscountMax": 99
+                                },
+                                "searchRatingTotal": {
+                                    "searchRatingTotalMin": 0,
+                                    "searchRatingTotalMax": 5
+                                }
+                            }
+                        }
+                    );
+                     }
+                this.getToken(filterSearch)
+                this.dialog = true;
+                console.log(this.$store.state.discounts)
+            },
         }
     }
 </script>
