@@ -4,13 +4,16 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
+
 const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 
+
 let store = new Vuex.Store({
     state: {
+        keyWord: null,
         details: {},
         discounts: [],
         switch: true,
@@ -27,7 +30,7 @@ let store = new Vuex.Store({
         getFilterData: state => {
             return state.filtered;
         },
-        setFilter(state, filteredData) {
+        setFilter (state, filteredData){
             state.filtered = filteredData;
         },
         switcher: state => {
@@ -47,8 +50,17 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        changeKeyWord(state, key) {
+            state.keyWord = key;
+        },
         receiveSearch(state, dis) {
-            state.discounts = dis;
+            // @ts-ignore
+            state.discounts.push(...dis);
+        },
+
+        addNextDis(state, nextDis){
+          // @ts-ignore
+            state.discounts.push(...nextDis);
         },
         receiveGetById(state, dis) {
             state.details = {};
@@ -73,7 +85,7 @@ let store = new Vuex.Store({
             // @ts-ignore
             state.discounts.push(newDiscount)
         },
-        updTask(state, updatedDiscount) {
+        updTask (state, updatedDiscount)  {
             // @ts-ignore
             const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
             if(index !== -1) {
@@ -90,6 +102,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        setKeyWord({commit}, state) {
+            commit('changeKeyWord', state);
+        },
         changeFilter({commit}, state) {
             commit("setFilter", state);
         },
@@ -117,7 +132,7 @@ let store = new Vuex.Store({
             commit('updTask', discount);
         },
 
-        async inputPost({commit}, search) {
+        async inputPost({commit}, search){
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
@@ -126,6 +141,18 @@ let store = new Vuex.Store({
             url += id;
             const response = await axios.get(url);
             commit('receiveGetById', response.data)
+        },
+        async nextDiscount({commit}, search) {
+            try{
+                const response = await axios.post(searchDiscount, search);
+                commit('addNextDis', response.data)
+            } catch (e) {
+                // if(e.response && e.response.status === 404) {
+                //     console.clear();
+                // }
+                console.log(e)
+
+            }
         }
     }
 
