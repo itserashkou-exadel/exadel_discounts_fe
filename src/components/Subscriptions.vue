@@ -2,7 +2,9 @@
   <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
     <v-data-table
         :items="filterData"
-        :headers="headers()">
+        :headers="headers()"
+        hide-default-footer
+    >
       <template v-slot:top>
         <v-toolbar
             flat
@@ -51,6 +53,10 @@
         </td>
       </template>
     </v-data-table>
+    <v-pagination
+        v-model="page"
+        :length="pageCount"
+    ></v-pagination>
   </v-col>
 </template>
 
@@ -74,14 +80,8 @@ export default {
     offers: [],
     info: [],
     result: [],
-    defaultItem: {
-      name: '',
-      vendor: '',
-      discount: 0,
-      start_date: '',
-      finish_date: '',
-      raring: 0
-    },
+    page: 1,
+    pageCount: 1
   }),
   computed: {
     ...mapGetters(["allSubscriptions"]),
@@ -114,7 +114,7 @@ export default {
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 1,
-              "searchPaginationCountElementPerPage": 5,
+              "searchPaginationCountElementPerPage": 10,
               "searchLanguage": "Ru"
             }
         )
