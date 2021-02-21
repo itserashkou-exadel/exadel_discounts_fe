@@ -43,7 +43,7 @@
         methods: {
             selectCountryHandler(value){
                 this.$emit('selectedCountryForObj', value);
-                this.selectCountry(value);
+                // this.selectCountry(value);
                 this.selectedCity = '';
                 this.getCities()
             },
@@ -65,6 +65,16 @@
                 this.getToken(getCities);
             }
         },
+        async mounted() {
+            if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+                const id = this.$route.params.idOfDiscount;
+                const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
+                const discount = response.data;
+                this.selectedCountry = discount.address.country,
+                    this.selectedCity = discount.address.city;
+                this.getCities ();
+            }
+        }
     }
 </script>
 

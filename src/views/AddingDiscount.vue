@@ -29,7 +29,7 @@
                                           :placeholder='item.placeholderRu'
                                           v-model='titleRu'
                                           :label='item.labelRu'
-                                          :rules='nameRulesRu'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 0 && $i18n.locale === 'en'"
@@ -37,7 +37,7 @@
                                           :placeholder='item.placeholderEn'
                                           v-model='titleEn'
                                           :label='item.labelEn'
-                                          :rules='nameRulesEn'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
@@ -45,7 +45,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='$i18n.locale === "ru" ? nameRulesRu : nameRulesEn'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
@@ -53,7 +53,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
@@ -61,7 +61,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='($i18n.locale === "ru") ? nameRulesRu : nameRulesEn'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
@@ -69,7 +69,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='vendorDescrEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'ru'"
@@ -77,7 +77,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsRu'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='$i18n.locale === "ru" ? nameRulesRu : nameRulesEn'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 3 && $i18n.locale === 'en'"
@@ -85,7 +85,7 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                           v-model='tagsEn'
                                           :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
+                                          :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'ru'"
@@ -93,7 +93,7 @@
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionRu'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                        :rules='$i18n.locale === "ru" ? nameRulesRu : nameRulesEn'
+                                        :rules='nameRules'
                                         outlined>
                             </v-textarea>
                             <v-textarea v-if="i === 4 && $i18n.locale === 'en'"
@@ -101,7 +101,7 @@
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionEn'
                                         :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                        :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
+                                        :rules='nameRules'
                                         outlined>
                             </v-textarea>
                             <v-icon
@@ -119,7 +119,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleEn"
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='nameRulesEn'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"
@@ -128,7 +127,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model="titleRu"
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'ru')"
@@ -137,7 +135,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorEn'
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='$i18n.locale === "ru" ? nameRulesRu : nameRulesEn'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"
@@ -146,7 +143,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorRu'
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'ru')"
@@ -155,7 +151,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrEn'
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='$i18n.locale === "ru" ? nameRulesRu : nameRulesEn'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"
@@ -164,7 +159,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='vendorDescrRu'
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'ru')"
@@ -173,7 +167,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsEn'
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='$i18n.locale === "ru" ? nameRulesRu : nameRulesEn'
                                           outlined
                             ></v-text-field>
                             <v-text-field v-if="i === 3 && ($i18n.locale === 'en')"
@@ -182,7 +175,6 @@
                                           :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                           v-model='tagsRu'
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
                                           outlined
                             ></v-text-field>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'ru')"
@@ -191,7 +183,6 @@
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionEn'
                                         :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                        :rules='$i18n.locale === "ru" ? nameRulesRu : nameRulesEn'
                                         outlined
                             ></v-textarea>
                             <v-textarea v-if="i === 4 && ($i18n.locale === 'en')"
@@ -200,7 +191,6 @@
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
                                         v-model='descriptionRu'
                                         :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                        :rules='$i18n.locale === "ru" ? nameRulesEn : nameRulesRu'
                                         outlined
                             ></v-textarea>
                         </v-expand-transition>
@@ -211,6 +201,7 @@
                             :placeholder="this.$t('adLabelOfDiscountVendorPhone')"
                             outlined
                             v-model="vendorPhone"
+                            :rules='nameRules'
                     ></v-text-field>
                     <v-text-field
                             @keydown.enter="nothing"
@@ -218,6 +209,7 @@
                             :placeholder="this.$t('adLabelOfDiscountVendorEmail')"
                             outlined
                             v-model="vendorEmail"
+                            :rules='nameRules'
                     ></v-text-field>
                     <v-combobox
                             v-model="vendorSelectedDays"
@@ -233,12 +225,14 @@
                             :placeholder="this.$t('adLabelOfDiscountDiscount')"
                             outlined
                             v-model="valueOfDiscount"
+                            :rules='onlyNumberRules'
                     ></v-text-field>
                     <date-piker
                             v-on:selectedDateStart="selectedDateStart"
                             v-on:selectedDateFinish="selectedDateFinish"
                     />
                     <v-text-field
+                            v-model="picture"
                             @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountPicture')"
                             outlined
@@ -257,6 +251,7 @@
                             outlined
                             v-model="street"
                             @input="selectLine"
+                            :rules='nameRules'
                     ></v-text-field>
                     <div class="mr-10">
                         <AddDiscountMap v-bind:address="address"/>
@@ -268,6 +263,7 @@
                             :placeholder="this.$t('adLabelOfDiscountCoordinatesLatitude')"
                             outlined
                             v-model="coordinate1"
+                            :rules='onlyNumberRules'
                     ></v-text-field>
                     <v-text-field
                             @keydown.enter="nothing"
@@ -275,6 +271,7 @@
                             :placeholder="this.$t('adLabelOfDiscountCoordinatesLongitude')"
                             outlined
                             v-model="coordinate2"
+                            :rules='onlyNumberRules'
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -346,6 +343,7 @@
     import { v4 as uuidv4 } from 'uuid';
     import token from '@/mixins/token.mixin'
     import DatePiker from "@/components/DatePiker";
+    import axios from "axios";
 
 
     export default {
@@ -379,12 +377,12 @@
                 vendorPhone: '',
                 vendorEmail: '',
                 vendorSelectedDays: [],
+                picture: '',
                 trueOrFalseArr: [false, false, false, false, false],
                 dialog: false,
                 valid: true,
-                nameRulesRu: [v => (v && v.length > 0) || 'The field cant be empty'],
-                nameRulesEn: ['The field cant be empty'],
                 nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
+                onlyNumberRules: [v => /\d/.test(v) || 'The field must contain only numbers'],
                 dateStart: '',
                 dateFinish: '',
                 address: {
@@ -480,7 +478,8 @@
                 ]
             },
             objectWithoutId() {
-                    if (this.$i18n.locale === 'ru') {return {
+                    if (this.$i18n.locale === 'ru') {
+                        return {
                     name: this.titleRu,
                     description: this.descriptionRu,
                     amountOfDiscount: this.valueOfDiscount,
@@ -502,9 +501,8 @@
                         mail: this.vendorEmail
                     },
                     workingDaysOfTheWeek: this.transformateDays(),
-                    tags: [
-                        this.tagsRu
-                    ],
+                    pictureUrl: this.picture,
+                    tags: this.tagsRu.split(', '),
                     language: "Ru",
                     translations: [
                         {
@@ -525,9 +523,8 @@
                                 phoneNumber: this.vendorPhone,
                                 mail: this.vendorEmail
                             },
-                            tags: [
-                                this.tagsEn
-                            ],
+                            tags: this.tagsEn.split(', ')
+                            ,
                             language: "En"
                         }
                     ]
@@ -555,9 +552,7 @@
                                 mail: this.vendorEmail
                             },
                             workingDaysOfTheWeek: this.transformateDays(),
-                            tags: [
-                                this.tagsEn
-                            ],
+                            tags: this.tagsEn.split(', '),
                             language: "En",
                             translations: [
                                 {
@@ -578,9 +573,7 @@
                                         phoneNumber: this.vendorPhone,
                                         mail: this.vendorEmail
                                     },
-                                    tags: [
-                                        this.tagsRu
-                                    ],
+                                    tags: this.tagsEn.split(', '),
                                     language: "Ru"
                                 }
                             ]
@@ -590,23 +583,21 @@
             submit() {
                 const postDiscount = () => {
                     if (this.$route.params.placeOfCall === 'newDiscount'){
+
                     this.addDiscount(
                         {...{id: uuidv4()}, ...(this.objectWithoutId())}
                     )} else {
+                        console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                         this.addDiscount(
                             {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
                         )}
                 }
                 if (this.$refs.form.validate()) {
-                    this.val = true;
                         this.getToken(postDiscount);
-                        // console.log((this.objectWithoutId()));
-                        // this.addDiscount(
-                        //     {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                        //     )
-
+                    this.val = true;
                 } else {
                     this.val = false;
+
                 }
                 this.dialog = true
             },
@@ -638,19 +629,19 @@
                     return this.$tc('adAddSave', 2);
                 }
             },
-            fillingFields() {
+            async fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
-                    const discount = this.getDiscountById(id);
-                    console.log(discount);
+                    const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
+                    const discount = response.data;
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
                     this.vendorEn = discount.translations[0].company.name;
                     this.vendorDescrRu = discount.company.description;
                     this.vendorDescrEn = discount.translations[0].company.description;
-                    this.tagsRu = discount.tags;
-                    this.tagsEn = discount.translations[0].tags;
+                    this.tagsRu = this.transformateToTags(discount.tags);
+                    this.tagsEn = this.transformateToTags(discount.translations[0].tags);
                     this.descriptionRu = discount.description;
                     this.descriptionEn = discount.translations[0].description;
                     this.vendorPhone = discount.company.phoneNumber;
@@ -659,8 +650,26 @@
                     this.valueOfDiscount = discount.amountOfDiscount;
                     this.dateStart = discount.startDate.substr(0, 10),
                     this.dateFinish = discount.endDate.substr(0, 10),
-                    this.selectedCountry = discount.address.country;
+
+                    console.log(this.selectedCountry);
+                    if (this.$i18n.locale === 'ru') {
+                        this.selectedCountry = discount.address.country;
+                        this.selectedCity = discount.address.city}
+                    if (this.$i18n.locale === 'en') {
+                        this.selectedCountry = discount.translations[0].address.country;
+                        this.selectedCity = discount.translations[0].address.city}
+                    this.street = discount.address.street;
+                    this.coordinate1 = discount.address.location.latitude;
+                    this.coordinate2 = discount.address.location.longitude;
+                    this.picture = discount.pictureUrl;
                 }
+            },
+            transformateToTags (arr) {
+                let str = '';
+                str = `${arr.join(', ')}`;
+                //let substr = str.substr(0, str.length-1);
+                const a = str.split(', ');
+                return str
             },
             transformateToDays(str) {
 
@@ -725,12 +734,12 @@
                 }
                 return str
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries'])
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'nextDiscount'])
         },
         computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
 
         mounted() {
-           this.fillingFields();
+          this.fillingFields();
         }
     }
 </script>

@@ -5,7 +5,7 @@
                 :items="result"
                 class="elevation-8"
                 :data="filterData"
-                item-key="vendor"
+                item-key="id"
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
