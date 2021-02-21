@@ -16,8 +16,8 @@
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">{{ $t('dtCancel') }}</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{ $t('dtOk') }}</v-btn>
+                <v-btn color="blue darken-1" text>{{ $t('dtCancel') }}</v-btn>
+                <v-btn color="blue darken-1" text>{{ $t('dtOk') }}</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -27,12 +27,10 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
             small
-            @click="deleteItem(item)"
         >
           mdi-delete
         </v-icon>
       </template>
-
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-row class="d-flex justify-end my-5">
@@ -47,12 +45,6 @@
               <p class="mb-0">{{ item.description }}</p>
             </v-col>
             <v-col cols="11" lg="11" class="text-center">
-              <v-btn
-                  color="primary"
-                  @click="$router.push({name:'detail'})"
-              >
-                {{ $t('dtMoreInfo') }}
-              </v-btn>
             </v-col>
           </v-row>
         </td>
@@ -105,14 +97,6 @@ export default {
           ))
     },
   },
-  watch: {
-    dialog(val) {
-      val || this.close()
-    },
-    dialogDelete(val) {
-      val || this.closeDelete()
-    },
-  },
   methods: {
     ...mapActions(['getSubscription']),
     showSubscriptions() {
@@ -121,24 +105,20 @@ export default {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
         this.getSubscription(
             {
-            "searchText": 'Меха',
-            "searchDiscountOption": "Subscriptions",
-            "searchAddressCountry": "Украина",
-            "searchAddressCity": "Винница",
-            "searchSortFieldOption": "NameDiscount",
-            "searchSortOption": "Asc",
-            "searchPaginationPageNumber": 1,
-            "searchPaginationCountElementPerPage": 5,
-            "searchLanguage": "Ru"
+              "searchText": 'Меха',
+              "searchDiscountOption": "Subscriptions",
+              "searchAddressCountry": "Украина",
+              "searchAddressCity": "Винница",
+              "searchSortFieldOption": "NameDiscount",
+              "searchSortOption": "Asc",
+              "searchPaginationPageNumber": 1,
+              "searchPaginationCountElementPerPage": 5,
+              "searchLanguage": "Ru"
             }
-        ).then((response) => {
-          console.log("RESPONSE :" + JSON.stringify(response.data))
-          console.log("RESULT is :" + result)
-        })
+        )
       }).catch((error) => {
         alert(error);
       });
-      this.searchResult = '';
     },
     headers() {
       return [
@@ -156,37 +136,11 @@ export default {
         {text: this.$t('dtActions'), value: 'actions', sortable: false},
       ]
     },
-
-    deleteItem(item) {
-      this.editedIndex = this.offers.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true;
-    },
-    deleteItemConfirm() {
-      this.offers.splice(this.editedIndex, 1);
-      this.closeDelete();
-    },
-    close() {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
-    closeDelete() {
-      this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      })
-    },
   },
   mounted() {
     this.showSubscriptions();
   },
-
 }
-
 </script>
 
 
