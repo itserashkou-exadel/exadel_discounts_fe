@@ -254,7 +254,8 @@
                             :rules='nameRules'
                     ></v-text-field>
                     <div class="mr-10">
-                        <AddDiscountMap v-bind:address="address"/>
+                        <AddDiscountMap v-bind:address="address"
+                        :updateCoordinates="updateCoordinates"/>
                     </div>
                     <v-text-field
                             @keydown.enter="nothing"
@@ -395,6 +396,10 @@
         mixins: [token],
         components: {DatePiker, ChooseOfTown, AddDiscountMap},
         methods: {
+            updateCoordinates(lng, lat) {
+              this.coordinate2 = lng;
+              this.coordinate1 = lat;
+            },
             titleOfField() {
                 if (this.val) {
                     return this.$tc('adClearOrEdit', 1)
