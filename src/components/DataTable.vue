@@ -5,7 +5,7 @@
                 :items="result"
                 class="elevation-8"
                 :data="filterData"
-                item-key="vendor"
+                item-key="id"
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
@@ -168,7 +168,7 @@
                     this.info.map((item) => {
                         arr.push(
                             {
-                                id: item._id,
+                                id: item.id,
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,
@@ -181,6 +181,7 @@
 
                     })
                     this.result = arr;
+                    console.log(this.result);
                     return this.result;
                 }
 
@@ -264,7 +265,7 @@
                     // console.log(this.page,this.pageCount)
                 const goNext = () => {
                     if(this.selectedPages.indexOf(this.page) === -1){
-                        console.log('Hello')
+                        console.log('Hello', this.pageCount)
                         this.selectedPages.push(this.page);
                         this.nextDiscount(
                             {
