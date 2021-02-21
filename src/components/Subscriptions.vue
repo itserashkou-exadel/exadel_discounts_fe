@@ -8,7 +8,7 @@
             flat
         >
           <v-toolbar-title>
-            <h3>{{ $t('dtServices') }}</h3>
+            <h3>Подписки</h3>
           </v-toolbar-title>
           <v-dialog max-width="500px">
             <v-card>
@@ -89,21 +89,21 @@ export default {
     },
   }),
   computed: {
-    ...mapGetters(["allSubscriptions"])
-  },
-  filterData: function () {
-    return this.allSubscriptions.map((item) =>
-        new Object({
-              id: item._id,
-              service: item.name,
-              vendor: item.company.name,
-              amountOfDiscount: item.amountOfDiscount,
-              startDate: moment(item.startDate.$date).format('L'),
-              endDate: moment(item.endDate.$date).format('L'),
-              rating: item.ratingTotal,
-              description: item.description
-            }
-        ))
+    ...mapGetters(["allSubscriptions"]),
+    filterData: function () {
+      return this.allSubscriptions.map((item) =>
+          new Object({
+                id: item._id,
+                service: item.name,
+                vendor: item.company.name,
+                amountOfDiscount: item.amountOfDiscount,
+                startDate: moment(item.startDate.$date).format('L'),
+                endDate: moment(item.endDate.$date).format('L'),
+                rating: item.ratingTotal,
+                description: item.description
+              }
+          ))
+    },
   },
   watch: {
     dialog(val) {
@@ -121,15 +121,15 @@ export default {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
         this.getSubscription(
             {
-              "searchText": "Меха",
-              "searchDiscountOption": "Subscriptions",
-              "searchAddressCountry": "Украина",
-              "searchAddressCity": "Вінниця",
-              "searchSortFieldOption": "NameDiscount",
-              "searchSortOption": "Asc",
-              "searchPaginationPageNumber": 1,
-              "searchPaginationCountElementPerPage": 5,
-              "searchLanguage": "Ru"
+            "searchText": 'Меха',
+            "searchDiscountOption": "Subscriptions",
+            "searchAddressCountry": "Украина",
+            "searchAddressCity": "Винница",
+            "searchSortFieldOption": "NameDiscount",
+            "searchSortOption": "Asc",
+            "searchPaginationPageNumber": 1,
+            "searchPaginationCountElementPerPage": 5,
+            "searchLanguage": "Ru"
             }
         ).then((response) => {
           console.log("RESPONSE :" + JSON.stringify(response.data))

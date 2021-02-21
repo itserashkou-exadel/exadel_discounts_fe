@@ -46,7 +46,8 @@
                   <p class="mt-n4">{{info.startDate + " - " + info.endDate}}</p>
                 </v-card-text>
                 <v-btn height="60px" width="300px" color="#1E88E5" style="font-size:24px;"
-                       class="white--text ml-6 mt-n5 font-weight-bold">Воспользоваться
+                       class="white--text ml-6 mt-n5 font-weight-bold"
+                       v-on:click="addToSubscr">Воспользоваться
                 </v-btn>
               </v-col>
               <v-col
@@ -113,7 +114,8 @@
               </v-row>
               <v-row justify="center">
                 <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
-                       class="white--text mb-8 font-weight-bold">Воспользоваться
+                       class="white--text mb-8 font-weight-bold"
+                       v-on:click="addToSubscr">Воспользоваться
                 </v-btn>
               </v-row>
             </v-col>
@@ -166,7 +168,6 @@ export default {
     info: {},
     results: [],
     detailId: "",
-    subscriptions: [],
   }),
 
   props: {
@@ -190,11 +191,12 @@ export default {
       });
     },
     addToSubscr: function (event) {
-      let discountId = this.$store.state.discounts.id
+      let self = this;
+      // let discountId = this.$route.params._id
       const putSubscr = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/subscriptions/add/4e734e64-4344-4fe0-9e5b-fb40b1a0d6f4`,
+          url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
         }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
       };
       this.getToken(putSubscr);
