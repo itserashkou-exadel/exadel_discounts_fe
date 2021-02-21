@@ -27,6 +27,7 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
             small
+            @click="deleteFromSubscr(item.id)"
         >
           mdi-delete
         </v-icon>
@@ -56,6 +57,7 @@
 <script>
 import axios from "axios";
 import AuthService from "@/services/auth.service";
+import authMixin from '@/mixins/token.mixin'
 
 const auth = new AuthService();
 const moment = require('moment')
@@ -66,6 +68,7 @@ import Modal from "@/components/Filter/Modal";
 export default {
   components: {Modal},
   name: "Subscriptions",
+  mixins: [authMixin],
   data: () => ({
     searchResult: '',
     offers: [],
@@ -85,7 +88,7 @@ export default {
     filterData: function () {
       return this.allSubscriptions.map((item) =>
           new Object({
-                id: item._id,
+                id: item.id,
                 service: item.name,
                 vendor: item.company.name,
                 amountOfDiscount: item.amountOfDiscount,
@@ -119,6 +122,17 @@ export default {
       }).catch((error) => {
         alert(error);
       });
+    },
+    deleteFromSubscr: function (id) {
+      let show = () => this.showSubscriptions();
+
+      const putSubscr = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/subscriptions/delete/${id}`,
+        }).then(response => show());
+      };
+      this.getToken(putSubscr);
     },
     headers() {
       return [
