@@ -108,7 +108,6 @@ export default {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
         this.getSubscription(
             {
-              "searchText": 'Меха',
               "searchDiscountOption": "Subscriptions",
               "searchAddressCountry": "Украина",
               "searchAddressCity": "Винница",
