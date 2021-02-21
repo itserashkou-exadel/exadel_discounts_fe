@@ -20,10 +20,6 @@ export default {
                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
                 func()
             });
-        },
-        getDiscountById (id) {
-            const discount = this.allDiscounts.find(element => element.id = id);
-            return discount
         }
     }
 

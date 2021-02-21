@@ -4,12 +4,10 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-
 const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
-
 
 let store = new Vuex.Store({
     state: {
@@ -131,7 +129,6 @@ let store = new Vuex.Store({
             await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         },
-
         async inputPost({commit}, search){
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
@@ -151,7 +148,6 @@ let store = new Vuex.Store({
                 //     console.clear();
                 // }
                 console.log(e)
-
             }
         }
     }

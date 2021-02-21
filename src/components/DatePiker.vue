@@ -95,40 +95,42 @@
 
 <script>
     import token from '@/mixins/token.mixin'
+    import axios from "axios";
     export default {
         name: "DatePiker",
-        data () {
-          return {
-              menu: false,
-              menuFinish: false,
-              picker: new Date().toISOString().substr(0, 10),
-              dateStart: '',
-              dateFinish: ''
-          }
+        data() {
+            return {
+                menu: false,
+                menuFinish: false,
+                picker: new Date().toISOString().substr(0, 10),
+                dateStart: '',
+                dateFinish: ''
+            }
         },
         mixins: [token],
         methods: {
-            saveDateStart () {
+            saveDateStart() {
                 this.$refs.menu.save(this.dateStart);
                 this.giveDateStart()
             },
-            saveDateFinish () {
+            saveDateFinish() {
                 this.$refs.menuFinish.save(this.dateFinish);
                 this.giveDateFinish()
             },
-            giveDateStart (){
+            giveDateStart() {
                 this.$emit('selectedDateStart', this.dateStart);
             },
-            giveDateFinish (){
+            giveDateFinish() {
                 this.$emit('selectedDateFinish', this.dateFinish);
             },
         },
-        mounted() {
+        async mounted() {
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                 const id = this.$route.params.idOfDiscount;
-                const discount = this.getDiscountById(id);
-                this.dateStart = discount.startDate.$date.substr(0, 10),
-                this.dateFinish = discount.endDate.$date.substr(0, 10)
+                const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
+                const discount = response.data;
+                this.dateStart = discount.startDate.substr(0, 10),
+                this.dateFinish = discount.endDate.substr(0, 10)
             }
         }
     }
