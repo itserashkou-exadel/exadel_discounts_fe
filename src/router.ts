@@ -10,7 +10,7 @@ import AppTemplate from "@/views/AppTemplate.vue";
 import Table from '@/components/Table.vue';
 import AddingDiscount from '@/views/AddingDiscount.vue';
 import Detail from '@/views/Detail.vue';
-import Map from '@/components/Map/Map.vue';
+import ErrorPage from '@/views/ErrorPage.vue';
 
 Vue.use(VueRouter);
 
@@ -18,6 +18,8 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
+    linkActiveClass: "active",
+    linkExactActiveClass: "exact-active",
     routes: [
         {
             path: '/',
@@ -47,9 +49,10 @@ const router = new VueRouter({
             component: AppTemplate,
             children: [
                 {
-                    path: '/home/detail',
+                    path: '/home/detail/:_id',
                     name: 'detail',
                     component: Detail,
+                    props: true
                 }]
         },
         {
@@ -111,7 +114,19 @@ const router = new VueRouter({
                     component: FavoritesPage
                 }
             ]
-        }
+        },
+        {
+            path: '/502',
+            name: '502',
+            component: AppTemplate,
+            children: [
+                {
+                    path: '/502',
+                    name: '502',
+                    component: ErrorPage,
+                },
+            ],
+        },
     ]
 });
 
