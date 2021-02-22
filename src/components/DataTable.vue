@@ -69,10 +69,14 @@
                             <p class="mb-0">{{ item.description }}</p>
                         </v-col>
                         <v-col cols="11" lg="11" class="text-center">
-                            <v-btn
-                                    color="primary"
-                                    @click="$router.push({name:'detail'})"
-                            >
+<!--                            <v-btn-->
+<!--                                    color="primary"-->
+<!--                                    @click="$router.push({name:'detail'})"-->
+<!--                            >-->
+                          <v-btn
+                              color="primary"
+                              @click="$router.push({name:'detail',params:{_id:item.id}})"
+                          >
                                 {{$t('dtMoreInfo')}}
                             </v-btn>
                         </v-col>
