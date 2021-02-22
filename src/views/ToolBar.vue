@@ -1,12 +1,14 @@
 <template>
     <v-row class="d-flex align-center justify-lg-end justify-md-end justify-sm-center justify-center shrink">
-        <v-col cols="3" lg="1" md="2" class="d-flex justify-end">
+        <v-col cols="3" xl="1" lg="1" md="1"  class="d-flex justify-end  mr-lg-n5">
             <Modal/>
         </v-col>
-        <v-col cols="2" lg="1" md="2" class="d-flex justify-end">
+        <v-col cols="2" xl="1" lg="1" md="1" class="d-flex justify-end ml-lg-n16">
             <v-icon
                     large
                     class="pointer"
+                    color="blue"
+                    :disabled="!this.$store.state.filterIcon"
                     @click="showSearch"
                    >mdi-filter-off-outline
             </v-icon>
@@ -49,7 +51,7 @@
             ...mapGetters(['language'])
         },
         methods: {
-            ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost"]),
+            ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost", "setFilterIcon"]),
             goToPageAd() {
                 this.$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})
             },
@@ -72,6 +74,7 @@
                     );
                 }
                 this.getToken(resSearch)
+                this.setFilterIcon(false);
                 console.log(this.$store.state.discounts)
             },
 

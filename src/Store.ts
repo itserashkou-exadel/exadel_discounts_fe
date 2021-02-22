@@ -14,6 +14,7 @@ const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 
 let store = new Vuex.Store({
     state: {
+        filterIcon: false,
         filterRequest: false,
         keyWord: null,
         details: {},
@@ -52,6 +53,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        changeFilterIcon(state, bool){
+          state.filterIcon = bool;
+        },
         setTrueFilterRequest(state){
             state.filterRequest = true;
         },
@@ -110,6 +114,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        setFilterIcon({commit}, state){
+            commit('changeFilterIcon', state);
+        },
         setKeyWord({commit}, state) {
             commit('changeKeyWord', state);
         },
