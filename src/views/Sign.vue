@@ -1,7 +1,7 @@
 <template>
     <v-container class="d-flex align-center wrapper" fluid>
         <v-card width="500" class="mx-auto ">
-            <v-card-text >
+            <v-card-text>
                 <v-list-group eager>
                     <template v-slot:activator>
                         <v-list-item-title>{{$t('sChooseLocation')}}</v-list-item-title>
@@ -31,7 +31,7 @@
                         </template>
                         <v-list-item-group v-model="realSelected">
                             <v-list-item v-bind:key="town" v-for="town in ukraine ">
-                                <v-list-item-title >{{ town }}</v-list-item-title>
+                                <v-list-item-title>{{ town }}</v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list-group>
@@ -47,6 +47,9 @@
                     <v-btn @click="getProtectedApiData()">
                         <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                     </v-btn>
+                    <v-btn @click="getUser">
+                        123
+                    </v-btn>
                 </v-container>
 
             </v-card-text>
@@ -57,6 +60,7 @@
 <script>
     import AuthService from '@/services/auth.service';
     import axios from 'axios';
+
     const auth = new AuthService();
 
 
@@ -69,33 +73,36 @@
             realSelected: null,
         }),
         methods: {
-            redirectToIS4(){
+            redirectToIS4() {
                 console.log('You was redirected')
                 this.$router.push('/identity')
             },
-            login()
-            {
+            login() {
                 auth.login();
             },
-            logout()
-            {
+            logout() {
                 auth.logout();
+            },
+            getUser() {
+                const userClaims = auth.getUser();
+                console.log(userClaims)
             },
             getProtectedApiData() {
 
-            const authorizationHeader = 'Authorization';
-            auth.getAccessToken().then((userToken) => {
-                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+                const authorizationHeader = 'Authorization';
+                auth.getAccessToken().then((userToken) => {
+                    axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
 
-                axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
-                    .then((response) => {
-                        this.dataEventRecordsItems = response.data;
-                    })
-                    .catch((error) => {
-                        alert(error);
-                    });
-            });
-        }
+                    axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
+                        .then((response) => {
+                            this.dataEventRecordsItems = response.data;
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                });
+
+            },
         },
     };
 </script>

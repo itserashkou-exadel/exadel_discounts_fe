@@ -26,6 +26,10 @@ export default class AuthService {
         return this.userManager.getUser();
     }
 
+    public signinPopup(): Promise<User | null> {
+        return this.userManager.signinPopup();
+    }
+
     public login(): Promise<void> {
         return this.userManager.signinRedirect();
     }
