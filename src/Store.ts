@@ -9,6 +9,7 @@ const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 
+
 let store = new Vuex.Store({
     state: {
         keyWord: null,
@@ -19,7 +20,9 @@ let store = new Vuex.Store({
         filtered: [],
         filteredDiscounts: [],
         countries: [],
-        cities: []
+        cities: [],
+        subscriptions: [],
+        favorites: []
     },
     getters: {
         getDetailView(state) {
@@ -37,11 +40,17 @@ let store = new Vuex.Store({
         allDiscounts (state) {
             return state.discounts
         },
-        allCountries (state) {
+        allCountries(state) {
             return state.countries
         },
-        allCities (state) {
+        allCities(state) {
             return state.cities
+        },
+        allSubscriptions(state) {
+            return state.subscriptions
+        },
+        allFavorites(state) {
+            return state.favorites
         },
         language: state => {
             return state.language
@@ -56,13 +65,19 @@ let store = new Vuex.Store({
             state.discounts.push(...dis);
         },
 
-        addNextDis(state, nextDis){
-          // @ts-ignore
+        addNextDis(state, nextDis) {
+            // @ts-ignore
             state.discounts.push(...nextDis);
         },
         receiveGetById(state, dis) {
             state.details = {};
             state.details = dis;
+        },
+        receiveSubscription(state, subscr) {
+            state.subscriptions = subscr;
+        },
+        receiveFavorites(state, favor) {
+            state.favorites = favor;
         },
         setFilter(state, filteredData) {
             state.filtered = filteredData;
@@ -70,28 +85,28 @@ let store = new Vuex.Store({
         changeSwitcher: state => {
             state.switch = !state.switch;
         },
-        setDiscounts (state, discounts) {
+        setDiscounts(state, discounts) {
             state.discounts = discounts
         },
-        setCountries (state, countries) {
+        setCountries(state, countries) {
             state.countries = countries
         },
-        setCities (state, cities) {
+        setCities(state, cities) {
             state.cities = cities
         },
-        createDiscount (state, newDiscount) {
+        createDiscount(state, newDiscount) {
             // @ts-ignore
             state.discounts.push(newDiscount)
         },
-        updTask (state, updatedDiscount)  {
+        updTask(state, updatedDiscount) {
             // @ts-ignore
             const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
-            if(index !== -1) {
+            if (index !== -1) {
                 // @ts-ignore
                 state.discounts.splice(index, 1, updatedDiscount);
             }
         },
-        setLanguage (state, lang) {
+        setLanguage(state, lang) {
             if (lang) {
                 state.language = "Ru"
             } else {
@@ -106,14 +121,14 @@ let store = new Vuex.Store({
         changeFilter({commit}, state) {
             commit("setFilter", state);
         },
-        changeSwitcher({commit}, state){
-          commit('setSwitcher', state);
+        changeSwitcher({commit}, state) {
+            commit('setSwitcher', state);
         },
-        async goFetch ({commit}, str) {
+        async goFetch({commit}, str) {
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForCountries ({commit}, str) {
+        async goFetchForCountries({commit}, str) {
             const response = await axios.get(str);
             commit('setCountries', response.data);
         },
@@ -121,11 +136,11 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setCities', response.data);
         },
-        async addDiscount ({commit}, newDiscount) {
+        async addDiscount({commit}, newDiscount) {
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
-        async updateDiscount ( { commit }, discount) {
+        async updateDiscount({commit}, discount) {
             await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         },
@@ -133,7 +148,21 @@ let store = new Vuex.Store({
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
-        async getDiscountById({commit},id) {
+        async getSubscription({commit}, searchSub) {
+            const response = await axios.post(searchDiscount, searchSub).catch(error => {
+                console.log(error.response.data.error);
+                return {data: []};
+            });
+            commit('receiveSubscription', response.data)
+        },
+        async getFavorites({commit}, searchFav) {
+            const response = await axios.post(searchDiscount, searchFav).catch(error => {
+                console.log(error.response.data.error);
+                return {data: []};
+            });
+            commit('receiveFavorites', response.data)
+        },
+        async getDiscountById({commit}, id) {
             let url = urlGetDiscountsById;
             url += id;
             const response = await axios.get(url);

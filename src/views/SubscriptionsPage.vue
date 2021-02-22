@@ -1,9 +1,11 @@
 <template>
-    <v-content>SUBSCRIPTIONS</v-content>
+    <v-content><Subscriptions/></v-content>
 </template>
 
 <script>
+    import Subscriptions from "@/components/Subscriptions";
     export default {
-        name: "SubscriptionsPage"
+        name: "SubscriptionsPage",
+      components: {Subscriptions}
     };
 </script>
