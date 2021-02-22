@@ -75,6 +75,14 @@
                 dialog: false,
             };
         },
+        // watch:{
+        //     range: function(){
+        //         this.changeFilter({
+        //             ...this.$store.getters.getFilterData,
+        //             range: [this.range[0], this.range[1]]
+        //         })
+        //     }
+        // },
         mixins: [token],
 
         async mounted() {
@@ -88,7 +96,22 @@
                     "searchSortOption": "Asc",
                     "searchPaginationPageNumber": 1,
                     "searchPaginationCountElementPerPage": 20,
-                    "searchLanguage": "Ru"
+                    "searchLanguage": "Ru",
+                    // "searchAdvanced": {
+                    //     "companyName": this.$store.state.filtered.vendor,
+                    //     "searchDate": {
+                    //         "startDate": this.$store.state.filtered.rangeDate[0],
+                    //         "endDate": this.$store.state.filtered.rangeDate[1],
+                    //     },
+                    //     "searchAmountOfDiscount": {
+                    //         "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                    //         "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                    //     },
+                    //     "searchRatingTotal": {
+                    //         "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                    //         "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                    //     }
+                    // }
                 })
                     .then((response) => {
                         this.markersData = response.data;
