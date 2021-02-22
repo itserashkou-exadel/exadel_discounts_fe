@@ -43,7 +43,7 @@
         methods: {
             selectCountryHandler(value){
                 this.$emit('selectedCountryForObj', value);
-                // this.selectCountry(value);
+                this.selectCountry(value);
                 this.selectedCity = '';
                 this.getCities()
             },
@@ -70,7 +70,6 @@
                 const discount = response.data;
                 this.selectedCountry = discount.address.country || discount.translations[0].address.country;
                 this.selectedCity = discount.address.city || discount.translations[0].address.country;
-
                 this.getCities ();
             }
         }
