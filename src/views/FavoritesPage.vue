@@ -1,10 +1,12 @@
 <template>
-  <v-content>FAVORITES</v-content>
+  <v-content><Favorites/></v-content>
 </template>
 
 <script>
+import Favorites from "@/components/Favorites";
 export default {
-  name: "FavoritesPage"
+  name: "FavoritesPage",
+  components: {Favorites}
 }
 </script>
 

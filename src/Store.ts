@@ -22,6 +22,7 @@ let store = new Vuex.Store({
         countries: [],
         cities: [],
         subscriptions: [],
+        favorites: []
     },
     getters: {
         getDetailView(state) {
@@ -48,6 +49,9 @@ let store = new Vuex.Store({
         allSubscriptions(state) {
             return state.subscriptions
         },
+        allFavorites(state) {
+            return state.favorites
+        },
         language: state => {
             return state.language
         }
@@ -71,6 +75,9 @@ let store = new Vuex.Store({
         },
         receiveSubscription(state, subscr) {
             state.subscriptions = subscr;
+        },
+        receiveFavorites(state, favor) {
+            state.favorites = favor;
         },
         setFilter(state, filteredData) {
             state.filtered = filteredData;
@@ -147,6 +154,13 @@ let store = new Vuex.Store({
                 return {data: []};
             });
             commit('receiveSubscription', response.data)
+        },
+        async getFavorites({commit}, searchFav) {
+            const response = await axios.post(searchDiscount, searchFav).catch(error => {
+                console.log(error.response.data.error);
+                return {data: []};
+            });
+            commit('receiveFavorites', response.data)
         },
         async getDiscountById({commit}, id) {
             let url = urlGetDiscountsById;
