@@ -5,7 +5,7 @@
                 :items="result"
                 class="elevation-8"
                 :data="filterData"
-                item-key="vendor"
+                item-key="id"
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
@@ -168,7 +168,7 @@
                     this.info.map((item) => {
                         arr.push(
                             {
-                                id: item._id,
+                                id: item.id,
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,

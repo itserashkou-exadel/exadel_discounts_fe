@@ -4,7 +4,6 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-
 const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
@@ -31,13 +30,13 @@ let store = new Vuex.Store({
         filterData: state => {
             return state.filtered;
         },
-        setFilter(state, filteredData) {
+        setFilter (state, filteredData){
             state.filtered = filteredData;
         },
         switcher: state => {
             return state.switch;
         },
-        allDiscounts(state) {
+        allDiscounts (state) {
             return state.discounts
         },
         allCountries(state) {
@@ -138,8 +137,7 @@ let store = new Vuex.Store({
             await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         },
-
-        async inputPost({commit}, search) {
+        async inputPost({commit}, search){
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
@@ -157,7 +155,7 @@ let store = new Vuex.Store({
             commit('receiveGetById', response.data)
         },
         async nextDiscount({commit}, search) {
-            try {
+            try{
                 const response = await axios.post(searchDiscount, search);
                 commit('addNextDis', response.data)
             } catch (e) {
@@ -165,7 +163,6 @@ let store = new Vuex.Store({
                 //     console.clear();
                 // }
                 console.log(e)
-
             }
         }
     }

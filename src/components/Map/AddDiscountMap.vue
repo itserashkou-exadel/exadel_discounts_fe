@@ -10,7 +10,8 @@
         !
       </div>
       <MglMarker :coordinates="coordinates" color="red"
-                 :draggable="true"/>
+                 :draggable="true"
+                 @dragend="dragEnd"/>
     </MglMap>
   </div>
 </template>
@@ -38,7 +39,7 @@ export default {
       fetchedGeoData: [],
     };
   },
-  props: ['address'],
+  props: ['address', 'updateCoordinates'],
   watch: {
     address: {
       deep: true,
@@ -50,29 +51,34 @@ export default {
   methods: {
     findLocation(addr) {
       if (addr.country && addr.city && addr.line) {
-        console.log(JSON.stringify(addr));
         let fullAddress = [addr.country, addr.city, addr.line].join(' ');
         this.callGeocoderApi(fullAddress);
+
       }
     },
     callGeocoderApi(address) {
       let params = {
         access_token: 'pk.eyJ1IjoibGliZXJhdmVtIiwiYSI6ImNra3NieXZiZzBkYncycXBiYjNnc2FlN2YifQ.JnPErwA0TD5kk43WGMobLg'
       }
-      const updateCoordinates = (coords) => {
+      const updateFn = (coords) => {
         this.coordinates = coords;
+        this.updateCoordinates(coords[0], coords[1])
       }
+
       axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${params.access_token}&limit=1`)
           .then(function (response) {
-            console.log(response)
             response.data.features.forEach(f => console.log(`${f.center}-${f.place_name}`))
             if (response.data.features) {
-              updateCoordinates(response.data.features[0].center);
+              updateFn(response.data.features[0].center);
             }
           })
           .catch(function (error) {
             console.log(error);
           });
+    },
+    dragEnd(e) {
+      const { lng, lat } = e.marker.getLngLat();
+      this.updateCoordinates(lng, lat)
     },
     created() {
       this.mapbox = Mapbox;
