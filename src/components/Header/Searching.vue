@@ -44,7 +44,7 @@
         methods: {
             ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount']),
             showSearch() {
-                console.log(this.search)
+                // console.log(this.search)
                 this.$store.state.discounts = [];
                 const resSearch = () => {
                     this.inputPost(
@@ -90,7 +90,7 @@
                 }
                 this.getToken(resSearch)
 
-                console.log(this.$store.state.discounts)
+                // console.log(this.$store.state.discounts)
             },
             onResize() {
                 this.searchClosed = document.documentElement.clientWidth < 1080 ? true : false;

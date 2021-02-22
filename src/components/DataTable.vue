@@ -162,7 +162,7 @@
                 if (this.$store.state.discounts.length > 0) {
                     const arr = [];
                     this.searchWord = this.$store.state.keyWord;
-                    console.log(this.searchWord)
+                    //console.log(20);
                     this.info = this.$store.state.discounts;
                     console.log(this.info)
                     this.info.map((item) => {

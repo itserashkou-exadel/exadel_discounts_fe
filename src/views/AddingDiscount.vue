@@ -382,7 +382,7 @@
                 dialog: false,
                 valid: true,
                 nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
-                onlyNumberRules: [v => /\d/.test(v) || 'The field must contain only numbers'],
+                onlyNumberRules: [v => /^-?\d*(\.\d+)?$/.test(v) || 'The field must contain only numbers'],
                 dateStart: '',
                 dateFinish: '',
                 address: {
@@ -529,7 +529,8 @@
                         }
                     ]
                 }}
-                    if (this.$i18n === 'en') {
+                    if (this.$i18n.locale === 'en') {
+                        console.log(2)
                         return {
                             name: this.titleEn,
                             description: this.descriptionEn,
@@ -581,20 +582,41 @@
                     }
             },
             submit() {
+                if (this.$refs.form.validate()) {
                 const postDiscount = () => {
                     if (this.$route.params.placeOfCall === 'newDiscount'){
 
                     this.addDiscount(
                         {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                    )} else {
+                    )
+                        console.log({...{id: uuidv4()}, ...(this.objectWithoutId())})
+                    } else {
                         console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                         this.addDiscount(
                             {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                        )}
+                        ).catch((e) => console.log(e))
+                    }
                 }
-                if (this.$refs.form.validate()) {
-                        this.getToken(postDiscount);
+                    this.getToken(postDiscount);
                     this.val = true;
+                    const inputDiscount = ()=> {
+                        this.$store.state.discounts = [];
+                        this.inputPost(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": "Украина",
+                            "searchAddressCity": "Винница",
+                            "searchSortFieldOption": "NameDiscount",
+                            "searchSortOption": "Asc",
+                            "searchPaginationPageNumber": 1,
+                            "searchPaginationCountElementPerPage": 15,
+                            "searchLanguage": "Ru"
+                        }
+                    );
+                        console.log(1);
+                }
+                this.getToken(inputDiscount);
                 } else {
                     this.val = false;
 
@@ -634,6 +656,7 @@
                     const id = this.$route.params.idOfDiscount;
                     const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
                     const discount = response.data;
+                    if (discount.language === 'Ru') {
                     this.titleRu = discount.name;
                     this.titleEn = discount.translations[0].name;
                     this.vendorRu = discount.company.name;
@@ -643,25 +666,31 @@
                     this.tagsRu = this.transformateToTags(discount.tags);
                     this.tagsEn = this.transformateToTags(discount.translations[0].tags);
                     this.descriptionRu = discount.description;
-                    this.descriptionEn = discount.translations[0].description;
+                    this.descriptionEn = discount.translations[0].description}
+                    if (discount.language === 'En') {
+                        this.titleEn = discount.name;
+                        this.titleRu = discount.translations[0].name;
+                        this.vendorEn = discount.company.name;
+                        this.vendorRu = discount.translations[0].company.name;
+                        this.vendorDescrEn = discount.company.description;
+                        this.vendorDescrRu = discount.translations[0].company.description;
+                        this.tagsEn = this.transformateToTags(discount.tags);
+                        this.tagsRu = this.transformateToTags(discount.translations[0].tags);
+                        this.descriptionEn = discount.description;
+                        this.descriptionRu = discount.translations[0].description
+                    }
+                    this.selectedCountry = discount.address.country || discount.translations[0].address.country;
+                    this.selectedCity = discount.address.city || discount.translations[0].address.city;
                     this.vendorPhone = discount.company.phoneNumber;
                     this.vendorEmail = discount.company.mail;
                     this.transformateToDays(discount.workingDaysOfTheWeek);
                     this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = discount.startDate.substr(0, 10),
-                    this.dateFinish = discount.endDate.substr(0, 10),
-
-                    console.log(this.selectedCountry);
-                    if (this.$i18n.locale === 'ru') {
-                        this.selectedCountry = discount.address.country;
-                        this.selectedCity = discount.address.city}
-                    if (this.$i18n.locale === 'en') {
-                        this.selectedCountry = discount.translations[0].address.country;
-                        this.selectedCity = discount.translations[0].address.city}
+                    this.dateStart = discount.startDate.substr(0, 10);
+                    this.dateFinish = discount.endDate.substr(0, 10);
                     this.street = discount.address.street;
                     this.coordinate1 = discount.address.location.latitude;
                     this.coordinate2 = discount.address.location.longitude;
-                    this.picture = discount.pictureUrl;
+                    this.picture = discount.pictureUrl || '';
                 }
             },
             transformateToTags (arr) {
@@ -734,7 +763,7 @@
                 }
                 return str
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'nextDiscount'])
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'inputPost'])
         },
         computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
 

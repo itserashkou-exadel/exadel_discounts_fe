@@ -123,6 +123,7 @@ let store = new Vuex.Store({
         },
         async addDiscount ({commit}, newDiscount) {
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
+
             commit('createDiscount', newDiscount);
         },
         async updateDiscount ( { commit }, discount) {
