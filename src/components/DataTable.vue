@@ -57,7 +57,7 @@
                     <v-row class="d-flex justify-end my-5">
                         <v-col cols="1" lg="1" >
                             <v-btn>
-                                <v-icon color="orange">{{icons.icon}}</v-icon>
+                                <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
@@ -318,6 +318,11 @@
                 }
                 this.getToken(goNext)
             },
+
+            showId(id){
+              console.log(id);
+            },
+
             test(){
                 this.inputPost(
                     {

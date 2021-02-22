@@ -59,7 +59,7 @@
                             "searchSortFieldOption": "NameDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 15,
+                            "searchPaginationCountElementPerPage": 20,
                             "searchLanguage": "Ru"
                         }
                     );

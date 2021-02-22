@@ -10,6 +10,7 @@ const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
+const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
 
 
 let store = new Vuex.Store({
@@ -211,6 +212,17 @@ let store = new Vuex.Store({
                 console.log(e)
 
             }
+        },
+
+        async deleteDiscount({commit}, id){
+          try{
+              let url = deleteURL;
+              url += id;
+              const response = await axios.delete(url);
+              console.log(response);
+          }catch (e) {
+              console.log(e)
+          }
         }
     }
 
