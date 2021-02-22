@@ -59,40 +59,40 @@
                             "searchSortFieldOption": "NameDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 5,
+                            "searchPaginationCountElementPerPage": 15,
                             "searchLanguage": "Ru"
                         }
                     );
-                    setTimeout(() => {
-                        this.nextDiscount(
-                            {
-                                "searchText": this.$store.state.keyWord,
-                                "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
-                                "searchSortFieldOption": "NameDiscount",
-                                "searchSortOption": "Asc",
-                                "searchPaginationPageNumber": 2,
-                                "searchPaginationCountElementPerPage": 5,
-                                "searchLanguage": "Ru"
-                            }
-                        )
-                    }, 0);
-                        setTimeout(() => {
-                            this.nextDiscount(
-                                {
-                                    "searchText": this.$store.state.keyWord,
-                                    "searchDiscountOption": "All",
-                                    "searchAddressCountry": "Украина",
-                                    "searchAddressCity": "Винница",
-                                    "searchSortFieldOption": "NameDiscount",
-                                    "searchSortOption": "Asc",
-                                    "searchPaginationPageNumber": 3,
-                                    "searchPaginationCountElementPerPage": 5,
-                                    "searchLanguage": "Ru"
-                                }
-                            )
-                        }, 0)
+                    // setTimeout(() => {
+                    //     this.nextDiscount(
+                    //         {
+                    //             "searchText": this.$store.state.keyWord,
+                    //             "searchDiscountOption": "All",
+                    //             "searchAddressCountry": "Украина",
+                    //             "searchAddressCity": "Винница",
+                    //             "searchSortFieldOption": "NameDiscount",
+                    //             "searchSortOption": "Asc",
+                    //             "searchPaginationPageNumber": 2,
+                    //             "searchPaginationCountElementPerPage": 5,
+                    //             "searchLanguage": "Ru"
+                    //         }
+                    //     )
+                    // }, 0);
+                    //     setTimeout(() => {
+                    //         this.nextDiscount(
+                    //             {
+                    //                 "searchText": this.$store.state.keyWord,
+                    //                 "searchDiscountOption": "All",
+                    //                 "searchAddressCountry": "Украина",
+                    //                 "searchAddressCity": "Винница",
+                    //                 "searchSortFieldOption": "NameDiscount",
+                    //                 "searchSortOption": "Asc",
+                    //                 "searchPaginationPageNumber": 3,
+                    //                 "searchPaginationCountElementPerPage": 5,
+                    //                 "searchLanguage": "Ru"
+                    //             }
+                    //         )
+                    //     }, 0)
                 }
                 this.getToken(resSearch)
                 console.log(this.$store.state.discounts)

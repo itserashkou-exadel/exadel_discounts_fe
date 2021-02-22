@@ -9,11 +9,12 @@
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
-                :page.sync="page"
                 hide-default-footer
+                :page.sync="page"
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
         >
+
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -264,9 +265,7 @@
                 // console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
                 const goNext = () => {
-                    if(this.selectedPages.indexOf(this.page) === -1){
-                        console.log('Hello', this.pageCount)
-                        this.selectedPages.push(this.page);
+                    if(this.$store.state.filterRequest === false){
                         this.nextDiscount(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -280,7 +279,38 @@
                                 "searchLanguage": "Ru"
                             }
                         )
+                    }else{
+                        console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": this.pageCount + 1,
+                                "searchPaginationCountElementPerPage": 5,
+                                "searchLanguage": "Ru",
+                                "searchAdvanced": {
+                                    "companyName": this.$store.state.filtered.vendor,
+                                    "searchDate": {
+                                        "startDate": this.$store.state.filtered.rangeDate[0],
+                                        "endDate": this.$store.state.filtered.rangeDate[1],
+                                    },
+                                    "searchAmountOfDiscount": {
+                                        "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                        "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                    },
+                                    "searchRatingTotal": {
+                                        "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                        "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                    }
+                                }
+                            }
+                        );
                     }
+
                 }
                 this.getToken(goNext)
             },
