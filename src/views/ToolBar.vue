@@ -1,9 +1,9 @@
 <template>
     <v-row class="d-flex align-center justify-lg-end justify-md-end justify-sm-center justify-center shrink">
-        <v-col cols="3" xl="1" lg="1" md="1"  class="d-flex justify-end  mr-lg-n5">
+        <v-col cols="3" xl="1" lg="2" md="1"  class="d-flex justify-end  mr-lg-n5">
             <Modal/>
         </v-col>
-        <v-col cols="2" xl="1" lg="1" md="1" class="d-flex justify-end ml-lg-n16">
+        <v-col cols="2" xl="1" lg="2" md="1" class="d-flex justify-end ml-lg-n16">
             <v-icon
                     large
                     class="pointer"

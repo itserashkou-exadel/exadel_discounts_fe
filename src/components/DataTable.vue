@@ -166,6 +166,7 @@
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     const arr = [];
+                    this.page = this.$store.state.disPage;
                     this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
@@ -266,8 +267,10 @@
                 console.log(this.selectedPages)
                 console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
-                // console.log(this.page, this.pageCount);
+                console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
+                this.$store.commit('setDisPage', this.page)
+                console.log(this.$store.state.disPage)
                 const goNext = () => {
                     if(this.$store.state.filterRequest === false){
                         this.nextDiscount(

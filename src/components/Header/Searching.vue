@@ -49,6 +49,7 @@
             showSearch() {
                 console.log(this.search)
                 this.$store.state.discounts = [];
+                this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
                     this.inputPost(
                         {

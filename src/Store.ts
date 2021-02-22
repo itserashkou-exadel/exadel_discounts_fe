@@ -25,7 +25,8 @@ let store = new Vuex.Store({
         filtered: [],
         filteredDiscounts: [],
         countries: [],
-        cities: []
+        cities: [],
+        disPage: 1
     },
     getters: {
         getDetailView(state) {
@@ -54,6 +55,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setDisPage(state, page){
+          state.disPage = page;
+        },
         changeFilterIcon(state, bool){
           state.filterIcon = bool;
         },
