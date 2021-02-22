@@ -67,6 +67,12 @@
                 console.log(this.$store.getters.getFilterData)
             },
         },
+        mounted() {
+            this.changeFilter({
+                ...this.$store.getters.getFilterData,
+                rangeDate: this.date
+            })
+        },
         computed: {
             dateRangeText () {
                 console.log(this.$store.getters.allDiscounts);

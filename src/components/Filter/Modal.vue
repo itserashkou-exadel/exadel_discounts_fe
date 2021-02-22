@@ -104,7 +104,7 @@
             dialog: false,
             from: null,
             title: 'From',
-            vendor: ''
+            vendor: null
         }),
         mixins: [token],
         watch:{
@@ -116,16 +116,14 @@
             }
         },
         methods: {
-            ...mapActions(['changeFilter', 'inputPost']),
-
+            ...mapActions(['changeFilter', 'inputPost', 'setFilterRequest']),
             getFilteredData() {
                 // console.log(this.search)
                 // console.log(this.$store.state.keyWord ? this.$store.state.filtered.rangeDate[0] : null)
                 this.$store.state.discounts = [];
-                console.log(this.$store.state.filtered.vendor)
-                console.log(this.$store.state.filtered.vendor ? this.$store.state.filtered.vendor : null)
 
                 const filterSearch = () => {
+                    console.log(this.$store.state.filtered.range)
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
@@ -135,21 +133,21 @@
                             "searchSortFieldOption": "NameDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 5,
+                            "searchPaginationCountElementPerPage": 15,
                             "searchLanguage": "Ru",
                             "searchAdvanced": {
-                                "companyName": this.$store.state.filtered.vendor ? this.$store.state.filtered.vendor : null,
+                                "companyName": this.$store.state.filtered.vendor,
                                 "searchDate": {
-                                    "startDate": "2020-9-26",
-                                    "endDate": "2022-02-10"
+                                    "startDate": this.$store.state.filtered.rangeDate[0],
+                                    "endDate": this.$store.state.filtered.rangeDate[1],
                                 },
                                 "searchAmountOfDiscount": {
-                                    "searchAmountOfDiscountMin": 0,
-                                    "searchAmountOfDiscountMax": 99
+                                    "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                    "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
                                 },
                                 "searchRatingTotal": {
-                                    "searchRatingTotalMin": 0,
-                                    "searchRatingTotalMax": 5
+                                    "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                    "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
                                 }
                             }
                         }
@@ -157,6 +155,8 @@
                      }
                 this.getToken(filterSearch)
                 this.dialog = true;
+                this.$store.commit('changeFilterRequest');
+                console.log(this.$store.state.filterRequest)
                 console.log(this.$store.state.discounts)
             },
 

@@ -14,6 +14,7 @@ const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 
 let store = new Vuex.Store({
     state: {
+        filterRequest: true,
         keyWord: null,
         details: {},
         discounts: [],
@@ -51,6 +52,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        changeFilterRequest(state){
+          state.filterRequest =  !state.filterRequest;
+        },
         changeKeyWord(state, key) {
             state.keyWord = key;
         },
@@ -148,14 +152,14 @@ let store = new Vuex.Store({
         //         });
         // },
 
-        async allInputPost({commit}, search){
-            await axios.all([
-                axios.post(searchDiscount, search[0]),
-                axios.post(searchDiscount, search[1]),
-            ]).then(axios.spread((data1, data2) => {
-                commit('receiveSearch', [data1.data, data2.data])
-            }));
-        },
+        // async allInputPost({commit}, search){
+        //     await axios.all([
+        //         axios.post(searchDiscount, search[0]),
+        //         axios.post(searchDiscount, search[1]),
+        //     ]).then(axios.spread((data1, data2) => {
+        //         commit('receiveSearch', [data1.data, data2.data])
+        //     }));
+        // },
         // axios.all([
         //     axios.post('https://localhost:9001/api/v1/discounts/search', {
         //         "searchText": "Меха",

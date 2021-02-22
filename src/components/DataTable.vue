@@ -162,9 +162,9 @@
                 if (this.$store.state.discounts.length > 0) {
                     const arr = [];
                     this.searchWord = this.$store.state.keyWord;
-                    console.log(this.searchWord)
+                    // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    console.log(this.info)
+                    // console.log(this.info)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -181,7 +181,7 @@
 
                     })
                     this.result = arr;
-                    console.log(this.result);
+                    // console.log(this.result);
                     return this.result;
                 }
 

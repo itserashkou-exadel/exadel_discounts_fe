@@ -52,6 +52,12 @@
                 })
             }
         },
+        mounted() {
+            this.changeFilter({
+                ...this.$store.getters.getFilterData,
+                starRange: [this.range[0], this.range[1]]
+            })
+        },
         methods: {
             ...mapActions(['changeFilter']),
         }

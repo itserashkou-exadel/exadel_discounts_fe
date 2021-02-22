@@ -30,9 +30,9 @@
         name: "RangeSlider",
         data () {
             return {
-                min: 0,
+                min: 1,
                 max: 99,
-                range: [20, 99],
+                range: [1, 99],
             }
         },
         watch:{
@@ -42,6 +42,12 @@
                     range: [this.range[0], this.range[1]]
                 })
             }
+        },
+        mounted() {
+            this.changeFilter({
+                ...this.$store.getters.getFilterData,
+                range: [this.range[0], this.range[1]]
+            })
         },
         methods: {
             ...mapActions(['changeFilter']),

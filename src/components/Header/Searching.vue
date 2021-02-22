@@ -78,7 +78,6 @@
                             }
                         )
                     }, 0);
-
                         setTimeout(() => {
                             this.nextDiscount(
                                 {
@@ -99,36 +98,36 @@
                 console.log(this.$store.state.discounts)
             },
 
-                testing: function(){
-                axios.all([
-                    axios.post('https://localhost:9001/api/v1/discounts/search', {
-                        "searchText": "Меха",
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Винница",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": 5,
-                        "searchLanguage": "Ru"
-                    }),
-                    axios.post('https://localhost:9001/api/v1/discounts/search', {
-                        "searchText": "Меха",
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Винница",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 2,
-                        "searchPaginationCountElementPerPage": 5,
-                        "searchLanguage": "Ru"
-                    })
-                ])
-                    .then(axios.spread((data1, data2) => {
-                    console.log('data1', data1.data, 'data2', data2.data)
-                }));
-
-            },
+            //     testing: function(){
+            //     axios.all([
+            //         axios.post('https://localhost:9001/api/v1/discounts/search', {
+            //             "searchText": "Меха",
+            //             "searchDiscountOption": "All",
+            //             "searchAddressCountry": "Украина",
+            //             "searchAddressCity": "Винница",
+            //             "searchSortFieldOption": "NameDiscount",
+            //             "searchSortOption": "Asc",
+            //             "searchPaginationPageNumber": 1,
+            //             "searchPaginationCountElementPerPage": 5,
+            //             "searchLanguage": "Ru"
+            //         }),
+            //         axios.post('https://localhost:9001/api/v1/discounts/search', {
+            //             "searchText": "Меха",
+            //             "searchDiscountOption": "All",
+            //             "searchAddressCountry": "Украина",
+            //             "searchAddressCity": "Винница",
+            //             "searchSortFieldOption": "NameDiscount",
+            //             "searchSortOption": "Asc",
+            //             "searchPaginationPageNumber": 2,
+            //             "searchPaginationCountElementPerPage": 5,
+            //             "searchLanguage": "Ru"
+            //         })
+            //     ])
+            //         .then(axios.spread((data1, data2) => {
+            //         console.log('data1', data1.data, 'data2', data2.data)
+            //     }));
+            //
+            // },
 
             onResize() {
                 this.searchClosed = document.documentElement.clientWidth < 1080 ? true : false;
