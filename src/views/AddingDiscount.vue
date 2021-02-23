@@ -72,23 +72,7 @@
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 3 && $i18n.locale === 'ru'"
-                                          @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
-                                          v-model='tagsRu'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='nameRules'
-                                          outlined>
-                            </v-text-field>
-                            <v-text-field v-if="i === 3 && $i18n.locale === 'en'"
-                                          @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
-                                          v-model='tagsEn'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                          :rules='nameRules'
-                                          outlined>
-                            </v-text-field>
-                            <v-textarea v-if="i === 4 && $i18n.locale === 'ru'"
+                            <v-textarea v-if="i === 3 && $i18n.locale === 'ru'"
                                         @keydown.enter="nothing"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionRu'
@@ -96,7 +80,7 @@
                                         :rules='nameRules'
                                         outlined>
                             </v-textarea>
-                            <v-textarea v-if="i === 4 && $i18n.locale === 'en'"
+                            <v-textarea v-if="i === 3 && $i18n.locale === 'en'"
                                         @keydown.enter="nothing"
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
                                         v-model='descriptionEn'
@@ -161,23 +145,7 @@
                                           :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 3 && ($i18n.locale === 'ru')"
-                                          @keydown.enter="nothing"
-                                          v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
-                                          v-model='tagsEn'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          outlined
-                            ></v-text-field>
-                            <v-text-field v-if="i === 3 && ($i18n.locale === 'en')"
-                                          @keydown.enter="nothing"
-                                          v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
-                                          v-model='tagsRu'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          outlined
-                            ></v-text-field>
-                            <v-textarea v-if="i === 4 && ($i18n.locale === 'ru')"
+                            <v-textarea v-if="i === 3 && ($i18n.locale === 'ru')"
                                         @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
@@ -185,7 +153,7 @@
                                         :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
                                         outlined
                             ></v-textarea>
-                            <v-textarea v-if="i === 4 && ($i18n.locale === 'en')"
+                            <v-textarea v-if="i === 3 && ($i18n.locale === 'en')"
                                         @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
                                         :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
@@ -195,6 +163,12 @@
                             ></v-textarea>
                         </v-expand-transition>
                     </div>
+                    <chips-for-tags
+                    v-bind:items="tagsRu"
+                    />
+                    <chips-for-tags
+                            v-bind:items="tagsEn"
+                    />
                     <v-text-field
                             @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountVendorPhone')"
@@ -253,9 +227,9 @@
                             @input="selectLine"
                             :rules='nameRules'
                     ></v-text-field>
-                    <div class="mr-10">
+
                         <AddDiscountMap v-bind:address="address"/>
-                    </div>
+
                     <v-text-field
                             @keydown.enter="nothing"
                             class="mt-10"
@@ -272,7 +246,7 @@
                             outlined
                             v-model="coordinate2"
                             :rules='onlyNumberRules'
-                            :data="my"
+
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -338,13 +312,14 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex'
+    import {mapActions, mapGetters} from 'vuex'
     import ChooseOfTown from "../components/ChooseOfTown.vue";
     import AddDiscountMap from "@/components/Map/AddDiscountMap";
-    import { v4 as uuidv4 } from 'uuid';
+    import {v4 as uuidv4} from 'uuid';
     import token from '@/mixins/token.mixin'
     import DatePiker from "@/components/DatePiker";
     import axios from "axios";
+    import ChipsForTags from "@/components/ChipsForTags";
 
 
     export default {
@@ -371,15 +346,15 @@
                 vendorEn: '',
                 vendorDescrRu: '',
                 vendorDescrEn: '',
-                tagsRu: '',
-                tagsEn: '',
+                tagsRu: [],
+                tagsEn: [],
                 descriptionRu: '',
                 descriptionEn: '',
                 vendorPhone: '',
                 vendorEmail: '',
                 vendorSelectedDays: [],
                 picture: '',
-                trueOrFalseArr: [false, false, false, false, false],
+                trueOrFalseArr: [false, false, false, false],
                 dialog: false,
                 valid: true,
                 nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
@@ -394,8 +369,9 @@
             }
         },
         mixins: [token],
-        components: {DatePiker, ChooseOfTown, AddDiscountMap},
+        components: {DatePiker, ChooseOfTown, AddDiscountMap, ChipsForTags},
         methods: {
+
             titleOfField() {
                 if (this.val) {
                     return this.$tc('adClearOrEdit', 1)
@@ -461,14 +437,6 @@
                         labelEn: this.$t('adLabelOfDiscountVendorDescrEn'),
                     },
                     {
-                        placeholderRu: this.$t('adLabelOfDiscountTagsRu'),
-                        placeholderEn: this.$t('adLabelOfDiscountTagsEn'),
-                        modelRu: this.tagsRu,
-                        modelEn: this.tagsEn,
-                        labelRu: this.$t('adLabelOfDiscountTagsRu'),
-                        labelEn: this.$t('adLabelOfDiscountTagsEn'),
-                    },
-                    {
                         placeholderRu: this.$t('adLabelOfDiscountDescriptionRu'),
                         placeholderEn: this.$t('adLabelOfDiscountDescriptionEn'),
                         modelRu: this.descriptionRu,
@@ -503,7 +471,7 @@
                     },
                     workingDaysOfTheWeek: this.transformateDays(),
                     pictureUrl: this.picture,
-                    tags: this.tagsRu.split(', '),
+                    tags: this.tagsRu,
                     language: "Ru",
                     translations: [
                         {
@@ -524,7 +492,7 @@
                                 phoneNumber: this.vendorPhone,
                                 mail: this.vendorEmail
                             },
-                            tags: this.tagsEn.split(', ')
+                            tags: this.tagsEn
                             ,
                             language: "En"
                         }
@@ -554,7 +522,7 @@
                                 mail: this.vendorEmail
                             },
                             workingDaysOfTheWeek: this.transformateDays(),
-                            tags: this.tagsEn.split(', '),
+                            tags: this.tagsEn,
                             language: "En",
                             translations: [
                                 {
@@ -575,7 +543,7 @@
                                         phoneNumber: this.vendorPhone,
                                         mail: this.vendorEmail
                                     },
-                                    tags: this.tagsEn.split(', '),
+                                    tags: this.tagsRu,
                                     language: "Ru"
                                 }
                             ]
@@ -596,9 +564,6 @@
                         this.updateDiscount(
                             {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
                         ).catch((e) => console.log(e))
-                        // const index = state.discounts.findIndex(t => t.id === this.$route.params.idOfDiscount);
-                        // this.$store.state.discounts.splice(index, 1, {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
-                        // console.log(this.$store.state.discounts)
                     }
                 }
                     this.getToken(postDiscount);
@@ -618,9 +583,8 @@
                             "searchLanguage": "Ru"
                         }
                     );
-                      //  console.log(this.$store.state.discounts);
                 }
-                this.getToken(inputDiscount);
+
                 } else {
                     this.val = false;
 
@@ -667,8 +631,8 @@
                     this.vendorEn = discount.translations[0].company.name;
                     this.vendorDescrRu = discount.company.description;
                     this.vendorDescrEn = discount.translations[0].company.description;
-                    this.tagsRu = this.transformateToTags(discount.tags);
-                    this.tagsEn = this.transformateToTags(discount.translations[0].tags);
+                    this.tagsRu = discount.tags;
+                    this.tagsEn = discount.translations[0].tags;
                     this.descriptionRu = discount.description;
                     this.descriptionEn = discount.translations[0].description}
                     if (discount.language === 'En') {
@@ -678,8 +642,8 @@
                         this.vendorRu = discount.translations[0].company.name;
                         this.vendorDescrEn = discount.company.description;
                         this.vendorDescrRu = discount.translations[0].company.description;
-                        this.tagsEn = this.transformateToTags(discount.tags);
-                        this.tagsRu = this.transformateToTags(discount.translations[0].tags);
+                        this.tagsEn = discount.tags;
+                        this.tagsRu = discount.translations[0].tags;
                         this.descriptionEn = discount.description;
                         this.descriptionRu = discount.translations[0].description
                     }
@@ -696,13 +660,6 @@
                     this.coordinate2 = discount.address.location.longitude;
                     this.picture = discount.pictureUrl || '';
                 }
-            },
-            transformateToTags (arr) {
-                let str = '';
-                str = `${arr.join(', ')}`;
-                //let substr = str.substr(0, str.length-1);
-                const a = str.split(', ');
-                return str
             },
             transformateToDays(str) {
 
@@ -770,10 +727,7 @@
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'inputPost', 'updateDiscount'])
         },
         computed: {...mapGetters(['allDiscounts', 'language', 'allCountries']),
-            my(){
-            if (this.language === "Ru"){console.log(1)}
-            else {console.log(2)}
-        }},
+          },
 
         mounted() {
           this.fillingFields();

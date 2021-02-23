@@ -120,23 +120,12 @@ let store = new Vuex.Store({
             commit('setCities', response.data);
         },
         async addDiscount ({commit}, newDiscount) {
-            // const index = this.state.discounts.findIndex(t => t.id === newDiscount.id);
-            // if (index !== -1) {
-            //     this.state.discounts.splice(index, 1);
-            // }
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
         async updateDiscount ( { commit }, discount) {
-            console.log(discount);
-            console.log(this.state.discounts)
-            const index = this.state.discounts.findIndex(t => t.id === discount.id);
-            //@ts-ignore
-            this.state.discounts.splice(index, 1);
-            console.log(this.state.discounts)
             await axios.post(`https://localhost:9001/api/v1/discounts/upsert`, discount);
-            console.log(this.state.discounts);
-            //commit('updTask', discount);
+            commit('updTask', discount);
         },
         async inputPost({commit}, search){
             const response = await axios.post(searchDiscount, search);
