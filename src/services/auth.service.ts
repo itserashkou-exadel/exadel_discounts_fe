@@ -23,7 +23,7 @@ export default class AuthService {
     }
 
     public getUser(): Promise<User | null> {
-        return this.userManager.getUser();
+        return this.userManager.getUser()
     }
 
     public signinPopup(): Promise<User | null> {

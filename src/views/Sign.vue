@@ -1,7 +1,7 @@
 <template>
     <v-container class="d-flex align-center wrapper" fluid>
         <v-card width="500" class="mx-auto ">
-            <v-card-title>Your city is: {{this.$store.state.userLocation.town}}</v-card-title>
+            <v-card-title >Your city is: {{this.$store.state.userLocation.town}}</v-card-title>
             <v-card-text>
                 <v-list-group eager :value="true">
                     <template v-slot:activator>
@@ -149,29 +149,26 @@
             uzbekistan: ['Tashkent'],
             fictionalSelected: null,
             realSelected: null,
-            userLocalData: [],
+            //userClaimsData: [],
         }),
         methods: {
-            ...mapMutations(['setUserLocation', 'setUserRole']),
-
-            async getUser() {
-                const userClaims = await auth.getUser()
-                this.userLocalData = userClaims.profile
-                console.log('USER_CLAIMS', this.userLocalData)
-                //console.log('INJECTED_DATA', this.userLocalData)
-            },
-
-
+            ...mapMutations(['setUserLocation']),
+            // async getUser() {
+            //     const userClaims = await auth.getUser()
+            //     this.userClaimsData = userClaims.profile
+            //     console.log('USER_CLAIMS', this.userClaimsData)
+            // },
             setUserLocAndLocalStorage(country, town) {
                 this.setUserLocation({
                     country: country,
                     town: town
                 })
+
                 const userLoc = this.$store.getters.getUserLocation
                 console.log(userLoc)
                 localStorage.setItem('userLoc in LocalStorage: ', JSON.stringify(userLoc))
 
-                this.getUser()
+                //this.getUser()
 
                 // this.setUserRole({
                 //     userData: userLocalData
@@ -184,7 +181,6 @@
                 console.groupEnd()
                 //this.$router.push('/home')
 
-                //console.log('INJECTED_LOCAL_DATA', this.userLocalData)
             },
             login() {
                 auth.login();
