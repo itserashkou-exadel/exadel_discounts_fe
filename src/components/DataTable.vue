@@ -96,9 +96,10 @@
                         <v-spacer>
                         </v-spacer>
                         <v-col xl="1" lg="2" md="2" sm="2">
-                            <v-select
+                            <v-select v-if="page === 1"
                                     v-model="itemsPerPage"
                                     :items="itmPer"
+                                      @click="showSelect"
                                     label="items per page"
                                     dense
                                     solo
@@ -167,6 +168,7 @@
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
+                    this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
                     this.searchWord = this.$store.state.keyWord;
@@ -265,11 +267,11 @@
                 ]
             },
             next() {
-                console.log(this.page, this.pageCount)
-                console.log(this.selectedPages)
-                console.log(this.selectedPages.indexOf(this.page))
+                // console.log(this.page, this.pageCount)
+                // console.log(this.selectedPages)
+                // console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
-                console.log(this.page, this.pageCount);
+                // console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
@@ -284,12 +286,13 @@
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": this.itemsPerPage,
+                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": "Ru"
                             }
                         )
                     }else{
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
+                        console.log(this.$store.state.filtered.range)
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -299,7 +302,7 @@
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": 5,
+                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": "Ru",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,

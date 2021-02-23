@@ -27,7 +27,8 @@ let store = new Vuex.Store({
         cities: [],
         subscriptions: [],
         favorites: [],
-        disPage: 1
+        disPage: 1,
+        itemsPerPage: 5
     },
     getters: {
         getDetailView(state) {
@@ -62,6 +63,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setItemsPerPage(state, itemsPer){
+          state.itemsPerPage = itemsPer;
+        },
         setDisPage(state, page){
           state.disPage = page;
         },
@@ -219,6 +223,7 @@ let store = new Vuex.Store({
               console.log(e)
           }
         }
+
     }
 
 })

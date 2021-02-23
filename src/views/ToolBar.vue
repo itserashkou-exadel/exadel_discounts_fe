@@ -73,13 +73,14 @@
                             "searchSortFieldOption": "NameDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 15,
+                            "searchPaginationCountElementPerPage": 20,
                             "searchLanguage": "Ru"
                         }
                     );
                 }
                 this.getToken(resSearch)
                 this.setFilterIcon(false);
+                this.$store.commit('setDisPage', 1)
                 console.log(this.$store.state.discounts)
             },
 
