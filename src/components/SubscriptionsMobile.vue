@@ -22,7 +22,15 @@
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text>{{ $t('dtCancel') }}</v-btn>
                 <v-btn color="blue darken-1" text>{{ $t('dtOk') }}</v-btn>    <template v-slot:item.calories="{ item }">
+                <v-chip
+                    :color="getColor(item.calories)"
+                    dark
+                >
+                  {{ item.promo}}
+                </v-chip>
               </template>
+
+
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -57,48 +65,6 @@
             </v-col>
           </v-row>
         </td>
-        <template>
-          <div class="text-center">
-            <v-dialog
-                v-model="dialog"
-                width="500"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    color="red lighten-2"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                >
-                  Click Me
-                </v-btn>
-              </template>
-
-              <v-card>
-                <v-card-title class="headline grey lighten-2">
-                  Privacy Policy
-                </v-card-title>
-
-                <v-card-text>
-                  {{item.id}}
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                      color="primary"
-                      text
-                      @click="dialog = false"
-                  >
-                    I accept
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </template>
       </template>
 
     </v-data-table>
@@ -130,17 +96,7 @@ export default {
     info: [],
     result: [],
     page: 1,
-    pageCount: 1,
-    dialog: false,
-    promocodes: [
-        {
-          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "createDate": "2021-02-23T14:53:27.140Z",
-          "endDate": "2021-02-23T14:53:27.140Z",
-          "promocodeValue": "string",
-          "expired": true
-        }
-      ]
+    pageCount: 1
   }),
   computed: {
     ...mapGetters(["allSubscriptions"]),
@@ -193,15 +149,6 @@ export default {
       };
       this.getToken(putSubscr);
     },
-    getPromo: function (id) {
-      const promo = () => {
-        axios({
-          method: 'get',
-          url: `https://localhost:9001//api/v{version}/discounts/subscriptions/get/${id}`,
-        }).then(response => response.data);
-      };
-      this.getToken(promo);
-    },
     headers() {
       return [
         {
@@ -212,6 +159,7 @@ export default {
         },
         {text: this.$t('dtVendor'), value: 'vendor'},
         {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
+        {text: 'Промокод', value: 'promo'},
         {text: this.$t('dtStartDate'), value: 'startDate'},
         {text: this.$t('dtFinishDate'), value: 'endDate'},
         {text: this.$t('dtRating'), value: 'rating'},

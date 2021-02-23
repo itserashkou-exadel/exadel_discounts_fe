@@ -101,13 +101,13 @@
     import AuthService from "@/services/auth.service";
     import Mixin from "@/mixins/token.mixin";
 
+
     const moment = require('moment')
     const auth = new AuthService();
     export default {
         name: "Card",
         mixins: [Mixin],
         data: () => ({
-
             dialogDelete: false,
             editedIndex: -1,
             dialog: false,
@@ -123,8 +123,6 @@
                 finish_date: 0,
                 raring: 0
             },
-
-
         }),
         props: {
             description: {
@@ -198,6 +196,11 @@
                 this.close()
             },
         },
+        computed: {
+         favorites() {
+            return this.$store.state.favorites
+          }
+        }
 
 
 

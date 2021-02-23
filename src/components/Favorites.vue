@@ -98,6 +98,7 @@ export default {
                 description: item.description
               }
           ))
+      console.log( 'fav2', this.$store.state.favorites);
     },
   },
   methods: {
@@ -152,6 +153,7 @@ export default {
   },
   mounted() {
     this.showFavorites();
+    console.log( 'fav', this.$store.state.favorites);
   },
 }
 </script>
