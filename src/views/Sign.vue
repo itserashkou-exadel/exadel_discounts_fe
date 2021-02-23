@@ -1,6 +1,7 @@
 <template>
     <v-container class="d-flex align-center wrapper" fluid>
         <v-card width="500" class="mx-auto ">
+            <v-card-title>Your city is: {{this.$store.state.userLocation.town}}</v-card-title>
             <v-card-text>
                 <v-list-group eager :value="true">
                     <template v-slot:activator>
