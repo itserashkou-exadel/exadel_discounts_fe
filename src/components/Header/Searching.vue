@@ -47,7 +47,7 @@
         methods: {
             ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost"]),
             showSearch() {
-                console.log(this.search)
+                // console.log(this.search)
                 this.$store.state.discounts = [];
                 this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
@@ -64,36 +64,6 @@
                             "searchLanguage": "Ru"
                         }
                     );
-                    // setTimeout(() => {
-                    //     this.nextDiscount(
-                    //         {
-                    //             "searchText": this.$store.state.keyWord,
-                    //             "searchDiscountOption": "All",
-                    //             "searchAddressCountry": "Украина",
-                    //             "searchAddressCity": "Винница",
-                    //             "searchSortFieldOption": "NameDiscount",
-                    //             "searchSortOption": "Asc",
-                    //             "searchPaginationPageNumber": 2,
-                    //             "searchPaginationCountElementPerPage": 5,
-                    //             "searchLanguage": "Ru"
-                    //         }
-                    //     )
-                    // }, 0);
-                    //     setTimeout(() => {
-                    //         this.nextDiscount(
-                    //             {
-                    //                 "searchText": this.$store.state.keyWord,
-                    //                 "searchDiscountOption": "All",
-                    //                 "searchAddressCountry": "Украина",
-                    //                 "searchAddressCity": "Винница",
-                    //                 "searchSortFieldOption": "NameDiscount",
-                    //                 "searchSortOption": "Asc",
-                    //                 "searchPaginationPageNumber": 3,
-                    //                 "searchPaginationCountElementPerPage": 5,
-                    //                 "searchLanguage": "Ru"
-                    //             }
-                    //         )
-                    //     }, 0)
                 }
                 this.getToken(resSearch)
                 console.log(this.$store.state.discounts)

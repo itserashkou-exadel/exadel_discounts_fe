@@ -2,11 +2,16 @@
     <v-container fill-height>
         <router-view/>
         <ToolBar/>
-        <v-row v-show="this.$store.state.switch === true" class="justify-center align-center">
-            <DataTable/>
-        </v-row>
-        <v-row v-show="this.$store.state.switch === false" class="justify-center align-center">
+        <v-row v-if="windowInnerWidth<=900">
             <Cards/>
+        </v-row>
+        <v-row v-else>
+            <v-row v-if="this.$store.state.switch === true" class="justify-center align-center">
+                <DataTable/>
+            </v-row>
+            <v-row v-if="this.$store.state.switch === false" class="justify-center align-center">
+                <Cards/>
+            </v-row>
         </v-row>
     </v-container>
 </template>
@@ -18,6 +23,12 @@
     export default {
         name: "Table",
         components: { ToolBar, DataTable, Cards},
+        data() {
+            return {
+                windowInnerWidth: window.innerWidth,
+            }
+        },
+
     }
 </script>
 
