@@ -17,18 +17,41 @@
 </template>
 
 <script>
+    import AuthService from '@/services/auth.service';
+
+    const auth = new AuthService();
     import ToolBar from "@/views/ToolBar";
     import Cards from "@/views/Cards";
     import DataTable from "@/components/DataTable";
+    import {mapMutations} from 'vuex'
+
     export default {
         name: "Table",
-        components: { ToolBar, DataTable, Cards},
         data() {
             return {
                 windowInnerWidth: window.innerWidth,
             }
         },
+        userClaimsLocalData: [],
+        mounted() {
+            this.getUser2()
+        },
+        methods: {
+            ...mapMutations(['setUserClaims']),
+            async getUser2() {
+                const result = await auth.getUser()
+                console.log(result)
+                this.userClaimsLocalData = result
 
+                this.setUserClaims({
+                    name: result.profile.name,
+                    surname: result.profile.surname,
+                    role: result.profile.role
+                })
+                console.log('USER_CLAIMS_STORE_DATA: ', this.$store.getters.getUserClaims)
+            },
+        },
+        components: {ToolBar, DataTable, Cards},
     }
 </script>
 
