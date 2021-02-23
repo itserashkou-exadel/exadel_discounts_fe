@@ -11,6 +11,7 @@
                     large
                     v-bind="attrs"
                     v-on="on"
+                    color="blue"
                     class="pointer"
                     @click="setTrue">mdi-filter-outline
             </v-icon>
@@ -117,7 +118,7 @@
             }
         },
         methods: {
-            ...mapActions(['changeFilter', 'inputPost', 'setFilterRequest', 'setTrueFilterRequest']),
+            ...mapActions(['changeFilter', 'inputPost', 'setFilterRequest', 'setTrueFilterRequest', 'setFilterIcon']),
             setTrue: function(){
                 console.log('Set to true')
         this.$store.commit('setTrueFilterRequest');
@@ -164,6 +165,7 @@
         // this.$store.commit('changeFilterRequest');
         console.log(this.$store.state.filterRequest)
         console.log(this.$store.state.discounts)
+        this.setFilterIcon(true);
     }
     ,
 

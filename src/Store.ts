@@ -10,10 +10,12 @@ const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
+const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
 
 
 let store = new Vuex.Store({
     state: {
+        filterIcon: false,
         filterRequest: false,
         keyWord: null,
         details: {},
@@ -23,7 +25,8 @@ let store = new Vuex.Store({
         filtered: [],
         filteredDiscounts: [],
         countries: [],
-        cities: []
+        cities: [],
+        disPage: 1
     },
     getters: {
         getDetailView(state) {
@@ -52,6 +55,12 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setDisPage(state, page){
+          state.disPage = page;
+        },
+        changeFilterIcon(state, bool){
+          state.filterIcon = bool;
+        },
         setTrueFilterRequest(state){
             state.filterRequest = true;
         },
@@ -110,6 +119,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        setFilterIcon({commit}, state){
+            commit('changeFilterIcon', state);
+        },
         setKeyWord({commit}, state) {
             commit('changeKeyWord', state);
         },
@@ -204,6 +216,17 @@ let store = new Vuex.Store({
                 console.log(e)
 
             }
+        },
+
+        async deleteDiscount({commit}, id){
+          try{
+              let url = deleteURL;
+              url += id;
+              const response = await axios.delete(url);
+              console.log(response);
+          }catch (e) {
+              console.log(e)
+          }
         }
     }
 

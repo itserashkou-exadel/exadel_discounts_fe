@@ -57,7 +57,7 @@
                     <v-row class="d-flex justify-end my-5">
                         <v-col cols="1" lg="1" >
                             <v-btn>
-                                <v-icon color="orange">{{icons.icon}}</v-icon>
+                                <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
@@ -166,6 +166,7 @@
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     const arr = [];
+                    this.page = this.$store.state.disPage;
                     this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
@@ -266,8 +267,10 @@
                 console.log(this.selectedPages)
                 console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
-                // console.log(this.page, this.pageCount);
+                console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
+                this.$store.commit('setDisPage', this.page)
+                console.log(this.$store.state.disPage)
                 const goNext = () => {
                     if(this.$store.state.filterRequest === false){
                         this.nextDiscount(
@@ -318,6 +321,11 @@
                 }
                 this.getToken(goNext)
             },
+
+            showId(id){
+              console.log(id);
+            },
+
             test(){
                 this.inputPost(
                     {
