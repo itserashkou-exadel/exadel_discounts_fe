@@ -28,8 +28,12 @@ let store = new Vuex.Store({
         cities: [],
         disPage: 1,
         userLocation: [],
+        userData: [],
     },
     getters: {
+        getUserRole(state) {
+            return state.userData;
+        },
         getUserLocation(state) {
             return state.userLocation;
         },
@@ -59,6 +63,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setUserRole(state, userData) {
+            state.userData = userData;
+        },
         setUserLocation(state, location) {
             state.userLocation = location;
         },

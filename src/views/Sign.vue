@@ -116,9 +116,7 @@
                     <v-btn @click="getProtectedApiData()">
                         <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                     </v-btn>
-                    <v-btn @click="getUser">
-                        123
-                    </v-btn>
+
                 </v-container>
 
             </v-card-text>
@@ -136,6 +134,9 @@
 
     export default {
         name: 'Test2',
+        mounted() {
+
+        },
         data: () => ({
             belarus: ['Grodno', 'Minsk', 'Brest', 'Vitebsk'],
             ukraine: ['Kyiw', 'Kharkiv', 'Lviv', 'Odesa', 'Vinnytsia'],
@@ -146,19 +147,46 @@
             uzbekistan: ['Tashkent'],
             fictionalSelected: null,
             realSelected: null,
+            userLocalData: [],
         }),
         methods: {
-            ...mapMutations(['setUserLocation']),
+            ...mapMutations(['setUserLocation', 'setUserRole']),
+
+            async getUser() {
+                const userClaims = await auth.getUser()
+                this.userLocalData = userClaims.profile
+                console.log('USER_CLAIMS', this.userLocalData)
+                //console.log('INJECTED_DATA', this.userLocalData)
+            },
+
+
             redirectToMainPage(country, town) {
-                //this.getUser()
-                //this.clickedLoc = town
                 this.setUserLocation({
                     country: country,
                     town: town
                 })
 
-                console.log('User location is: ', this.$store.getters.getUserLocation)
+                const userLoc = this.$store.getters.getUserLocation
+
+                console.log(userLoc)
+
+                localStorage.setItem('userLoc in LocalStorage: ', JSON.stringify(userLoc))
+
+                //this.login()
+                this.getUser()
+
+                // this.setUserRole({
+                //     userData: userLocalData
+                // })
+
+
+                console.group('User data')
+                console.log('User location in VueX store: ', this.$store.getters.getUserLocation)
+                console.log('User state data is: ', this.$store.getters.getUserRole)
+                console.groupEnd()
                 //this.$router.push('/home')
+
+                //console.log('INJECTED_LOCAL_DATA', this.userLocalData)
             },
             login() {
                 auth.login();
@@ -166,12 +194,7 @@
             logout() {
                 auth.logout();
             },
-            getUser() {
-                const userClaims = auth.getUser();
-                console.log(userClaims)
-            },
             getProtectedApiData() {
-
                 const authorizationHeader = 'Authorization';
                 auth.getAccessToken().then((userToken) => {
                     axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
@@ -184,11 +207,7 @@
                             alert(error);
                         });
                 });
-
             },
-            setUserLocationAfterLogin() {
-
-            }
         },
     };
 </script>
