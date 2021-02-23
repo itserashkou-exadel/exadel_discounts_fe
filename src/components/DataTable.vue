@@ -96,9 +96,10 @@
                         <v-spacer>
                         </v-spacer>
                         <v-col xl="1" lg="2" md="2" sm="2">
-                            <v-select
+                            <v-select v-if="page === 1"
                                     v-model="itemsPerPage"
                                     :items="itmPer"
+                                      @click="showSelect"
                                     label="items per page"
                                     dense
                                     solo
