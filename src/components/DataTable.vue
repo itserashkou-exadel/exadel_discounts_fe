@@ -29,7 +29,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="closeDelete">{{$t('dtCancel')}}</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{$t('dtOk')}}</v-btn>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm()">{{$t('dtOk')}}</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -46,7 +46,7 @@
                 </v-icon>
                 <v-icon
                         small
-                        @click="deleteItem()"
+                        @click="deleteItem(item.id)"
                 >
                     mdi-delete
                 </v-icon>
@@ -122,6 +122,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            deleteID: null,
             searchWord: '',
             itmPer: [5, 10],
             selectedPages: [],
@@ -322,10 +323,10 @@
                 this.getToken(goNext)
             },
 
-            deleteDiscount(id){
-                let itemID = id;
+            deleteDiscount(){
+                let itemID = this.deleteID;
                 const goDelete = () => {
-                    console.log(id)
+                    console.log(itemID)
                     let url = 'https://localhost:9001/api/v1/discounts/delete/';
                     url += itemID;
                     axios.delete(url);
@@ -385,13 +386,12 @@
                     params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
                 });
             },
-            deleteItem(item) {
-                this.editedIndex = this.result.indexOf(item);
-                this.editedItem = Object.assign({}, item);
+            deleteItem(id) {
+                this.deleteID = id;
                 this.dialogDelete = true;
             },
-            deleteItemConfirm() {
-                this.result.splice(this.editedIndex, 1);
+            deleteItemConfirm(id) {
+                this.deleteDiscount(id);
                 this.closeDelete();
             },
             close() {
