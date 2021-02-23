@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
+import logger from "vuex/types/logger";
 
 Vue.use(Vuex);
 
@@ -8,9 +9,13 @@ const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
+const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
+
 
 let store = new Vuex.Store({
     state: {
+        filterIcon: false,
+        filterRequest: false,
         keyWord: null,
         details: {},
         discounts: [],
@@ -19,13 +24,25 @@ let store = new Vuex.Store({
         filtered: [],
         filteredDiscounts: [],
         countries: [],
-        cities: []
+        cities: [],
+        disPage: 1,
+        userLocation: [],
+        userClaimsStoreData: [],
+        subscriptions: [],
+        favorites: [],
+        itemsPerPage: 5
     },
     getters: {
+        getUserClaims(state) {
+            return state.userClaimsStoreData;
+        },
+        getUserLocation(state) {
+            return state.userLocation;
+        },
         getDetailView(state) {
             return state.details;
         },
-        filterData: state => {
+        getFilterData: state => {
             return state.filtered;
         },
         setFilter (state, filteredData){
@@ -37,17 +54,44 @@ let store = new Vuex.Store({
         allDiscounts (state) {
             return state.discounts
         },
-        allCountries (state) {
+        allCountries(state) {
             return state.countries
         },
-        allCities (state) {
+        allCities(state) {
             return state.cities
+        },
+        allSubscriptions(state) {
+            return state.subscriptions
+        },
+        allFavorites(state) {
+            return state.favorites
         },
         language: state => {
             return state.language
         }
     },
     mutations: {
+        setItemsPerPage(state, itemsPer){
+            state.itemsPerPage = itemsPer;
+        },
+        setDisPage(state, page){
+            state.disPage = page;
+        },
+        setUserClaims(state, userData) {
+            state.userClaimsStoreData = userData;
+        },
+        setUserLocation(state, location) {
+            state.userLocation = location;
+        },
+        changeFilterIcon(state, bool){
+          state.filterIcon = bool;
+        },
+        setTrueFilterRequest(state){
+            state.filterRequest = true;
+        },
+        changeFilterRequest(state){
+          state.filterRequest =  !state.filterRequest;
+        },
         changeKeyWord(state, key) {
             state.keyWord = key;
         },
@@ -63,6 +107,12 @@ let store = new Vuex.Store({
         receiveGetById(state, dis) {
             state.details = {};
             state.details = dis;
+        },
+        receiveSubscription(state, subscr) {
+            state.subscriptions = subscr;
+        },
+        receiveFavorites(state, favor) {
+            state.favorites = favor;
         },
         setFilter(state, filteredData) {
             state.filtered = filteredData;
@@ -98,6 +148,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        setFilterIcon({commit}, state){
+            commit('changeFilterIcon', state);
+        },
         setKeyWord({commit}, state) {
             commit('changeKeyWord', state);
         },
@@ -131,6 +184,29 @@ let store = new Vuex.Store({
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
+
+        async allInputPost({commit}, search){
+            await axios.all([
+                axios.post(searchDiscount, search[0]),
+                axios.post(searchDiscount, search[1]),
+            ]).then(axios.spread((data1, data2) => {
+                commit('receiveSearch', [data1.data, data2.data])
+            }));
+        },
+        async getSubscription({commit}, searchSub) {
+            const response = await axios.post(searchDiscount, searchSub).catch(error => {
+                console.log(error.response.data.error);
+                return {data: []};
+            });
+            commit('receiveSubscription', response.data)
+        },
+        async getFavorites({commit}, searchFav) {
+            const response = await axios.post(searchDiscount, searchFav).catch(error => {
+                console.log(error.response.data.error);
+                return {data: []};
+            });
+            commit('receiveFavorites', response.data)
+        },
         async getDiscountById({commit},id) {
             let url = urlGetDiscountsById;
             url += id;
@@ -146,7 +222,19 @@ let store = new Vuex.Store({
                 //     console.clear();
                 // }
                 console.log(e)
+
             }
+        },
+
+        async deleteDiscount({commit}, id){
+          try{
+              let url = deleteURL;
+              url += id;
+              const response = await axios.delete(url);
+              console.log(response);
+          }catch (e) {
+              console.log(e)
+          }
         }
     }
 

@@ -1,19 +1,22 @@
 <template>
-    <v-text-field
-            placeholder="Search"
-            prepend-inner-icon="mdi-magnify"
-            class="expanding-search mt-4"
-            filled
-            dense
-            chips
-            color="blue lighten-5"
-            multiple
-            :class="{'closed' : searchClosed}"
-            @focus="searchClosed = false"
-            @blur.native="searchClosed = true"
-            v-model="search"
-            @keydown.enter="showSearch()"
-    ></v-text-field>
+    <div>
+        <v-text-field
+                placeholder="Search"
+                prepend-inner-icon="mdi-magnify"
+                class="expanding-search mt-4"
+                filled
+                dense
+                chips
+                color="blue lighten-5"
+                multiple
+                :class="{'closed' : searchClosed}"
+                @focus="searchClosed = false"
+                @blur.native="searchClosed = true"
+                v-model="search"
+                @keydown.enter="showSearch()"
+        ></v-text-field>
+<!--        <v-btn @click="testing"></v-btn>-->
+    </div>
 </template>
 
 <script>
@@ -42,56 +45,61 @@
             }
         },
         methods: {
-            ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount']),
+            ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost"]),
             showSearch() {
                 // console.log(this.search)
                 this.$store.state.discounts = [];
+                this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
                     this.inputPost(
                         {
-                            "searchText": this.search,
+                            "searchText": this.$store.state.keyWord,
                             "searchDiscountOption": "All",
                             "searchAddressCountry": "Украина",
                             "searchAddressCity": "Винница",
                             "searchSortFieldOption": "NameDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 5,
+                            "searchPaginationCountElementPerPage": 20,
                             "searchLanguage": "Ru"
                         }
                     );
-                    setTimeout(this.nextDiscount(
-                        {
-                            "searchText": this.search,
-                            "searchDiscountOption": "All",
-                            "searchAddressCountry": "Украина",
-                            "searchAddressCity": "Винница",
-                            "searchSortFieldOption": "NameDiscount",
-                            "searchSortOption": "Asc",
-                            "searchPaginationPageNumber": 2,
-                            "searchPaginationCountElementPerPage": 5,
-                            "searchLanguage": "Ru"
-                        }
-                    ), 1000);
-                    setTimeout(this.nextDiscount(
-                        {
-                            "searchText": this.search,
-                            "searchDiscountOption": "All",
-                            "searchAddressCountry": "Украина",
-                            "searchAddressCity": "Винница",
-                            "searchSortFieldOption": "NameDiscount",
-                            "searchSortOption": "Asc",
-                            "searchPaginationPageNumber": 3,
-                            "searchPaginationCountElementPerPage": 5,
-                            "searchLanguage": "Ru"
-                        }
-                    ), 1000);
-
                 }
                 this.getToken(resSearch)
-
-                // console.log(this.$store.state.discounts)
+                console.log(this.$store.state.discounts)
             },
+
+            //     testing: function(){
+            //     axios.all([
+            //         axios.post('https://localhost:9001/api/v1/discounts/search', {
+            //             "searchText": "Меха",
+            //             "searchDiscountOption": "All",
+            //             "searchAddressCountry": "Украина",
+            //             "searchAddressCity": "Винница",
+            //             "searchSortFieldOption": "NameDiscount",
+            //             "searchSortOption": "Asc",
+            //             "searchPaginationPageNumber": 1,
+            //             "searchPaginationCountElementPerPage": 5,
+            //             "searchLanguage": "Ru"
+            //         }),
+            //         axios.post('https://localhost:9001/api/v1/discounts/search', {
+            //             "searchText": "Меха",
+            //             "searchDiscountOption": "All",
+            //             "searchAddressCountry": "Украина",
+            //             "searchAddressCity": "Винница",
+            //             "searchSortFieldOption": "NameDiscount",
+            //             "searchSortOption": "Asc",
+            //             "searchPaginationPageNumber": 2,
+            //             "searchPaginationCountElementPerPage": 5,
+            //             "searchLanguage": "Ru"
+            //         })
+            //     ])
+            //         .then(axios.spread((data1, data2) => {
+            //         console.log('data1', data1.data, 'data2', data2.data)
+            //     }));
+            //
+            // },
+
             onResize() {
                 this.searchClosed = document.documentElement.clientWidth < 1080 ? true : false;
             },

@@ -47,10 +47,16 @@
         watch:{
             range: function(){
                 this.changeFilter({
-                    ...this.$store.getters.filterData,
+                    ...this.$store.getters.getFilterData,
                     starRange: [this.range[0], this.range[1]]
                 })
             }
+        },
+        mounted() {
+            this.changeFilter({
+                ...this.$store.getters.getFilterData,
+                starRange: [this.range[0], this.range[1]]
+            })
         },
         methods: {
             ...mapActions(['changeFilter']),

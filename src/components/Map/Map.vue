@@ -1,4 +1,4 @@
-<template>
+<template v-slot:activator="{ on, attrs }">
     <div id="map">
         <div class="filter">
             <Modal class="modal"/>
@@ -21,22 +21,22 @@
         >
             <MglMarker :coordinates="[marker.address.location.latitude, marker.address.location.longitude]"
                        v-for="marker in markersData"
+                       @click="test"
 
             >
+
                 <MglPopup>
                     <VCard flat>
                         <v-card-title>
-                            <div>{{marker.name}}</div>
+                            <h5>{{marker.name}}</h5>
                         </v-card-title>
                         <v-card-text>
-                            <p>
-                                <span>
-                                    Company: {{marker.company.name}}
-                                </span>
-                            </p>
+                            <h4>Company:</h4> <span>{{marker.company.name}}</span>
+                            <hr>
                             <p>
                                 {{marker.company.description}}
                             </p>
+                            <p>{{marker.amountOfDiscount}}%</p>
                         </v-card-text>
                     </VCard>
                 </MglPopup>
@@ -72,33 +72,57 @@
                 mapStyle: 'mapbox://styles/mapbox/streets-v11', // your map style
                 coordinates: [27.544592, 53.898477],
                 markersData: [],
+                dialog: false,
             };
         },
+        // watch:{
+        //     range: function(){
+        //         this.changeFilter({
+        //             ...this.$store.getters.getFilterData,
+        //             range: [this.range[0], this.range[1]]
+        //         })
+        //     }
+        // },
         mixins: [token],
 
         async mounted() {
-                const getData = () => {
-                     axios.post('https://localhost:9001/api/v1/discounts/search', {
-                        "searchText": "Меха",
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Беларусь",
-                        "searchAddressCity": "Минск",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": 20,
-                        "searchLanguage": "Ru"
+            const getData = () => {
+                axios.post('https://localhost:9001/api/v1/discounts/search', {
+                    "searchText": "Меха",
+                    "searchDiscountOption": "All",
+                    "searchAddressCountry": "Беларусь",
+                    "searchAddressCity": "Минск",
+                    "searchSortFieldOption": "NameDiscount",
+                    "searchSortOption": "Asc",
+                    "searchPaginationPageNumber": 1,
+                    "searchPaginationCountElementPerPage": 20,
+                    "searchLanguage": "Ru",
+                    // "searchAdvanced": {
+                    //     "companyName": this.$store.state.filtered.vendor,
+                    //     "searchDate": {
+                    //         "startDate": this.$store.state.filtered.rangeDate[0],
+                    //         "endDate": this.$store.state.filtered.rangeDate[1],
+                    //     },
+                    //     "searchAmountOfDiscount": {
+                    //         "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                    //         "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                    //     },
+                    //     "searchRatingTotal": {
+                    //         "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                    //         "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                    //     }
+                    // }
+                })
+                    .then((response) => {
+                        this.markersData = response.data;
+                        console.log(this.markersData)
                     })
-                        .then((response) => {
-                            this.markersData = response.data;
-                            console.log(this.markersData)
-                        })
-                        .catch((error) => {
-                            alert(error);
-                        });
-                }
+                    .catch((error) => {
+                        alert(error);
+                    });
+            }
 
-                await this.getToken(getData)
+            await this.getToken(getData)
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
@@ -119,6 +143,9 @@
                 })
                 console.log('WORK', coordinates)
             },
+            test() {
+                console.log('CLICK TEST!')
+            }
         }
     };
 </script>

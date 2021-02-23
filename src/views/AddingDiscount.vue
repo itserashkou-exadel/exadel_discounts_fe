@@ -227,9 +227,10 @@
                             @input="selectLine"
                             :rules='nameRules'
                     ></v-text-field>
-
-                        <AddDiscountMap v-bind:address="address"/>
-
+                    <div class="mr-10">
+                        <AddDiscountMap v-bind:address="address"
+                        :updateCoordinates="updateCoordinates"/>
+                    </div>
                     <v-text-field
                             @keydown.enter="nothing"
                             class="mt-10"
@@ -246,7 +247,6 @@
                             outlined
                             v-model="coordinate2"
                             :rules='onlyNumberRules'
-
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -371,7 +371,10 @@
         mixins: [token],
         components: {DatePiker, ChooseOfTown, AddDiscountMap, ChipsForTags},
         methods: {
-
+            updateCoordinates(lng, lat) {
+              this.coordinate2 = lng;
+              this.coordinate1 = lat;
+            },
             titleOfField() {
                 if (this.val) {
                     return this.$tc('adClearOrEdit', 1)
