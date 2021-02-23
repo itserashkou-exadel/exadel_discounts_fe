@@ -180,8 +180,8 @@
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,
-                                startDate: moment(item.startDate.$date).format('L'),
-                                endDate: moment(item.endDate.$date).format('L'),
+                                startDate: moment(item.startDate).format('L'),
+                                endDate: moment(item.endDate).format('L'),
                                 rating: item.ratingTotal,
                                 description: item.description,
                             }
