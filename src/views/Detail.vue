@@ -46,7 +46,8 @@
                   <p class="mt-n4">{{info.startDate + " - " + info.endDate}}</p>
                 </v-card-text>
                 <v-btn height="60px" width="300px" color="#1E88E5" style="font-size:24px;"
-                       class="white--text ml-6 mt-n5 font-weight-bold">Воспользоваться
+                       class="white--text ml-6 mt-n5 font-weight-bold"
+                       v-on:click="addToSubscr">Воспользоваться
                 </v-btn>
               </v-col>
               <v-col
@@ -113,7 +114,8 @@
               </v-row>
               <v-row justify="center">
                 <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
-                       class="white--text mb-8 font-weight-bold">Воспользоваться
+                       class="white--text mb-8 font-weight-bold"
+                       v-on:click="addToSubscr">Воспользоваться
                 </v-btn>
               </v-row>
             </v-col>
@@ -151,15 +153,21 @@
 import {mapActions, mapGetters} from "vuex";
 import axios from "axios";
 import AuthService from "@/services/auth.service";
+import paginationMixin from '@/mixins/token.mixin'
+
+
+
+
 
 const auth = new AuthService();
 const moment = require('moment')
 export default {
   name: "Detail",
+  mixins: [paginationMixin],
   data: () => ({
     info: {},
     results: [],
-    detailId:"",
+    detailId: "",
   }),
 
   props: {
@@ -181,22 +189,41 @@ export default {
               alert(error);
             });
       });
-    }
+    },
+    addToSubscr: function (event) {
+      let self = this;
+      // let discountId = this.$route.params._id
+      const putSubscr = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
+        }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+      };
+      this.getToken(putSubscr);
+    },
   },
   mounted: function () {
     this.detailView();
   },
-  computed:{
+  computed: {
     ...mapGetters(["getDetailView"]),
-    filterData () {
+    filterData() {
       const arr = [];
       this.info = this.getDetailView;
       this.info.startDate = moment(this.info.startDate).format('L');
       this.info.endDate = moment(this.info.endDate).format('L');
-        return this.info;
+      return this.info;
+    },
+    discounts() {
+      return this.$store.state.discounts
+    },
+    subscriptions() {
+      return this.$store.state.subscriptions
     }
   },
 }
+
+
 </script>
 
 <style scoped>

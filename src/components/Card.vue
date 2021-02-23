@@ -40,7 +40,7 @@
                     </div>
                 </v-row>
             </v-col>
-            <v-icon v-on:click="iconSwitch"
+            <v-icon v-on:click="iconSwitch(description.id)"
                     class="mr-7 mt-7" large>>
 
                 {{ card }}
@@ -99,12 +99,14 @@
     import {mapActions} from "vuex";
     import axios from "axios";
     import AuthService from "@/services/auth.service";
+    import Mixin from "@/mixins/token.mixin";
+
     const moment = require('moment')
     const auth = new AuthService();
     import token from '@/mixins/token.mixin'
     export default {
         name: "Card",
-        mixins: [token],
+        mixins: [token, Mixin],
         data: () => ({
 
             dialogDelete: false,
@@ -129,16 +131,28 @@
             description: {
                 type: Object,
                 required: true
-            }
+            },
+            deleteFromFavor: ['deleteFromFavor']
         },
         methods: {
-            iconSwitch() {
-                if (this.card === "mdi-heart-outline")
-                    this.card = "mdi-heart"
+            iconSwitch(id) {
+                if (this.card === "mdi-heart-outline"){
+                  this.card = "mdi-heart"
+                  this.addToFavorites(id);
+                }
                 else
                     this.card = "mdi-heart-outline"
             },
-
+          addToFavorites: function (id) {
+            console.log('discounts',id);
+            const putSubscr = () => {
+              axios({
+                method: 'put',
+                url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
+              }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+            };
+            this.getToken(putSubscr);
+          },
             ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
           ...mapActions(['getDiscountById']),
             headers() {
