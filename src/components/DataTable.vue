@@ -46,7 +46,7 @@
                 </v-icon>
                 <v-icon
                         small
-                        @click="deleteItem(item)"
+                        @click="deleteItem()"
                 >
                     mdi-delete
                 </v-icon>
@@ -320,6 +320,19 @@
 
                 }
                 this.getToken(goNext)
+            },
+
+            deleteDiscount(id){
+                let itemID = id;
+                const goDelete = () => {
+                    console.log(id)
+                    let url = 'https://localhost:9001/api/v1/discounts/delete/';
+                    url += itemID;
+                    axios.delete(url);
+                     this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                     console.log(this.info)
+                }
+                this.getToken(goDelete)
             },
 
             showId(id){
