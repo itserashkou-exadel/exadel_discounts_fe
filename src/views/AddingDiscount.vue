@@ -272,6 +272,7 @@
                             outlined
                             v-model="coordinate2"
                             :rules='onlyNumberRules'
+                            :data="my"
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -592,9 +593,12 @@
                         console.log({...{id: uuidv4()}, ...(this.objectWithoutId())})
                     } else {
                         console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
-                        this.addDiscount(
+                        this.updateDiscount(
                             {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
                         ).catch((e) => console.log(e))
+                        // const index = state.discounts.findIndex(t => t.id === this.$route.params.idOfDiscount);
+                        // this.$store.state.discounts.splice(index, 1, {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
+                        // console.log(this.$store.state.discounts)
                     }
                 }
                     this.getToken(postDiscount);
@@ -614,7 +618,7 @@
                             "searchLanguage": "Ru"
                         }
                     );
-                        console.log(1);
+                      //  console.log(this.$store.state.discounts);
                 }
                 this.getToken(inputDiscount);
                 } else {
@@ -763,9 +767,13 @@
                 }
                 return str
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'inputPost'])
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'inputPost', 'updateDiscount'])
         },
-        computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
+        computed: {...mapGetters(['allDiscounts', 'language', 'allCountries']),
+            my(){
+            if (this.language === "Ru"){console.log(1)}
+            else {console.log(2)}
+        }},
 
         mounted() {
           this.fillingFields();
