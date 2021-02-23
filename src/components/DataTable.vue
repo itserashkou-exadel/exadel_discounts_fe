@@ -29,7 +29,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="closeDelete">{{$t('dtCancel')}}</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{$t('dtOk')}}</v-btn>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm()">{{$t('dtOk')}}</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -46,7 +46,7 @@
                 </v-icon>
                 <v-icon
                         small
-                        @click="deleteItem(item)"
+                        @click="deleteItem(item.id)"
                 >
                     mdi-delete
                 </v-icon>
@@ -89,15 +89,17 @@
                             <v-pagination
                                     v-model="page"
                                     :length="pageCount"
+                                    :total-visible="7"
                                     @input="next"
                             ></v-pagination>
                         </v-col>
                         <v-spacer>
                         </v-spacer>
                         <v-col xl="1" lg="2" md="2" sm="2">
-                            <v-select
+                            <v-select v-if="page === 1"
                                     v-model="itemsPerPage"
                                     :items="itmPer"
+                                      @click="showSelect"
                                     label="items per page"
                                     dense
                                     solo
@@ -122,6 +124,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            deleteID: null,
             searchWord: '',
             itmPer: [5, 10],
             selectedPages: [],
@@ -165,6 +168,7 @@
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
+                    this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
                     this.searchWord = this.$store.state.keyWord;
@@ -178,8 +182,8 @@
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,
-                                startDate: moment(item.startDate.$date).format('L'),
-                                endDate: moment(item.endDate.$date).format('L'),
+                                startDate: moment(item.startDate).format('L'),
+                                endDate: moment(item.endDate).format('L'),
                                 rating: item.ratingTotal,
                                 description: item.description,
                             }
@@ -263,11 +267,11 @@
                 ]
             },
             next() {
-                console.log(this.page, this.pageCount)
-                console.log(this.selectedPages)
-                console.log(this.selectedPages.indexOf(this.page))
+                // console.log(this.page, this.pageCount)
+                // console.log(this.selectedPages)
+                // console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
-                console.log(this.page, this.pageCount);
+                // console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
@@ -282,12 +286,13 @@
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": this.itemsPerPage,
+                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": "Ru"
                             }
                         )
                     }else{
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
+                        console.log(this.$store.state.filtered.range)
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -297,7 +302,7 @@
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": 5,
+                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": "Ru",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
@@ -320,6 +325,19 @@
 
                 }
                 this.getToken(goNext)
+            },
+
+            deleteDiscount(){
+                let itemID = this.deleteID;
+                const goDelete = () => {
+                    console.log(itemID)
+                    let url = 'https://localhost:9001/api/v1/discounts/delete/';
+                    url += itemID;
+                    axios.delete(url);
+                     this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                     console.log(this.info)
+                }
+                this.getToken(goDelete)
             },
 
             showId(id){
@@ -372,13 +390,12 @@
                     params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
                 });
             },
-            deleteItem(item) {
-                this.editedIndex = this.result.indexOf(item);
-                this.editedItem = Object.assign({}, item);
+            deleteItem(id) {
+                this.deleteID = id;
                 this.dialogDelete = true;
             },
-            deleteItemConfirm() {
-                this.result.splice(this.editedIndex, 1);
+            deleteItemConfirm(id) {
+                this.deleteDiscount(id);
                 this.closeDelete();
             },
             close() {

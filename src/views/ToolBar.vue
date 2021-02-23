@@ -3,7 +3,7 @@
         <v-col cols="3" xl="1" lg="2" md="1"  class="d-flex justify-end  mr-lg-n5">
             <Modal/>
         </v-col>
-        <v-col cols="2" xl="1" lg="2" md="1" class="d-flex justify-end ml-lg-n16">
+        <v-col cols="2" xl="1" lg="2" md="1" class="d-flex justify-md-end ml-lg-n16 justify-sm-center">
             <v-icon
                     large
                     class="pointer"
@@ -14,7 +14,7 @@
             </v-icon>
         </v-col>
 
-        <v-col cols="4" lg="2" md="2" sm="3" class="d-flex justify-center">
+        <v-col v-if="windowInnerWidth>=900" cols="4" lg="2" md="2" sm="3" class="d-flex justify-center">
             <SwitchButton></SwitchButton>
         </v-col>
         <v-col cols="3" lg="2" md="2" sm="2">
@@ -39,6 +39,11 @@
     const auth = new AuthService();
     export default {
         name: "ToolBar",
+        data() {
+            return {
+                windowInnerWidth: window.innerWidth,
+            }
+        },
         components: {
             SwitchButton,
             Modal
@@ -68,13 +73,14 @@
                             "searchSortFieldOption": "NameDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 15,
+                            "searchPaginationCountElementPerPage": 20,
                             "searchLanguage": "Ru"
                         }
                     );
                 }
                 this.getToken(resSearch)
                 this.setFilterIcon(false);
+                this.$store.commit('setDisPage', 1)
                 console.log(this.$store.state.discounts)
             },
 

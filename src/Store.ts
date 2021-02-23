@@ -5,7 +5,6 @@ import logger from "vuex/types/logger";
 
 Vue.use(Vuex);
 
-
 const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
@@ -29,6 +28,9 @@ let store = new Vuex.Store({
         disPage: 1,
         userLocation: [],
         userClaimsStoreData: [],
+        subscriptions: [],
+        favorites: [],
+        itemsPerPage: 5
     },
     getters: {
         getUserClaims(state) {
@@ -43,13 +45,13 @@ let store = new Vuex.Store({
         getFilterData: state => {
             return state.filtered;
         },
-        setFilter(state, filteredData) {
+        setFilter (state, filteredData){
             state.filtered = filteredData;
         },
         switcher: state => {
             return state.switch;
         },
-        allDiscounts(state) {
+        allDiscounts (state) {
             return state.discounts
         },
         allCountries(state) {
@@ -58,28 +60,37 @@ let store = new Vuex.Store({
         allCities(state) {
             return state.cities
         },
+        allSubscriptions(state) {
+            return state.subscriptions
+        },
+        allFavorites(state) {
+            return state.favorites
+        },
         language: state => {
             return state.language
         }
     },
     mutations: {
+        setItemsPerPage(state, itemsPer){
+            state.itemsPerPage = itemsPer;
+        },
+        setDisPage(state, page){
+            state.disPage = page;
+        },
         setUserClaims(state, userData) {
             state.userClaimsStoreData = userData;
         },
         setUserLocation(state, location) {
             state.userLocation = location;
         },
-        setDisPage(state, page) {
-            state.disPage = page;
+        changeFilterIcon(state, bool){
+          state.filterIcon = bool;
         },
-        changeFilterIcon(state, bool) {
-            state.filterIcon = bool;
-        },
-        setTrueFilterRequest(state) {
+        setTrueFilterRequest(state){
             state.filterRequest = true;
         },
-        changeFilterRequest(state) {
-            state.filterRequest = !state.filterRequest;
+        changeFilterRequest(state){
+          state.filterRequest =  !state.filterRequest;
         },
         changeKeyWord(state, key) {
             state.keyWord = key;
@@ -89,13 +100,19 @@ let store = new Vuex.Store({
             state.discounts.push(...dis);
         },
 
-        addNextDis(state, nextDis) {
-            // @ts-ignore
+        addNextDis(state, nextDis){
+          // @ts-ignore
             state.discounts.push(...nextDis);
         },
         receiveGetById(state, dis) {
             state.details = {};
             state.details = dis;
+        },
+        receiveSubscription(state, subscr) {
+            state.subscriptions = subscr;
+        },
+        receiveFavorites(state, favor) {
+            state.favorites = favor;
         },
         setFilter(state, filteredData) {
             state.filtered = filteredData;
@@ -103,28 +120,28 @@ let store = new Vuex.Store({
         changeSwitcher: state => {
             state.switch = !state.switch;
         },
-        setDiscounts(state, discounts) {
+        setDiscounts (state, discounts) {
             state.discounts = discounts
         },
-        setCountries(state, countries) {
+        setCountries (state, countries) {
             state.countries = countries
         },
-        setCities(state, cities) {
+        setCities (state, cities) {
             state.cities = cities
         },
-        createDiscount(state, newDiscount) {
+        createDiscount (state, newDiscount) {
             // @ts-ignore
             state.discounts.push(newDiscount)
         },
-        updTask(state, updatedDiscount) {
+        updTask (state, updatedDiscount)  {
             // @ts-ignore
             const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
-            if (index !== -1) {
+            if(index !== -1) {
                 // @ts-ignore
                 state.discounts.splice(index, 1, updatedDiscount);
             }
         },
-        setLanguage(state, lang) {
+        setLanguage (state, lang) {
             if (lang) {
                 state.language = "Ru"
             } else {
@@ -133,7 +150,7 @@ let store = new Vuex.Store({
         }
     },
     actions: {
-        setFilterIcon({commit}, state) {
+        setFilterIcon({commit}, state){
             commit('changeFilterIcon', state);
         },
         setKeyWord({commit}, state) {
@@ -142,14 +159,14 @@ let store = new Vuex.Store({
         changeFilter({commit}, state) {
             commit("setFilter", state);
         },
-        changeSwitcher({commit}, state) {
-            commit('setSwitcher', state);
+        changeSwitcher({commit}, state){
+          commit('setSwitcher', state);
         },
-        async goFetch({commit}, str) {
+        async goFetch ({commit}, str) {
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForCountries({commit}, str) {
+        async goFetchForCountries ({commit}, str) {
             const response = await axios.get(str);
             commit('setCountries', response.data);
         },
@@ -157,31 +174,20 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setCities', response.data);
         },
-        async addDiscount({commit}, newDiscount) {
+        async addDiscount ({commit}, newDiscount) {
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
-        async updateDiscount({commit}, discount) {
+        async updateDiscount ( { commit }, discount) {
             await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         },
-
-        async inputPost({commit}, search) {
+        async inputPost({commit}, search){
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
 
-        // async allInputPost({commit}, search){
-        //     await axios.post(searchDiscount, search[0])
-        //         .then((resp) => {
-        //             commit('receiveSearch', resp)
-        //             return axios.post(searchDiscount, search[1])
-        //         }).then((resp) => {
-        //             commit('receiveSearch', resp)
-        //         });
-        // },
-
-        async allInputPost({commit}, search) {
+        async allInputPost({commit}, search){
             await axios.all([
                 axios.post(searchDiscount, search[0]),
                 axios.post(searchDiscount, search[1]),
@@ -189,38 +195,28 @@ let store = new Vuex.Store({
                 commit('receiveSearch', [data1.data, data2.data])
             }));
         },
-        // axios.all([
-        //     axios.post('https://localhost:9001/api/v1/discounts/search', {
-        //         "searchText": "Меха",
-        //         "searchDiscountOption": "All",
-        //         "searchAddressCountry": "Украина",
-        //         "searchAddressCity": "Винница",
-        //         "searchSortFieldOption": "NameDiscount",
-        //         "searchSortOption": "Asc",
-        //         "searchPaginationPageNumber": 1,
-        //         "searchPaginationCountElementPerPage": 5,
-        //         "searchLanguage": "Ru"
-        //     }).then(response => console.log(response.data)),
-        //     axios.post('https://localhost:9001/api/v1/discounts/search', {
-        //         "searchText": "Меха",
-        //         "searchDiscountOption": "All",
-        //         "searchAddressCountry": "Украина",
-        //         "searchAddressCity": "Винница",
-        //         "searchSortFieldOption": "NameDiscount",
-        //         "searchSortOption": "Asc",
-        //         "searchPaginationPageNumber": 2,
-        //         "searchPaginationCountElementPerPage": 5,
-        //         "searchLanguage": "Ru"
-        //     }).then(response => console.log(response.data)),
-        // ])
-        async getDiscountById({commit}, id) {
+        async getSubscription({commit}, searchSub) {
+            const response = await axios.post(searchDiscount, searchSub).catch(error => {
+                console.log(error.response.data.error);
+                return {data: []};
+            });
+            commit('receiveSubscription', response.data)
+        },
+        async getFavorites({commit}, searchFav) {
+            const response = await axios.post(searchDiscount, searchFav).catch(error => {
+                console.log(error.response.data.error);
+                return {data: []};
+            });
+            commit('receiveFavorites', response.data)
+        },
+        async getDiscountById({commit},id) {
             let url = urlGetDiscountsById;
             url += id;
             const response = await axios.get(url);
             commit('receiveGetById', response.data)
         },
         async nextDiscount({commit}, search) {
-            try {
+            try{
                 const response = await axios.post(searchDiscount, search);
                 commit('addNextDis', response.data)
             } catch (e) {
@@ -232,15 +228,15 @@ let store = new Vuex.Store({
             }
         },
 
-        async deleteDiscount({commit}, id) {
-            try {
-                let url = deleteURL;
-                url += id;
-                const response = await axios.delete(url);
-                console.log(response);
-            } catch (e) {
-                console.log(e)
-            }
+        async deleteDiscount({commit}, id){
+          try{
+              let url = deleteURL;
+              url += id;
+              const response = await axios.delete(url);
+              console.log(response);
+          }catch (e) {
+              console.log(e)
+          }
         }
     }
 
