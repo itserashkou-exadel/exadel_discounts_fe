@@ -134,12 +134,10 @@ let store = new Vuex.Store({
             state.discounts.push(newDiscount)
         },
         updTask (state, updatedDiscount)  {
-            // @ts-ignore
-            const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
-            if(index !== -1) {
-                // @ts-ignore
-                state.discounts.splice(index, 1, updatedDiscount);
-            }
+            //@ts-ignore
+           const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
+                //@ts-ignore
+               state.discounts.splice(index, 1, updatedDiscount);
         },
         setLanguage (state, lang) {
             if (lang) {
@@ -179,7 +177,7 @@ let store = new Vuex.Store({
             commit('createDiscount', newDiscount);
         },
         async updateDiscount ( { commit }, discount) {
-            await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
+            await axios.post(`https://localhost:9001/api/v1/discounts/upsert`, discount);
             commit('updTask', discount);
         },
         async inputPost({commit}, search){

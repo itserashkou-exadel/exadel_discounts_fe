@@ -42,7 +42,8 @@ export default {
     getCountries () {
       const getCountries = () => {
       let languageForCountries = (this.isRuLocale ? 'Ru' : 'En')
-      this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`)
+      this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`
+      )
     };
       this.getToken(getCountries);}
   },
