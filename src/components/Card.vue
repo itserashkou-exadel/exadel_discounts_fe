@@ -74,7 +74,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDelete">Отмена</v-btn>
-                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">Да</v-btn>
+                    <v-btn color="blue darken-1" text @click="deleteItemConfirm(description.id)">Да</v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -104,9 +104,10 @@
 
     const moment = require('moment')
     const auth = new AuthService();
+    import token from '@/mixins/token.mixin'
     export default {
         name: "Card",
-        mixins: [Mixin],
+        mixins: [token, Mixin],
         data: () => ({
             dialogDelete: false,
             editedIndex: -1,
@@ -169,10 +170,22 @@
                 this.editedItem = Object.assign({}, item);
                 this.dialogDelete = true;
             },
-            deleteItemConfirm() {
-                this.offers.splice(this.editedIndex, 1);
-                this.closeDelete();
-            },
+          deleteDiscount(id){
+            let itemID = id;
+            const goDelete = () => {
+              console.log(id)
+              let url = 'https://localhost:9001/api/v1/discounts/delete/';
+              url += itemID;
+              axios.delete(url);
+              this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+              console.log(this.info)
+            }
+            this.getToken(goDelete)
+          },
+          deleteItemConfirm(id) {
+            this.deleteDiscount(id)
+            this.closeDelete();
+          },
             close() {
                 this.dialog = false
                 this.$nextTick(() => {

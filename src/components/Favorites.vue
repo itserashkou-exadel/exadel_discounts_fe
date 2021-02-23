@@ -100,6 +100,7 @@ export default {
           ))
       console.log( 'fav2', this.$store.state.favorites);
     },
+
   },
   methods: {
     ...mapActions(['getFavorites']),
@@ -119,6 +120,7 @@ export default {
               "searchLanguage": "Ru"
             }
         )
+        console.log(this.$store.state.favorites)
       }).catch((error) => {
         alert(error);
       });

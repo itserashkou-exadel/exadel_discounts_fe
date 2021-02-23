@@ -7,14 +7,15 @@
 
     >
         <template v-slot:activator="{ on, attrs }">
+            <v-icon
+                    large
+                    v-bind="attrs"
+                    v-on="on"
+                    color="blue"
+                    class="pointer"
+                    @click="setTrue">mdi-filter-outline
+            </v-icon>
 
-            <v-img max-height="15"
-                   max-width="25"
-                   src="../../assets/filter.png"
-                   v-bind="attrs"
-                   v-on="on"
-                   class="pointer"
-            ></v-img>
         </template>
         <v-card>
             <v-card-title>
@@ -79,7 +80,7 @@
                 <v-btn
                         color="blue darken-1"
                         text
-                        @click="dialog = false"
+                        @click="getFilteredData"
                 >
                     {{$t('fSave')}}
                 </v-btn>
@@ -94,7 +95,10 @@
     import DataPicker from "@/components/Filter/DataPicker";
     import RangeSlider from "@/components/Filter/RangeSlider";
     import StarSlider from "@/components/Filter/StarSlider";
+    import token from '@/mixins/token.mixin'
+    import AuthService from "@/services/auth.service";
 
+    const auth = new AuthService();
     export default {
         name: "Modal.vue",
         components: {StarSlider, RangeSlider, DataPicker},
@@ -102,19 +106,77 @@
             dialog: false,
             from: null,
             title: 'From',
-            vendor: ''
+            vendor: null
         }),
-        watch:{
-            vendor: function(){
+        mixins: [token],
+        watch: {
+            vendor: function () {
                 this.changeFilter({
-                    ...this.$store.getters.filterData,
+                    ...this.$store.getters.getFilterData,
                     vendor: this.vendor
                 })
             }
         },
         methods: {
-            ...mapActions(['changeFilter']),
+            ...mapActions(['changeFilter', 'inputPost', 'setFilterRequest', 'setTrueFilterRequest', 'setFilterIcon']),
+            setTrue: function(){
+                console.log('Set to true')
+        this.$store.commit('setTrueFilterRequest');
+    },
+    getFilteredData()
+    {
+        // console.log(this.search)
+        // console.log(this.$store.state.keyWord ? this.$store.state.filtered.rangeDate[0] : null)
+        this.$store.state.discounts = [];
+        this.$store.commit('setDisPage', 1)
+        const filterSearch = () => {
+            console.log('Set to false')
+            this.inputPost(
+                {
+                    "searchText": this.$store.state.keyWord,
+                    "searchDiscountOption": "All",
+                    "searchAddressCountry": "Украина",
+                    "searchAddressCity": "Винница",
+                    "searchSortFieldOption": "NameDiscount",
+                    "searchSortOption": "Asc",
+                    "searchPaginationPageNumber": 1,
+                    "searchPaginationCountElementPerPage": 15,
+                    "searchLanguage": "Ru",
+                    "searchAdvanced": {
+                        "companyName": this.$store.state.filtered.vendor,
+                        "searchDate": {
+                            "startDate": this.$store.state.filtered.rangeDate[0],
+                            "endDate": this.$store.state.filtered.rangeDate[1],
+                        },
+                        "searchAmountOfDiscount": {
+                            "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                            "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                        },
+                        "searchRatingTotal": {
+                            "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                            "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                        }
+                    }
+                }
+            );
         }
+        this.getToken(filterSearch)
+        this.dialog = true;
+        // this.$store.commit('changeFilterRequest');
+        console.log(this.$store.state.filterRequest)
+        console.log(this.$store.state.discounts)
+        this.setFilterIcon(true);
+    }
+    ,
+
+    test: function () {
+        // this.$store.state.filtered.vendor === null ? this.$store.state.filtered.vendor : null;
+        // "startDate": this.$store.state.filtered.rangeDate[0] === null ? this.$store.state.filtered.rangeDate[0] : null,
+        //     "endDate": this.$store.state.filtered.rangeDate[1] === null ? this.$store.state.filtered.rangeDate[1] : null,
+        let res = this.$store.state.filtered.vendor === null ? 'I have this field' : 'Empty';
+        console.log(res)
+    }
+    }
     }
 </script>
 

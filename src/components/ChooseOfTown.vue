@@ -58,9 +58,7 @@
                         .then((response) => {
                             this.cities = response.data
                         })
-                        .catch((error) => {
-                            alert(error);
-                        });
+
                 };
                 this.getToken(getCities);
             }
@@ -70,8 +68,8 @@
                 const id = this.$route.params.idOfDiscount;
                 const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
                 const discount = response.data;
-                this.selectedCountry = discount.address.country,
-                    this.selectedCity = discount.address.city;
+                this.selectedCountry = discount.address.country || discount.translations[0].address.country;
+                this.selectedCity = discount.address.city || discount.translations[0].address.country;
                 this.getCities ();
             }
         }

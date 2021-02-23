@@ -34,8 +34,9 @@
                             {{item.name}}
                         </v-expansion-panel-header>
 
-                        <v-expansion-panel-content>{{item.company.description}}</v-expansion-panel-content>
+                        <v-expansion-panel-content>{{item.company.name}}</v-expansion-panel-content>
                         <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
+                        <v-expansion-panel-content><p>{{item.amountOfDiscount}}%</p></v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
             </v-navigation-drawer>
