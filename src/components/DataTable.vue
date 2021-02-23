@@ -168,6 +168,7 @@
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
+                    this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
                     this.searchWord = this.$store.state.keyWord;
@@ -266,11 +267,11 @@
                 ]
             },
             next() {
-                console.log(this.page, this.pageCount)
-                console.log(this.selectedPages)
-                console.log(this.selectedPages.indexOf(this.page))
+                // console.log(this.page, this.pageCount)
+                // console.log(this.selectedPages)
+                // console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
-                console.log(this.page, this.pageCount);
+                // console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
@@ -285,12 +286,13 @@
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": this.itemsPerPage,
+                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": "Ru"
                             }
                         )
                     }else{
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
+                        console.log(this.$store.state.filtered.range)
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -300,7 +302,7 @@
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": 5,
+                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": "Ru",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
