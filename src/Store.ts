@@ -26,28 +26,32 @@ let store = new Vuex.Store({
         filteredDiscounts: [],
         countries: [],
         cities: [],
-        disPage: 1
+        disPage: 1,
+        userLocation: [],
     },
     getters: {
+        getUserLocation(state) {
+            return state.userLocation;
+        },
         getDetailView(state) {
             return state.details;
         },
         getFilterData: state => {
             return state.filtered;
         },
-        setFilter (state, filteredData){
+        setFilter(state, filteredData) {
             state.filtered = filteredData;
         },
         switcher: state => {
             return state.switch;
         },
-        allDiscounts (state) {
+        allDiscounts(state) {
             return state.discounts
         },
-        allCountries (state) {
+        allCountries(state) {
             return state.countries
         },
-        allCities (state) {
+        allCities(state) {
             return state.cities
         },
         language: state => {
@@ -55,17 +59,20 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
-        setDisPage(state, page){
-          state.disPage = page;
+        setUserLocation(state, location) {
+            state.userLocation = location;
         },
-        changeFilterIcon(state, bool){
-          state.filterIcon = bool;
+        setDisPage(state, page) {
+            state.disPage = page;
         },
-        setTrueFilterRequest(state){
+        changeFilterIcon(state, bool) {
+            state.filterIcon = bool;
+        },
+        setTrueFilterRequest(state) {
             state.filterRequest = true;
         },
-        changeFilterRequest(state){
-          state.filterRequest =  !state.filterRequest;
+        changeFilterRequest(state) {
+            state.filterRequest = !state.filterRequest;
         },
         changeKeyWord(state, key) {
             state.keyWord = key;
@@ -75,8 +82,8 @@ let store = new Vuex.Store({
             state.discounts.push(...dis);
         },
 
-        addNextDis(state, nextDis){
-          // @ts-ignore
+        addNextDis(state, nextDis) {
+            // @ts-ignore
             state.discounts.push(...nextDis);
         },
         receiveGetById(state, dis) {
@@ -89,28 +96,28 @@ let store = new Vuex.Store({
         changeSwitcher: state => {
             state.switch = !state.switch;
         },
-        setDiscounts (state, discounts) {
+        setDiscounts(state, discounts) {
             state.discounts = discounts
         },
-        setCountries (state, countries) {
+        setCountries(state, countries) {
             state.countries = countries
         },
-        setCities (state, cities) {
+        setCities(state, cities) {
             state.cities = cities
         },
-        createDiscount (state, newDiscount) {
+        createDiscount(state, newDiscount) {
             // @ts-ignore
             state.discounts.push(newDiscount)
         },
-        updTask (state, updatedDiscount)  {
+        updTask(state, updatedDiscount) {
             // @ts-ignore
             const index = state.discounts.findIndex(t => t._id === updatedDiscount._id);
-            if(index !== -1) {
+            if (index !== -1) {
                 // @ts-ignore
                 state.discounts.splice(index, 1, updatedDiscount);
             }
         },
-        setLanguage (state, lang) {
+        setLanguage(state, lang) {
             if (lang) {
                 state.language = "Ru"
             } else {
@@ -119,7 +126,7 @@ let store = new Vuex.Store({
         }
     },
     actions: {
-        setFilterIcon({commit}, state){
+        setFilterIcon({commit}, state) {
             commit('changeFilterIcon', state);
         },
         setKeyWord({commit}, state) {
@@ -128,14 +135,14 @@ let store = new Vuex.Store({
         changeFilter({commit}, state) {
             commit("setFilter", state);
         },
-        changeSwitcher({commit}, state){
-          commit('setSwitcher', state);
+        changeSwitcher({commit}, state) {
+            commit('setSwitcher', state);
         },
-        async goFetch ({commit}, str) {
+        async goFetch({commit}, str) {
             const response = await axios.get(str);
             commit('setDiscounts', response.data);
         },
-        async goFetchForCountries ({commit}, str) {
+        async goFetchForCountries({commit}, str) {
             const response = await axios.get(str);
             commit('setCountries', response.data);
         },
@@ -143,16 +150,16 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setCities', response.data);
         },
-        async addDiscount ({commit}, newDiscount) {
+        async addDiscount({commit}, newDiscount) {
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
         },
-        async updateDiscount ( { commit }, discount) {
+        async updateDiscount({commit}, discount) {
             await axios.put(`https://jsonplaceholder.typicode.com/posts${discount.id}`, discount);
             commit('updTask', discount);
         },
 
-        async inputPost({commit}, search){
+        async inputPost({commit}, search) {
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
@@ -167,7 +174,7 @@ let store = new Vuex.Store({
         //         });
         // },
 
-        async allInputPost({commit}, search){
+        async allInputPost({commit}, search) {
             await axios.all([
                 axios.post(searchDiscount, search[0]),
                 axios.post(searchDiscount, search[1]),
@@ -199,14 +206,14 @@ let store = new Vuex.Store({
         //         "searchLanguage": "Ru"
         //     }).then(response => console.log(response.data)),
         // ])
-        async getDiscountById({commit},id) {
+        async getDiscountById({commit}, id) {
             let url = urlGetDiscountsById;
             url += id;
             const response = await axios.get(url);
             commit('receiveGetById', response.data)
         },
         async nextDiscount({commit}, search) {
-            try{
+            try {
                 const response = await axios.post(searchDiscount, search);
                 commit('addNextDis', response.data)
             } catch (e) {
@@ -218,15 +225,15 @@ let store = new Vuex.Store({
             }
         },
 
-        async deleteDiscount({commit}, id){
-          try{
-              let url = deleteURL;
-              url += id;
-              const response = await axios.delete(url);
-              console.log(response);
-          }catch (e) {
-              console.log(e)
-          }
+        async deleteDiscount({commit}, id) {
+            try {
+                let url = deleteURL;
+                url += id;
+                const response = await axios.delete(url);
+                console.log(response);
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 

@@ -16,8 +16,9 @@
                         </template>
 
                         <v-list-item-group v-model="fictionalSelected">
-                            <v-list-item v-bind:key="town" v-for="town in belarus" @click="redirectToMainPage">
-                                <v-list-item-title>{{ town }}</v-list-item-title>
+                            <v-list-item v-bind:key="town" v-for="town in belarus">
+                                <v-list-item-title @click="redirectToMainPage(country = 'Belarus', town)">{{ town }}
+                                </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list-group>
@@ -31,8 +32,9 @@
                             </v-list-item-content>
                         </template>
                         <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in ukraine" @click="redirectToMainPage">
-                                <v-list-item-title>{{ town }}</v-list-item-title>
+                            <v-list-item v-bind:key="town" v-for="town in ukraine">
+                                <v-list-item-title @click="redirectToMainPage(country = 'Ukraine', town)">{{ town }}
+                                </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list-group>
@@ -46,8 +48,9 @@
                             </v-list-item-content>
                         </template>
                         <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in lithuania" @click="redirectToMainPage">
-                                <v-list-item-title>{{ town }}</v-list-item-title>
+                            <v-list-item v-bind:key="town" v-for="town in lithuania">
+                                <v-list-item-title @click="redirectToMainPage(country = 'Lithuania', town)">{{ town }}
+                                </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list-group>
@@ -61,8 +64,9 @@
                             </v-list-item-content>
                         </template>
                         <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in russia" @click="redirectToMainPage">
-                                <v-list-item-title>{{ town }}</v-list-item-title>
+                            <v-list-item v-bind:key="town" v-for="town in russia">
+                                <v-list-item-title @click="redirectToMainPage(country = 'Russia', town)">{{ town }}
+                                </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list-group>
@@ -76,8 +80,9 @@
                             </v-list-item-content>
                         </template>
                         <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in germany" @click="redirectToMainPage">
-                                <v-list-item-title>{{ town }}</v-list-item-title>
+                            <v-list-item v-bind:key="town" v-for="town in germany">
+                                <v-list-item-title @click="redirectToMainPage(country = 'Germany', town)">{{ town }}
+                                </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list-group>
@@ -91,8 +96,10 @@
                             </v-list-item-content>
                         </template>
                         <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in uzbekistan" @click="redirectToMainPage">
-                                <v-list-item-title>{{ town }}</v-list-item-title>
+                            <v-list-item v-bind:key="town" v-for="town in uzbekistan">
+                                <v-list-item-title @click="redirectToMainPage(country = 'Uzbekistan', town)">{{ town
+                                    }}
+                                </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list-group>
@@ -122,6 +129,7 @@
 <script>
     import AuthService from '@/services/auth.service';
     import axios from 'axios';
+    import {mapMutations} from 'vuex'
 
     const auth = new AuthService();
 
@@ -136,14 +144,21 @@
             germany: ['Dresden'],
             poland: ['Warsaw', 'Bialystock', 'Szczecin', 'Poznan'],
             uzbekistan: ['Tashkent'],
-
             fictionalSelected: null,
             realSelected: null,
         }),
         methods: {
-            redirectToMainPage() {
-                console.log('You was redirected')
-                this.$router.push('/home')
+            ...mapMutations(['setUserLocation']),
+            redirectToMainPage(country, town) {
+                //this.getUser()
+                //this.clickedLoc = town
+                this.setUserLocation({
+                    country: country,
+                    town: town
+                })
+
+                console.log('User location is: ', this.$store.getters.getUserLocation)
+                //this.$router.push('/home')
             },
             login() {
                 auth.login();
@@ -171,6 +186,9 @@
                 });
 
             },
+            setUserLocationAfterLogin() {
+
+            }
         },
     };
 </script>
