@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
+import logger from "vuex/types/logger";
 
 Vue.use(Vuex);
 
@@ -8,10 +9,13 @@ const urlDiscounts = 'http://localhost:3000/discounts';
 const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
 const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
 const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
+const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
 
 
 let store = new Vuex.Store({
     state: {
+        filterIcon: false,
+        filterRequest: false,
         keyWord: null,
         details: {},
         discounts: [],
@@ -22,13 +26,14 @@ let store = new Vuex.Store({
         countries: [],
         cities: [],
         subscriptions: [],
-        favorites: []
+        favorites: [],
+        disPage: 1
     },
     getters: {
         getDetailView(state) {
             return state.details;
         },
-        filterData: state => {
+        getFilterData: state => {
             return state.filtered;
         },
         setFilter (state, filteredData){
@@ -57,6 +62,18 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setDisPage(state, page){
+          state.disPage = page;
+        },
+        changeFilterIcon(state, bool){
+          state.filterIcon = bool;
+        },
+        setTrueFilterRequest(state){
+            state.filterRequest = true;
+        },
+        changeFilterRequest(state){
+          state.filterRequest =  !state.filterRequest;
+        },
         changeKeyWord(state, key) {
             state.keyWord = key;
         },
@@ -115,6 +132,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        setFilterIcon({commit}, state){
+            commit('changeFilterIcon', state);
+        },
         setKeyWord({commit}, state) {
             commit('changeKeyWord', state);
         },
@@ -148,6 +168,15 @@ let store = new Vuex.Store({
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
+
+        async allInputPost({commit}, search){
+            await axios.all([
+                axios.post(searchDiscount, search[0]),
+                axios.post(searchDiscount, search[1]),
+            ]).then(axios.spread((data1, data2) => {
+                commit('receiveSearch', [data1.data, data2.data])
+            }));
+        },
         async getSubscription({commit}, searchSub) {
             const response = await axios.post(searchDiscount, searchSub).catch(error => {
                 console.log(error.response.data.error);
@@ -162,7 +191,7 @@ let store = new Vuex.Store({
             });
             commit('receiveFavorites', response.data)
         },
-        async getDiscountById({commit}, id) {
+        async getDiscountById({commit},id) {
             let url = urlGetDiscountsById;
             url += id;
             const response = await axios.get(url);
@@ -178,6 +207,17 @@ let store = new Vuex.Store({
                 // }
                 console.log(e)
             }
+        },
+
+        async deleteDiscount({commit}, id){
+          try{
+              let url = deleteURL;
+              url += id;
+              const response = await axios.delete(url);
+              console.log(response);
+          }catch (e) {
+              console.log(e)
+          }
         }
     }
 

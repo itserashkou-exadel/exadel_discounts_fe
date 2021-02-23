@@ -9,11 +9,12 @@
                 :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 show-expand
-                :page.sync="page"
                 hide-default-footer
+                :page.sync="page"
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
         >
+
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -28,7 +29,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="closeDelete">{{$t('dtCancel')}}</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{$t('dtOk')}}</v-btn>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm()">{{$t('dtOk')}}</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -45,7 +46,7 @@
                 </v-icon>
                 <v-icon
                         small
-                        @click="deleteItem(item)"
+                        @click="deleteItem(item.id)"
                 >
                     mdi-delete
                 </v-icon>
@@ -56,7 +57,7 @@
                     <v-row class="d-flex justify-end my-5">
                         <v-col cols="1" lg="1" >
                             <v-btn>
-                                <v-icon color="orange">{{icons.icon}}</v-icon>
+                                <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
@@ -68,10 +69,14 @@
                             <p class="mb-0">{{ item.description }}</p>
                         </v-col>
                         <v-col cols="11" lg="11" class="text-center">
-                            <v-btn
-                                    color="primary"
-                                    @click="$router.push({name:'detail'})"
-                            >
+<!--                            <v-btn-->
+<!--                                    color="primary"-->
+<!--                                    @click="$router.push({name:'detail'})"-->
+<!--                            >-->
+                          <v-btn
+                              color="primary"
+                              @click="$router.push({name:'detail',params:{_id:item.id}})"
+                          >
                                 {{$t('dtMoreInfo')}}
                             </v-btn>
                         </v-col>
@@ -84,6 +89,7 @@
                             <v-pagination
                                     v-model="page"
                                     :length="pageCount"
+                                    :total-visible="7"
                                     @input="next"
                             ></v-pagination>
                         </v-col>
@@ -117,6 +123,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            deleteID: null,
             searchWord: '',
             itmPer: [5, 10],
             selectedPages: [],
@@ -161,10 +168,11 @@
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     const arr = [];
+                    this.page = this.$store.state.disPage;
                     this.searchWord = this.$store.state.keyWord;
-                    console.log(this.searchWord)
+                    // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    console.log(this.info)
+                    // console.log(this.info)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -172,8 +180,8 @@
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,
-                                startDate: moment(item.startDate.$date).format('L'),
-                                endDate: moment(item.endDate.$date).format('L'),
+                                startDate: moment(item.startDate).format('L'),
+                                endDate: moment(item.endDate).format('L'),
                                 rating: item.ratingTotal,
                                 description: item.description,
                             }
@@ -181,6 +189,7 @@
 
                     })
                     this.result = arr;
+                    // console.log(this.result);
                     return this.result;
                 }
 
@@ -260,12 +269,12 @@
                 console.log(this.selectedPages)
                 console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
-                // console.log(this.page, this.pageCount);
+                console.log(this.page, this.pageCount);
                     // console.log(this.page,this.pageCount)
+                this.$store.commit('setDisPage', this.page)
+                console.log(this.$store.state.disPage)
                 const goNext = () => {
-                    if(this.selectedPages.indexOf(this.page) === -1){
-                        console.log('Hello')
-                        this.selectedPages.push(this.page);
+                    if(this.$store.state.filterRequest === false){
                         this.nextDiscount(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -279,10 +288,59 @@
                                 "searchLanguage": "Ru"
                             }
                         )
+                    }else{
+                        console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": this.pageCount + 1,
+                                "searchPaginationCountElementPerPage": 5,
+                                "searchLanguage": "Ru",
+                                "searchAdvanced": {
+                                    "companyName": this.$store.state.filtered.vendor,
+                                    "searchDate": {
+                                        "startDate": this.$store.state.filtered.rangeDate[0],
+                                        "endDate": this.$store.state.filtered.rangeDate[1],
+                                    },
+                                    "searchAmountOfDiscount": {
+                                        "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                        "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                    },
+                                    "searchRatingTotal": {
+                                        "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                        "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                    }
+                                }
+                            }
+                        );
                     }
+
                 }
                 this.getToken(goNext)
             },
+
+            deleteDiscount(){
+                let itemID = this.deleteID;
+                const goDelete = () => {
+                    console.log(itemID)
+                    let url = 'https://localhost:9001/api/v1/discounts/delete/';
+                    url += itemID;
+                    axios.delete(url);
+                     this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                     console.log(this.info)
+                }
+                this.getToken(goDelete)
+            },
+
+            showId(id){
+              console.log(id);
+            },
+
             test(){
                 this.inputPost(
                     {
@@ -329,13 +387,12 @@
                     params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
                 });
             },
-            deleteItem(item) {
-                this.editedIndex = this.result.indexOf(item);
-                this.editedItem = Object.assign({}, item);
+            deleteItem(id) {
+                this.deleteID = id;
                 this.dialogDelete = true;
             },
-            deleteItemConfirm() {
-                this.result.splice(this.editedIndex, 1);
+            deleteItemConfirm(id) {
+                this.deleteDiscount(id);
                 this.closeDelete();
             },
             close() {
