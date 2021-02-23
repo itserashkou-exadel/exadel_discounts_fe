@@ -89,6 +89,7 @@
                             <v-pagination
                                     v-model="page"
                                     :length="pageCount"
+                                    :total-visible="7"
                                     @input="next"
                             ></v-pagination>
                         </v-col>

@@ -128,7 +128,7 @@
         // console.log(this.search)
         // console.log(this.$store.state.keyWord ? this.$store.state.filtered.rangeDate[0] : null)
         this.$store.state.discounts = [];
-
+        this.$store.commit('setDisPage', 1)
         const filterSearch = () => {
             console.log('Set to false')
             this.inputPost(
