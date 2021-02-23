@@ -18,7 +18,7 @@
 
                         <v-list-item-group v-model="fictionalSelected">
                             <v-list-item v-bind:key="town" v-for="town in belarus">
-                                <v-list-item-title @click="redirectToMainPage(country = 'Belarus', town)">{{ town }}
+                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Belarus', town)">{{ town }}
                                 </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
@@ -34,7 +34,7 @@
                         </template>
                         <v-list-item-group v-model="realSelected">
                             <v-list-item v-bind:key="town" v-for="town in ukraine">
-                                <v-list-item-title @click="redirectToMainPage(country = 'Ukraine', town)">{{ town }}
+                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Ukraine', town)">{{ town }}
                                 </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
@@ -50,7 +50,7 @@
                         </template>
                         <v-list-item-group v-model="realSelected">
                             <v-list-item v-bind:key="town" v-for="town in lithuania">
-                                <v-list-item-title @click="redirectToMainPage(country = 'Lithuania', town)">{{ town }}
+                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Lithuania', town)">{{ town }}
                                 </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
@@ -66,7 +66,7 @@
                         </template>
                         <v-list-item-group v-model="realSelected">
                             <v-list-item v-bind:key="town" v-for="town in russia">
-                                <v-list-item-title @click="redirectToMainPage(country = 'Russia', town)">{{ town }}
+                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Russia', town)">{{ town }}
                                 </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
@@ -82,7 +82,7 @@
                         </template>
                         <v-list-item-group v-model="realSelected">
                             <v-list-item v-bind:key="town" v-for="town in germany">
-                                <v-list-item-title @click="redirectToMainPage(country = 'Germany', town)">{{ town }}
+                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Germany', town)">{{ town }}
                                 </v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
@@ -98,7 +98,7 @@
                         </template>
                         <v-list-item-group v-model="realSelected">
                             <v-list-item v-bind:key="town" v-for="town in uzbekistan">
-                                <v-list-item-title @click="redirectToMainPage(country = 'Uzbekistan', town)">{{ town
+                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Uzbekistan', town)">{{ town
                                     }}
                                 </v-list-item-title>
                             </v-list-item>
@@ -110,6 +110,7 @@
 
                     <v-btn @click="login()">
                         <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
+                        Login In
                     </v-btn>
                     <v-btn @click="logout()">
                         <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
@@ -161,19 +162,15 @@
             },
 
 
-            redirectToMainPage(country, town) {
+            setUserLocAndLocalStorage(country, town) {
                 this.setUserLocation({
                     country: country,
                     town: town
                 })
-
                 const userLoc = this.$store.getters.getUserLocation
-
                 console.log(userLoc)
-
                 localStorage.setItem('userLoc in LocalStorage: ', JSON.stringify(userLoc))
 
-                //this.login()
                 this.getUser()
 
                 // this.setUserRole({
