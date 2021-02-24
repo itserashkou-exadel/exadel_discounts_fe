@@ -57,7 +57,7 @@
                             "searchDiscountOption": "All",
                             "searchAddressCountry": "Украина",
                             "searchAddressCity": "Винница",
-                            "searchSortFieldOption": "NameDiscount",
+                            "searchSortFieldOption": "RatingDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
                             "searchPaginationCountElementPerPage": 20,

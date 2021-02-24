@@ -6,10 +6,10 @@
             <Cards class="d-md-none"></Cards>
         </v-row>
         <v-row class=" d-none d-md-block">
-            <v-row justify="center" align="center" v-if="this.$store.state.switch === true" >
+            <v-row justify="center" align="center" v-show="this.$store.state.switch === true" >
                 <DataTable/>
             </v-row>
-            <v-row v-if="this.$store.state.switch === false" class="justify-center align-center">
+            <v-row v-show="this.$store.state.switch === false" class="justify-center align-center">
                 <Cards/>
             </v-row>
         </v-row>

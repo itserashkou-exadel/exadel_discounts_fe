@@ -36,7 +36,7 @@
                     </v-dialog>
                 </v-toolbar>
             </template>
-            <template v-slot:item.actions="{ item }">
+            <template v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" v-slot:item.actions="{ item }">
                 <v-icon
                         small
                         class="mr-2"
@@ -165,7 +165,7 @@
 
         }),
         mixins: [token],
-        mounted() {
+        created() {
             const LocalStorage = JSON.parse(window.localStorage.getItem('userLoc in LocalStorage: '));
             console.log(LocalStorage)
             console.log(LocalStorage.country)
@@ -232,6 +232,57 @@
             searchWord: function(){
                 this.selectedPages = [1];
             },
+            itemsPerPage: function(){
+                this.$store.state.discounts = [];
+                const resSearch = () => {
+                    if(this.$store.state.filterRequest === false) {
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "RatingDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 20,
+                                "searchLanguage": "Ru"
+                            }
+                        );
+                    }else{
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 20,
+                                "searchLanguage": "Ru",
+                                "searchAdvanced": {
+                                    "companyName": this.$store.state.filtered.vendor,
+                                    "searchDate": {
+                                        "startDate": this.$store.state.filtered.rangeDate[0],
+                                        "endDate": this.$store.state.filtered.rangeDate[1],
+                                    },
+                                    "searchAmountOfDiscount": {
+                                        "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                        "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                    },
+                                    "searchRatingTotal": {
+                                        "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                        "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                    }
+                                }
+                            }
+                        );
+                    }
+                }
+                this.getToken(resSearch)
+                console.log(this.$store.state.discounts)
+            }
             // result: function(){
             //     console.log('res')
             //     this.selectedPages.push(this.page)
@@ -273,7 +324,7 @@
         methods: {
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             headers() {
-                return [
+                let headerArr = [
                     {
                         text: this.$t('dtOffer'),
                         align: 'left',
@@ -285,8 +336,11 @@
                     {text: this.$t('dtStartDate'), value: 'startDate'},
                     {text: this.$t('dtFinishDate'), value: 'endDate'},
                     {text: this.$t('dtRating'), value: 'rating'},
-                    {text: this.$t('dtActions'), value: 'actions', sortable: false},
-                ]
+                    ];
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee'){
+                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
+                }
+                return headerArr;
             },
             next() {
                 // console.log(this.page, this.pageCount)
@@ -315,7 +369,7 @@
                     }else{
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
                         console.log(this.$store.state.filtered.range)
-                        this.inputPost(
+                        this.nextDiscount(
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
