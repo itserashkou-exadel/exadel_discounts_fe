@@ -1,8 +1,10 @@
 <template>
     <div>
-        <v-container v-if="signFormToggle"  class="d-flex align-center wrapper" fluid>
+        <v-container v-if="signFormToggle" class="d-flex align-center wrapper" fluid>
             <v-card width="500" class="mx-auto ">
-                <v-card-title>Your city is: {{this.$store.state.userLocation.town}}</v-card-title>
+                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">Your city is:
+                    {{this.$store.state.userLocation.town}}
+                </v-card-title>
                 <v-card-text>
                     <v-list-group eager :value="true">
                         <template v-slot:activator>
@@ -112,20 +114,42 @@
                             </v-list-item-group>
                         </v-list-group>
 
+                        <!--            Седьмая группа USA           -->
+                        <v-list-group sub-group no-action>
+                            <template v-slot:activator>
+                                <v-list-item-content>
+                                    <v-list-item-title>USA</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-list-item-group v-model="realSelected">
+                                <v-list-item v-bind:key="town" v-for="town in usa">
+                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'USA', town)">
+                                        {{ town }}
+                                    </v-list-item-title>
+                                </v-list-item>
+                            </v-list-item-group>
+                        </v-list-group>
+
                     </v-list-group>
                     <v-container class="d-flex justify-center">
 
-                        <v-btn @click="login()" :class="{'loginDisabled' : this.$store.state.userLocation.length === 0 }">
-                            <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
-                            Login In
-                        </v-btn>
-                        <v-btn @click="logout()">
-                            <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
-                        </v-btn>
-                        <v-btn @click="getProtectedApiData()">
+                        <v-btn @click="login()"
+                               :disabled="this.$store.state.userLocation.length === 0"
+                        >
+                            Login
                             <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                         </v-btn>
-                        <v-btn @click="deleteLocalStorage">Kick</v-btn>
+
+                                                <v-btn @click="logout()">
+                                                    Logout
+                                                    <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
+                                                </v-btn>
+
+                        <!--                        <v-btn @click="getProtectedApiData()">-->
+                        <!--                            &lt;!&ndash; <router-link to="/home">{{$t('sLogIn')}}</router-link> &ndash;&gt;-->
+                        <!--                        </v-btn>-->
+
+                                                <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>
 
                     </v-container>
 
@@ -134,9 +158,13 @@
         </v-container>
         <v-container v-else class="d-flex align-center wrapper" fluid>
             <v-card width="500" class="mx-auto">
-                <v-card-title>Your location is:</v-card-title>
-                <v-card-subtitle @click="">{{this.$store.state.userLocation}}</v-card-subtitle>
-                <v-btn @click="backToSelectTown">Select city</v-btn>
+                <v-card-title>Your location is: {{this.$store.state.userLocation.town}}</v-card-title>
+                <v-card-text>
+                    If you want change your current location click the button bellow
+                </v-card-text>
+                <v-container class="d-flex justify-center align-center">
+                    <v-btn @click="backToSelectTown">Change Location</v-btn>
+                </v-container>
                 <v-card-text></v-card-text>
             </v-card>
         </v-container>
@@ -151,7 +179,7 @@
     const auth = new AuthService();
 
     export default {
-        name: 'Test2',
+        name: 'Sign',
         data: () => ({
             belarus: ['Grodno', 'Minsk', 'Brest', 'Vitebsk'],
             ukraine: ['Kyiw', 'Kharkiv', 'Lviv', 'Odesa', 'Vinnytsia'],
@@ -160,9 +188,10 @@
             germany: ['Dresden'],
             poland: ['Warsaw', 'Bialystock', 'Szczecin', 'Poznan'],
             uzbekistan: ['Tashkent'],
+            usa: ['Walnut Creek', 'Boulder'],
             fictionalSelected: null,
             realSelected: null,
-            signFormToggle: false
+            signFormToggle: false,
         }),
         methods: {
             ...mapMutations(['setUserLocation']),
@@ -177,7 +206,7 @@
                 localStorage.setItem('key', JSON.stringify(userLoc))
                 console.group('User data')
                 console.log('User location in VueX store: ', this.$store.getters.getUserLocation)
-                console.log('User state data is: ', this.$store.getters.getUserClaims)
+                //console.log('User state data is: ', this.$store.getters.getUserClaims)
                 console.groupEnd()
                 //this.$router.push('/home')
             },
@@ -187,36 +216,30 @@
             logout() {
                 auth.logout();
             },
-            getProtectedApiData() {
-                const authorizationHeader = 'Authorization';
-                auth.getAccessToken().then((userToken) => {
-                    axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-
-                    axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
-                        .then((response) => {
-                            this.dataEventRecordsItems = response.data;
-                        })
-                        .catch((error) => {
-                            alert(error);
-                        });
-                });
-            },
+            // getProtectedApiData() {
+            //     const authorizationHeader = 'Authorization';
+            //     auth.getAccessToken().then((userToken) => {
+            //         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+            //
+            //         axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
+            //             .then((response) => {
+            //                 this.dataEventRecordsItems = response.data;
+            //             })
+            //             .catch((error) => {
+            //                 alert(error);
+            //             });
+            //     });
+            // },
             deleteLocalStorage() {
                 localStorage.clear()
                 this.signFormToggle = false
                 this.$store.state.userLocation = []
+                console.log('User Location: ', this.$store.state.userLocation)
             },
             backToSelectTown() {
                 this.signFormToggle = true
             },
         },
-        computed:{
-            userLocWatcher(){
-                if (this.$store.state.userLocation.length === 0){
-
-                }
-            }
-        }
     };
 </script>
 
@@ -225,8 +248,12 @@
         height: 100vh;
         background: #40BDED;
     }
-    .loginDisabled{
-        display: none;
 
+    .loginDisabled {
+        /*display: none;*/
+    }
+
+    .titleNone {
+        display: none;
     }
 </style>
