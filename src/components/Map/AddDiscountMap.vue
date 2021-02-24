@@ -1,6 +1,6 @@
 <template class="pt-15">
   <div id="addDiscountMap">
-    <MglMap
+    <MglMap id="my"
         :accessToken="accessToken"
         :mapStyle.sync="mapStyle"
         :center="coordinates"
@@ -87,10 +87,16 @@ export default {
 };
 </script>
 <style>
-#map {
-  width: 100vw;
-  height: 100vh;
-}
+/*#map {*/
+/*  width: 100vw;*/
+/*  height: 100vh;*/
+/*}*/
+/*#addDiscountMap {*/
+/*  width: 100vw;*/
+/*}*/
+/*.mgl-map-wrapper .mapboxgl-map {*/
+/*   position: static;*/
+/* }*/
 
 .container {
   padding: 0px;
