@@ -134,9 +134,9 @@
 <!--                    </v-list-group>-->
                     <v-container class="d-flex justify-center">
 
-                        <v-btn @click="login()"
-                               :disabled="this.$store.state.userLocation.length === 0"
-                        >
+                        <v-btn @click="login()">
+<!--                               :disabled="this.$store.state.userLocation.length === 0"-->
+<!--                        >-->
                             Login
                             <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                         </v-btn>
