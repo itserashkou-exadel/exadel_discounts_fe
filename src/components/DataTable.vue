@@ -13,6 +13,7 @@
                 :page.sync="page"
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
+
         >
 
             <template v-slot:top>
@@ -188,7 +189,6 @@
                                 description: item.description,
                             }
                         )
-
                     })
                     this.result = arr;
                     // console.log(this.result);
@@ -287,7 +287,7 @@
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": "Ru"
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         )
                     }else{
@@ -303,7 +303,7 @@
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": "Ru",
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
                                     "searchDate": {
@@ -355,7 +355,7 @@
                         "searchSortOption": "Asc",
                         "searchPaginationPageNumber": 1,
                         "searchPaginationCountElementPerPage": 15,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 )
 
@@ -375,7 +375,7 @@
                         "searchSortOption": "Asc",
                         "searchPaginationPageNumber": 2,
                         "searchPaginationCountElementPerPage": 5,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 )
 

@@ -42,33 +42,33 @@
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderRu'
                                           v-model='vendorRu'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelRu'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorEn'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelEn'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderRu'
                                           v-model='vendorDescrRu'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelRu'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorDescrEn'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelEn'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
@@ -163,11 +163,25 @@
                             ></v-textarea>
                         </v-expand-transition>
                     </div>
-                    <chips-for-tags
+                    <chips-for-tags v-if="$i18n.locale === 'ru'"
                     v-bind:items="tagsRu"
+                    v-bind:icon-show="true"
+                    v-on:tagShow="changeTagShow"
                     />
-                    <chips-for-tags
+                    <chips-for-tags v-if="$i18n.locale === 'en'"
+                                    v-bind:items="tagsEn"
+                                    v-bind:icon-show="true"
+                                    v-on:tagShow="changeTagShow"
+                    />
+                    <chips-for-tags v-if="$i18n.locale === 'ru'"
+                            v-show="tagShowAd"
                             v-bind:items="tagsEn"
+                            v-bind:icon-show="false"
+                    />
+                    <chips-for-tags v-if="$i18n.locale === 'en'"
+                                    v-show="tagShowAd"
+                                    v-bind:items="tagsRu"
+                                    v-bind:icon-show="false"
                     />
                     <v-text-field
                             @keydown.enter="nothing"
@@ -227,10 +241,11 @@
                             @input="selectLine"
                             :rules='nameRules'
                     ></v-text-field>
-                    <div class="mr-10">
+
                         <AddDiscountMap v-bind:address="address"
+
                         :updateCoordinates="updateCoordinates"/>
-                    </div>
+
                     <v-text-field
                             @keydown.enter="nothing"
                             class="mt-10"
@@ -326,6 +341,7 @@
         name: "AddingDiscount",
         data() {
             return {
+                tagShowAd: false,
                 val: true,
                 dialog: false,
                 componentKey: 0,
@@ -371,6 +387,10 @@
         mixins: [token],
         components: {DatePiker, ChooseOfTown, AddDiscountMap, ChipsForTags},
         methods: {
+            changeTagShow (show) {
+
+                this.tagShowAd = show
+            },
             updateCoordinates(lng, lat) {
               this.coordinate2 = lng;
               this.coordinate1 = lat;
@@ -502,7 +522,7 @@
                     ]
                 }}
                     if (this.$i18n.locale === 'en') {
-                        console.log(2)
+
                         return {
                             name: this.titleEn,
                             description: this.descriptionEn,
@@ -664,6 +684,13 @@
                     this.picture = discount.pictureUrl || '';
                 }
             },
+            transformateToTags (arr) {
+                let str = '';
+                str = `${arr.join(', ')}`;
+                //let substr = str.substr(0, str.length-1);
+                const a = str.split(', ');
+                return str
+            },
             transformateToDays(str) {
 
                 if (str[0] === '1') {
@@ -727,10 +754,9 @@
                 }
                 return str
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'inputPost', 'updateDiscount'])
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'nextDiscount'])
         },
-        computed: {...mapGetters(['allDiscounts', 'language', 'allCountries']),
-          },
+        computed: mapGetters(['allDiscounts', 'language', 'allCountries']),
 
         mounted() {
           this.fillingFields();
@@ -738,8 +764,11 @@
     }
 </script>
 <style scoped>
+    /*div > canvas {*/
+    /*    width: 100% !important;*/
+    /*}*/
     #addDiscountMap {
-        width: 32vw;
+        /*width: 32vw;*/
         height: 49vh;
     }
 </style>
