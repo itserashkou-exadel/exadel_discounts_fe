@@ -39,7 +39,7 @@
           ...mapGetters(['allCountries'])
         },
         mixins: [token],
-       props: ['selectCountry', 'selectCity'],
+        props: ['selectCountry', 'selectCity'],
         methods: {
             selectCountryHandler(value){
                 this.$emit('selectedCountryForObj', value);

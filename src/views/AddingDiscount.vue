@@ -321,6 +321,9 @@
                     >{{$t('adCancel')}}
                     </v-btn>
                 </v-col>
+                <Promocodes
+                v-bind:item1="promo1"
+                v-bind:item2="promo2"/>
             </v-row>
         </v-form>
     </v-container>
@@ -335,12 +338,15 @@
     import DatePiker from "@/components/DatePiker";
     import axios from "axios";
     import ChipsForTags from "@/components/ChipsForTags";
+    import Promocodes from "@/components/Promocodes";
 
 
     export default {
         name: "AddingDiscount",
         data() {
             return {
+                promo1: 0,
+                promo2: 0,
                 tagShowAd: false,
                 val: true,
                 dialog: false,
@@ -385,7 +391,7 @@
             }
         },
         mixins: [token],
-        components: {DatePiker, ChooseOfTown, AddDiscountMap, ChipsForTags},
+        components: {DatePiker, ChooseOfTown, AddDiscountMap, ChipsForTags, Promocodes},
         methods: {
             changeTagShow (show) {
 
