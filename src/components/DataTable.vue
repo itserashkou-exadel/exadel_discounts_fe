@@ -165,6 +165,28 @@
 
         }),
         mixins: [token],
+        mounted() {
+            const LocalStorage = JSON.parse(window.localStorage.getItem('userLoc in LocalStorage: '));
+            console.log(LocalStorage)
+            console.log(LocalStorage.country)
+            console.log(LocalStorage.town)
+            const resSearch = () => {
+                this.inputPost(
+                    {
+                        "searchText": null,
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Беларусь",
+                        "searchAddressCity": "Минск",
+                        "searchSortFieldOption": "RatingDiscount",
+                        "searchSortOption": "Desc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 20,
+                        "searchLanguage": "Ru"
+                    }
+                );
+            }
+            this.getToken(resSearch)
+        },
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
@@ -272,7 +294,7 @@
                 // console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
                 // console.log(this.page, this.pageCount);
-                    // console.log(this.page,this.pageCount)
+                //     console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
                 const goNext = () => {
@@ -382,7 +404,7 @@
                 console.log(this.$store.state.discounts)
             },
             showSelect() {
-                console.log(this.$store.state.itemsPerPage);
+
             },
             editItem(item) {
                 this.$router.push({
