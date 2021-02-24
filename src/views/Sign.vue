@@ -114,11 +114,28 @@
                             </v-list-item-group>
                         </v-list-group>
 
+                        <!--            Седьмая группа USA           -->
+                        <v-list-group sub-group no-action>
+                            <template v-slot:activator>
+                                <v-list-item-content>
+                                    <v-list-item-title>USA</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-list-item-group v-model="realSelected">
+                                <v-list-item v-bind:key="town" v-for="town in usa">
+                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'USA', town)">
+                                        {{ town }}
+                                    </v-list-item-title>
+                                </v-list-item>
+                            </v-list-item-group>
+                        </v-list-group>
+
                     </v-list-group>
                     <v-container class="d-flex justify-center">
 
                         <v-btn @click="login()"
-                               :class="{'loginDisabled' : this.$store.state.userLocation.length === 0 }">
+                               :disabled="this.$store.state.userLocation.length === 0"
+                        >
                             <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                             Login In
                         </v-btn>
@@ -158,10 +175,7 @@
     const auth = new AuthService();
 
     export default {
-        name: 'Test2',
-        mounted() {
-            console.log('User Location (MOUNTED): ', this.$store.state.userLocation)
-        },
+        name: 'Sign',
         data: () => ({
             belarus: ['Grodno', 'Minsk', 'Brest', 'Vitebsk'],
             ukraine: ['Kyiw', 'Kharkiv', 'Lviv', 'Odesa', 'Vinnytsia'],
@@ -170,9 +184,10 @@
             germany: ['Dresden'],
             poland: ['Warsaw', 'Bialystock', 'Szczecin', 'Poznan'],
             uzbekistan: ['Tashkent'],
+            usa: ['Walnut Creek', 'Boulder'],
             fictionalSelected: null,
             realSelected: null,
-            signFormToggle: false
+            signFormToggle: false,
         }),
         methods: {
             ...mapMutations(['setUserLocation']),
@@ -229,9 +244,11 @@
         height: 100vh;
         background: #40BDED;
     }
+
     .loginDisabled {
-        display: none;
+        /*display: none;*/
     }
+
     .titleNone {
         display: none;
     }
