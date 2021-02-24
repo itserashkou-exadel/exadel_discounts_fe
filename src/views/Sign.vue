@@ -2,7 +2,7 @@
     <div>
         <v-container v-if="signFormToggle" class="d-flex align-center wrapper" fluid>
             <v-card width="500" class="mx-auto ">
-                <v-card-title :class="{'loginDisabled' : this.$store.state.userLocation.length === 0 }">Your city is:
+                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">Your city is:
                     {{this.$store.state.userLocation.town}}
                 </v-card-title>
                 <v-card-text>
@@ -229,8 +229,10 @@
         height: 100vh;
         background: #40BDED;
     }
-
     .loginDisabled {
+        display: none;
+    }
+    .titleNone {
         display: none;
     }
 </style>
