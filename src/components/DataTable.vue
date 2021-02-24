@@ -386,7 +386,7 @@
             },
             editItem(item) {
                 this.$router.push({
-                    name: 'add_discount',
+                    name: 'editingDetails',
                     params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
                 });
             },

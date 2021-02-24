@@ -73,6 +73,18 @@ const router = new VueRouter({
             component: AppTemplate,
             children: [
                 {
+                    path: '/editing/:idOfDiscount',
+                    name: 'editingDetails',
+                    component: AddingDiscount,
+                    props: true
+                }]
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: AppTemplate,
+            children: [
+                {
                     path: '/add_discount',
                     name: 'add_discount',
                     component: AddingDiscount,
