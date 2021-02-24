@@ -136,16 +136,20 @@
                         <v-btn @click="login()"
                                :disabled="this.$store.state.userLocation.length === 0"
                         >
-                            <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
-                            Login In
-                        </v-btn>
-                        <v-btn @click="logout()">
+                            Login
                             <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                         </v-btn>
+
+                                                <v-btn @click="logout()">
+                                                    Logout
+                                                    <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
+                                                </v-btn>
+
                         <!--                        <v-btn @click="getProtectedApiData()">-->
                         <!--                            &lt;!&ndash; <router-link to="/home">{{$t('sLogIn')}}</router-link> &ndash;&gt;-->
                         <!--                        </v-btn>-->
-                        <v-btn @click="deleteLocalStorage">Kick</v-btn>
+
+                                                <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>
 
                     </v-container>
 
@@ -229,7 +233,7 @@
             deleteLocalStorage() {
                 localStorage.clear()
                 this.signFormToggle = false
-                //this.$store.state.userLocation = []
+                this.$store.state.userLocation = []
                 console.log('User Location: ', this.$store.state.userLocation)
             },
             backToSelectTown() {
