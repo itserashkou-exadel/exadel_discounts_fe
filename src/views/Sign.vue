@@ -9,19 +9,23 @@
                     <ChooseOfTown
                             v-on:selectedCountryForObj="getUserCounty"
                             v-on:selectedCityForObj="getUserCity"
+                            class="mt-10"
                     />
-                    <v-container class="d-flex justify-center">
+                    <v-container
+                            class="d-flex justify-center mb-5"
+                    >
                         <v-btn @click="this.setUserLocAndLocalStorage"
                                :disabled="this.selectedCountry === '' && this.selectedCity === ''"
+                               block
                         >
                             Login
                         </v-btn>
 
-                        <v-btn @click="logout()">
-                            Logout
-                        </v-btn>
+<!--                        <v-btn @click="logout()">-->
+<!--                            Logout-->
+<!--                        </v-btn>-->
 
-                        <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>
+<!--                        <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>-->
 
                     </v-container>
 
@@ -30,7 +34,6 @@
         </v-container>
         <v-container v-else class="d-flex align-center wrapper" fluid>
             <v-card width="500" class="mx-auto">
-                <v-card-title>Your location is: {{this.$store.state.userLocation.town}}</v-card-title>
                 <v-card-text>
                     {{$t('sChooseLocation')}}
                 </v-card-text>
