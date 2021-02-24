@@ -4,9 +4,14 @@
       <v-row class="mt-1">
         <v-col cols="12">
           <v-card max-width="100%" class="d-none mt-n7 d-md-block" style="position:relative">
+<!--            <v-img-->
+<!--                max-height="50vh"-->
+<!--                src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
+<!--                class="d-flex"-->
+<!--            >-->
             <v-img
-                max-height="50vh"
-                src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"
+                max-height="70vh"
+                :src="pictureCheck(info.pictureUrl)"
                 class="d-flex"
             >
               <v-icon class="ml-6 mt-4" large color="blue">
@@ -63,9 +68,14 @@
             </v-row>
           </v-card>
           <v-card max-width="100%" class="d-md-none">
+<!--            <v-img-->
+<!--                max-height="70vh"-->
+<!--                src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
+<!--                class="d-flex"-->
+<!--            >-->
             <v-img
                 max-height="70vh"
-                src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"
+                :src="pictureCheck(info.pictureUrl)"
                 class="d-flex"
             >
               <v-icon class="ml-6 mt-4" large color="blue">
@@ -158,7 +168,6 @@ import paginationMixin from '@/mixins/token.mixin'
 
 
 
-
 const auth = new AuthService();
 const moment = require('moment')
 export default {
@@ -178,6 +187,14 @@ export default {
   },
 
   methods: {
+    pictureCheck(url){
+      console.log(url)
+      if(url === false)
+        return "../../public/cat_404.jpg.jpg"
+      else
+          // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        return url
+    },
     ...mapActions(['getDiscountById']),
     detailView: function () {
       let self = this;
