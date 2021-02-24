@@ -228,8 +228,6 @@
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
-                            v-bind:selectCity="selectCity"
-                            v-bind:selectCountry="selectCountry"
                             v-on:selectedCountryForObj='selCountry'
                             v-on:selectedCityForObj='selCity'
                     />
@@ -418,9 +416,11 @@
             },
             selCountry: function (country) {
                 this.selectedCountry = country
+                this.address.country = country
             },
             selCity: function (city) {
                 this.selectedCity = city
+                this.address.city = city
             },
             selectedDateStart: function (dateStart) {
                 this.dateStart = dateStart
@@ -622,12 +622,12 @@
             selectLine(value) {
                 this.address.line = value;
             },
-            selectCountry(value) {
-                this.address.country = value;
-            },
-            selectCity(value) {
-                this.address.city = value;
-            },
+            // selectCountry(value) {
+            //     this.address.country = value;
+            // },
+            // selectCity(value) {
+            //     this.address.city = value;
+            // },
             titleOfPage() {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
                     return this.$tc('adEditingNewDiscount', 2)
