@@ -1,41 +1,16 @@
  <template>
-    <div class="my">
-        <div class="d-flex overflow-y-auto">
-            <div class="my wrap"
-                    v-for="(selection, i) in items"
-                    :key="i"
-            >
-                <v-chip class="mr-2"
-                        color="green"
-                        close
-                        @click:close="deleteItem"
-                >
-                    {{ selection}}
-                </v-chip>
-            </div>
-        </div>
-        <div class="d-flex">
-        <v-text-field :label='chooseOrder()'
+        <v-text-field :label='рррр'
                       @keydown.enter="nothing"
+
         ></v-text-field>
-        <v-icon
-                v-show="iconShow"
-                large
-                color="orange darken-2"
-                @click="changeTagShow"
-        >
-            mdi-arrow-down-bold-box-outline
-        </v-icon>
-        </div>
-    </div>
+
 </template>
 
 <script>
-
     export default {
-        name: "ChipsForTags",
+        name: "Promocodes",
         data: () => ({
-                tagShow: false
+
             }
         ),
         props: ['items', 'iconShow'],
@@ -66,7 +41,5 @@
 </script>
 
 <style scoped>
-    .my {
-        break-inside: auto;
-    }
+
 </style>
