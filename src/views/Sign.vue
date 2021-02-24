@@ -87,9 +87,8 @@
                 localStorage.setItem('key', JSON.stringify(userLoc))
                 console.group('User data')
                 console.log('User location in VueX store: ', this.$store.getters.getUserLocation)
-                //console.log('User state data is: ', this.$store.getters.getUserClaims)
                 console.groupEnd()
-                //this.$router.push('/home')
+                this.$router.push('/home')
             },
             login() {
                 auth.login();
@@ -142,8 +141,9 @@
         },
         mixins: [token],
         mounted() {
+            let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
             //Берем списаок стран с бэка и оложим в стор
-            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/ru/countries`)
+            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`)
             this.getUser2()
         },
         watch: {

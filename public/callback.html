@@ -14,8 +14,10 @@
     }).signinRedirectCallback().then(function (user) {
         console.log("signin response success", user);
         if (localStorage.getItem('key')) {
+            console.log(localStorage.getItem('key'))
             window.location.href = '../home';
         } else {
+            console.log(localStorage.getItem('key'))
             window.location.href = '../location';
         }
     }).catch(function (err) {
