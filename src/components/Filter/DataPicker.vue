@@ -47,9 +47,8 @@
 
 <script>
     import {mapActions} from "vuex";
-
+    const moment = require('moment')
     export default {
-
         name: "DataPicker",
         data: () => ({
             date: new Date().toISOString().substr(0, 10),
@@ -60,9 +59,12 @@
         methods: {
             ...mapActions(['changeFilter']),
             saveData(){
+                let rangeData = [];
+                rangeData.push(moment(this.date[0]).format())
+                rangeData.push(moment(this.date[1]).format())
                 this.changeFilter({
                     ...this.$store.getters.getFilterData,
-                    rangeDate: this.date
+                    rangeDate: rangeData
                 });
                 console.log(this.$store.getters.getFilterData)
             },
