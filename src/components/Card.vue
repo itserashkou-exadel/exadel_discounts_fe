@@ -143,7 +143,7 @@
             pictureCheck(url){
               console.log(url)
               if(url === false)
-                return "../../public/54.jpg"
+                return "../../public/cat_404.jpg"
               else
                 // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
                   return url
