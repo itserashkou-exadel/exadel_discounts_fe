@@ -6,149 +6,20 @@
                     {{this.$store.state.userLocation.town}}
                 </v-card-title>
                 <v-card-text>
-                    <ChooseOfTown/>
-<!--                    <v-list-group eager :value="true">-->
-<!--                        <template v-slot:activator>-->
-<!--                            <v-list-item-title>{{$t('sChooseLocation')}}</v-list-item-title>-->
-<!--                        </template>-->
-
-                        <!--            Первая группа Belarus            -->
-                        <!--                        <v-list-group no-action sub-group v-for="country in countriesAndCities()">-->
-                        <!--                            <template v-slot:activator>-->
-                        <!--                                <v-list-item-content>-->
-                        <!--                                    <v-list-item-title>{{country.Беларусь}}</v-list-item-title>-->
-                        <!--                                </v-list-item-content>-->
-                        <!--                            </template>-->
-
-                        <!--                            <v-list-item-group v-model="fictionalSelected">-->
-                        <!--                                <v-list-item v-bind:key="town" v-for="town in country">-->
-                        <!--                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = country, town)">{{-->
-                        <!--                                        town }}-->
-                        <!--                                    </v-list-item-title>-->
-                        <!--                                </v-list-item>-->
-                        <!--                            </v-list-item-group>-->
-                        <!--                        </v-list-group>-->
-
-                        <!--                        <v-divider></v-divider>-->
-                        <!--            Вторая группа Ukraine           -->
-                        <!--                        <v-list-group sub-group no-action>-->
-                        <!--                            <template v-slot:activator>-->
-                        <!--                                <v-list-item-content>-->
-                        <!--                                    <v-list-item-title>Ukraine</v-list-item-title>-->
-                        <!--                                </v-list-item-content>-->
-                        <!--                            </template>-->
-                        <!--                            <v-list-item-group v-model="realSelected">-->
-                        <!--                                <v-list-item v-bind:key="town" v-for="town in ukraine">-->
-                        <!--                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Ukraine', town)">{{-->
-                        <!--                                        town }}-->
-                        <!--                                    </v-list-item-title>-->
-                        <!--                                </v-list-item>-->
-                        <!--                            </v-list-item-group>-->
-                        <!--                        </v-list-group>-->
-
-                        <!--                        <v-divider></v-divider>-->
-                        <!--                        &lt;!&ndash;            Третья группа Lithuania           &ndash;&gt;-->
-                        <!--                        <v-list-group sub-group no-action>-->
-                        <!--                            <template v-slot:activator>-->
-                        <!--                                <v-list-item-content>-->
-                        <!--                                    <v-list-item-title>Lithuania</v-list-item-title>-->
-                        <!--                                </v-list-item-content>-->
-                        <!--                            </template>-->
-                        <!--                            <v-list-item-group v-model="realSelected">-->
-                        <!--                                <v-list-item v-bind:key="town" v-for="town in lithuania">-->
-                        <!--                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Lithuania', town)">-->
-                        <!--                                        {{ town }}-->
-                        <!--                                    </v-list-item-title>-->
-                        <!--                                </v-list-item>-->
-                        <!--                            </v-list-item-group>-->
-                        <!--                        </v-list-group>-->
-
-                        <!--                        <v-divider></v-divider>-->
-                        <!--                        &lt;!&ndash;            Четвертая группа Russia           &ndash;&gt;-->
-                        <!--                        <v-list-group sub-group no-action>-->
-                        <!--                            <template v-slot:activator>-->
-                        <!--                                <v-list-item-content>-->
-                        <!--                                    <v-list-item-title>Russia</v-list-item-title>-->
-                        <!--                                </v-list-item-content>-->
-                        <!--                            </template>-->
-                        <!--                            <v-list-item-group v-model="realSelected">-->
-                        <!--                                <v-list-item v-bind:key="town" v-for="town in russia">-->
-                        <!--                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Russia', town)">{{-->
-                        <!--                                        town }}-->
-                        <!--                                    </v-list-item-title>-->
-                        <!--                                </v-list-item>-->
-                        <!--                            </v-list-item-group>-->
-                        <!--                        </v-list-group>-->
-
-                        <!--                        <v-divider></v-divider>-->
-                        <!--                        &lt;!&ndash;            Пятая группа Germany           &ndash;&gt;-->
-                        <!--                        <v-list-group sub-group no-action>-->
-                        <!--                            <template v-slot:activator>-->
-                        <!--                                <v-list-item-content>-->
-                        <!--                                    <v-list-item-title>Germany</v-list-item-title>-->
-                        <!--                                </v-list-item-content>-->
-                        <!--                            </template>-->
-                        <!--                            <v-list-item-group v-model="realSelected">-->
-                        <!--                                <v-list-item v-bind:key="town" v-for="town in germany">-->
-                        <!--                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Germany', town)">{{-->
-                        <!--                                        town }}-->
-                        <!--                                    </v-list-item-title>-->
-                        <!--                                </v-list-item>-->
-                        <!--                            </v-list-item-group>-->
-                        <!--                        </v-list-group>-->
-
-                        <!--                        <v-divider></v-divider>-->
-                        <!--                        &lt;!&ndash;            Шестая группа Uzbekistan           &ndash;&gt;-->
-                        <!--                        <v-list-group sub-group no-action>-->
-                        <!--                            <template v-slot:activator>-->
-                        <!--                                <v-list-item-content>-->
-                        <!--                                    <v-list-item-title>Uzbekistan</v-list-item-title>-->
-                        <!--                                </v-list-item-content>-->
-                        <!--                            </template>-->
-                        <!--                            <v-list-item-group v-model="realSelected">-->
-                        <!--                                <v-list-item v-bind:key="town" v-for="town in uzbekistan">-->
-                        <!--                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Uzbekistan', town)">-->
-                        <!--                                        {{ town-->
-                        <!--                                        }}-->
-                        <!--                                    </v-list-item-title>-->
-                        <!--                                </v-list-item>-->
-                        <!--                            </v-list-item-group>-->
-                        <!--                        </v-list-group>-->
-
-                        <!--                        &lt;!&ndash;            Седьмая группа USA           &ndash;&gt;-->
-                        <!--                        <v-list-group sub-group no-action>-->
-                        <!--                            <template v-slot:activator>-->
-                        <!--                                <v-list-item-content>-->
-                        <!--                                    <v-list-item-title>USA</v-list-item-title>-->
-                        <!--                                </v-list-item-content>-->
-                        <!--                            </template>-->
-                        <!--                            <v-list-item-group v-model="realSelected">-->
-                        <!--                                <v-list-item v-bind:key="town" v-for="town in usa">-->
-                        <!--                                    <v-list-item-title @click="setUserLocAndLocalStorage(country = 'USA', town)">-->
-                        <!--                                        {{ town }}-->
-                        <!--                                    </v-list-item-title>-->
-                        <!--                                </v-list-item>-->
-                        <!--                            </v-list-item-group>-->
-                        <!--                        </v-list-group>-->
-
-<!--                    </v-list-group>-->
+                    <ChooseOfTown
+                            v-on:selectedCountryForObj="getUserCounty"
+                            v-on:selectedCityForObj="getUserCity"
+                    />
                     <v-container class="d-flex justify-center">
-
-                        <v-btn @click="login()"
-                               :disabled="this.$store.state.userLocation.length === 0"
+                        <v-btn @click="this.setUserLocAndLocalStorage"
+                               :disabled="this.selectedCountry === '' && this.selectedCity === ''"
                         >
                             Login
-                            <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                         </v-btn>
 
                         <v-btn @click="logout()">
                             Logout
-                            <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
                         </v-btn>
-
-                        <!--                        <v-btn @click="getProtectedApiData()">-->
-                        <!--                            &lt;!&ndash; <router-link to="/home">{{$t('sLogIn')}}</router-link> &ndash;&gt;-->
-                        <!--                        </v-btn>-->
 
                         <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>
 
@@ -190,6 +61,7 @@
     import {mapMutations, mapActions} from 'vuex'
     import ChooseOfTown from "@/components/ChooseOfTown";
     import token from '@/mixins/token.mixin'
+
     const auth = new AuthService();
 
     export default {
@@ -198,41 +70,20 @@
         data: () => ({
             language: 'ru',
             items: ['ru', 'en'],
-            // belarus: ['Grodno', 'Minsk', 'Brest', 'Vitebsk'],
-            // ukraine: ['Kyiw', 'Kharkiv', 'Lviv', 'Odesa', 'Vinnytsia'],
-            // lithuania: ['Klaipeda', 'Vilnius'],
-            // russia: ['Chelyabinsk', 'Ekaterinburg'],
-            // germany: ['Dresden'],
-            // poland: ['Warsaw', 'Bialystock', 'Szczecin', 'Poznan'],
-            // uzbekistan: ['Tashkent'],
-            // usa: ['Walnut Creek', 'Boulder'],
-            fictionalSelected: null,
-            realSelected: null,
+            selectedCountry: '',
+            selectedCity: '',
             signFormToggle: false,
+            userClaimsLocalData: [],
         }),
         methods: {
-            countriesAndCities() {
-                if (this.$i18n.locale === 'ru') {
-                    return
-                    [["Гродно", "Минск", "Брест", "Витебск"],
-                        ["Киев", "Харьков", "Львов", "Одесса", "Винница"]]
-                }
-                // if (this.$i18n.locale === 'en') {
-                //     return {
-                //         belarus: ['Grodno', 'Minsk', 'Brest', 'Vitebsk'],
-                //         ukraine: ['Kyiw', 'Kharkiv', 'Lviv', 'Odesa', 'Vinnytsia'],
-                //     }
-                // }
-            },
-            ...mapMutations(['setUserLocation', 'setLanguage']),
-            setUserLocAndLocalStorage(country, town) {
+            ...mapMutations(['setUserLocation', 'setLanguage', 'setUserClaims']),
+            setUserLocAndLocalStorage() {
                 this.setUserLocation({
-                    country: country,
-                    town: town
+                    country: this.selectedCountry,
+                    town: this.selectedCity
                 })
 
                 const userLoc = this.$store.getters.getUserLocation
-                console.log(userLoc)
                 localStorage.setItem('key', JSON.stringify(userLoc))
                 console.group('User data')
                 console.log('User location in VueX store: ', this.$store.getters.getUserLocation)
@@ -269,12 +120,31 @@
             backToSelectTown() {
                 this.signFormToggle = true
             },
+            getUserCounty(country) {
+                this.selectedCountry = country
+            },
+            getUserCity(city) {
+                this.selectedCity = city
+            },
+            async getUser2() {
+                const result = await auth.getUser()
+                console.log(result)
+                this.userClaimsLocalData = result
+
+                this.setUserClaims({
+                    name: result.profile.name,
+                    surname: result.profile.surname,
+                    role: result.profile.role
+                })
+                console.log('USER_CLAIMS_STORE_DATA: ', this.$store.getters.getUserClaims)
+            },
             ...mapActions(['goFetchForCountries'])
         },
         mixins: [token],
         mounted() {
+            //Берем списаок стран с бэка и оложим в стор
             this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/ru/countries`)
-
+            this.getUser2()
         },
         watch: {
             language() {
