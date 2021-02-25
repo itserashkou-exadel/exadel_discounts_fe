@@ -89,7 +89,7 @@
           <v-btn @click="$router.push({name:'detail',params:{_id:description.id}})" color="blue" raised>
                 Choose
             </v-btn>
-            <div class="mr-12">
+            <div v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" class="mr-12">
                 <v-icon @click="editItem(description)">
                     mdi-pencil
                 </v-icon>

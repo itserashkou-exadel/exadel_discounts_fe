@@ -131,6 +131,7 @@
         this.$store.commit('setDisPage', 1)
         const filterSearch = () => {
             console.log('Set to false')
+            console.log(this.$store.state.filtered.rangeDate[0], this.$store.state.filtered.rangeDate[1])
             this.inputPost(
                 {
                     "searchText": this.$store.state.keyWord,
@@ -145,23 +146,24 @@
                     "searchAdvanced": {
                         "companyName": this.$store.state.filtered.vendor,
                         "searchDate": {
-                            "startDate": this.$store.state.filtered.rangeDate[0],
-                            "endDate": this.$store.state.filtered.rangeDate[1],
+                            "searchStartDate": this.$store.state.filtered.rangeDate[0],
+                            "searchEndDate": this.$store.state.filtered.rangeDate[1]
                         },
                         "searchAmountOfDiscount": {
                             "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
-                            "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                            "searchAmountOfDiscountMax": this.$store.state.filtered.range[1]
                         },
                         "searchRatingTotal": {
                             "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
-                            "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                            "searchRatingTotalMax": this.$store.state.filtered.starRange[1]
                         }
                     }
                 }
             );
+
         }
         this.getToken(filterSearch)
-        this.dialog = true;
+        this.dialog = false;
         // this.$store.commit('changeFilterRequest');
         console.log(this.$store.state.filterRequest)
         console.log(this.$store.state.discounts)
@@ -173,8 +175,8 @@
         // this.$store.state.filtered.vendor === null ? this.$store.state.filtered.vendor : null;
         // "startDate": this.$store.state.filtered.rangeDate[0] === null ? this.$store.state.filtered.rangeDate[0] : null,
         //     "endDate": this.$store.state.filtered.rangeDate[1] === null ? this.$store.state.filtered.rangeDate[1] : null,
-        let res = this.$store.state.filtered.vendor === null ? 'I have this field' : 'Empty';
-        console.log(res)
+        // let res = this.$store.state.filtered.vendor === null ? 'I have this field' : 'Empty';
+        console.log(this.$store.state.discounts)
     }
     }
     }

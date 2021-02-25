@@ -2,14 +2,14 @@
     <v-container fill-height>
         <router-view/>
         <ToolBar/>
-        <v-row v-if="windowInnerWidth<=900">
-            <Cards/>
+        <v-row>
+            <Cards class="d-md-none"></Cards>
         </v-row>
-        <v-row v-else>
-            <v-row v-if="this.$store.state.switch === true" class="justify-center align-center">
+        <v-row class=" d-none d-md-block">
+            <v-row justify="center" align="center" v-show="this.$store.state.switch === true" >
                 <DataTable/>
             </v-row>
-            <v-row v-if="this.$store.state.switch === false" class="justify-center align-center">
+            <v-row v-show="this.$store.state.switch === false" class="justify-center align-center">
                 <Cards/>
             </v-row>
         </v-row>

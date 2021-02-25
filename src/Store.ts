@@ -97,7 +97,7 @@ let store = new Vuex.Store({
         },
         receiveSearch(state, dis) {
             // @ts-ignore
-            state.discounts.push(...dis);
+            state.discounts = dis;
         },
 
         addNextDis(state, nextDis){
