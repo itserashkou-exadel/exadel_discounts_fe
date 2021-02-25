@@ -38,7 +38,7 @@
                     {{$t('sChooseLocation')}}
                 </v-card-text>
                 <v-container class="d-flex justify-center align-center">
-                    <v-btn @click="backToSelectTown">Change Location</v-btn>
+                    <v-btn @click="backToSelectTown">{{$t('sButtonChangeLocation')}}</v-btn>
                 </v-container>
                 <v-container>
                     <v-row>
@@ -99,20 +99,6 @@
             logout() {
                 auth.logout();
             },
-            // getProtectedApiData() {
-            //     const authorizationHeader = 'Authorization';
-            //     auth.getAccessToken().then((userToken) => {
-            //         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-            //
-            //         axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
-            //             .then((response) => {
-            //                 this.dataEventRecordsItems = response.data;
-            //             })
-            //             .catch((error) => {
-            //                 alert(error);
-            //             });
-            //     });
-            // },
             deleteLocalStorage() {
                 localStorage.clear()
                 this.signFormToggle = false
@@ -144,26 +130,30 @@
         },
         mixins: [token],
         mounted() {
+            const getCountries = () => {
             let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
             //Берем списаок стран с бэка и оложим в стор
-            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`)
+            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
+            this.getToken(getCountries)
             this.getUser2()
         },
         watch: {
             language() {
-                console.log(this.language)
+
                 if (this.language === 'ru') {
                     this.setLanguage(true);
                     import(`../langs/ru.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('ru', msg);
                         this.$i18n.locale = 'ru';
                     })
+                    this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/ru/countries`);
                 } else {
                     this.setLanguage(false);
                     import(`../langs/en.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('en', msg);
                         this.$i18n.locale = 'en';
                     })
+                    this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/en/countries`);
                 }
             }
         },
