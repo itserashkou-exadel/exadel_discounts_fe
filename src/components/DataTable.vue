@@ -167,13 +167,15 @@
         }),
         mixins: [token],
         created() {
+            const localStorage = JSON.parse(window.localStorage.getItem('key'));
+            this.$store.commit('setUserLocation', localStorage)
             const resSearch = () => {
                 this.inputPost(
                     {
                         "searchText": null,
                         "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Винница",
+                        "searchAddressCountry": localStorage.country,
+                        "searchAddressCity": localStorage.town,
                         "searchSortFieldOption": "RatingDiscount",
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
@@ -232,14 +234,15 @@
                 this.$store.state.discounts = [];
                 const resSearch = () => {
                     if(this.$store.state.filterRequest === false) {
+                        console.log(this.$store.state.userLocation.country, this.$store.state.userLocation.town);
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "RatingDiscount",
-                                "searchSortOption": "Asc",
+                                "searchSortOption": "Desc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": "Ru"
@@ -250,8 +253,8 @@
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
@@ -353,8 +356,8 @@
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "RatingDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
@@ -369,8 +372,8 @@
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
