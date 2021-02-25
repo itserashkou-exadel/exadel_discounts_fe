@@ -100,7 +100,7 @@
                             <v-select v-if="page === 1"
                                     v-model="itemsPerPage"
                                     :items="itmPer"
-                                      @click="showSelect"
+                                     @click="showSelect"
                                     label="items per page"
                                     dense
                                     solo
