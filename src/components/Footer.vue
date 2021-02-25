@@ -32,7 +32,7 @@ export default {
   name: "Footer",
   data() {
     return {
-      isRuLocale: true
+      isRuLocale: this.$i18n.locale === 'ru' ? true : false
     }
   },
   mixins: [token],

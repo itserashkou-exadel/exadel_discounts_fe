@@ -14,10 +14,10 @@
             </v-icon>
         </v-col>
 
-        <v-col v-if="windowInnerWidth>=900" cols="4" lg="2" md="2" sm="3" class="d-flex justify-center">
+        <v-col cols="4" lg="2" md="2" sm="3" class="justify-center d-none d-md-block">
             <SwitchButton></SwitchButton>
         </v-col>
-        <v-col cols="3" lg="2" md="2" sm="2">
+        <v-col v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" cols="3" lg="2" md="2" sm="2">
                     <v-btn
                             color="primary"
                             dark
@@ -70,8 +70,8 @@
                             "searchDiscountOption": "All",
                             "searchAddressCountry": "Украина",
                             "searchAddressCity": "Винница",
-                            "searchSortFieldOption": "NameDiscount",
-                            "searchSortOption": "Asc",
+                            "searchSortFieldOption": "RatingDiscount",
+                            "searchSortOption": "Desc",
                             "searchPaginationPageNumber": 1,
                             "searchPaginationCountElementPerPage": 20,
                             "searchLanguage": "Ru"

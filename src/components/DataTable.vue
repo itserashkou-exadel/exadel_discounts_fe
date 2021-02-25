@@ -37,7 +37,7 @@
                     </v-dialog>
                 </v-toolbar>
             </template>
-            <template v-slot:item.actions="{ item }">
+            <template v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" v-slot:item.actions="{ item }">
                 <v-icon
                         small
                         class="mr-2"
@@ -166,6 +166,28 @@
 
         }),
         mixins: [token],
+        created() {
+            const LocalStorage = JSON.parse(window.localStorage.getItem('userLoc in LocalStorage: '));
+            console.log(LocalStorage)
+            console.log(LocalStorage.country)
+            console.log(LocalStorage.town)
+            const resSearch = () => {
+                this.inputPost(
+                    {
+                        "searchText": null,
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Винница",
+                        "searchSortFieldOption": "RatingDiscount",
+                        "searchSortOption": "Desc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 20,
+                        "searchLanguage": "Ru"
+                    }
+                );
+            }
+            this.getToken(resSearch)
+        },
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
@@ -183,8 +205,8 @@
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,
-                                startDate: moment(item.startDate).format('L'),
-                                endDate: moment(item.endDate).format('L'),
+                                startDate: moment(item.startDate).format('DD-MM-YYYY'),
+                                endDate: moment(item.endDate).format('DD-MM-YYYY'),
                                 rating: item.ratingTotal,
                                 description: item.description,
                             }
@@ -210,6 +232,57 @@
             searchWord: function(){
                 this.selectedPages = [1];
             },
+            itemsPerPage: function(){
+                this.$store.state.discounts = [];
+                const resSearch = () => {
+                    if(this.$store.state.filterRequest === false) {
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "RatingDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 20,
+                                "searchLanguage": "Ru"
+                            }
+                        );
+                    }else{
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": "Украина",
+                                "searchAddressCity": "Винница",
+                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 20,
+                                "searchLanguage": "Ru",
+                                "searchAdvanced": {
+                                    "companyName": this.$store.state.filtered.vendor,
+                                    "searchDate": {
+                                        "startDate": this.$store.state.filtered.rangeDate[0],
+                                        "endDate": this.$store.state.filtered.rangeDate[1],
+                                    },
+                                    "searchAmountOfDiscount": {
+                                        "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                        "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                    },
+                                    "searchRatingTotal": {
+                                        "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                        "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                    }
+                                }
+                            }
+                        );
+                    }
+                }
+                this.getToken(resSearch)
+                console.log(this.$store.state.discounts)
+            }
             // result: function(){
             //     console.log('res')
             //     this.selectedPages.push(this.page)
@@ -251,7 +324,7 @@
         methods: {
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             headers() {
-                return [
+                let headerArr = [
                     {
                         text: this.$t('dtOffer'),
                         align: 'left',
@@ -263,8 +336,11 @@
                     {text: this.$t('dtStartDate'), value: 'startDate'},
                     {text: this.$t('dtFinishDate'), value: 'endDate'},
                     {text: this.$t('dtRating'), value: 'rating'},
-                    {text: this.$t('dtActions'), value: 'actions', sortable: false},
-                ]
+                    ];
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee'){
+                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
+                }
+                return headerArr;
             },
             next() {
                 // console.log(this.page, this.pageCount)
@@ -272,7 +348,7 @@
                 // console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
                 // console.log(this.page, this.pageCount);
-                    // console.log(this.page,this.pageCount)
+                //     console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
                 const goNext = () => {
@@ -283,7 +359,7 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": "Украина",
                                 "searchAddressCity": "Винница",
-                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortFieldOption": "RatingDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
@@ -293,7 +369,7 @@
                     }else{
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
                         console.log(this.$store.state.filtered.range)
-                        this.inputPost(
+                        this.nextDiscount(
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
@@ -382,7 +458,7 @@
                 console.log(this.$store.state.discounts)
             },
             showSelect() {
-                console.log(this.$store.state.itemsPerPage);
+
             },
             editItem(item) {
                 this.$router.push({
