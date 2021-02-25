@@ -175,8 +175,8 @@
                     {
                         "searchText": null,
                         "searchDiscountOption": "All",
-                        "searchAddressCountry": "Беларусь",
-                        "searchAddressCity": "Минск",
+                        "searchAddressCountry": "Украина",
+                        "searchAddressCity": "Винница",
                         "searchSortFieldOption": "RatingDiscount",
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,

@@ -52,27 +52,36 @@
         name: "DataPicker",
         data: () => ({
             date: new Date().toISOString().substr(0, 10),
+            defaultDate: [moment().format(), moment().format()],
             menu: false,
             modal: false,
             menu2: false,
+            rangeData: [moment().format(), moment().format()]
         }),
         methods: {
             ...mapActions(['changeFilter']),
             saveData(){
-                let rangeData = [];
-                rangeData.push(moment(this.date[0]).format())
-                rangeData.push(moment(this.date[1]).format())
-                this.changeFilter({
-                    ...this.$store.getters.getFilterData,
-                    rangeDate: rangeData
-                });
-                console.log(this.$store.getters.getFilterData)
+                if(this.date.length === 10){
+                    this.changeFilter({
+                        ...this.$store.getters.getFilterData,
+                        rangeDate: this.defaultDate
+                    })
+                }else{
+                    this.rangeData = [];
+                    this.rangeData.push(moment(this.date[0]).format())
+                    this.rangeData.push(moment(this.date[1]).format())
+                    this.changeFilter({
+                        ...this.$store.getters.getFilterData,
+                        rangeDate: this.rangeData
+                    });
+                }
             },
         },
         mounted() {
+            console.log(this.defaultDate)
             this.changeFilter({
                 ...this.$store.getters.getFilterData,
-                rangeDate: this.date
+                rangeDate: this.defaultDate
             })
         },
         computed: {
