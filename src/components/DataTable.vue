@@ -168,7 +168,7 @@
         mixins: [token],
         created() {
             const localStorage = JSON.parse(window.localStorage.getItem('key'));
-            this.$store.commit('setUserLocation', localStorage)
+            this.$store.commit('setUserLocation', localStorage);
             const resSearch = () => {
                 this.inputPost(
                     {
@@ -180,7 +180,7 @@
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
                         "searchPaginationCountElementPerPage": 24,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 );
             }
@@ -245,7 +245,7 @@
                                 "searchSortOption": "Desc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru"
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         );
                     }else{
@@ -259,7 +259,7 @@
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru",
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
                                     "searchDate": {
