@@ -1,9 +1,9 @@
 <template v-slot:activator="{ on, attrs }">
     <div id="map">
-        <div class="filter">
-            <Modal class="modal"/>
-        </div>
-
+           <div class="filter">
+               <Modal class="modal"/>
+               <DeleteFilter/>
+           </div>
         <nav class="mapNavPanel">
             <LeftSideBar
                     v-bind:markersData="markersData"
@@ -54,12 +54,14 @@
 
     import AuthService from "@/services/auth.service";
     import token from '@/mixins/token.mixin'
+    import DeleteFilter from "@/components/Filter/DeleteFilter";
 
     const auth = new AuthService();
 
 
     export default {
         components: {
+            DeleteFilter,
             Modal,
             LeftSideBar,
             MglMarker,
@@ -171,16 +173,15 @@
     }
 
     .filter {
+        width: 100px;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         position: absolute;
         z-index: 10;
         top: 100px;
         right: 100px;
-        width: 30px;
-        height: 30px;
+        height: 40px;
         border-radius: 5px;
-        background: royalblue;
     }
 </style>

@@ -48,7 +48,7 @@
                         </v-list-item>
                         <v-btn value="nearby"
                                icon>
-                            <v-icon>mdi-map-marker</v-icon>
+                            <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
                         </v-btn>
                         <Avatar/>
                     </v-list>
@@ -60,7 +60,7 @@
             <span>Price</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-      <Searching/>
+        <Searching/>
     </v-toolbar>
 </template>
 
@@ -72,13 +72,19 @@
         name: "Header_mobile",
         components: {Searching, Avatar},
         methods: {
-            links() {return [
-        {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
-        {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
-        {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
-        {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
-        {id: 4, text: this.$t('hStatistic'), route: "statistic", icon: "mdi-sort-descending"}]
-    }},
+            links() {
+                return [
+                    {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
+                    {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
+                    {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
+                    {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
+                    {id: 4, text: this.$t('hStatistic'), route: "statistic", icon: "mdi-sort-descending"}]
+            },
+            changeUserLoc() {
+                localStorage.removeItem('key')
+                this.$router.push('/location')
+            },
+        },
         data: () => ({
             sideNav: false,
             dialog: false,
@@ -102,6 +108,6 @@
         &.closed
             max-width: 45px
 
-    .v-app-bar__nav-icon
-        margin-left: -24px
+        .v-app-bar__nav-icon
+            margin-left: -24px
 </style>
