@@ -38,7 +38,7 @@
                 user: {
                     initials: 'JD',
                     fullName: `${this.$store.getters.getUserClaims.name} ${this.$store.getters.getUserClaims.surname}`,
-                    email: 'john.doe@doe.com',
+                    email: 'claire.flower@google.com',
                 }
             }
         },
