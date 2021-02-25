@@ -15,8 +15,9 @@
                             class="d-flex justify-center mb-5"
                     >
                         <v-btn @click="this.setUserLocAndLocalStorage"
-                               :disabled="this.selectedCountry === '' && this.selectedCity === ''"
+                               :disabled="this.selectedCountry && this.selectedCity === ''"
                                block
+                               color="primary"
                         >
                             Login
                         </v-btn>
@@ -38,7 +39,7 @@
                     {{$t('sChooseLocation')}}
                 </v-card-text>
                 <v-container class="d-flex justify-center align-center">
-                    <v-btn @click="backToSelectTown">Change Location</v-btn>
+                    <v-btn @click="backToSelectTown" color="primary">Change Location</v-btn>
                 </v-container>
                 <v-container>
                     <v-row>
@@ -53,7 +54,6 @@
                         </v-col>
                     </v-row>
                 </v-container>
-
             </v-card>
         </v-container>
     </div>
@@ -130,15 +130,16 @@
             },
             async getUser2() {
                 const result = await auth.getUser()
-                console.log(result)
                 this.userClaimsLocalData = result
+                console.log('USER CLAIMS: ', result)
 
                 this.setUserClaims({
                     name: result.profile.name,
                     surname: result.profile.surname,
-                    role: result.profile.role
+                    role: result.profile.role,
+                    //email: result.profile.email
                 })
-                console.log('USER_CLAIMS_STORE_DATA: ', this.$store.getters.getUserClaims)
+                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
             ...mapActions(['goFetchForCountries'])
         },
