@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import Subscriptions from "@/components/Subscriptions";
+    import Subscriptions from "@/components/Subscriptions/Subscriptions";
     export default {
         name: "SubscriptionsPage",
       components: {Subscriptions}

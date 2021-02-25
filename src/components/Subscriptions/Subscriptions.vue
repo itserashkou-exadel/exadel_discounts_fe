@@ -21,84 +21,37 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text>{{ $t('dtCancel') }}</v-btn>
-                <v-btn color="blue darken-1" text>{{ $t('dtOk') }}</v-btn>    <template v-slot:item.calories="{ item }">
-              </template>
+                <v-btn color="blue darken-1" text>{{ $t('dtOk') }}</v-btn>
+                <template v-slot:item.calories="{ item }">
+                </template>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
           </v-dialog>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-            small
-            @click="deleteFromSubscr(item.id)"
-        >
-          mdi-delete
-        </v-icon>
-      </template>
-      <template v-slot:expanded-item="{ headers, item }" >
+      <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length" class="content">
           <v-row class="d-flex justify-center my-5">
-            <v-col cols="7" lg="11" class="d-flex justify-center">
-              <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
+            <v-col cols="12" lg="12" class="d-flex justify-center">
+              <h2>{{ $t('dtDetailsAbout') }} "{{ item.service }}"</h2>
             </v-col>
             <v-spacer></v-spacer>
-            <v-col cols="11" lg="11" class="d-flex justify-center">
+            <v-col cols="12" lg="12" class="d-flex justify-center">
               <p class="mb-0">{{ item.description }}</p>
             </v-col>
-            <v-col cols="11" lg="11" class="text-center">
+            <v-col  cols="9" lg="9" class="d-flex justify-space-around">
               <v-btn
                   color="primary"
                   @click="$router.push({name:'detail'})"
               >
-                {{$t('dtMoreInfo')}}
+                {{ $t('dtMoreInfo') }}
               </v-btn>
+              <Promocodes v-bind:subscrItem="item"/>
             </v-col>
           </v-row>
         </td>
-        <template>
-          <div class="text-center">
-            <v-dialog
-                v-model="dialog"
-                width="500"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    color="red lighten-2"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                >
-                  Click Me
-                </v-btn>
-              </template>
 
-              <v-card>
-                <v-card-title class="headline grey lighten-2">
-                  Privacy Policy
-                </v-card-title>
-
-                <v-card-text>
-                  {{item.id}}
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                      color="primary"
-                      text
-                      @click="dialog = false"
-                  >
-                    I accept
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </template>
       </template>
 
     </v-data-table>
@@ -114,14 +67,16 @@ import axios from "axios";
 import AuthService from "@/services/auth.service";
 import authMixin from '@/mixins/token.mixin'
 
+
 const auth = new AuthService();
 const moment = require('moment')
 
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 import Modal from "@/components/Filter/Modal";
+import Promocodes from "@/components/Subscriptions/Promocodes";
 
 export default {
-  components: {Modal},
+  components: {Promocodes, Modal},
   name: "Subscriptions",
   mixins: [authMixin],
   data: () => ({
@@ -132,15 +87,6 @@ export default {
     page: 1,
     pageCount: 1,
     dialog: false,
-    promocodes: [
-        {
-          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "createDate": "2021-02-23T14:53:27.140Z",
-          "endDate": "2021-02-23T14:53:27.140Z",
-          "promocodeValue": "string",
-          "expired": true
-        }
-      ]
   }),
   computed: {
     ...mapGetters(["allSubscriptions"]),
@@ -155,7 +101,6 @@ export default {
                 endDate: moment(item.endDate.$date).format('L'),
                 rating: item.ratingTotal,
                 description: item.description,
-                promo: item.promo,
               }
           ))
     },
@@ -182,26 +127,7 @@ export default {
         alert(error);
       });
     },
-    deleteFromSubscr: function (id) {
-      let show = () => this.showSubscriptions();
 
-      const putSubscr = () => {
-        axios({
-          method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/subscriptions/delete/${id}`,
-        }).then(response => show());
-      };
-      this.getToken(putSubscr);
-    },
-    getPromo: function (id) {
-      const promo = () => {
-        axios({
-          method: 'get',
-          url: `https://localhost:9001//api/v{version}/discounts/subscriptions/get/${id}`,
-        }).then(response => response.data);
-      };
-      this.getToken(promo);
-    },
     headers() {
       return [
         {
@@ -215,7 +141,6 @@ export default {
         {text: this.$t('dtStartDate'), value: 'startDate'},
         {text: this.$t('dtFinishDate'), value: 'endDate'},
         {text: this.$t('dtRating'), value: 'rating'},
-        {text: this.$t('dtActions'), value: 'actions', sortable: false},
       ]
     },
   },
@@ -230,7 +155,8 @@ export default {
 .pb-10 {
   margin: 0 auto;
 }
-tr{
+
+tr {
   box-shadow: none !important;
 }
 </style>
