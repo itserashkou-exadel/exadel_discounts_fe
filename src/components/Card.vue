@@ -5,11 +5,16 @@
             max-height="800px"
     >
         <div>
-            <v-img
-                    height="250"
-                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-                    class="white--text "
-            >
+<!--            <v-img-->
+<!--                    height="250"-->
+<!--                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"-->
+<!--                    class="white&#45;&#45;text "-->
+<!--            >-->
+          <v-img
+              height="250"
+              :src="pictureCheck(description.picture)"
+              class="white--text "
+          >
                 <div>
                     <v-avatar size="59" color="red" class=" mx-3 my-3"><b>{{description.amountOfDiscount}}%</b>
                     </v-avatar>
@@ -135,6 +140,14 @@
             deleteFromFavor: ['deleteFromFavor']
         },
         methods: {
+            pictureCheck(url){
+              console.log(url)
+              if(url === false)
+                return "../../public/cat_404.jpg"
+              else
+                // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                  return url
+            },
             iconSwitch(id) {
                 if (this.card === "mdi-heart-outline"){
                   this.card = "mdi-heart"

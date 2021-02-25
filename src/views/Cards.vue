@@ -49,7 +49,8 @@
                             endDate: moment(item.endDate.$date).format('L'),
                             rating: item.ratingTotal,
                             description: item.description,
-                            tags: item.tags
+                            tags: item.tags,
+                            picture: item.pictureUrl
                         }
                     )
 
