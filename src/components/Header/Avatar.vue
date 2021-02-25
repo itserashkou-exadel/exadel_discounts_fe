@@ -44,9 +44,8 @@
         },
         methods: {
             userLogOut() {
-                localStorage.clear()
                 auth.logout()
-            }
+            },
         },
     }
 </script>
