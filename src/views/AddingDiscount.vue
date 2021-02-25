@@ -267,7 +267,6 @@
                     ></v-text-field>
                     <PromocodesForAdding
                             v-bind:item1="promo1"
-                            :data="changePromo"
                             v-on:selectedPromos="getPromo"
                     />
                 </v-col>
@@ -711,10 +710,12 @@
                     }
                     this.selectedCountry = discount.address.country || discount.translations[0].address.country;
                     this.selectedCity = discount.address.city || discount.translations[0].address.city;
+                    if (discount.promocodeOptions !== undefined) {
+                               console.log(1);
                     this.promo1 = discount.promocodeOptions.countActivePromocodePerUser,
                     this.promo2 = discount.promocodeOptions.daysDurationPromocode,
                     this.promo3 = discount.promocodeOptions.countSymbolsPromocode,
-                    this.promo4 = discount.promocodeOptions.timeLimitAddingInSeconds,
+                    this.promo4 = discount.promocodeOptions.timeLimitAddingInSeconds}
                     this.vendorPhone = discount.company.phoneNumber;
                     this.vendorEmail = discount.company.mail;
                     this.transformateToDays(discount.workingDaysOfTheWeek);
@@ -727,13 +728,7 @@
                     this.picture = discount.pictureUrl || '';
                 }
             },
-            transformateToTags(arr) {
-                let str = '';
-                str = `${arr.join(', ')}`;
-                //let substr = str.substr(0, str.length-1);
-                const a = str.split(', ');
-                return str
-            },
+
             transformateToDays(str) {
 
                 if (str[0] === '1') {
