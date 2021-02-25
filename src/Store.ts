@@ -30,7 +30,7 @@ let store = new Vuex.Store({
         userClaimsStoreData: [],
         subscriptions: [],
         favorites: [],
-        itemsPerPage: 5
+        itemsPerPage: 6
     },
     getters: {
         getUserClaims(state) {

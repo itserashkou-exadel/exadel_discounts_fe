@@ -141,7 +141,7 @@
         },
         methods: {
             pictureCheck(url){
-              console.log(url)
+              // console.log(url)
               if(url === false)
                 return "../../public/cat_404.jpg"
               else
