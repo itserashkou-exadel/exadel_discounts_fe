@@ -145,9 +145,11 @@
         },
         mixins: [token],
         mounted() {
-            let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
-            //Берем списаок стран с бэка и оложим в стор
-            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`)
+            const getCountries = () => {
+                let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
+                //Берем списаок стран с бэка и оложим в стор
+                this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
+            this.getToken(getCountries)
             this.getUser2()
         },
         watch: {
