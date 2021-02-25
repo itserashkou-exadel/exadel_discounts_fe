@@ -66,5 +66,11 @@
  "fRating": "Rating",
  "fClose": "Close",
  "fSave": "Save",
- "sChooseLocation": "For change your location click on button below"
+ "sChooseLocation": "For change your location click on button below",
+ "sButtonChangeLocation": "Change location",
+ "countActivePromocodePerUser": "Count active promocodes per user",
+ "daysDurationPromocode": "Days duration promocode",
+ "countSymbolsPromocode": "Count symbols promocode",
+ "timeLimitAddingInSeconds": "TimeLimit adding in seconds",
+ "promocodes": "Options of promocodes"
 }
