@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-        <v-card>
+        <v-card class="mb-16">
             <v-row :data="filterData" >
                 <v-col lg="4"
                        sm="12"
@@ -15,7 +15,13 @@
                     </div>
                 </v-col>
             </v-row>
-        </v-card>
+          <v-pagination
+              v-model="page"
+              :length="pageCount"
+              :total-visible="7"
+              @input="next"
+          ></v-pagination>
+        </v-card >
     </v-container>
 </template>
 <script>
@@ -30,7 +36,9 @@
         components: {Modal, SwitchButton, Card},
         data: () => ({
                 info: [],
-                results:[]
+                results:[],
+          page: 1,
+          pageCount: 1,
         }),
 
         computed: {
