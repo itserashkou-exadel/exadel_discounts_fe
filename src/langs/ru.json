@@ -66,5 +66,11 @@
   "fRating": "Рейтинг",
   "fClose": "Закрыть",
   "fSave": "Сохранить",
-  "sChooseLocation": "Чтобы изменить свое текущее местоположение нажмите кнопку ниже"
+  "sChooseLocation": "Чтобы изменить свое текущее местоположение нажмите кнопку ниже",
+  "sButtonChangeLocation": "Изменить свой город",
+  "countActivePromocodePerUser": "Количетсов активных промокодов на человека",
+  "daysDurationPromocode": "Продолжительность действия промокода в днях",
+  "countSymbolsPromocode": "Количество символов в промокоде",
+  "timeLimitAddingInSeconds": "Ограничение нажатия кнопки в секундах",
+  "promocodes": "Опции промокодов"
 }
