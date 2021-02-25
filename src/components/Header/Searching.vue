@@ -60,7 +60,7 @@
                             "searchSortFieldOption": "RatingDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 20,
+                            "searchPaginationCountElementPerPage": 24,
                             "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                         }
                     );

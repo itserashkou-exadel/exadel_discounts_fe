@@ -127,11 +127,11 @@
         data: () => ({
             deleteID: null,
             searchWord: '',
-            itmPer: [5, 10],
+            itmPer: [6, 12],
             selectedPages: [],
             page: 1,
             pageCount: 1,
-            itemsPerPage: 5,
+            itemsPerPage: 6,
             expanded: [],
             singleExpand: true,
             dialog: false,
@@ -181,7 +181,7 @@
                         "searchSortFieldOption": "RatingDiscount",
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": 20,
+                        "searchPaginationCountElementPerPage": 24,
                         "searchLanguage": "Ru"
                     }
                 );
@@ -245,7 +245,7 @@
                                 "searchSortFieldOption": "RatingDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
-                                "searchPaginationCountElementPerPage": 20,
+                                "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": "Ru"
                             }
                         );
@@ -259,7 +259,7 @@
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
-                                "searchPaginationCountElementPerPage": 20,
+                                "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": "Ru",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,

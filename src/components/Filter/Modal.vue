@@ -141,7 +141,7 @@
                     "searchSortFieldOption": "NameDiscount",
                     "searchSortOption": "Asc",
                     "searchPaginationPageNumber": 1,
-                    "searchPaginationCountElementPerPage": 15,
+                    "searchPaginationCountElementPerPage": 18,
                     "searchLanguage": "Ru",
                     "searchAdvanced": {
                         "companyName": this.$store.state.filtered.vendor,
