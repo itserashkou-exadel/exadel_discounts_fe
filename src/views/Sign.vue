@@ -15,8 +15,9 @@
                             class="d-flex justify-center mb-5"
                     >
                         <v-btn @click="this.setUserLocAndLocalStorage"
-                               :disabled="this.selectedCountry === '' && this.selectedCity === ''"
+                               :disabled="this.selectedCountry && this.selectedCity === ''"
                                block
+                               color="primary"
                         >
                             Login
                         </v-btn>
@@ -38,7 +39,7 @@
                     {{$t('sChooseLocation')}}
                 </v-card-text>
                 <v-container class="d-flex justify-center align-center">
-                    <v-btn @click="backToSelectTown">{{$t('sButtonChangeLocation')}}</v-btn>
+                    <v-btn @click="backToSelectTown" color="primary">Change Location</v-btn>
                 </v-container>
                 <v-container>
                     <v-row>
@@ -53,7 +54,6 @@
                         </v-col>
                     </v-row>
                 </v-container>
-
             </v-card>
         </v-container>
     </div>
@@ -99,6 +99,20 @@
             logout() {
                 auth.logout();
             },
+            // getProtectedApiData() {
+            //     const authorizationHeader = 'Authorization';
+            //     auth.getAccessToken().then((userToken) => {
+            //         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+            //
+            //         axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
+            //             .then((response) => {
+            //                 this.dataEventRecordsItems = response.data;
+            //             })
+            //             .catch((error) => {
+            //                 alert(error);
+            //             });
+            //     });
+            // },
             deleteLocalStorage() {
                 localStorage.clear()
                 this.signFormToggle = false
@@ -116,44 +130,43 @@
             },
             async getUser2() {
                 const result = await auth.getUser()
-                console.log(result)
                 this.userClaimsLocalData = result
+                console.log('USER CLAIMS: ', result)
 
                 this.setUserClaims({
                     name: result.profile.name,
                     surname: result.profile.surname,
-                    role: result.profile.role
+                    role: result.profile.role,
+                    //email: result.profile.email
                 })
-                console.log('USER_CLAIMS_STORE_DATA: ', this.$store.getters.getUserClaims)
+                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
             ...mapActions(['goFetchForCountries'])
         },
         mixins: [token],
         mounted() {
             const getCountries = () => {
-            let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
-            //Берем списаок стран с бэка и оложим в стор
-            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
+                let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
+                //Берем списаок стран с бэка и оложим в стор
+                this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
             this.getToken(getCountries)
             this.getUser2()
         },
         watch: {
             language() {
-
+                console.log(this.language)
                 if (this.language === 'ru') {
                     this.setLanguage(true);
                     import(`../langs/ru.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('ru', msg);
                         this.$i18n.locale = 'ru';
                     })
-                    this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/ru/countries`);
                 } else {
                     this.setLanguage(false);
                     import(`../langs/en.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('en', msg);
                         this.$i18n.locale = 'en';
                     })
-                    this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/en/countries`);
                 }
             }
         },

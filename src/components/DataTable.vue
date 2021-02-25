@@ -167,10 +167,6 @@
         }),
         mixins: [token],
         created() {
-            const LocalStorage = JSON.parse(window.localStorage.getItem('userLoc in LocalStorage: '));
-            console.log(LocalStorage)
-            console.log(LocalStorage.country)
-            console.log(LocalStorage.town)
             const resSearch = () => {
                 this.inputPost(
                     {
