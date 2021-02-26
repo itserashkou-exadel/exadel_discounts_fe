@@ -25,8 +25,7 @@
           >
             <v-data-table
                 :headers="headers()"
-                :items="promocodes"
-                :data="filterData"
+                :items="filterData"
                 hide-default-footer
             >
             <template v-slot:item.promocodeValue="{ item }">
@@ -119,7 +118,7 @@ export default {
       this.getToken(promo);
     },
     deleteFromSubscr: function (discountId, promoId) {
-      let show = () => this.showSubscriptions();
+      let show = () => this.getPromo(discountId);
       const putSubscr = () => {
         axios({
           method: 'put',
@@ -130,21 +129,17 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allSubscriptions"]),
     filterData: function () {
       return this.promocodes.map((item) =>
           new Object({
-                createDate: moment(item.createDate.$date).format('LL'),
-                endDate: moment(item.endDate.$date).format('L'),
+                createDate: moment(item.createDate).format('L'),
+                endDate: moment(item.endDate).format('L'),
                 expired: false,
                 id: item.id,
                 promocodeValue: item.promocodeValue,
               }
           ))
     },
-  },
-  mounted() {
-    this.showSubscriptions();
   },
 }
 

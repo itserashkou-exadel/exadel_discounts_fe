@@ -33,7 +33,7 @@ const router = new VueRouter({
         },
         {
             path: '/home',
-            name: 'home',
+            name: 'homePage',
             component: AppTemplate,
             children: [
                 {
@@ -93,7 +93,7 @@ const router = new VueRouter({
         {
 
             path: '/subscriptions',
-            name: 'subscriptions',
+            name: 'subscriptionsPage',
             component: AppTemplate,
             children: [
                 {
@@ -105,7 +105,7 @@ const router = new VueRouter({
         },
         {
             path: '/map',
-            name: 'map',
+            name: 'mapPage',
             component: AppTemplate,
             children: [
                 {
@@ -117,7 +117,7 @@ const router = new VueRouter({
         },
         {
             path: '/favorites',
-            name: 'favorites',
+            name: 'favoritesPage',
             component: AppTemplate,
             children: [
                 {
@@ -129,7 +129,7 @@ const router = new VueRouter({
         },
         {
             path: '/502',
-            name: '502',
+            name: '502_error',
             component: AppTemplate,
             children: [
                 {
