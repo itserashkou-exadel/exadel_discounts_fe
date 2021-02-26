@@ -1,8 +1,9 @@
 <template>
     <v-list>
         <v-list-group
-                color="red"
+                color="teal accent-3"
                 prepend-icon="mdi-format-list-numbers"
+                :value="true"
         >
             <template v-slot:activator>
                 <v-list-item-title>{{$t('promocodes')}}</v-list-item-title>
@@ -12,6 +13,7 @@
                           v-model="countActivePromocodePerUser"
                           @change="handler"
                           :rules="numberOnly"
+
             ></v-text-field>
             <v-text-field :label="this.$t('daysDurationPromocode')"
                           @keydown.enter="nothing"
@@ -36,6 +38,8 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "PromocodesForAdding",
         data: () => ({
@@ -46,8 +50,8 @@
                 numberOnly: [v => /^-?\d*(\.\d+)?/.test(v) || 'The fiesld must contain only numbers'],
             }
         ),
+        props: ['item1'],
         methods: {
-
             handler() {
                 this.$emit('selectedPromos', this.countActivePromocodePerUser,
                     this.daysDurationPromocode, this.countSymbolsPromocode, this.timeLimitAddingInSeconds);
@@ -56,6 +60,17 @@
                 event.preventDefault();
             },
         },
+        async mounted() {
+            if (this.$route.params.placeOfCall === 'editingOfDiscount') {
+                const id = this.$route.params.idOfDiscount;
+                const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
+                const discount = response.data;
+                this.countActivePromocodePerUser = discount.promocodeOptions.countActivePromocodePerUser
+                this.daysDurationPromocode = discount.promocodeOptions.daysDurationPromocode
+                this.countSymbolsPromocode = discount.promocodeOptions.countSymbolsPromocode
+                this.timeLimitAddingInSeconds = discount.promocodeOptions.timeLimitAddingInSeconds
+            }
+        }
 
     }
 </script>

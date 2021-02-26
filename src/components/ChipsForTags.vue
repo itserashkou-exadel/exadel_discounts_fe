@@ -5,7 +5,6 @@
                     v-model="items"
                     chips
                     multiple
-                    clearable
                     :label="chooseOrder()"
                     :data="watchTags"
 
@@ -70,13 +69,6 @@
                 this.tagShow = !this.tagShow
                 this.$emit('tagShow', this.tagShow);
             },
-            nothing(event) {
-              //  console.log(this.items)
-               // event.preventDefault();
-              //  this.items.push(event.target.value);
-              //  this.$emit('selectedTags', event.target.value);
-              //  event.target.value = '';
-            },
             deleteItem(i) {
                 this.items.splice(this.items.indexOf(i), 1)
                 this.items = [...this.items]
@@ -87,7 +79,7 @@
                 if (this.tags.length > this.items.length){
                this.items = this.tags}
               // this.tags = this.items
-                console.log(this.items)
+
             }
         }
     }
