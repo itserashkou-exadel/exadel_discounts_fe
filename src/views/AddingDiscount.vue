@@ -805,11 +805,9 @@
     }
 </script>
 <style scoped>
-    /*div > canvas {*/
-    /*    width: 100% !important;*/
-    /*}*/
+
     #addDiscountMap {
-        /*width: 32vw;*/
+
         height: 49vh;
     }
 </style>

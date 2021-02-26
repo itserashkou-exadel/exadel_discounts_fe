@@ -49,6 +49,7 @@
     import HeaderButton from "@/components/Header/HeaderButton";
     import Avatar from "@/components/Header/Avatar";
     import Searching from "@/components/Header/Searching";
+    import {mapGetters} from "vuex"
 
     export default {
         name: "Header",
@@ -65,18 +66,32 @@
         },
         methods: {
             headerButtons() {
-                return [
-                    {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
-                    {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
-                    {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
-                    {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
-                    {id: 4, text: this.$t('hStatistic'), route: "statistic", icon: "mdi-sort-descending"},
-                ]
+                console.log(this.getUserClaims)
+                if (this.$store.getters.getUserClaims.role === "Administrator") {
+                    return [
+                        {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
+                        {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
+                        {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
+                        {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
+                        {id: 5, text: this.$t('hStatistic'), route: "statistic", icon: "mdi-sort-descending"}
+                    ]
+                } else {
+                    return [
+                        {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
+                        {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
+                        {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
+                        {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
+                    ]
+                }
             },
-          changeUserLoc() {
-            localStorage.removeItem('key')
-            this.$router.push('/location')
-          }
+            changeUserLoc() {
+                localStorage.removeItem('key')
+                this.$router.push('/location')
+            },
+        },
+        computed: {
+            ...
+                mapGetters(['getUserClaims'])
         }
     }
 

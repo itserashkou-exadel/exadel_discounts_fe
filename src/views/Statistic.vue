@@ -1,14 +1,17 @@
 <template>
-  <div>Statistic</div>
+  <div></div>
 </template>
 
 <script>
 import Favorites from "@/components/Favorites";
-
+import {mapGetters} from 'vuex'
 
 export default {
   name: "Statistic",
-  components: {Favorites},
+  computed: {
+
+  }
+
 
 }
 </script>
