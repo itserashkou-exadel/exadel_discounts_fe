@@ -73,18 +73,18 @@
         data: () => ({
             language: 'ru',
             items: ['ru', 'en'],
-            selectedCountry: '',
-            selectedCity: '',
+            // selectedCountry: '',
+            // selectedCity: '',
             signFormToggle: false,
             userClaimsLocalData: [],
         }),
         methods: {
             ...mapMutations(['setUserLocation', 'setLanguage', 'setUserClaims']),
             setUserLocAndLocalStorage() {
-                this.setUserLocation({
-                    country: this.selectedCountry,
-                    town: this.selectedCity
-                })
+                // this.setUserLocation({
+                //     country: this.selectedCountry,
+                //     town: this.selectedCity
+                // })
 
                 const userLoc = this.$store.getters.getUserLocation
                 localStorage.setItem('key', JSON.stringify(userLoc))
@@ -151,6 +151,7 @@
                 this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
             this.getToken(getCountries)
             this.getUser2()
+            console.log()
         },
         watch: {
             language() {
