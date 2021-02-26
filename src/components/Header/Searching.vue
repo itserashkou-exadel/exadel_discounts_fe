@@ -49,14 +49,15 @@
             showSearch() {
                 // console.log(this.search)
                 this.$store.state.discounts = [];
+                console.log(this.$store.state.userLocation)
                 this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
                             "searchDiscountOption": "All",
-                            "searchAddressCountry": "Украина",
-                            "searchAddressCity": "Винница",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
                             "searchSortFieldOption": "RatingDiscount",
                             "searchSortOption": "Asc",
                             "searchPaginationPageNumber": 1,

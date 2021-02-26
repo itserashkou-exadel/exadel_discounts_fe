@@ -72,5 +72,6 @@
   "daysDurationPromocode": "Продолжительность действия промокода в днях",
   "countSymbolsPromocode": "Количество символов в промокоде",
   "timeLimitAddingInSeconds": "Ограничение нажатия кнопки в секундах",
-  "promocodes": "Опции промокодов"
+  "promocodes": "Опции промокодов",
+  "hStatistic": "СТАТИСТИКА"
 }

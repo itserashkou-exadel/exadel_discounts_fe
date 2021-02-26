@@ -13,9 +13,7 @@
                 :page.sync="page"
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
-
         >
-
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -100,7 +98,7 @@
                             <v-select v-if="page === 1"
                                     v-model="itemsPerPage"
                                     :items="itmPer"
-                                      @click="showSelect"
+                                     @click="showSelect"
                                     label="items per page"
                                     dense
                                     solo
@@ -161,19 +159,23 @@
                 startDate: '',
                 endDate: '',
                 rating: 0,
-                description: ''
+                description: '',
+                userClaimsLocalData: [],
             },
 
         }),
         mixins: [token],
         created() {
+            this.getUser2();
+            const localStorage = JSON.parse(window.localStorage.getItem('key'));
+            this.$store.commit('setUserLocation', localStorage)
             const resSearch = () => {
                 this.inputPost(
                     {
                         "searchText": null,
                         "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Винница",
+                        "searchAddressCountry": localStorage.country,
+                        "searchAddressCity": localStorage.town,
                         "searchSortFieldOption": "RatingDiscount",
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
@@ -232,14 +234,15 @@
                 this.$store.state.discounts = [];
                 const resSearch = () => {
                     if(this.$store.state.filterRequest === false) {
+                        console.log(this.$store.state.userLocation.country, this.$store.state.userLocation.town);
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "RatingDiscount",
-                                "searchSortOption": "Asc",
+                                "searchSortOption": "Desc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": "Ru"
@@ -250,8 +253,8 @@
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
@@ -319,6 +322,7 @@
 
         methods: {
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
+            ...mapMutations(['setUserClaims']),
             headers() {
                 let headerArr = [
                     {
@@ -353,8 +357,8 @@
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "RatingDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
@@ -369,8 +373,8 @@
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
@@ -491,6 +495,21 @@
                     this.result.push(this.editedItem)
                 }
                 this.close()
+            },
+            async getUser2() {
+
+                const result = await auth.getUser()
+                this.userClaimsLocalData = result
+                console.log('USER CLAIMS: ', result)
+
+                this.setUserClaims({
+                    name: result.profile.name,
+                    surname: result.profile.surname,
+                    role: result.profile.role,
+
+                    //email: result.profile.email
+                })
+                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
         },
     }

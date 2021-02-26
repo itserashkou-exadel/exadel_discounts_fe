@@ -136,8 +136,8 @@
                 {
                     "searchText": this.$store.state.keyWord,
                     "searchDiscountOption": "All",
-                    "searchAddressCountry": "Украина",
-                    "searchAddressCity": "Винница",
+                    "searchAddressCountry": this.$store.state.userLocation.country,
+                    "searchAddressCity": this.$store.state.userLocation.town,
                     "searchSortFieldOption": "NameDiscount",
                     "searchSortOption": "Asc",
                     "searchPaginationPageNumber": 1,

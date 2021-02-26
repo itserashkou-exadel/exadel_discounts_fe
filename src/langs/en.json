@@ -72,5 +72,6 @@
  "daysDurationPromocode": "Days duration promocode",
  "countSymbolsPromocode": "Count symbols promocode",
  "timeLimitAddingInSeconds": "TimeLimit adding in seconds",
- "promocodes": "Options of promocodes"
+ "promocodes": "Options of promocodes",
+ "hStatistic": "STATISTICS"
 }
