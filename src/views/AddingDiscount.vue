@@ -623,8 +623,11 @@
                             console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                             this.updateDiscount(
                                 {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                            ).catch((e) => {this.val = false; this.dialog = true})
-                            if (this.val) {this.$router.push({name:'home'})}
+                            ).catch((e) => {console.log(55); this.val = false; this.dialog = true})
+                            .then(() => {
+                                if (this.val === true)
+                                {this.$router.push({name:'home'})}
+                            })
                             this.val = true
                         }
                     }
@@ -641,12 +644,6 @@
             selectLine(value) {
                 this.address.line = value;
             },
-            // selectCountry(value) {
-            //     this.address.country = value;
-            // },
-            // selectCity(value) {
-            //     this.address.city = value;
-            // },
             titleOfPage() {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
                     return this.$tc('adEditingNewDiscount', 2)
@@ -711,7 +708,6 @@
                     this.picture = discount.pictureUrl || '';
                 }
             },
-
             transformateToDays(str) {
 
                 if (str[0] === '1') {

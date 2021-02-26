@@ -30,9 +30,13 @@ let store = new Vuex.Store({
         userClaimsStoreData: [],
         subscriptions: [],
         favorites: [],
-        itemsPerPage: 6
+        itemsPerPage: 6,
+        totalStatistic: {}
     },
     getters: {
+        getTotalStatistic(state) {
+            return state.totalStatistic;
+        },
         getUserClaims(state) {
             return state.userClaimsStoreData;
         },
@@ -99,7 +103,10 @@ let store = new Vuex.Store({
             // @ts-ignore
             state.discounts = dis;
         },
-
+        receiveTotalStatistic(state, dis) {
+            // @ts-ignore
+            state.totalStatistic = dis;
+        },
         addNextDis(state, nextDis){
           // @ts-ignore
             state.discounts.push(...nextDis);
@@ -184,7 +191,10 @@ let store = new Vuex.Store({
             const response = await axios.post(searchDiscount, search);
             commit('receiveSearch', response.data)
         },
-
+        async statisticPost({commit}, search){
+            const response = await axios.post(searchDiscount, search);
+            commit('receiveTotalStatistic', response.data)
+        },
         async allInputPost({commit}, search){
             await axios.all([
                 axios.post(searchDiscount, search[0]),
@@ -222,7 +232,6 @@ let store = new Vuex.Store({
                 //     console.clear();
                 // }
                 console.log(e)
-
             }
         },
 
