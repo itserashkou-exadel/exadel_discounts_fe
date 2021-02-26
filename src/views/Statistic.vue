@@ -1,16 +1,15 @@
 <template>
-  <div></div>
+  <DataTable/>
 </template>
 
 <script>
-import Favorites from "@/components/Favorites";
 import {mapGetters} from 'vuex'
+import DataTable from "@/components/DataTable";
 
 export default {
   name: "Statistic",
-  computed: {
+  components: {DataTable},
 
-  }
 
 
 }

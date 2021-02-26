@@ -609,46 +609,29 @@
                     }
                 }
             },
-            submit() {
+            async submit() {
                 if (this.$refs.form.validate()) {
                     const postDiscount = () => {
                         if (this.$route.params.placeOfCall === 'newDiscount') {
-
                             this.addDiscount(
                                 {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                            )
+                            ).catch((e) => this.val = false)
                             console.log({...{id: uuidv4()}, ...(this.objectWithoutId())})
+                            this.dialog = true
+                            this.val = true
                         } else {
                             console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                             this.updateDiscount(
                                 {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                            ).catch((e) => console.log(e))
+                            ).catch((e) => {this.val = false; this.dialog = true})
+                            if (this.val) {this.$router.push({name:'home'})}
+                            this.val = true
                         }
                     }
-                    this.getToken(postDiscount);
-                    this.val = true;
-                    const inputDiscount = () => {
-                        this.$store.state.discounts = [];
-                        this.inputPost(
-                            {
-                                "searchText": this.$store.state.keyWord,
-                                "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
-                                "searchSortFieldOption": "NameDiscount",
-                                "searchSortOption": "Asc",
-                                "searchPaginationPageNumber": 1,
-                                "searchPaginationCountElementPerPage": 15,
-                                "searchLanguage": "Ru"
-                            }
-                        );
-                    }
-
+                    await this.getToken(postDiscount)
                 } else {
                     this.val = false;
-
                 }
-                this.dialog = true
             },
             resetForm() {
                 this.$refs.form.reset();

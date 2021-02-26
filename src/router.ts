@@ -12,7 +12,7 @@ import Table from '@/components/Table.vue';
 import AddingDiscount from '@/views/AddingDiscount.vue';
 import Detail from '@/views/Detail.vue';
 import ErrorPage from '@/views/ErrorPage.vue';
-import Statistic from "@/views/Statistic.vue"
+import StatisticMain from "@/components/StatisticMain.vue"
 
 Vue.use(VueRouter);
 
@@ -142,7 +142,7 @@ const router = new VueRouter({
                 {
                     path: "/statistic",
                     name: "statistic",
-                    component: Statistic
+                    component: StatisticMain
                 }
             ]
         },

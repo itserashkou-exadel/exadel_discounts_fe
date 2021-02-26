@@ -73,7 +73,7 @@
                 this.getToken(resSearch)
                 this.setFilterIcon(false);
                 this.$store.commit('setDisPage', 1)
-                console.log(this.$store.state.discounts)
+              //  console.log(this.$store.state.discounts)
             },
 
         }
