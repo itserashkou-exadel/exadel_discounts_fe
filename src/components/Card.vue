@@ -24,7 +24,7 @@
         <v-row align="start" justify="space-between">
             <v-col>
                 <div>
-                    <v-card-title>
+                    <v-card-title style="word-break: normal">
                         {{ description.service}}
                     </v-card-title>
                 </div>
