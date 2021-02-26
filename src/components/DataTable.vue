@@ -168,7 +168,7 @@
         created() {
             this.getUser2();
             const localStorage = JSON.parse(window.localStorage.getItem('key'));
-            this.$store.commit('setUserLocation', localStorage)
+            this.$store.commit('setUserLocation', localStorage);
             const resSearch = () => {
                 this.inputPost(
                     {
@@ -180,7 +180,7 @@
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
                         "searchPaginationCountElementPerPage": 24,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 );
             }
@@ -192,10 +192,11 @@
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
-                    this.searchWord = this.$store.state.keyWord;
+                    // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    // console.log(this.info)
+                    console.log(this.info)
+                    console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -245,7 +246,7 @@
                                 "searchSortOption": "Desc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru"
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         );
                     }else{
@@ -259,7 +260,7 @@
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru",
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
                                     "searchDate": {
