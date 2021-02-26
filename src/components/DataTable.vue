@@ -3,7 +3,7 @@
         <v-data-table
                 :headers="headers()"
                 :items="result"
-                class="elevation-8"
+                class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
                 :single-expand="singleExpand"
