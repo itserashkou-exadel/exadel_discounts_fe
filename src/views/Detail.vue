@@ -20,7 +20,7 @@
             </v-img>
             <v-row>
               <v-col cols="5" class="mt-n4">
-                <v-card-title style="word-break: normal class="black--text
+                <v-card-title style="word-break: normal" class="black--text
                                 ml-1 mt-3
                                 font-weight-bold
                                 text-lg-h2
