@@ -205,7 +205,7 @@
                                 amountOfDiscount: item.amountOfDiscount,
                                 startDate: moment(item.startDate).format('DD-MM-YYYY'),
                                 endDate: moment(item.endDate).format('DD-MM-YYYY'),
-                                rating: item.ratingTotal,
+                                rating: item.ratingTotal.toFixed(2),
                                 description: item.description,
                             }
                         )
