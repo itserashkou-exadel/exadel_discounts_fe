@@ -20,7 +20,7 @@
             </v-img>
             <v-row>
               <v-col cols="5" class="mt-n4">
-                <v-card-title class="black--text
+                <v-card-title style="word-break: normal" class="black--text
                                 ml-1 mt-3
                                 font-weight-bold
                                 text-lg-h2
@@ -29,8 +29,12 @@
                                 name">
                   {{ info.name }}
                 </v-card-title>
+                <v-row align="center" class="mt-1 mb-n8">
+
                 <v-rating
-                    class="ml-4 mb-5 mt-n4 "
+                    v-model="info.ratingTotal"
+                    @input="ratingChose"
+                    class="ml-6 mb-5 mt-n4 "
                     color="yellow darken-3"
                     :value="info.ratingTotal"
                     background-color="grey darken-1"
@@ -38,6 +42,10 @@
                     half-increments
                     hover
                 ></v-rating>
+                  <div class="grey--text mb-9 ml-2">
+                    {{info.ratingTotal.toFixed(2)}}
+                  </div>
+                </v-row>
                 <v-row class="ml-2" align-center>
                   <v-card-subtitle class="black--text mb-8 font-weight-bold" style="font-size:32px;">
                     {{info.amountOfDiscount + "% Скидка"}}
@@ -96,8 +104,10 @@
               </v-row>
 
 
-              <v-row justify="center">
+              <v-row align="center" justify="center">
                 <v-rating
+                    v-model="info.ratingTotal"
+                    @input="ratingChose"
                     class="mt-n3"
                     color="yellow darken-3"
                     background-color="grey darken-1"
@@ -106,6 +116,9 @@
                     size="20px"
                     hover
                 ></v-rating>
+                <div class="grey--text mb-2 ml-2">
+                  {{info.ratingTotal.toFixed(2)}}
+                </div>
               </v-row>
               <v-row justify="center">
                 <v-card-subtitle class="black--text mr-1 font-weight-bold" style="font-size:32px;">
@@ -164,7 +177,7 @@ import {mapActions, mapGetters} from "vuex";
 import axios from "axios";
 import AuthService from "@/services/auth.service";
 import paginationMixin from '@/mixins/token.mixin'
-
+import token from '@/mixins/token.mixin'
 
 
 
@@ -172,7 +185,7 @@ const auth = new AuthService();
 const moment = require('moment')
 export default {
   name: "Detail",
-  mixins: [paginationMixin],
+  mixins: [paginationMixin, token],
   data: () => ({
     info: {},
     results: [],
@@ -185,8 +198,22 @@ export default {
       required: true
     }
   },
-
   methods: {
+    ...mapActions["putRatingById"],
+    ratingChose(rate){
+      console.log(rate)
+      let str = "";
+      let self = this;
+      const putRate = () => {
+        str+=self.$route.params._id+'/';
+        str+=rate;
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/vote/${str}`,
+        }).then(this.detailView);
+      }
+      this.getToken(putRate)
+    },
     pictureCheck(url){
       console.log(url)
       if(url === false)
@@ -221,11 +248,12 @@ export default {
   },
   mounted: function () {
     this.detailView();
+
   },
   computed: {
     ...mapGetters(["getDetailView"]),
     filterData() {
-      const arr = [];
+      console.log(this.info.ratingTotal)
       this.info = this.getDetailView;
       this.info.startDate = moment(this.info.startDate).format('L');
       this.info.endDate = moment(this.info.endDate).format('L');

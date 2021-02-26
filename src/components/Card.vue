@@ -24,7 +24,7 @@
         <v-row align="start" justify="space-between">
             <v-col>
                 <div>
-                    <v-card-title>
+                    <v-card-title style="word-break: normal">
                         {{ description.service}}
                     </v-card-title>
                 </div>
@@ -41,7 +41,7 @@
                             size="14"
                     ></v-rating>
                     <div class="grey--text ml-2">
-                        {{description.rating}}
+                      {{description.rating.toFixed(2)}}
                     </div>
                 </v-row>
             </v-col>

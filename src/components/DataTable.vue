@@ -3,7 +3,7 @@
         <v-data-table
                 :headers="headers()"
                 :items="result"
-                class="elevation-8"
+                class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
                 :single-expand="singleExpand"
@@ -176,7 +176,7 @@
         created() {
             this.getUser2();
             const localStorage = JSON.parse(window.localStorage.getItem('key'));
-            this.$store.commit('setUserLocation', localStorage)
+            this.$store.commit('setUserLocation', localStorage);
             const resSearch = () => {
                 this.inputPost(
                     {
@@ -188,7 +188,7 @@
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
                         "searchPaginationCountElementPerPage": 24,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 );
             }
@@ -200,10 +200,11 @@
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
-                    this.searchWord = this.$store.state.keyWord;
+                    // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    // console.log(this.info)
+                    console.log(this.info)
+                    console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -213,7 +214,7 @@
                                 amountOfDiscount: item.amountOfDiscount,
                                 startDate: moment(item.startDate).format('DD-MM-YYYY'),
                                 endDate: moment(item.endDate).format('DD-MM-YYYY'),
-                                rating: item.ratingTotal,
+                                rating: item.ratingTotal.toFixed(2),
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
@@ -257,7 +258,7 @@
                                 "searchSortOption": "Desc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru"
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         );
                     }else{
@@ -271,7 +272,7 @@
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru",
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
                                     "searchDate": {

@@ -41,7 +41,26 @@
         mixins: [token],
         watch: {
             search: function () {
+                console.log(this.search)
                 this.setKeyWord(this.search)
+                if(this.search === ''){
+                    const resSearch = () => {
+                        this.inputPost(
+                            {
+                                "searchText": null,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
+                                "searchSortFieldOption": "RatingDiscount",
+                                "searchSortOption": "Desc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 24,
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                            }
+                        );
+                    }
+                    this.getToken(resSearch)
+                }
             }
         },
         methods: {
