@@ -149,7 +149,11 @@
                 startDate: '',
                 endDate: '',
                 rating: 0,
-                description: ''
+                description: '',
+                viewsTotal: 0,
+                subscriptionsTotal: 0,
+                usersSubscriptionTotal: 0,
+                createDate: ''
             },
             defaultItem: {
                 id: '',
@@ -161,6 +165,10 @@
                 rating: 0,
                 description: '',
                 userClaimsLocalData: [],
+                viewsTotal: 0,
+                subscriptionsTotal: 0,
+                usersSubscriptionTotal: 0,
+                createDate: ''
             },
 
         }),
@@ -208,6 +216,10 @@
                                 endDate: moment(item.endDate).format('DD-MM-YYYY'),
                                 rating: item.ratingTotal.toFixed(2),
                                 description: item.description,
+                                viewsTotal: item.viewsTotal,
+                                subscriptionsTotal: item.subscriptionsTotal,
+                                usersSubscriptionTotal: item.usersSubscriptionTotal,
+                                createDate: moment(item.createDate).format("DD-MM-YYYY")
                             }
                         )
                     })
@@ -325,6 +337,7 @@
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             ...mapMutations(['setUserClaims']),
             headers() {
+               // console.log(this.$route.name)
                 let headerArr = [
                     {
                         text: this.$t('dtOffer'),
@@ -338,8 +351,16 @@
                     {text: this.$t('dtFinishDate'), value: 'endDate'},
                     {text: this.$t('dtRating'), value: 'rating'},
                     ];
-                if(this.$store.state.userClaimsStoreData.role !== 'Employee'){
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')){
                     headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
+                }
+                if (this.$route.name === 'statistic') {
+                    headerArr.push(
+                        {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
+                        {text: this.$t('subscriptionsTotal'), value: 'subscriptionsTotal', sortable: true},
+                        {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
+                        {text: this.$t('createDate'), value: 'createDate', sortable: true},
+                        )
                 }
                 return headerArr;
             },

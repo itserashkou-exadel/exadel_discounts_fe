@@ -73,5 +73,11 @@
  "countSymbolsPromocode": "Count symbols promocode",
  "timeLimitAddingInSeconds": "TimeLimit adding in seconds",
  "promocodes": "Options of promocodes",
- "hStatistic": "STATISTICS"
+ "hStatistic": "STATISTICS",
+ "viewsTotal": "Total views",
+ "subscriptionsTotal": "Total subscriptions",
+ "usersSubscriptionTotal": "Total user's subscriptions",
+ "createDate": "Create date",
+ "tbEachDiscount": "Each discount",
+ "tbTotalCount": "Total count"
 }
