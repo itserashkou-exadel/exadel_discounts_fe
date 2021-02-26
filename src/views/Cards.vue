@@ -40,7 +40,7 @@
           arr:[],
                 info: [],
                 results:[],
-          itemsPerPage:5,
+          itemsPerPage:6,
           page: 1,
           pageCount: 1,
         }),

@@ -76,10 +76,10 @@
             selectedCountry: '',
             selectedCity: '',
             signFormToggle: false,
-            userClaimsLocalData: [],
+
         }),
         methods: {
-            ...mapMutations(['setUserLocation', 'setLanguage', 'setUserClaims']),
+            ...mapMutations(['setUserLocation', 'setLanguage']),
             setUserLocAndLocalStorage() {
                 this.setUserLocation({
                     country: this.selectedCountry,
@@ -128,19 +128,6 @@
             getUserCity(city) {
                 this.selectedCity = city
             },
-            async getUser2() {
-                const result = await auth.getUser()
-                this.userClaimsLocalData = result
-                console.log('USER CLAIMS: ', result)
-
-                this.setUserClaims({
-                    name: result.profile.name,
-                    surname: result.profile.surname,
-                    role: result.profile.role,
-                    //email: result.profile.email
-                })
-                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
-            },
             ...mapActions(['goFetchForCountries'])
         },
         mixins: [token],
@@ -150,7 +137,7 @@
                 //Берем списаок стран с бэка и оложим в стор
                 this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
             this.getToken(getCountries)
-            this.getUser2()
+
         },
         watch: {
             language() {

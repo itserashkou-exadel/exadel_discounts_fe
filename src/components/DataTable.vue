@@ -3,7 +3,7 @@
         <v-data-table
                 :headers="headers()"
                 :items="result"
-                class="elevation-8"
+                class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
                 :single-expand="singleExpand"
@@ -13,9 +13,7 @@
                 :page.sync="page"
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
-
         >
-
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -161,12 +159,14 @@
                 startDate: '',
                 endDate: '',
                 rating: 0,
-                description: ''
+                description: '',
+                userClaimsLocalData: [],
             },
 
         }),
         mixins: [token],
         created() {
+            this.getUser2();
             const localStorage = JSON.parse(window.localStorage.getItem('key'));
             this.$store.commit('setUserLocation', localStorage);
             const resSearch = () => {
@@ -322,6 +322,7 @@
 
         methods: {
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
+            ...mapMutations(['setUserClaims']),
             headers() {
                 let headerArr = [
                     {
@@ -494,6 +495,21 @@
                     this.result.push(this.editedItem)
                 }
                 this.close()
+            },
+            async getUser2() {
+
+                const result = await auth.getUser()
+                this.userClaimsLocalData = result
+                console.log('USER CLAIMS: ', result)
+
+                this.setUserClaims({
+                    name: result.profile.name,
+                    surname: result.profile.surname,
+                    role: result.profile.role,
+
+                    //email: result.profile.email
+                })
+                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
         },
     }
