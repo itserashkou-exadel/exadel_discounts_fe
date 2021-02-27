@@ -1,0 +1,449 @@
+{
+  "discounts": [
+    {
+      "_id": "e0c659d7-dc46-48df-b376-628a768f92c4",
+      "name": "Невероятный Бетонный Куртка",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "47",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 4,
+      "viewTotal": 92,
+      "reservationTotal": 30,
+      "favoritePersonsId": [
+        "67c39246-12b0-4bc5-8e6a-3dbb24cba479",
+        "3c76d026-dabc-455e-b763-cfdd43aaf99a"
+      ],
+      "reservationPersonsId": [
+        "eb257967-be37-468e-a74c-aed7721e1e6a",
+        "365b61bb-b4c3-4a15-811f-cdf6b7352a95"
+      ],
+      "viewPersonsId": [
+        "8774e83a-b2e0-4cac-ac36-8845b3f2e491",
+        "fef3995a-ac68-4639-9996-fca232f667a9"
+      ],
+      "createDate": {
+        "$date": "2020-03-17T08:30:40.183Z"
+      },
+      "personCreateDate": {
+        "_id": "70a04f74-0c61-4296-9e42-0d37c08c1ed8",
+        "name": "Эдуард",
+        "surname": "Семенов",
+        "phoneNumber": "+462 82 972-22-35",
+        "mail": "Eduard_Semenov@hotmail.com",
+        "hashPassword": null,
+        "salt": null,
+        "roles": 0
+      },
+      "lastChangeDate": {
+        "$date": "2020-12-08T01:00:54.544Z"
+      },
+      "personLastChangeDate": {
+        "_id": "5444ee72-09bb-41b7-9e42-28f2b30a0b52",
+        "name": "Степан",
+        "surname": "Ковалев",
+        "phoneNumber": "+892 37 858-86-57",
+        "mail": "Stepan.Kovalev@ya.ru",
+        "hashPassword": null,
+        "salt": null,
+        "roles": 0
+      },
+      "hidden": false,
+      "language": "russian",
+      "translations": [
+        {
+          "language": "english",
+          "name": "Tasty Metal Cheese",
+          "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+          "address": {
+            "country": "Grenada",
+            "city": "Lake Carey",
+            "street": "204 O'Hara Ports"
+          },
+          "company": {
+            "name": "Orn - Armstrong",
+            "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J"
+          },
+          "tags": [
+            "Outdoors",
+            "Baby",
+            "Kids",
+            "Music",
+            "Clothing",
+            "Books",
+            "Movies",
+            "Jewelery",
+            "Home",
+            "Games"
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "65c6c011-d96f-4efe-bf3f-2c51362a6465",
+      "name": "Невероятный ",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki ",
+      "amountOfDiscount": "56",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 3,
+      "viewTotal": 92,
+      "reservationTotal": 30
+    },
+    {
+      "_id": "e0c659d7-dc46-48df-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30,
+      "hidden": false,
+      "language": "russian",
+      "translations": [
+        {
+          "language": "english",
+          "name": "Small Wooden Cheese",
+          "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+          "address": {
+            "country": "Portugal",
+            "city": "East Kayden",
+            "street": "531 Wilson Divide"
+          },
+          "company": {
+            "name": "DuBuque - Mueller",
+            "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive"
+          },
+          "tags": [
+            "Home",
+            "Health",
+            "Books",
+            "Clothing",
+            "Baby",
+            "Computers",
+            "Grocery",
+            "Garden",
+            "Music",
+            "Sports"
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "e0c659d7-dc46-48f-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30,
+      "translations": [
+        {
+          "language": "english",
+          "name": "Rustic Granite Pizza",
+          "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+          "address": {
+            "country": "San Marino",
+            "city": "Moorefort",
+            "street": "44023 Sanford Shore"
+          },
+          "company": {
+            "name": "Corwin - Tromp",
+            "description": "The Football Is Good For Training And Recreational Purposes"
+          },
+          "tags": [
+            "Baby",
+            "Outdoors",
+            "Sports",
+            "Electronics",
+            "Shoes",
+            "Jewelery",
+            "Grocery",
+            "Books",
+            "Home",
+            "Automotive",
+            "Toys",
+            "Clothing"
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "e0c65d7-dc46-48df-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30,
+      "translations": [
+        {
+          "language": "english",
+          "name": "Refined Rubber Tuna",
+          "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+          "address": {
+            "country": "French Southern Territories",
+            "city": "Port Amyahaven",
+            "street": "19397 Steuber Corners"
+          },
+          "company": {
+            "name": "McDermott LLC",
+            "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles"
+          },
+          "tags": [
+            "Games",
+            "Garden",
+            "Home",
+            "Automotive",
+            "Grocery",
+            "Kids",
+            "Toys",
+            "Clothing",
+            "Baby",
+            "Health",
+            "Tools"
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "e0c69d7-dc46-48df-b376-628a768f92c5",
+      "name": "Бетонный Куртка",
+      "description": "The Nagasaki several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "amountOfDiscount": "17",
+      "startDate": {
+        "$date": "2021-01-10T07:43:42.805Z"
+      },
+      "endDate": {
+        "$date": "2021-12-15T15:45:44.596Z"
+      },
+      "address": {
+        "country": "Украина",
+        "city": "Пенза",
+        "street": "Энергетиков ул., 515",
+        "location": {
+          "latitude": 43.4112,
+          "longitude": -161.3009
+        }
+      },
+      "company": {
+        "name": "Блохина, Силин and Филиппов",
+        "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+        "phoneNumber": "+629 92 888-68-87",
+        "mail": "Marina.Zakharova@yahoo.com"
+      },
+      "workingHours": "1010100",
+      "tags": [
+        "Электроника",
+        "компьютеры",
+        "красота",
+        "Фильмы",
+        "Спорт",
+        "Игрушки",
+        "Книги",
+        "Меха",
+        "игры",
+        "промышленное"
+      ],
+      "ratingTotal": 5,
+      "viewTotal": 92,
+      "reservationTotal": 30,
+      "translations": [
+        {
+          "language": "english",
+          "name": "Handmade Steel Tuna",
+          "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+          "address": {
+            "country": "Haiti",
+            "city": "Lake Genevievemouth",
+            "street": "63499 Audra Underpass"
+          },
+          "company": {
+            "name": "Nolan - Cormier",
+            "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals"
+          },
+          "tags": [
+            "Books",
+            "Sports",
+            "Beauty",
+            "Industrial",
+            "Movies",
+            "Grocery",
+            "Automotive",
+            "Home",
+            "Outdoors",
+            "Games",
+            "Clothing",
+            "Jewelery"
+          ]
+        }
+      ]
+    }
+  ]
+}
