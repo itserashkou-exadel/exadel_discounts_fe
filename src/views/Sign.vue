@@ -1,186 +1,97 @@
 <template>
-    <v-container class="d-flex align-center wrapper" fluid>
-        <v-card width="500" class="mx-auto ">
-            <v-card-title >Your city is: {{this.$store.state.userLocation.town}}</v-card-title>
-            <v-card-text>
-                <v-list-group eager :value="true">
-                    <template v-slot:activator>
-                        <v-list-item-title>{{$t('sChooseLocation')}}</v-list-item-title>
-                    </template>
+    <div>
+        <v-container v-if="signFormToggle" class="d-flex align-center wrapper" fluid>
+            <v-card width="500" class="mx-auto ">
+                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">Your city is:
+                    {{this.$store.state.userLocation.town}}
+                </v-card-title>
+                <v-card-text>
+                    <ChooseOfTown
+                            v-on:selectedCountryForObj="getUserCounty"
+                            v-on:selectedCityForObj="getUserCity"
+                            class="mt-10"
+                    />
+                    <v-container
+                            class="d-flex justify-center mb-5"
+                    >
+                        <v-btn @click="this.setUserLocAndLocalStorage"
+                               :disabled="this.selectedCountry && this.selectedCity === ''"
+                               block
+                               color="primary"
+                        >
+                            Login
+                        </v-btn>
 
-                    <!--            Первая группа Belarus            -->
-                    <v-list-group no-action sub-group>
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title>Belarus</v-list-item-title>
-                            </v-list-item-content>
-                        </template>
+<!--                        <v-btn @click="logout()">-->
+<!--                            Logout-->
+<!--                        </v-btn>-->
 
-                        <v-list-item-group v-model="fictionalSelected">
-                            <v-list-item v-bind:key="town" v-for="town in belarus">
-                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Belarus', town)">{{ town }}
-                                </v-list-item-title>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list-group>
+<!--                        <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>-->
 
-                    <v-divider></v-divider>
-                    <!--            Вторая группа Ukraine           -->
-                    <v-list-group sub-group no-action>
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title>Ukraine</v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in ukraine">
-                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Ukraine', town)">{{ town }}
-                                </v-list-item-title>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list-group>
+                    </v-container>
 
-                    <v-divider></v-divider>
-                    <!--            Третья группа Lithuania           -->
-                    <v-list-group sub-group no-action>
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title>Lithuania</v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in lithuania">
-                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Lithuania', town)">{{ town }}
-                                </v-list-item-title>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list-group>
-
-                    <v-divider></v-divider>
-                    <!--            Четвертая группа Russia           -->
-                    <v-list-group sub-group no-action>
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title>Russia</v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in russia">
-                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Russia', town)">{{ town }}
-                                </v-list-item-title>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list-group>
-
-                    <v-divider></v-divider>
-                    <!--            Пятая группа Germany           -->
-                    <v-list-group sub-group no-action>
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title>Germany</v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in germany">
-                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Germany', town)">{{ town }}
-                                </v-list-item-title>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list-group>
-
-                    <v-divider></v-divider>
-                    <!--            Шестая группа Uzbekistan           -->
-                    <v-list-group sub-group no-action>
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title>Uzbekistan</v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <v-list-item-group v-model="realSelected">
-                            <v-list-item v-bind:key="town" v-for="town in uzbekistan">
-                                <v-list-item-title @click="setUserLocAndLocalStorage(country = 'Uzbekistan', town)">{{ town
-                                    }}
-                                </v-list-item-title>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list-group>
-
-                </v-list-group>
-                <v-container class="d-flex justify-center">
-
-                    <v-btn @click="login()">
-                        <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
-                        Login In
-                    </v-btn>
-                    <v-btn @click="logout()">
-                        <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
-                    </v-btn>
-                    <v-btn @click="getProtectedApiData()">
-                        <!-- <router-link to="/home">{{$t('sLogIn')}}</router-link> -->
-                    </v-btn>
-
+                </v-card-text>
+            </v-card>
+        </v-container>
+        <v-container v-else class="d-flex align-center wrapper" fluid>
+            <v-card width="500" class="mx-auto">
+                <v-card-text>
+                    {{$t('sChooseLocation')}}
+                </v-card-text>
+                <v-container class="d-flex justify-center align-center">
+                    <v-btn @click="backToSelectTown" color="primary">Change Location</v-btn>
                 </v-container>
-
-            </v-card-text>
-        </v-card>
-    </v-container>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" md="9">
+                        </v-col>
+                        <v-col cols="12" md="2">
+                            <v-select
+                                    item-value="ru"
+                                    v-model="language"
+                                    :items="items"
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card>
+        </v-container>
+    </div>
 </template>
 
 <script>
     import AuthService from '@/services/auth.service';
-    import axios from 'axios';
-    import {mapMutations} from 'vuex'
+    import {mapMutations, mapActions} from 'vuex'
+    import ChooseOfTown from "@/components/ChooseOfTown";
+    import token from '@/mixins/token.mixin'
 
     const auth = new AuthService();
 
-
     export default {
-        name: 'Test2',
-        mounted() {
-
-        },
+        name: 'Sign',
+        components: {ChooseOfTown},
         data: () => ({
-            belarus: ['Grodno', 'Minsk', 'Brest', 'Vitebsk'],
-            ukraine: ['Kyiw', 'Kharkiv', 'Lviv', 'Odesa', 'Vinnytsia'],
-            lithuania: ['Klaipeda', 'Vilnius'],
-            russia: ['Chelyabinsk', 'Ekaterinburg'],
-            germany: ['Dresden'],
-            poland: ['Warsaw', 'Bialystock', 'Szczecin', 'Poznan'],
-            uzbekistan: ['Tashkent'],
-            fictionalSelected: null,
-            realSelected: null,
-            //userClaimsData: [],
+            language: 'ru',
+            items: ['ru', 'en'],
+            selectedCountry: '',
+            selectedCity: '',
+            signFormToggle: false,
+
         }),
         methods: {
-            ...mapMutations(['setUserLocation']),
-            // async getUser() {
-            //     const userClaims = await auth.getUser()
-            //     this.userClaimsData = userClaims.profile
-            //     console.log('USER_CLAIMS', this.userClaimsData)
-            // },
-            setUserLocAndLocalStorage(country, town) {
+            ...mapMutations(['setUserLocation', 'setLanguage']),
+            setUserLocAndLocalStorage() {
                 this.setUserLocation({
-                    country: country,
-                    town: town
+                    country: this.selectedCountry,
+                    town: this.selectedCity
                 })
 
                 const userLoc = this.$store.getters.getUserLocation
-                console.log(userLoc)
-                localStorage.setItem('userLoc in LocalStorage: ', JSON.stringify(userLoc))
-
-                //this.getUser()
-
-                // this.setUserRole({
-                //     userData: userLocalData
-                // })
-
-
+                localStorage.setItem('key', JSON.stringify(userLoc))
                 console.group('User data')
                 console.log('User location in VueX store: ', this.$store.getters.getUserLocation)
-                console.log('User state data is: ', this.$store.getters.getUserRole)
                 console.groupEnd()
-                //this.$router.push('/home')
-
+                this.$router.push('/home')
             },
             login() {
                 auth.login();
@@ -188,20 +99,63 @@
             logout() {
                 auth.logout();
             },
-            getProtectedApiData() {
-                const authorizationHeader = 'Authorization';
-                auth.getAccessToken().then((userToken) => {
-                    axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-
-                    axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
-                        .then((response) => {
-                            this.dataEventRecordsItems = response.data;
-                        })
-                        .catch((error) => {
-                            alert(error);
-                        });
-                });
+            // getProtectedApiData() {
+            //     const authorizationHeader = 'Authorization';
+            //     auth.getAccessToken().then((userToken) => {
+            //         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+            //
+            //         axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
+            //             .then((response) => {
+            //                 this.dataEventRecordsItems = response.data;
+            //             })
+            //             .catch((error) => {
+            //                 alert(error);
+            //             });
+            //     });
+            // },
+            deleteLocalStorage() {
+                localStorage.clear()
+                this.signFormToggle = false
+                this.$store.state.userLocation = []
+                console.log('User Location: ', this.$store.state.userLocation)
             },
+            backToSelectTown() {
+                this.signFormToggle = true
+            },
+            getUserCounty(country) {
+                this.selectedCountry = country
+            },
+            getUserCity(city) {
+                this.selectedCity = city
+            },
+            ...mapActions(['goFetchForCountries'])
+        },
+        mixins: [token],
+        mounted() {
+            const getCountries = () => {
+                let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
+                //Берем списаок стран с бэка и оложим в стор
+                this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
+            this.getToken(getCountries)
+
+        },
+        watch: {
+            language() {
+                console.log(this.language)
+                if (this.language === 'ru') {
+                    this.setLanguage(true);
+                    import(`../langs/ru.json`).then((msg) => {
+                        this.$i18n.setLocaleMessage('ru', msg);
+                        this.$i18n.locale = 'ru';
+                    })
+                } else {
+                    this.setLanguage(false);
+                    import(`../langs/en.json`).then((msg) => {
+                        this.$i18n.setLocaleMessage('en', msg);
+                        this.$i18n.locale = 'en';
+                    })
+                }
+            }
         },
     };
 </script>
@@ -210,5 +164,13 @@
     .wrapper {
         height: 100vh;
         background: #40BDED;
+    }
+
+    .loginDisabled {
+        /*display: none;*/
+    }
+
+    .titleNone {
+        display: none;
     }
 </style>

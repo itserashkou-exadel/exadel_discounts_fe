@@ -5,12 +5,12 @@
         <v-row>
             <Cards class="d-md-none"></Cards>
         </v-row>
-        <v-row class=" d-none d-md-block">
+        <v-row>
             <v-row justify="center" align="center" v-show="this.$store.state.switch === true" >
                 <DataTable/>
             </v-row>
             <v-row v-show="this.$store.state.switch === false" class="justify-center align-center">
-                <Cards/>
+                <StatisticTotal/>
             </v-row>
         </v-row>
     </v-container>
@@ -21,6 +21,7 @@
     import ToolBar from "@/views/ToolBar";
     import Cards from "@/views/Cards";
     import DataTable from "@/components/DataTable";
+    import StatisticTotal from "@/views/StatisticTotal";
 
     const auth = new AuthService();
 
@@ -31,7 +32,7 @@
                 windowInnerWidth: window.innerWidth,
             }
         },
-        components: {ToolBar, DataTable, Cards},
+        components: {ToolBar, DataTable, Cards, StatisticTotal},
     }
 </script>
 

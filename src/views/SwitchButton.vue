@@ -20,6 +20,9 @@
 
         computed: {
             direction: function (){
+                if (this.$route.name === "statistic"){
+                    return this.$store.getters.switcher === true ? this.$t('tbEachDiscount') : this.$t('tbTotalCount');
+                } else
                 return this.$store.getters.switcher === true ? this.$t('tbTable') : this.$t('tbCards');
             },
         }

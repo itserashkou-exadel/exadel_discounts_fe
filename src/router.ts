@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 import Cards from './views/Cards.vue';
 import Vue from 'vue'
 import Sign from '@/views/Sign.vue';
+import SignWrapper from '@/views/SignWrapper.vue'
 import HomePage from "@/views/HomePage.vue";
 import SubscribesPage from "@/views/SubscriptionsPage.vue";
 import MapPage from "@/views/MapPage.vue";
@@ -11,6 +12,7 @@ import Table from '@/components/Table.vue';
 import AddingDiscount from '@/views/AddingDiscount.vue';
 import Detail from '@/views/Detail.vue';
 import ErrorPage from '@/views/ErrorPage.vue';
+import StatisticMain from "@/components/StatisticMain.vue"
 
 Vue.use(VueRouter);
 
@@ -22,9 +24,14 @@ const router = new VueRouter({
     linkExactActiveClass: "exact-active",
     routes: [
         {
-            path: '/',
+            path: '/location',
             name: 'sign',
             component: Sign
+        },
+        {
+            path: '/',
+            name: 'signWrapper',
+            component: SignWrapper
         },
         {
             path: '/',
@@ -124,6 +131,18 @@ const router = new VueRouter({
                     path: "/favorites",
                     name: "favorites",
                     component: FavoritesPage
+                }
+            ]
+        },
+        {
+            path: '/statistic',
+            name: 'statistic',
+            component: AppTemplate,
+            children: [
+                {
+                    path: "/statistic",
+                    name: "statistic",
+                    component: StatisticMain
                 }
             ]
         },

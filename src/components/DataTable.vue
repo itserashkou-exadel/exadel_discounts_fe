@@ -3,7 +3,7 @@
         <v-data-table
                 :headers="headers()"
                 :items="result"
-                class="elevation-8"
+                class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
                 :single-expand="singleExpand"
@@ -14,7 +14,6 @@
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
         >
-
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -36,7 +35,7 @@
                     </v-dialog>
                 </v-toolbar>
             </template>
-            <template v-slot:item.actions="{ item }">
+            <template v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" v-slot:item.actions="{ item }">
                 <v-icon
                         small
                         class="mr-2"
@@ -99,7 +98,7 @@
                             <v-select v-if="page === 1"
                                     v-model="itemsPerPage"
                                     :items="itmPer"
-                                      @click="showSelect"
+                                     @click="showSelect"
                                     label="items per page"
                                     dense
                                     solo
@@ -127,11 +126,11 @@
         data: () => ({
             deleteID: null,
             searchWord: '',
-            itmPer: [5, 10],
+            itmPer: [6, 12],
             selectedPages: [],
             page: 1,
             pageCount: 1,
-            itemsPerPage: 5,
+            itemsPerPage: 6,
             expanded: [],
             singleExpand: true,
             dialog: false,
@@ -151,7 +150,11 @@
                 startDate: '',
                 endDate: '',
                 rating: 0,
-                description: ''
+                description: '',
+                viewsTotal: 0,
+                subscriptionsTotal: 0,
+                usersSubscriptionTotal: 0,
+                createDate: ''
             },
             defaultItem: {
                 id: '',
@@ -161,21 +164,48 @@
                 startDate: '',
                 endDate: '',
                 rating: 0,
-                description: ''
+                description: '',
+                userClaimsLocalData: [],
+                viewsTotal: 0,
+                subscriptionsTotal: 0,
+                usersSubscriptionTotal: 0,
+                createDate: ''
             },
 
         }),
         mixins: [token],
+        created() {
+            this.getUser2();
+            const localStorage = JSON.parse(window.localStorage.getItem('key'));
+            this.$store.commit('setUserLocation', localStorage);
+            const resSearch = () => {
+                this.inputPost(
+                    {
+                        "searchText": null,
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": localStorage.country,
+                        "searchAddressCity": localStorage.town,
+                        "searchSortFieldOption": "RatingDiscount",
+                        "searchSortOption": "Desc",
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 24,
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                    }
+                );
+            }
+            this.getToken(resSearch)
+        },
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
-                    this.searchWord = this.$store.state.keyWord;
+                    // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    // console.log(this.info)
+                    console.log(this.info)
+                    console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -183,13 +213,16 @@
                                 service: item.name,
                                 vendor: item.company.name,
                                 amountOfDiscount: item.amountOfDiscount,
-                                startDate: moment(item.startDate).format('L'),
-                                endDate: moment(item.endDate).format('L'),
-                                rating: item.ratingTotal,
+                                startDate: moment(item.startDate).format('DD-MM-YYYY'),
+                                endDate: moment(item.endDate).format('DD-MM-YYYY'),
+                                rating: item.ratingTotal.toFixed(2),
                                 description: item.description,
+                                viewsTotal: item.viewsTotal,
+                                subscriptionsTotal: item.subscriptionsTotal,
+                                usersSubscriptionTotal: item.usersSubscriptionTotal,
+                                createDate: moment(item.createDate).format("DD-MM-YYYY")
                             }
                         )
-
                     })
                     this.result = arr;
                     // console.log(this.result);
@@ -211,6 +244,58 @@
             searchWord: function(){
                 this.selectedPages = [1];
             },
+            itemsPerPage: function(){
+                this.$store.state.discounts = [];
+                const resSearch = () => {
+                    if(this.$store.state.filterRequest === false) {
+                        console.log(this.$store.state.userLocation.country, this.$store.state.userLocation.town);
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
+                                "searchSortFieldOption": "RatingDiscount",
+                                "searchSortOption": "Desc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 24,
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                            }
+                        );
+                    }else{
+                        this.inputPost(
+                            {
+                                "searchText": this.$store.state.keyWord,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
+                                "searchSortFieldOption": "NameDiscount",
+                                "searchSortOption": "Asc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 24,
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
+                                "searchAdvanced": {
+                                    "companyName": this.$store.state.filtered.vendor,
+                                    "searchDate": {
+                                        "startDate": this.$store.state.filtered.rangeDate[0],
+                                        "endDate": this.$store.state.filtered.rangeDate[1],
+                                    },
+                                    "searchAmountOfDiscount": {
+                                        "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                        "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                    },
+                                    "searchRatingTotal": {
+                                        "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                        "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                    }
+                                }
+                            }
+                        );
+                    }
+                }
+                this.getToken(resSearch)
+                console.log(this.$store.state.discounts)
+            }
             // result: function(){
             //     console.log('res')
             //     this.selectedPages.push(this.page)
@@ -251,8 +336,10 @@
 
         methods: {
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
+            ...mapMutations(['setUserClaims']),
             headers() {
-                return [
+               // console.log(this.$route.name)
+                let headerArr = [
                     {
                         text: this.$t('dtOffer'),
                         align: 'left',
@@ -264,8 +351,19 @@
                     {text: this.$t('dtStartDate'), value: 'startDate'},
                     {text: this.$t('dtFinishDate'), value: 'endDate'},
                     {text: this.$t('dtRating'), value: 'rating'},
-                    {text: this.$t('dtActions'), value: 'actions', sortable: false},
-                ]
+                    ];
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')){
+                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
+                }
+                if (this.$route.name === 'statistic') {
+                    headerArr.push(
+                        {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
+                        {text: this.$t('subscriptionsTotal'), value: 'subscriptionsTotal', sortable: true},
+                        {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
+                        {text: this.$t('createDate'), value: 'createDate', sortable: true},
+                        )
+                }
+                return headerArr;
             },
           addToFavorites: function (id) {
             console.log('discounts',id);
@@ -283,7 +381,7 @@
                 // console.log(this.selectedPages.indexOf(this.page))
                 // console.log(this.$store.state.discounts)
                 // console.log(this.page, this.pageCount);
-                    // console.log(this.page,this.pageCount)
+                //     console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
                 const goNext = () => {
@@ -292,29 +390,29 @@
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
-                                "searchSortFieldOption": "NameDiscount",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
+                                "searchSortFieldOption": "RatingDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": "Ru"
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         )
                     }else{
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
                         console.log(this.$store.state.filtered.range)
-                        this.inputPost(
+                        this.nextDiscount(
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "NameDiscount",
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": "Ru",
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
                                     "searchDate": {
@@ -366,7 +464,7 @@
                         "searchSortOption": "Asc",
                         "searchPaginationPageNumber": 1,
                         "searchPaginationCountElementPerPage": 15,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 )
 
@@ -386,14 +484,14 @@
                         "searchSortOption": "Asc",
                         "searchPaginationPageNumber": 2,
                         "searchPaginationCountElementPerPage": 5,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 )
 
                 console.log(this.$store.state.discounts)
             },
             showSelect() {
-                console.log(this.$store.state.itemsPerPage);
+
             },
             editItem(item) {
                 this.$router.push({
@@ -430,6 +528,21 @@
                     this.result.push(this.editedItem)
                 }
                 this.close()
+            },
+            async getUser2() {
+
+                const result = await auth.getUser()
+                this.userClaimsLocalData = result
+                console.log('USER CLAIMS: ', result)
+
+                this.setUserClaims({
+                    name: result.profile.name,
+                    surname: result.profile.surname,
+                    role: result.profile.role,
+
+                    //email: result.profile.email
+                })
+                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
         },
     }

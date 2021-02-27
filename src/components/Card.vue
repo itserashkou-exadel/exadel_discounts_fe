@@ -5,11 +5,16 @@
             max-height="800px"
     >
         <div>
-            <v-img
-                    height="250"
-                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-                    class="white--text "
-            >
+<!--            <v-img-->
+<!--                    height="250"-->
+<!--                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"-->
+<!--                    class="white&#45;&#45;text "-->
+<!--            >-->
+          <v-img
+              height="250"
+              :src="pictureCheck(description.picture)"
+              class="white--text "
+          >
                 <div>
                     <v-avatar size="59" color="red" class=" mx-3 my-3"><b>{{description.amountOfDiscount}}%</b>
                     </v-avatar>
@@ -19,7 +24,7 @@
         <v-row align="start" justify="space-between">
             <v-col>
                 <div>
-                    <v-card-title>
+                    <v-card-title style="word-break: normal">
                         {{ description.service}}
                     </v-card-title>
                 </div>
@@ -36,7 +41,7 @@
                             size="14"
                     ></v-rating>
                     <div class="grey--text ml-2">
-                        {{description.rating}}
+                      {{description.rating.toFixed(2)}}
                     </div>
                 </v-row>
             </v-col>
@@ -84,7 +89,7 @@
           <v-btn @click="$router.push({name:'detail',params:{_id:description.id}})" color="blue" raised>
                 Choose
             </v-btn>
-            <div class="mr-12">
+            <div v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" class="mr-12">
                 <v-icon @click="editItem(description)">
                     mdi-pencil
                 </v-icon>
@@ -133,6 +138,14 @@
             deleteFromFavor: ['deleteFromFavor']
         },
         methods: {
+            pictureCheck(url){
+              // console.log(url)
+              if(url === false)
+                return "../../public/cat_404.jpg"
+              else
+                // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                  return url
+            },
             iconSwitch(id) {
                 if (this.card === "mdi-heart-outline"){
                   this.card = "mdi-heart"

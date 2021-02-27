@@ -42,33 +42,33 @@
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderRu'
                                           v-model='vendorRu'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelRu'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorEn'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelEn'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderRu'
                                           v-model='vendorDescrRu'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelRu'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
                             <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
                                           @keydown.enter="nothing"
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorDescrEn'
-                                          :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                          :label='item.labelEn'
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
@@ -163,11 +163,29 @@
                             ></v-textarea>
                         </v-expand-transition>
                     </div>
-                    <chips-for-tags
-                    v-bind:items="tagsRu"
+                    <chips-for-tags v-if="$i18n.locale === 'ru'"
+                                    v-bind:icon-show="true"
+                                    v-bind:tags="tagsRu"
+                                    v-on:tagShow="changeTagShow"
+                                    v-on:sendTags="setTagsRu"
                     />
-                    <chips-for-tags
-                            v-bind:items="tagsEn"
+                    <chips-for-tags v-if="$i18n.locale === 'en'"
+                                    v-bind:icon-show="true"
+                                    v-bind:tags="tagsEn"
+                                    v-on:tagShow="changeTagShow"
+                                    v-on:sendTags="setTagsEn"
+                    />
+                    <chips-for-tags v-if="$i18n.locale === 'ru'"
+                                    v-show="tagShowAd"
+                                    v-bind:tags="tagsEn"
+                                    v-bind:icon-show="false"
+                                    v-on:sendTags="setTagsEn"
+                    />
+                    <chips-for-tags v-if="$i18n.locale === 'en'"
+                                    v-show="tagShowAd"
+                                    v-bind:tags="tagsRu"
+                                    v-bind:icon-show="false"
+                                    v-on:sendTags="setTagsRu"
                     />
                     <v-text-field
                             @keydown.enter="nothing"
@@ -183,7 +201,7 @@
                             :placeholder="this.$t('adLabelOfDiscountVendorEmail')"
                             outlined
                             v-model="vendorEmail"
-                            :rules='nameRules'
+                            :rules='emailRules'
                     ></v-text-field>
                     <v-combobox
                             v-model="vendorSelectedDays"
@@ -214,8 +232,6 @@
                 </v-col>
                 <v-col cols="12" md="5">
                     <ChooseOfTown
-                            v-bind:selectCity="selectCity"
-                            v-bind:selectCountry="selectCountry"
                             v-on:selectedCountryForObj='selCountry'
                             v-on:selectedCityForObj='selCity'
                     />
@@ -227,10 +243,11 @@
                             @input="selectLine"
                             :rules='nameRules'
                     ></v-text-field>
-                    <div class="mr-10">
-                        <AddDiscountMap v-bind:address="address"
-                        :updateCoordinates="updateCoordinates"/>
-                    </div>
+
+                    <AddDiscountMap v-bind:address="address"
+
+                                    :updateCoordinates="updateCoordinates"/>
+
                     <v-text-field
                             @keydown.enter="nothing"
                             class="mt-10"
@@ -248,6 +265,10 @@
                             v-model="coordinate2"
                             :rules='onlyNumberRules'
                     ></v-text-field>
+                    <PromocodesForAdding
+                            v-bind:item1="promo1"
+                            v-on:selectedPromos="getPromo"
+                    />
                 </v-col>
             </v-row>
             <v-row
@@ -267,7 +288,7 @@
                             persistent
                             max-width="290"
                     >
-                        <v-card >
+                        <v-card>
                             <v-card-title class="headline" v-if="val">
                                 {{$t('adServeAreAdded')}}
                             </v-card-title>
@@ -320,19 +341,25 @@
     import DatePiker from "@/components/DatePiker";
     import axios from "axios";
     import ChipsForTags from "@/components/ChipsForTags";
+    import PromocodesForAdding from "@/components/PromocodesForAdding";
 
 
     export default {
         name: "AddingDiscount",
         data() {
             return {
+                promo1: 0,
+                promo2: 0,
+                promo3: 0,
+                promo4: 0,
+                tagShowAd: false,
                 val: true,
                 dialog: false,
                 componentKey: 0,
                 countries: [],
                 cities: [],
                 switchAd: true,
-                daysOfWeek: [`${this.$t('Monday')}`,`${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
+                daysOfWeek: [`${this.$t('Monday')}`, `${this.$t('Tuesday')}`, `${this.$t('Wednesday')}`, `${this.$t('Thursday')}`, `${this.$t('Friday')}`, `${this.$t('Saturday')}`, `${this.$t('Sunday')}`],
                 street: '',
                 coordinate1: null,
                 coordinate2: null,
@@ -359,6 +386,7 @@
                 valid: true,
                 nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
                 onlyNumberRules: [v => /^-?\d*(\.\d+)?$/.test(v) || 'The field must contain only numbers'],
+                emailRules: [v => /^[0-9a-z_-]+@[0-9a-z_-]+\.[a-z]{2,5}$/i.test(v) || "Email is not correctly"],
                 dateStart: '',
                 dateFinish: '',
                 address: {
@@ -369,11 +397,27 @@
             }
         },
         mixins: [token],
-        components: {DatePiker, ChooseOfTown, AddDiscountMap, ChipsForTags},
+        components: {DatePiker, ChooseOfTown, AddDiscountMap, ChipsForTags, PromocodesForAdding},
         methods: {
+            getPromo (promo1, promo2, promo3, promo4) {
+                this.promo1 = promo1;
+                this.promo2 = promo2;
+                this.promo3 = promo3;
+                this.promo4 = promo4;
+            },
+            setTagsRu(tags) {
+
+                this.tagsRu = tags
+            },
+            setTagsEn(tags) {
+                this.tagsEn = tags
+            },
+            changeTagShow(show) {
+                this.tagShowAd = show
+            },
             updateCoordinates(lng, lat) {
-              this.coordinate2 = lng;
-              this.coordinate1 = lat;
+                this.coordinate2 = lng;
+                this.coordinate1 = lat;
             },
             titleOfField() {
                 if (this.val) {
@@ -382,25 +426,27 @@
                     return this.$tc('adClearOrEdit', 2);
                 }
             },
-            titleOfButtonOfCard (){
+            titleOfButtonOfCard() {
                 if (this.val) {
                     return this.$tc('adTitleOfButtonOfCard', 1)
                 } else {
                     return this.$tc('adTitleOfButtonOfCard', 2);
                 }
             },
-            nothing (event) {
+            nothing(event) {
                 event.preventDefault()
             },
-            agree () {
+            agree() {
                 this.dialog = false;
                 this.$refs.form.reset();
             },
             selCountry: function (country) {
                 this.selectedCountry = country
+                this.address.country = country
             },
             selCity: function (city) {
                 this.selectedCity = city
+                this.address.city = city
             },
             selectedDateStart: function (dateStart) {
                 this.dateStart = dateStart
@@ -450,149 +496,145 @@
                 ]
             },
             objectWithoutId() {
-                    if (this.$i18n.locale === 'ru') {
-                        return {
-                    name: this.titleRu,
-                    description: this.descriptionRu,
-                    amountOfDiscount: this.valueOfDiscount,
-                    startDate: this.dateStart,
-                    endDate: this.dateFinish,
-                    address: {
-                        country: this.selectedCountry,
-                        city: this.selectedCity,
-                        street: this.street,
-                        location: {
-                            latitude: this.coordinate1,
-                            longitude: this.coordinate2
-                        }
-                    },
-                    company: {
-                        name: this.vendorRu,
-                        description: this.vendorDescrRu,
-                        phoneNumber: this.vendorPhone,
-                        mail: this.vendorEmail
-                    },
-                    workingDaysOfTheWeek: this.transformateDays(),
-                    pictureUrl: this.picture,
-                    tags: this.tagsRu,
-                    language: "Ru",
-                    translations: [
-                        {
-                            name: this.titleEn,
-                            description: this.descriptionEn,
-                            address: {
-                                country: '',
-                                city: '',
-                                street: this.street,
-                                location: {
-                                    latitude: this.coordinate1,
-                                    longitude: this.coordinate2
-                                }
-                            },
-                            company: {
-                                name: this.vendorEn,
-                                description: this.vendorDescrEn,
-                                phoneNumber: this.vendorPhone,
-                                mail: this.vendorEmail
-                            },
-                            tags: this.tagsEn
-                            ,
-                            language: "En"
-                        }
-                    ]
-                }}
-                    if (this.$i18n.locale === 'en') {
-                        console.log(2)
-                        return {
-                            name: this.titleEn,
-                            description: this.descriptionEn,
-                            amountOfDiscount: this.valueOfDiscount,
-                            startDate: this.dateStart,
-                            endDate: this.dateFinish,
-                            address: {
-                                country: this.selectedCountry,
-                                city: this.selectedCity,
-                                street: this.street,
-                                location: {
-                                    latitude: this.coordinate1,
-                                    longitude: this.coordinate2
-                                }
-                            },
-                            company: {
-                                name: this.vendorEn,
-                                description: this.vendorDescrEn,
-                                phoneNumber: this.vendorPhone,
-                                mail: this.vendorEmail
-                            },
-                            workingDaysOfTheWeek: this.transformateDays(),
-                            tags: this.tagsEn,
-                            language: "En",
-                            translations: [
-                                {
-                                    name: this.titleRu,
-                                    description: this.descriptionRu,
-                                    address: {
-                                        country: '',
-                                        city: '',
-                                        street: this.street,
-                                        location: {
-                                            latitude: this.coordinate1,
-                                            longitude: this.coordinate2
-                                        }
-                                    },
-                                    company: {
-                                        name: this.vendorRu,
-                                        description: this.vendorDescrRu,
-                                        phoneNumber: this.vendorPhone,
-                                        mail: this.vendorEmail
-                                    },
-                                    tags: this.tagsRu,
-                                    language: "Ru"
-                                }
-                            ]
-                        }
+                if (this.$i18n.locale === 'ru') {
+                    return {
+                        name: this.titleRu,
+                        description: this.descriptionRu,
+                        amountOfDiscount: this.valueOfDiscount,
+                        startDate: this.dateStart,
+                        endDate: this.dateFinish,
+                        address: {
+                            country: this.selectedCountry,
+                            city: this.selectedCity,
+                            street: this.street,
+                            location: {
+                                latitude: this.coordinate1,
+                                longitude: this.coordinate2
+                            }
+                        },
+                        company: {
+                            name: this.vendorRu,
+                            description: this.vendorDescrRu,
+                            phoneNumber: this.vendorPhone,
+                            mail: this.vendorEmail
+                        },
+                        workingDaysOfTheWeek: this.transformateDays(),
+                        pictureUrl: this.picture,
+                        tags: this.tagsRu,
+                        promocodeOptions: {
+                        countActivePromocodePerUser: this.promo1,
+                        daysDurationPromocode: this.promo2,
+                        countSymbolsPromocode: this.promo3,
+                        timeLimitAddingInSeconds: this.promo4},
+                        language: "Ru",
+                        translations: [
+                            {
+                                name: this.titleEn,
+                                description: this.descriptionEn,
+                                address: {
+                                    country: this.selectedCountry,
+                                    city: this.selectedCity,
+                                    street: this.street,
+                                    location: {
+                                        latitude: this.coordinate1,
+                                        longitude: this.coordinate2
+                                    }
+                                },
+                                company: {
+                                    name: this.vendorEn,
+                                    description: this.vendorDescrEn,
+                                    phoneNumber: this.vendorPhone,
+                                    mail: this.vendorEmail
+                                },
+                                tags: this.tagsEn
+                                ,
+                                language: "En"
+                            }
+                        ]
                     }
+                }
+                if (this.$i18n.locale === 'en') {
+                    return {
+                        name: this.titleEn,
+                        description: this.descriptionEn,
+                        amountOfDiscount: this.valueOfDiscount,
+                        startDate: this.dateStart,
+                        endDate: this.dateFinish,
+                        address: {
+                            country: this.selectedCountry,
+                            city: this.selectedCity,
+                            street: this.street,
+                            location: {
+                                latitude: this.coordinate1,
+                                longitude: this.coordinate2
+                            }
+                        },
+                        company: {
+                            name: this.vendorEn,
+                            description: this.vendorDescrEn,
+                            phoneNumber: this.vendorPhone,
+                            mail: this.vendorEmail
+                        },
+                        workingDaysOfTheWeek: this.transformateDays(),
+                        tags: this.tagsEn,
+                        promocodeOptions: {
+                            countActivePromocodePerUser: this.promo1,
+                            daysDurationPromocode: this.promo2,
+                            countSymbolsPromocode: this.promo3,
+                            timeLimitAddingInSeconds: this.promo4},
+                        language: "En",
+                        translations: [
+                            {
+                                name: this.titleRu,
+                                description: this.descriptionRu,
+                                address: {
+                                    country: this.selectedCountry,
+                                    city: this.selectedCity,
+                                    street: this.street,
+                                    location: {
+                                        latitude: this.coordinate1,
+                                        longitude: this.coordinate2
+                                    }
+                                },
+                                company: {
+                                    name: this.vendorRu,
+                                    description: this.vendorDescrRu,
+                                    phoneNumber: this.vendorPhone,
+                                    mail: this.vendorEmail
+                                },
+                                tags: this.tagsRu,
+                                language: "Ru"
+                            }
+                        ]
+                    }
+                }
             },
-            submit() {
+            async submit() {
                 if (this.$refs.form.validate()) {
-                const postDiscount = () => {
-                    if (this.$route.params.placeOfCall === 'newDiscount'){
-
-                    this.addDiscount(
-                        {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                    )
-                        console.log({...{id: uuidv4()}, ...(this.objectWithoutId())})
-                    } else {
-                        console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
-                        this.updateDiscount(
-                            {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                        ).catch((e) => console.log(e))
-                    }
-                }
-                    this.getToken(postDiscount);
-                    this.val = true;
-                    const inputDiscount = ()=> {
-                        this.$store.state.discounts = [];
-                        this.inputPost(
-                        {
-                            "searchText": this.$store.state.keyWord,
-                            "searchDiscountOption": "All",
-                            "searchAddressCountry": "Украина",
-                            "searchAddressCity": "Винница",
-                            "searchSortFieldOption": "NameDiscount",
-                            "searchSortOption": "Asc",
-                            "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 15,
-                            "searchLanguage": "Ru"
+                    const postDiscount = () => {
+                        if (this.$route.params.placeOfCall === 'newDiscount') {
+                            this.addDiscount(
+                                {...{id: uuidv4()}, ...(this.objectWithoutId())}
+                            ).catch((e) => this.val = false)
+                            console.log({...{id: uuidv4()}, ...(this.objectWithoutId())})
+                            this.dialog = true
+                            this.val = true
+                        } else {
+                            console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
+                            this.updateDiscount(
+                                {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
+                            ).catch((e) => {console.log(55); this.val = false; this.dialog = true})
+                            .then(() => {
+                                if (this.val === true)
+                                {this.$router.push({name:'home'})}
+                            })
+                            this.val = true
                         }
-                    );
-                }
-
+                    }
+                    await this.getToken(postDiscount)
                 } else {
                     this.val = false;
-
                 }
-                this.dialog = true
             },
             resetForm() {
                 this.$refs.form.reset();
@@ -601,12 +643,6 @@
             },
             selectLine(value) {
                 this.address.line = value;
-            },
-            selectCountry(value) {
-                this.address.country = value;
-            },
-            selectCity(value) {
-                this.address.city = value;
             },
             titleOfPage() {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
@@ -627,17 +663,19 @@
                     const id = this.$route.params.idOfDiscount;
                     const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
                     const discount = response.data;
+                    console.log(discount);
                     if (discount.language === 'Ru') {
-                    this.titleRu = discount.name;
-                    this.titleEn = discount.translations[0].name;
-                    this.vendorRu = discount.company.name;
-                    this.vendorEn = discount.translations[0].company.name;
-                    this.vendorDescrRu = discount.company.description;
-                    this.vendorDescrEn = discount.translations[0].company.description;
-                    this.tagsRu = discount.tags;
-                    this.tagsEn = discount.translations[0].tags;
-                    this.descriptionRu = discount.description;
-                    this.descriptionEn = discount.translations[0].description}
+                        this.titleRu = discount.name;
+                        this.titleEn = discount.translations[0].name;
+                        this.vendorRu = discount.company.name;
+                        this.vendorEn = discount.translations[0].company.name;
+                        this.vendorDescrRu = discount.company.description;
+                        this.vendorDescrEn = discount.translations[0].company.description;
+                        this.tagsRu = discount.tags;
+                        this.tagsEn = discount.translations[0].tags;
+                        this.descriptionRu = discount.description;
+                        this.descriptionEn = discount.translations[0].description
+                    }
                     if (discount.language === 'En') {
                         this.titleEn = discount.name;
                         this.titleRu = discount.translations[0].name;
@@ -652,6 +690,12 @@
                     }
                     this.selectedCountry = discount.address.country || discount.translations[0].address.country;
                     this.selectedCity = discount.address.city || discount.translations[0].address.city;
+                    if (discount.promocodeOptions !== undefined) {
+                               console.log(1);
+                    this.promo1 = discount.promocodeOptions.countActivePromocodePerUser,
+                    this.promo2 = discount.promocodeOptions.daysDurationPromocode,
+                    this.promo3 = discount.promocodeOptions.countSymbolsPromocode,
+                    this.promo4 = discount.promocodeOptions.timeLimitAddingInSeconds}
                     this.vendorPhone = discount.company.phoneNumber;
                     this.vendorEmail = discount.company.mail;
                     this.transformateToDays(discount.workingDaysOfTheWeek);
@@ -727,19 +771,22 @@
                 }
                 return str
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'inputPost', 'updateDiscount'])
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'nextDiscount'])
         },
-        computed: {...mapGetters(['allDiscounts', 'language', 'allCountries']),
-          },
+        computed: {
+            ...mapGetters(['allDiscounts', 'language', 'allCountries']),
+
+        },
 
         mounted() {
-          this.fillingFields();
+            this.fillingFields();
         }
     }
 </script>
 <style scoped>
+
     #addDiscountMap {
-        width: 32vw;
+
         height: 49vh;
     }
 </style>

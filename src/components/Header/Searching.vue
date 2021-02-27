@@ -41,7 +41,26 @@
         mixins: [token],
         watch: {
             search: function () {
+                console.log(this.search)
                 this.setKeyWord(this.search)
+                if(this.search === ''){
+                    const resSearch = () => {
+                        this.inputPost(
+                            {
+                                "searchText": null,
+                                "searchDiscountOption": "All",
+                                "searchAddressCountry": this.$store.state.userLocation.country,
+                                "searchAddressCity": this.$store.state.userLocation.town,
+                                "searchSortFieldOption": "RatingDiscount",
+                                "searchSortOption": "Desc",
+                                "searchPaginationPageNumber": 1,
+                                "searchPaginationCountElementPerPage": 24,
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                            }
+                        );
+                    }
+                    this.getToken(resSearch)
+                }
             }
         },
         methods: {
@@ -49,19 +68,20 @@
             showSearch() {
                 // console.log(this.search)
                 this.$store.state.discounts = [];
+                console.log(this.$store.state.userLocation)
                 this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
                             "searchDiscountOption": "All",
-                            "searchAddressCountry": "Украина",
-                            "searchAddressCity": "Винница",
-                            "searchSortFieldOption": "NameDiscount",
-                            "searchSortOption": "Asc",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
+                            "searchSortFieldOption": "RatingDiscount",
+                            "searchSortOption": "Desc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 20,
-                            "searchLanguage": "Ru"
+                            "searchPaginationCountElementPerPage": 24,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                         }
                     );
                 }
