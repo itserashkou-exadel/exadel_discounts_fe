@@ -1,3 +1,4 @@
+
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const fs = require('fs')
 
@@ -11,13 +12,16 @@ module.exports = {
   },
 
   devServer: {
-      host: 'localhost',
+      host: `${process.env.BASE_URL}`,
+      //host: 'localhost',
       disableHostCheck: true,
       https: {
         key: fs.readFileSync('./certs/dev_localhost.key'),
         cert: fs.readFileSync('./certs/dev_localhost.pem'),
       },
-      public: 'https://localhost:44357'
+      //public: 'https://localhost:44357',
+      public: `https://${process.env.BASE_URL}`,
+      publicPath: `https://${process.env.BASE_URL}`
   },
 
   transpileDependencies: [

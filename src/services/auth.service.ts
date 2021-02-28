@@ -10,7 +10,8 @@ export default class AuthService {
             userStore: new WebStorageStateStore({ store: window.localStorage }),
             authority: STS_DOMAIN,
             client_id: 'crazypriceclient',
-            redirect_uri: 'https://localhost:44357/callback.html',
+            //redirect_uri: 'https://localhost:44357/callback.html',
+            redirect_uri: `https://${process.env.BASE_URL}:44357/callback.html`,
             automaticSilentRenew: true,
             silent_redirect_uri: 'https://localhost:44357/silent-renew.html',
             response_type: 'code',
@@ -21,6 +22,8 @@ export default class AuthService {
 
         this.userManager = new UserManager(settings);
     }
+
+
 
     public getUser(): Promise<User | null> {
         return this.userManager.getUser()
