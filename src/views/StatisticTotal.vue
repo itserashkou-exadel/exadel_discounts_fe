@@ -2,15 +2,27 @@
     <v-container fluid>
         <v-row>
             <v-col>
-                <choose-of-town/>
+                <ChooseOfTown
+                        v-on:selectedCountryForObj="setCountry"
+                        v-on:selectedCityForObj="setCity"
+                />
+                <date-piker
+                        v-on:selectedDateStart="setStartDate"
+                        v-on:selectedDateFinish="setFinishDate"
+                />
             </v-col>
+            <v-btn
+                    block
+                    @click="clearAll"
+            >Очистить
+            </v-btn>
+            <v-btn
+                    block
+                    @click="generate"
+            >Сформировать
+            </v-btn>
             <v-col>
-                <date-piker/>
-                <v-btn
-                        block
-                        @click="generate"
-                >Сформировать
-                </v-btn>
+
             </v-col>
         </v-row>
         <v-card
@@ -40,35 +52,68 @@
     </v-container>
 </template>
 <script>
-    import ChooseOfTown from "@/components/ChooseOfTown";
-
-    const moment = require('moment')
-    import Card from '../components/Card.vue'
-    import SwitchButton from "@/views/SwitchButton";
-    import Modal from "@/components/Filter/Modal";
+    import ChooseOfTown from "@/components/ChooseOfTown.vue";
     import token from '@/mixins/token.mixin'
     import DatePiker from "@/components/DatePiker";
     import axios from 'axios'
 
+    const moment = require('moment')
+
     export default {
-        name: "Cards",
+        name: "StatisticTotal",
         mixins: [token],
-        components: {DatePiker, ChooseOfTown, Modal, SwitchButton, Card},
+        components: {DatePiker, ChooseOfTown},
         data: () => ({
             selectedItem: 1,
             items: [
-                {text: 'discountsTotal', value: '100'},
-                {text: 'ratedTotal', value: '100'},
-                {text: 'inFavoritesListTotal', value: '200'},
-                {text: 'viewsTotal', value: '300'},
-                {text: 'subscriptionsTotal', value: '400'},
+                {text: 'discountsTotal', value: '0'},
+                {text: 'ratedTotal', value: '0'},
+                {text: 'inFavoritesListTotal', value: '0'},
+                {text: 'viewsTotal', value: '0'},
+                {text: 'subscriptionsTotal', value: '0'},
             ],
+            country: '',
+            city: '',
+            startDate: '',
+            finishDate: ''
         }),
         methods: {
+            clearAll() {
+                this.$emit('clearAll')
+                this.country = '',
+                this.city = '',
+                this.startDate = '',
+                this.finishDate = ''
+            },
+            setCountry(country) {
+                this.country = country
+            },
+            setCity(city) {
+                this.city = city
+            },
+            setStartDate(date) {
+                this.startDate = `${date}T00:00:00.459Z`
+                console.log(this.startDate)
+            },
+            setFinishDate(date) {
+                this.finishDate = `${date}T23:59:59.459Z`
+            },
             generate() {
                 const getStatistic = () => {
-                    axios.post('https://localhost:9001/api/v1/statistics/discounts', {}).then(
-                        (data) => console.log(data))
+                    let surchObj = {
+                        createStartDate: this.startDate,
+                        createEndDate: this.finishDate,
+                        searchAddressCountry: this.country,
+                        searchAddressCity: this.city
+                    }
+                    axios.post('https://localhost:9001/api/v1/statistics/discounts', surchObj).then(
+                        (data) => {
+                            this.items[0].value = data.data.discountsTotal;
+                            this.items[1].value = data.data.ratedTotal;
+                            this.items[2].value = data.data.favoritesTotal;
+                            this.items[3].value = data.data.viewsTotal;
+                            this.items[4].value = data.data.subscriptionsTotal;
+                        })
                 }
                 this.getToken(getStatistic);
             }

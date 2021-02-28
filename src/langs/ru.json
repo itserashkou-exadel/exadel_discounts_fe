@@ -79,5 +79,6 @@
   "usersSubscriptionTotal": "Общее количество подписок пользователя",
   "createDate": "Дата создания",
   "tbEachDiscount": "По каждой скидке",
-  "tbTotalCount": "По всем скидкам"
+  "tbTotalCount": "По всем скидкам",
+  "allCountries": "Все"
 }

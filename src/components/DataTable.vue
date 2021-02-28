@@ -203,8 +203,8 @@
                     // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    console.log(this.info)
-                    console.log(this.$store.state.userClaimsStoreData)
+                    // console.log(this.info)
+                    // console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {

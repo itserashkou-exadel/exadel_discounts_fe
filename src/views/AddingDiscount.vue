@@ -634,6 +634,7 @@
                     await this.getToken(postDiscount)
                 } else {
                     this.val = false;
+                    this.dialog = true
                 }
             },
             resetForm() {
