@@ -157,8 +157,14 @@ export default {
       this.showSubscriptions();
     },
     updatePageCount() {
-      if (this.pageNumber === this.pageCount && this.allSubscriptions.length >= this.pageSize  ) {
-        this.pageCount++
+      if (this.pageNumber === this.pageCount) {
+        if (this.allSubscriptions.length >= this.pageSize  ) {
+          this.pageCount++
+        }else if (this.allSubscriptions.length <= 0  ) {
+          this.pageCount--;
+          this.pageNumber=1;
+          this.showSubscriptions();
+        }
       }
     }
   },
