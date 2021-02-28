@@ -5,7 +5,6 @@
         :headers="headers()"
         hide-default-footer
         show-expand
-        :page.sync="page"
     >
       <template v-slot:top>
         <v-toolbar
@@ -40,14 +39,16 @@
             <v-col cols="12" lg="12" class="d-flex justify-center">
               <p class="mb-0">{{ item.description }}</p>
             </v-col>
-            <v-col  cols="9" lg="9" class="d-flex justify-space-around">
+            <v-col cols="9" lg="9" class="d-flex justify-space-around">
               <v-btn
                   color="primary"
                   @click="$router.push({name:'detail'})"
               >
                 {{ $t('dtMoreInfo') }}
               </v-btn>
-              <Promocodes v-bind:subscrItem="item"/>
+              <Promocodes v-bind:subscrItem="item"
+                          :showSubscriptions="showSubscriptions"
+              />
             </v-col>
           </v-row>
         </td>
@@ -56,8 +57,11 @@
 
     </v-data-table>
     <v-pagination
-        v-model="page"
+        v-model="pageNumber"
         :length="pageCount"
+        @next="paginateNext"
+        @previous="paginatePrev"
+        @input="paginateInput"
     ></v-pagination>
   </v-col>
 </template>
@@ -80,13 +84,11 @@ export default {
   name: "Subscriptions",
   mixins: [authMixin],
   data: () => ({
-    searchResult: '',
-    offers: [],
-    info: [],
-    result: [],
-    page: 1,
+    pageNumber: 1,
     pageCount: 1,
+    pageSize: 5,
     dialog: false,
+
   }),
   computed: {
     ...mapGetters(["allSubscriptions"]),
@@ -108,21 +110,22 @@ export default {
   methods: {
     ...mapActions(['getSubscription']),
     showSubscriptions() {
+      const {country, town} = this.$store.state.userLocation
       const authorizationHeader = 'Authorization';
       auth.getAccessToken().then((userToken) => {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
         this.getSubscription(
             {
               "searchDiscountOption": "Subscriptions",
-              "searchAddressCountry": "Украина",
-              "searchAddressCity": "Винница",
+              "searchAddressCountry": country,
+              "searchAddressCity": town,
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
-              "searchPaginationPageNumber": 1,
-              "searchPaginationCountElementPerPage": 10,
+              "searchPaginationPageNumber": this.pageNumber,
+              "searchPaginationCountElementPerPage": this.pageSize,
               "searchLanguage": "Ru"
             }
-        )
+        ).then(response => this.updatePageCount());
       }).catch((error) => {
         alert(error);
       });
@@ -143,7 +146,23 @@ export default {
         {text: this.$t('dtRating'), value: 'rating'},
       ]
     },
+    paginateInput(pageNumber) {
+      this.showSubscriptions(pageNumber);
+    },
+    paginateNext() {
+      this.showSubscriptions();
+
+    },
+    paginatePrev() {
+      this.showSubscriptions();
+    },
+    updatePageCount() {
+      if (this.pageNumber === this.pageCount && this.allSubscriptions.length >= this.pageSize  ) {
+        this.pageCount++
+      }
+    }
   },
+
   mounted() {
     this.showSubscriptions();
   },

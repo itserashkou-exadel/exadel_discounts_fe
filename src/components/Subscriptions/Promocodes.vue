@@ -12,22 +12,22 @@
             v-on="on"
             @click="getPromo(subscrItem.id)"
         >
-         Мои промокоды
+          Мои промокоды
         </v-btn>
       </template>
 
       <v-card>
 
-          <v-card-title class="headline grey lighten-2">
-            Промокоды
-          </v-card-title>
-          <v-card-text
+        <v-card-title class="headline grey lighten-2">
+          Промокоды
+        </v-card-title>
+        <v-card-text
+        >
+          <v-data-table
+              :headers="headers()"
+              :items="filterData"
+              hide-default-footer
           >
-            <v-data-table
-                :headers="headers()"
-                :items="filterData"
-                hide-default-footer
-            >
             <template v-slot:item.promocodeValue="{ item }">
               <v-chip
                   :color="getColor(item.promocodeValue)"
@@ -36,22 +36,22 @@
                 {{ item.promocodeValue }}
               </v-chip>
             </template>
-              <template v-slot:item.actions="{ item }">
-                <v-icon
-                    small
-                    @click="deleteFromSubscr(subscrItem.id ,item.id)"
-                >
-                  mdi-delete
-                </v-icon>
-              </template>
-            </v-data-table>
-          </v-card-text>
+            <template v-slot:item.actions="{ item }">
+              <v-icon
+                  small
+                  @click="deleteFromSubscr(subscrItem.id ,item.id)"
+              >
+                mdi-delete
+              </v-icon>
+            </template>
+          </v-data-table>
+        </v-card-text>
 
-          <v-divider></v-divider>
+        <v-divider></v-divider>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-          </v-card-actions>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+        </v-card-actions>
 
       </v-card>
     </v-dialog>
@@ -70,7 +70,7 @@ const auth = new AuthService();
 
 export default {
   name: "Promocodes",
-  props: ['subscrItem'],
+  props: ['subscrItem', 'showSubscriptions'],
   mixins: [authMixin],
   data() {
     return {
@@ -94,9 +94,9 @@ export default {
         {text: 'УДАЛИТЬ', value: 'actions'},
       ]
     },
-    getColor (endDate) {
+    getColor(endDate) {
 
-     return '#2196f3'
+      return '#2196f3'
     },
     getPromo: function (id) {
       let updatePromocodes = (promocodes) => this.promocodes = promocodes;
@@ -118,13 +118,13 @@ export default {
       this.getToken(promo);
     },
     deleteFromSubscr: function (discountId, promoId) {
-      let show = () => this.getPromo(discountId);
-      const putSubscr = () => {
-        axios({
-          method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/subscriptions/delete/${discountId}/${promoId}`,
-        }).then(response => show());
-      };
+      let showSubscriptions = () => this.showSubscriptions();
+      let showPromocodes = () => this.getPromo(discountId);
+      const putSubscr = () => axios({
+        method: 'put',
+        url: `https://localhost:9001/api/v1/discounts/subscriptions/delete/${discountId}/${promoId}`,
+      }).then(response => showPromocodes())
+          .then(response => showSubscriptions());
       this.getToken(putSubscr);
     },
   },
