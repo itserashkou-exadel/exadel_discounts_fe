@@ -13,10 +13,23 @@
                 :page.sync="page"
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
+                :sortCol="sortData"
         >
-            <template v-slot:headers.companyName>
-                <button @click="console.log('you have clicked me')">Calories</button>
+            <template v-slot:header.CompanyName>
+                <button @click="pilik">Вендор</button>
             </template>
+            <template v-slot:header.AmountOfDiscount>
+                <button @click="pilik">Скидка</button>
+            </template>
+            <template v-slot:header.DateStart>
+                <button @click="pilik">Дата начала</button>
+            </template>
+            <template v-slot:header.DateEnd>
+                <button @click="pilik">Дата окончания</button>
+            </template><template v-slot:header.RatingDiscount>
+            <button @click="pilik">Рейтинг</button>
+        </template>
+
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -57,28 +70,28 @@
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
                     <v-row class="d-flex justify-end my-5">
-                        <v-col cols="1" lg="1" >
+                        <v-col cols="1" lg="1">
                             <v-btn>
                                 <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
                         <v-col cols="7" lg="11" class="d-flex justify-center">
-                            <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
+                            <h2>{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
                         </v-col>
                         <v-spacer></v-spacer>
                         <v-col cols="11" lg="11" class="d-flex justify-center">
                             <p class="mb-0">{{ item.description }}</p>
                         </v-col>
                         <v-col cols="11" lg="11" class="text-center">
-<!--                            <v-btn-->
-<!--                                    color="primary"-->
-<!--                                    @click="$router.push({name:'detail'})"-->
-<!--                            >-->
-                          <v-btn
-                              color="primary"
-                              @click="$router.push({name:'detail',params:{_id:item.id}})"
-                          >
+                            <!--                            <v-btn-->
+                            <!--                                    color="primary"-->
+                            <!--                                    @click="$router.push({name:'detail'})"-->
+                            <!--                            >-->
+                            <v-btn
+                                    color="primary"
+                                    @click="$router.push({name:'detail',params:{_id:item.id}})"
+                            >
                                 {{$t('dtMoreInfo')}}
                             </v-btn>
                         </v-col>
@@ -86,29 +99,29 @@
                 </td>
             </template>
             <template v-slot:footer>
-                    <v-row class="mt-5">
-                        <v-col xl="7" lg="7" md="7" sm="7" class="d-flex justify-end mr-xl-10">
-                            <v-pagination
-                                    v-model="page"
-                                    :length="pageCount"
-                                    :total-visible="7"
-                                    @input="next"
-                            ></v-pagination>
-                        </v-col>
-                        <v-spacer>
-                        </v-spacer>
-                        <v-col xl="1" lg="2" md="2" sm="2">
-                            <v-select v-if="page === 1"
-                                    v-model="itemsPerPage"
-                                    :items="itmPer"
-                                     @click="showSelect"
-                                    label="items per page"
-                                    dense
-                                    solo
-                            ></v-select>
-                        </v-col>
-                        <v-col xl="1" lg="1"></v-col>
-                    </v-row>
+                <v-row class="mt-5">
+                    <v-col xl="7" lg="7" md="7" sm="7" class="d-flex justify-end mr-xl-10">
+                        <v-pagination
+                                v-model="page"
+                                :length="pageCount"
+                                :total-visible="7"
+                                @input="next"
+                        ></v-pagination>
+                    </v-col>
+                    <v-spacer>
+                    </v-spacer>
+                    <v-col xl="1" lg="2" md="2" sm="2">
+                        <v-select v-if="page === 1"
+                                  v-model="itemsPerPage"
+                                  :items="itmPer"
+                                  @click="showSelect"
+                                  label="items per page"
+                                  dense
+                                  solo
+                        ></v-select>
+                    </v-col>
+                    <v-col xl="1" lg="1"></v-col>
+                </v-row>
             </template>
         </v-data-table>
     </v-col>
@@ -117,15 +130,18 @@
 <script>
     import axios from "axios";
     import AuthService from "@/services/auth.service";
+
     const auth = new AuthService();
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
     import token from '@/mixins/token.mixin'
+
     export default {
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            sortOption: null,
             deleteID: null,
             searchWord: '',
             itmPer: [6, 12],
@@ -232,24 +248,41 @@
                 }
 
             },
-            hello: () => {
-                console.log('heh');
-            }
+            sortData() {
+                this.sortOption = this.$store.state.sortOption.sortName;
+                if (this.sortOption !== '') {
+                    console.log('WORKING')
+                    this.inputPost(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
+                            "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                            "searchSortOption": this.$store.state.sortOption.sortOrder ? 'Desc' : 'Asc',
+                            "searchPaginationPageNumber": 1,
+                            "searchPaginationCountElementPerPage": 24,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                        }
+                    );
+                }
+            },
         },
         watch: {
+
             dialog(val) {
                 val || this.close()
             },
             dialogDelete(val) {
                 val || this.closeDelete()
             },
-            searchWord: function(){
+            searchWord: function () {
                 this.selectedPages = [1];
             },
-            itemsPerPage: function(){
+            itemsPerPage: function () {
                 this.$store.state.discounts = [];
                 const resSearch = () => {
-                    if(this.$store.state.filterRequest === false) {
+                    if (this.$store.state.filterRequest === false) {
                         console.log(this.$store.state.userLocation.country, this.$store.state.userLocation.town);
                         this.inputPost(
                             {
@@ -257,14 +290,14 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "RatingDiscount",
-                                "searchSortOption": "Desc",
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                                "searchSortOption": this.$store.state.sortOption.sortOrder ? 'Desc' : 'Asc',
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         );
-                    }else{
+                    } else {
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -339,8 +372,43 @@
         methods: {
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             ...mapMutations(['setUserClaims']),
+            pilik: function (e) {
+                console.log('PILICK')
+                this.$store.commit('setDisPage', 1)
+                if (e.target.innerText === 'Вендор') {
+                    this.$store.commit('setSortName', 'CompanyName')
+                    this.$store.commit('setSortOrder')
+                    console.log(this.$store.state.sortOption)
+                }
+                if (e.target.innerText === 'Скидка') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'AmountOfDiscount')
+                    this.$store.commit('setSortOrder')
+                    console.log(this.$store.state.sortOption)
+                }
+                if (e.target.innerText === 'Дата начала') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'DateStart')
+                    this.$store.commit('setSortOrder')
+                    console.log(this.$store.state.sortOption)
+                }
+                if (e.target.innerText === 'Дата окончания') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'DateEnd')
+                    this.$store.commit('setSortOrder')
+                    console.log(this.$store.state.sortOption)
+                }
+                if (e.target.innerText === 'Рейтинг') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'RatingDiscount')
+                    this.$store.commit('setSortOrder')
+                    console.log(this.$store.state.sortOption)
+                }
+                // console.log(this.sortOption.sortName, this.$store.state.sortOption.sortName)
+
+            },
             headers() {
-               // console.log(this.$route.name)
+                // console.log(this.$route.name)
                 let headerArr = [
                     {
                         text: this.$t('dtOffer'),
@@ -348,13 +416,13 @@
                         sortable: false,
                         value: 'NameDiscount',
                     },
-                    {text: this.$t('dtVendor'), value: 'CompanyName'},
-                    {text: this.$t('dtDiscount'), value: 'AmountOfDiscount'},
-                    {text: this.$t('dtStartDate'), value: 'DateStart'},
-                    {text: this.$t('dtFinishDate'), value: 'DateEnd'},
-                    {text: this.$t('dtRating'), value: 'RatingDiscount'},
-                    ];
-                if(this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')){
+                    {text: this.$t('dtVendor'), value: 'CompanyName', sortable: false},
+                    {text: this.$t('dtDiscount'), value: 'AmountOfDiscount', sortable: false},
+                    {text: this.$t('dtStartDate'), value: 'DateStart', sortable: false},
+                    {text: this.$t('dtFinishDate'), value: 'DateEnd', sortable: false},
+                    {text: this.$t('dtRating'), value: 'RatingDiscount', sortable: false},
+                ];
+                if (this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')) {
                     headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
                 }
                 if (this.$route.name === 'statistic') {
@@ -363,7 +431,7 @@
                         {text: this.$t('subscriptionsTotal'), value: 'subscriptionsTotal', sortable: true},
                         {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
                         {text: this.$t('createDate'), value: 'createDate', sortable: true},
-                        )
+                    )
                 }
                 return headerArr;
             },
@@ -377,21 +445,21 @@
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
                 const goNext = () => {
-                    if(this.$store.state.filterRequest === false){
+                    if (this.$store.state.filterRequest === false) {
                         this.nextDiscount(
                             {
                                 "searchText": this.$store.state.keyWord,
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "RatingDiscount",
-                                "searchSortOption": "Desc",
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                                "searchSortOption": this.$store.state.sortOption.sortOrder ? 'Desc' : 'Asc',
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         )
-                    }else{
+                    } else {
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
                         console.log(this.$store.state.filtered.range)
                         this.nextDiscount(
@@ -428,24 +496,24 @@
                 this.getToken(goNext)
             },
 
-            deleteDiscount(){
+            deleteDiscount() {
                 let itemID = this.deleteID;
                 const goDelete = () => {
                     console.log(itemID)
                     let url = 'https://localhost:9001/api/v1/discounts/delete/';
                     url += itemID;
                     axios.delete(url);
-                     this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
-                     console.log(this.info)
+                    this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                    console.log(this.info)
                 }
                 this.getToken(goDelete)
             },
 
-            showId(id){
-              console.log(id);
+            showId(id) {
+                console.log(id);
             },
 
-            test(){
+            test() {
                 this.inputPost(
                     {
                         "searchText": 'Меха',
@@ -462,10 +530,10 @@
 
                 console.log(this.$store.state.discounts)
 
-                setTimeout(this.test_2,1000)
+                setTimeout(this.test_2, 1000)
             },
 
-            test_2(){
+            test_2() {
                 this.inputPost(
                     {
                         "searchText": 'Меха',
@@ -522,7 +590,6 @@
                 this.close()
             },
             async getUser2() {
-
                 const result = await auth.getUser()
                 this.userClaimsLocalData = result
                 console.log('USER CLAIMS: ', result)

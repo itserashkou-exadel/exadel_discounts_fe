@@ -32,7 +32,11 @@ let store = new Vuex.Store({
         subscriptions: [],
         favorites: [],
         itemsPerPage: 6,
-        totalStatistic: {}
+        totalStatistic: {},
+        sortOption: {
+            sortName: '',
+            sortOrder: false
+        }
     },
     getters: {
         getTotalStatistic(state) {
@@ -76,6 +80,12 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setSortName(state, sortName){
+          state.sortOption.sortName = sortName;
+        },
+        setSortOrder(state, sortOrder){
+            state.sortOption.sortOrder = !state.sortOption.sortOrder;
+        },
         setItemsPerPage(state, itemsPer){
             state.itemsPerPage = itemsPer;
         },
