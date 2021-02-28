@@ -14,6 +14,9 @@
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
         >
+            <template v-slot:headers.companyName>
+                <button @click="console.log('you have clicked me')">Calories</button>
+            </template>
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -209,12 +212,12 @@
                         arr.push(
                             {
                                 id: item.id,
-                                service: item.name,
-                                vendor: item.company.name,
-                                amountOfDiscount: item.amountOfDiscount,
-                                startDate: moment(item.startDate).format('DD-MM-YYYY'),
-                                endDate: moment(item.endDate).format('DD-MM-YYYY'),
-                                rating: item.ratingTotal.toFixed(2),
+                                NameDiscount: item.name,
+                                CompanyName: item.company.name,
+                                AmountOfDiscount: item.amountOfDiscount,
+                                DateStart: moment(item.startDate).format('DD-MM-YYYY'),
+                                DateEnd: moment(item.endDate).format('DD-MM-YYYY'),
+                                RatingDiscount: item.ratingTotal.toFixed(2),
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
@@ -343,13 +346,13 @@
                         text: this.$t('dtOffer'),
                         align: 'left',
                         sortable: false,
-                        value: 'service',
+                        value: 'NameDiscount',
                     },
-                    {text: this.$t('dtVendor'), value: 'vendor'},
-                    {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
-                    {text: this.$t('dtStartDate'), value: 'startDate'},
-                    {text: this.$t('dtFinishDate'), value: 'endDate'},
-                    {text: this.$t('dtRating'), value: 'rating'},
+                    {text: this.$t('dtVendor'), value: 'CompanyName'},
+                    {text: this.$t('dtDiscount'), value: 'AmountOfDiscount'},
+                    {text: this.$t('dtStartDate'), value: 'DateStart'},
+                    {text: this.$t('dtFinishDate'), value: 'DateEnd'},
+                    {text: this.$t('dtRating'), value: 'RatingDiscount'},
                     ];
                 if(this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')){
                     headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
@@ -382,7 +385,7 @@
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
                                 "searchSortFieldOption": "RatingDiscount",
-                                "searchSortOption": "Asc",
+                                "searchSortOption": "Desc",
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"

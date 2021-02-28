@@ -109,7 +109,7 @@
         },
         computed: {
           visibleCards: function() {
-            this.$store.commit('setItemsPerPage', this.itemsPerPage)
+            // this.$store.commit('setItemsPerPage', this.itemsPerPage)
             // console.log(this.$store.state.itemsPerPage)
             this.page = this.$store.state.disPage;
             // this.searchWord = this.$store.state.keyWord;
