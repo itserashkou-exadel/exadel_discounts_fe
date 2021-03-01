@@ -83,5 +83,6 @@
   "allCountries": "Все",
   "ClearAll": "Очистить поля",
   "Form": "Сформировать",
-  "discountsTotal": "Общее количество скидок"
+  "discountsTotal": "Общее количество скидок",
+  "dateOfCreatedOfDiscount": "Дата создания скидки"
 }

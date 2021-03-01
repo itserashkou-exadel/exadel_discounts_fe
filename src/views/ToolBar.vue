@@ -1,25 +1,28 @@
 <template>
-    <v-row class="d-flex align-center justify-lg-end justify-md-end justify-sm-center justify-center shrink">
-        <v-col cols="3" xl="1" lg="2" md="1"
-               class="d-none justify-end  mr-lg-n5}"
-               :class="{'d-flex': $route.name !== 'statistic' ||
-               ($route.name === 'statistic'&& -this.$store.getters.switcher)}">
+    <v-row class="align-center flex-nowrap">
+        <v-col cols="12" md="6"></v-col>
+        <v-col
+               class="d-none"
+               :class="{'d-block': $route.name !== 'statistic' ||
+               ($route.name === 'statistic'&& this.$store.getters.switcher)}">
             <Modal/>
         </v-col>
+        <v-col >
         <DeleteFilter
         />
-        <v-col cols="4" lg="2" md="2" sm="3"
-               class="justify-center"
+        </v-col>
+        <v-col
+               align-self="start"
                :class="{'d-none d-md-block': $route.name !== 'statistic'}">
             <SwitchButton></SwitchButton>
         </v-col>
-        <v-col v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" cols="3" lg="2" md="2" sm="2">
+        <v-col
+                v-if="this.$store.state.userClaimsStoreData.role !=='Employee'">
             <v-btn
                     color="primary"
                     dark
                     class="mb-2"
-                    @click="goToPageAd()"
-            >
+                    @click="goToPageAd()"            >
                 {{$t('dtNewItem')}}
             </v-btn>
         </v-col>

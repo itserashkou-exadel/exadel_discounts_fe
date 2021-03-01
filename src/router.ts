@@ -33,18 +33,18 @@ const router = new VueRouter({
             name: 'signWrapper',
             component: SignWrapper
         },
-        {
-            path: '/',
-            name: 'table',
-            component: Table
-        },
+        // {
+        //     path: '/',
+        //     name: 'table',
+        //     component: Table
+        // },
         {
             path: '/home',
             name: 'home',
             component: AppTemplate,
             children: [
                 {
-                    path: '/home',
+                    path: '/',
                     name: 'home',
                     component: HomePage,
                 }
@@ -56,24 +56,24 @@ const router = new VueRouter({
             component: AppTemplate,
             children: [
                 {
-                    path: '/home/detail/:_id',
+                    path: '/detail/:_id',
                     name: 'detail',
                     component: Detail,
                     props: true
                 }]
         },
-        {
-            path: '/home',
-            name: 'home',
-            component: AppTemplate,
-            children: [
-                {
-                    path: '/cards',
-                    name: 'cards',
-                    component: Cards,
-                }
-            ]
-        },
+        // {
+        //     path: '/home',
+        //     name: 'home',
+        //     component: AppTemplate,
+        //     children: [
+        //         {
+        //             path: '/cards',
+        //             name: 'cards',
+        //             component: Cards,
+        //         }
+        //     ]
+        // },
         {
             path: '/home',
             name: 'home',

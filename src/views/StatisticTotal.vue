@@ -3,21 +3,26 @@
         <v-form ref="form">
             <v-row>
                 <v-col>
-                    <ChooseOfTown
-                            v-on:selectedCountryForObj="setCountry"
-                            v-on:selectedCityForObj="setCity"
-                    />
+                    <v-list-item-title>{{$t('dateOfCreatedOfDiscount')}}</v-list-item-title>
                     <date-piker
+                            class="mt-16"
                             v-on:selectedDateStart="setStartDate"
                             v-on:selectedDateFinish="setFinishDate"
                     />
                 </v-col>
+                <v-col>
+                    <ChooseOfTown
+                            v-on:selectedCountryForObj="setCountry"
+                            v-on:selectedCityForObj="setCity"
+                    />
+                </v-col>
+            </v-row>
                 <v-btn
                         block
                         @click="clearAll"
                 >{{$t('ClearAll')}}
                 </v-btn>
-                <v-btn
+                <v-btn class="mt-10"
                         block
                         @click="generate"
                 >{{$t('Form')}}
@@ -25,7 +30,7 @@
                 <v-col>
 
                 </v-col>
-            </v-row>
+
             <v-card
                     class="mx-auto"
                     tile

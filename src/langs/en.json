@@ -83,5 +83,6 @@
  "allCountries": "All",
  "ClearAll": "Clear all",
  "Form": "Form",
- "discountsTotal": "Total discounts"
+ "discountsTotal": "Total discounts",
+ "dateOfCreatedOfDiscount": "Discount creation date"
 }

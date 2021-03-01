@@ -1,14 +1,11 @@
 <template>
-    <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
+<!--    <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">-->
         <v-data-table
                 :headers="headers()"
                 :items="result"
                 class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
-                :single-expand="singleExpand"
-                :expanded.sync="expanded"
-                show-expand
                 hide-default-footer
                 :page.sync="page"
                 @page-count="pageCount = $event"
@@ -108,7 +105,7 @@
                     </v-row>
             </template>
         </v-data-table>
-    </v-col>
+<!--    </v-col>-->
 </template>
 
 <script>
@@ -538,5 +535,10 @@
 </script>
 
 <style scoped>
+    .v-data-table {
+      box-shadow: none !important;
+     -webkit-box-shadow: none !important;
+}
+
 
 </style>
