@@ -73,22 +73,17 @@
         components: {Searching, Avatar},
         methods: {
             links() {
-                if (this.$store.getters.getUserClaims.role === "Administrator") {
-                return [
+                let hLinks = [
                     {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
                     {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
                     {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
                     {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
-                    {id: 5, text: this.$t('hStatistic'), route: "statistic", icon: "mdi-sort-descending"}]}
-                else {
-                    return [
-                        {id: 1, text: this.$t('hMap'), route: "map", icon: "mdi-map-search-outline"},
-                        {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
-                        {id: 3, text: this.$t('hSubscribe'), route: "subscriptions", icon: "mdi-tag"},
-                        {id: 4, text: this.$t('hFavorites'), route: "favorites", icon: "mdi-star"},
-                    ]
-                }
-            },
+                ]
+                if (this.$store.getters.getUserClaims.role === "Administrator") {
+                    hLinks.push({id: 5, text: this.$t('hStatistic'), route: "statistic", icon: "mdi-sort-descending"})
+              }
+                    return hLinks
+               },
             changeUserLoc() {
                 localStorage.removeItem('key')
                 this.$router.push('/location')

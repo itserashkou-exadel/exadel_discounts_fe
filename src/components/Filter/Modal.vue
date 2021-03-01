@@ -142,7 +142,7 @@
                     "searchSortOption": "Asc",
                     "searchPaginationPageNumber": 1,
                     "searchPaginationCountElementPerPage": 18,
-                    "searchLanguage": "Ru",
+                    "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                     "searchAdvanced": {
                         "companyName": this.$store.state.filtered.vendor,
                         "searchDate": {

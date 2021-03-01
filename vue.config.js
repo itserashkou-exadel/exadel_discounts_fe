@@ -16,8 +16,7 @@ module.exports = {
       //host: 'localhost',
       disableHostCheck: true,
       https: {
-        key: fs.readFileSync('./certs/dev_localhost.key'),
-        cert: fs.readFileSync('./certs/dev_localhost.pem'),
+
       },
       //public: 'https://localhost:44357',
       public: `https://${process.env.BASE_URL}`,

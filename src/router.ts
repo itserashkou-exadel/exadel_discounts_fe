@@ -12,7 +12,7 @@ import Table from '@/components/Table.vue';
 import AddingDiscount from '@/views/AddingDiscount.vue';
 import Detail from '@/views/Detail.vue';
 import ErrorPage from '@/views/ErrorPage.vue';
-import Statistic from "@/views/Statistic.vue"
+import StatisticMain from "@/components/StatisticMain.vue"
 
 Vue.use(VueRouter);
 
@@ -40,7 +40,7 @@ const router = new VueRouter({
         },
         {
             path: '/home',
-            name: 'home',
+            name: 'homePage',
             component: AppTemplate,
             children: [
                 {
@@ -100,7 +100,7 @@ const router = new VueRouter({
         {
 
             path: '/subscriptions',
-            name: 'subscriptions',
+            name: 'subscriptionsPage',
             component: AppTemplate,
             children: [
                 {
@@ -112,7 +112,7 @@ const router = new VueRouter({
         },
         {
             path: '/map',
-            name: 'map',
+            name: 'mapPage',
             component: AppTemplate,
             children: [
                 {
@@ -124,7 +124,7 @@ const router = new VueRouter({
         },
         {
             path: '/favorites',
-            name: 'favorites',
+            name: 'favoritesPage',
             component: AppTemplate,
             children: [
                 {
@@ -142,22 +142,44 @@ const router = new VueRouter({
                 {
                     path: "/statistic",
                     name: "statistic",
-                    component: Statistic
+                    component: StatisticMain
                 }
             ]
         },
         {
+            path: '/404',
+            name: '404_error',
+            component: AppTemplate,
+            children: [
+                {
+                    path: '/404',
+                    name: '404_error',
+                    component: ErrorPage,
+                    props: {
+                        code: 404
+                    }
+                },
+            ],
+        },
+        {
             path: '/502',
-            name: '502',
+            name: '502_error',
             component: AppTemplate,
             children: [
                 {
                     path: '/502',
-                    name: '502',
+                    name: '502_error',
                     component: ErrorPage,
+                    props: {
+                        code: 502
+                    }
                 },
             ],
         },
+        {
+            path: '*',
+            redirect: '/404'
+        }
     ]
 });
 
