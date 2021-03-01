@@ -11,7 +11,7 @@
           class="white--text "
       >
         <div>
-          <v-avatar size="59" color="red" class=" mx-3 my-3"><b>{{subscription.amountOfDiscount}}%</b>
+          <v-avatar size="59" color="red" class=" mx-3 my-3"><b>{{ subscription.amountOfDiscount }}%</b>
           </v-avatar>
         </div>
       </v-img>
@@ -20,7 +20,7 @@
       <v-col>
         <div>
           <v-card-title style="word-break: normal">
-            {{ subscription.service}}
+            {{subscription.name}}
           </v-card-title>
         </div>
       </v-col>
@@ -28,18 +28,20 @@
     <v-divider></v-divider>
     <v-card-subtitle v-if="subscription.description.length<120">
       <b>Description:<br></b>
-      {{subscription.description.substring(0,120)}}
+      {{ subscription.description.substring(0, 120) }}
     </v-card-subtitle>
     <v-card-subtitle v-else>
       <b>Description:<br></b>
-      {{subscription.description.substring(0,120) + " ..."}}
+      {{ subscription.description.substring(0, 120) + " ..." }}
     </v-card-subtitle>
     <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
-      <v-btn @click="$router.push({name:'detail',params:{_id:subscription.id}})" color="blue" raised>
+      <v-btn @click="$router.push({name:'detail',params:{_id:subscription.id}})" color="primary" raised>
         Choose
       </v-btn>
       <Promocodes v-bind:subscrItem="subscription"
-                  :showSubscriptions="showSubscriptions"/>
+                  :showSubscriptions="showSubscriptions"
+                  class="mr-7"
+      />
     </v-row>
   </v-card>
 </template>
@@ -53,12 +55,12 @@ import Promocodes from "@/components/Subscriptions/Promocodes";
 const moment = require('moment')
 const auth = new AuthService();
 import token from '@/mixins/token.mixin'
+
 export default {
   name: "SubscriptionsMobileCard",
   mixins: [token, Mixin],
   components: {Promocodes},
-  data: () => ({
-  }),
+  data: () => ({}),
   props: {
     showSubscriptions: {
       type: Function,
@@ -70,7 +72,7 @@ export default {
     },
   },
   methods: {
-    pictureCheck(url){
+    pictureCheck(url) {
       return url ? url : "../../public/cat_404.jpg"
     },
 
