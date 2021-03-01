@@ -1,6 +1,9 @@
 <template>
 
-    <v-col cols="2" xl="1" lg="2" md="1" class="d-flex justify-md-end ml-lg-n16 justify-sm-center">
+    <v-col cols="2" xl="1" lg="2" md="1"
+           class="d-none justify-md-end ml-lg-n16 justify-sm-center"
+           :class="{'d-flex': $route.name !== 'statistic' || ($route.name === 'statistic'&& -this.$store.getters.switcher)}"
+    >
         <v-icon
                 large
                 class="pointer"

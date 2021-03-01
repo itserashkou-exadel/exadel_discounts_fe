@@ -351,9 +351,6 @@
                     {text: this.$t('dtFinishDate'), value: 'endDate'},
                     {text: this.$t('dtRating'), value: 'rating'},
                     ];
-                if(this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')){
-                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
-                }
                 if (this.$route.name === 'statistic') {
                     headerArr.push(
                         {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
@@ -361,6 +358,9 @@
                         {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
                         {text: this.$t('createDate'), value: 'createDate', sortable: true},
                         )
+                }
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee'){
+                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
                 }
                 return headerArr;
             },

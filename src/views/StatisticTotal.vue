@@ -1,54 +1,56 @@
 <template>
     <v-container fluid>
-        <v-row>
-            <v-col>
-                <ChooseOfTown
-                        v-on:selectedCountryForObj="setCountry"
-                        v-on:selectedCityForObj="setCity"
-                />
-                <date-piker
-                        v-on:selectedDateStart="setStartDate"
-                        v-on:selectedDateFinish="setFinishDate"
-                />
-            </v-col>
-            <v-btn
-                    block
-                    @click="clearAll"
-            >Очистить
-            </v-btn>
-            <v-btn
-                    block
-                    @click="generate"
-            >Сформировать
-            </v-btn>
-            <v-col>
+        <v-form ref="form">
+            <v-row>
+                <v-col>
+                    <ChooseOfTown
+                            v-on:selectedCountryForObj="setCountry"
+                            v-on:selectedCityForObj="setCity"
+                    />
+                    <date-piker
+                            v-on:selectedDateStart="setStartDate"
+                            v-on:selectedDateFinish="setFinishDate"
+                    />
+                </v-col>
+                <v-btn
+                        block
+                        @click="clearAll"
+                >{{$t('ClearAll')}}
+                </v-btn>
+                <v-btn
+                        block
+                        @click="generate"
+                >{{$t('Form')}}
+                </v-btn>
+                <v-col>
 
-            </v-col>
-        </v-row>
-        <v-card
-                class="mx-auto"
-                tile
-        >
-            <v-list shaped>
-                <v-subheader>REPORTS</v-subheader>
-                <v-list-item-group
-                        v-model="selectedItem"
-                        color="primary"
-                >
-                    <v-list-item
-                            v-for="(item, i) in items"
-                            :key="i"
+                </v-col>
+            </v-row>
+            <v-card
+                    class="mx-auto"
+                    tile
+            >
+                <v-list shaped>
+                    <v-subheader>REPORTS</v-subheader>
+                    <v-list-item-group
+                            v-model="selectedItem"
+                            color="primary"
                     >
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.text"></v-list-item-title>
-                        </v-list-item-content>
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.value"></v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list-item-group>
-            </v-list>
-        </v-card>
+                        <v-list-item
+                                v-for="(item, i) in items"
+                                :key="i"
+                        >
+                            <v-list-item-content>
+                                <v-list-item-title v-text="item.text"></v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-content>
+                                <v-list-item-title v-text="item.value"></v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list-item-group>
+                </v-list>
+            </v-card>
+        </v-form>
     </v-container>
 </template>
 <script>
@@ -79,11 +81,12 @@
         }),
         methods: {
             clearAll() {
-                this.$emit('clearAll')
-                this.country = '',
-                this.city = '',
-                this.startDate = '',
-                this.finishDate = ''
+                this.$refs.form.reset();
+                this.items[0].value = 0
+                this.items[1].value = 0
+                this.items[2].value = 0
+                this.items[3].value = 0
+                this.items[4].value = 0
             },
             setCountry(country) {
                 this.country = country
@@ -93,7 +96,6 @@
             },
             setStartDate(date) {
                 this.startDate = `${date}T00:00:00.459Z`
-                console.log(this.startDate)
             },
             setFinishDate(date) {
                 this.finishDate = `${date}T23:59:59.459Z`
@@ -113,11 +115,11 @@
                             this.items[2].value = data.data.favoritesTotal;
                             this.items[3].value = data.data.viewsTotal;
                             this.items[4].value = data.data.subscriptionsTotal;
-                        })
+                        }
+                    )
                 }
                 this.getToken(getStatistic);
             }
-
         }
     }
 </script>

@@ -80,5 +80,8 @@
  "createDate": "Create date",
  "tbEachDiscount": "Each discount",
  "tbTotalCount": "Total count",
- "allCountries": "All"
+ "allCountries": "All",
+ "ClearAll": "Clear all",
+ "Form": "Form",
+ "discountsTotal": "Total discounts"
 }

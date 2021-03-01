@@ -1,21 +1,27 @@
 <template>
     <v-row class="d-flex align-center justify-lg-end justify-md-end justify-sm-center justify-center shrink">
-        <v-col cols="3" xl="1" lg="2" md="1"  class="d-flex justify-end  mr-lg-n5}">
+        <v-col cols="3" xl="1" lg="2" md="1"
+               class="d-none justify-end  mr-lg-n5}"
+               :class="{'d-flex': $route.name !== 'statistic' ||
+               ($route.name === 'statistic'&& -this.$store.getters.switcher)}">
             <Modal/>
         </v-col>
-        <DeleteFilter/>
-        <v-col cols="4" lg="2" md="2" sm="3" class="justify-center d-none d-md-block">
+        <DeleteFilter
+        />
+        <v-col cols="4" lg="2" md="2" sm="3"
+               class="justify-center"
+               :class="{'d-none d-md-block': $route.name !== 'statistic'}">
             <SwitchButton></SwitchButton>
         </v-col>
         <v-col v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" cols="3" lg="2" md="2" sm="2">
-                    <v-btn
-                            color="primary"
-                            dark
-                            class="mb-2"
-                            @click="goToPageAd()"
-                    >
-                        {{$t('dtNewItem')}}
-                    </v-btn>
+            <v-btn
+                    color="primary"
+                    dark
+                    class="mb-2"
+                    @click="goToPageAd()"
+            >
+                {{$t('dtNewItem')}}
+            </v-btn>
         </v-col>
     </v-row>
 </template>
@@ -27,6 +33,7 @@
     import AuthService from "@/services/auth.service";
     import token from '@/mixins/token.mixin'
     import DeleteFilter from "@/components/Filter/DeleteFilter";
+
     const auth = new AuthService();
     export default {
         name: "ToolBar",
@@ -50,7 +57,7 @@
         methods: {
             ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost", "setFilterIcon"]),
             goToPageAd() {
-                this.$router.push({name:'add_discount', params: {placeOfCall: 'newDiscount'}})
+                this.$router.push({name: 'add_discount', params: {placeOfCall: 'newDiscount'}})
             },
             showSearch() {
                 this.$store.state.filterRequest = false;
@@ -73,7 +80,7 @@
                 this.getToken(resSearch)
                 this.setFilterIcon(false);
                 this.$store.commit('setDisPage', 1)
-              //  console.log(this.$store.state.discounts)
+                //  console.log(this.$store.state.discounts)
             },
 
         }

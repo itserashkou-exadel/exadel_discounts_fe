@@ -80,5 +80,8 @@
   "createDate": "Дата создания",
   "tbEachDiscount": "По каждой скидке",
   "tbTotalCount": "По всем скидкам",
-  "allCountries": "Все"
+  "allCountries": "Все",
+  "ClearAll": "Очистить поля",
+  "Form": "Сформировать",
+  "discountsTotal": "Общее количество скидок"
 }
