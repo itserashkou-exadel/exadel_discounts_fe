@@ -151,7 +151,8 @@
             <h1 class="mb-2 ml-9">Где находится</h1>
           </v-row>
           <v-card max-width="100%">
-            <v-img src="../../public/image1.png" height="60%"></v-img>
+<!--            <v-img src="../../public/image1.png" height="60%"></v-img>-->
+              <DetailPageMap />
           </v-card>
         </v-col>
       </v-row>
@@ -164,6 +165,7 @@ import {mapActions, mapGetters} from "vuex";
 import axios from "axios";
 import AuthService from "@/services/auth.service";
 import paginationMixin from '@/mixins/token.mixin'
+import DetailPageMap from "@/components/Map/DetailPageMap";
 
 
 
@@ -172,7 +174,8 @@ const auth = new AuthService();
 const moment = require('moment')
 export default {
   name: "Detail",
-  mixins: [paginationMixin],
+    components: {DetailPageMap},
+    mixins: [paginationMixin],
   data: () => ({
     info: {},
     results: [],
