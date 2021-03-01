@@ -17,19 +17,40 @@
         >
 
             <template v-slot:header.CompanyName>
-                <button @click="pilik">Вендор</button>
+                <div>
+                    <button @click="pilik">Вендор</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
             </template>
             <template v-slot:header.AmountOfDiscount>
-                <button @click="pilik">Скидка</button>
+                <div class="d-flex">
+                    <button @click="pilik">Скидка</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
             </template>
             <template v-slot:header.DateStart>
-                <button @click="pilik">Дата начала</button>
+                <div class="d-flex">
+                    <button @click="pilik">Дата начала</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
             </template>
             <template v-slot:header.DateEnd>
-                <button @click="pilik">Дата окончания</button>
-            </template><template v-slot:header.RatingDiscount>
-            <button @click="pilik">Рейтинг</button>
-        </template>
+                <div>
+                    <button @click="pilik">Дата окончания</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
+            <template v-slot:header.RatingDiscount>
+                <div>
+                    <button @click="pilik">Рейтинг</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
 
             <template v-slot:top>
                 <v-toolbar
@@ -141,6 +162,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            showSortIcon: true,
             sortOptionName: '',
             sortOption: null,
             deleteID: null,
@@ -415,19 +437,53 @@
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     console.log(this.$store.state.sortOption)
                 }
-                this.inputPost(
-                    {
-                        "searchText": this.$store.state.keyWord,
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": this.$store.state.userLocation.country,
-                        "searchAddressCity": this.$store.state.userLocation.town,
-                        "searchSortFieldOption": this.$store.state.sortOption.sortName,
-                        "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
-                        "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": 24,
-                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                    }
-                );
+                this.sortOptionName = this.$store.state.sortOption.sortName;
+                if (this.$store.state.filterRequest === false){
+                    console.log(this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc')
+                    this.inputPost(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
+                            "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                            "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                            "searchPaginationPageNumber": 1,
+                            "searchPaginationCountElementPerPage": 24,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                        }
+                    );
+                }else{
+                    this.inputPost(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
+                            "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                            "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                            "searchPaginationPageNumber": 1,
+                            "searchPaginationCountElementPerPage": 18,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
+                            "searchAdvanced": {
+                                "companyName": this.$store.state.filtered.vendor,
+                                "searchDate": {
+                                    "searchStartDate": this.$store.state.filtered.rangeDate[0],
+                                    "searchEndDate": this.$store.state.filtered.rangeDate[1]
+                                },
+                                "searchAmountOfDiscount": {
+                                    "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                    "searchAmountOfDiscountMax": this.$store.state.filtered.range[1]
+                                },
+                                "searchRatingTotal": {
+                                    "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                    "searchRatingTotalMax": this.$store.state.filtered.starRange[1]
+                                }
+                            }
+                        }
+                    );
+                }
+
 
             },
             headers() {
@@ -491,8 +547,8 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "NameDiscount",
-                                "searchSortOption": "Asc",
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
