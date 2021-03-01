@@ -1,11 +1,16 @@
 <template>
     <v-app-bar color="primary" flat>
+      <router-link to="home">
+      <v-btn text>
         <v-toolbar-title class="headline text-uppercase mr-6">
         <span class="text--accent-4"
               color="blue lighten-5">Crazy</span>
             <span class="font-weight-light"
                   color="blue lighten-5">Price</span>
+
         </v-toolbar-title>
+      </v-btn>
+      </router-link>
         <v-toolbar-items v-for="(item, i) in headerButtons()"
                          :key="i">
             <HeaderButton v-bind:headerButton="item"
