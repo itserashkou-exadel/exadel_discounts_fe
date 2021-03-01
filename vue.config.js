@@ -12,15 +12,15 @@ module.exports = {
   },
 
   devServer: {
-      host: `${process.env.BASE_URL}`,
-      //host: 'localhost',
+      //host: `${process.env.BASE_URL}`,
+      host: 'localhost',
       disableHostCheck: true,
       https: {
 
       },
-      //public: 'https://localhost:44357',
-      public: `https://${process.env.BASE_URL}`,
-      publicPath: `https://${process.env.BASE_URL}`
+      public: 'https://localhost:44357',
+      //public: `https://${process.env.BASE_URL}`,
+      //publicPath: `https://${process.env.BASE_URL}`
   },
 
   transpileDependencies: [

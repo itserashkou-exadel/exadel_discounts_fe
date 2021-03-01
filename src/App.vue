@@ -13,8 +13,7 @@
         name: 'App',
         components: {},
         created(): void {
-            console.log('Base URL: ', process.env.BASE_URL)
-            console.log('Vue App Title : ', process.env.VUE_APP_TITLE)
+            console.log('Vue App Title : ', process.env.VUE_APP_URL)
         },
         data: () => ({
             //
