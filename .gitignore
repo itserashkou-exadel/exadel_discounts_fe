@@ -4,8 +4,10 @@ node_modules
 .idea
 
 # local env files
+.env
 .env.local
 .env.*.local
+.env.production.local
 
 # Log files
 npm-debug.log*
