@@ -147,17 +147,39 @@ const router = new VueRouter({
             ]
         },
         {
+            path: '/404',
+            name: '404_error',
+            component: AppTemplate,
+            children: [
+                {
+                    path: '/404',
+                    name: '404_error',
+                    component: ErrorPage,
+                    props: {
+                        code: 404
+                    }
+                },
+            ],
+        },
+        {
             path: '/502',
             name: '502_error',
             component: AppTemplate,
             children: [
                 {
                     path: '/502',
-                    name: '502',
+                    name: '502_error',
                     component: ErrorPage,
+                    props: {
+                        code: 502
+                    }
                 },
             ],
         },
+        {
+            path: '*',
+            redirect: '/404'
+        }
     ]
 });
 
