@@ -76,7 +76,7 @@
             selectedCountry: '',
             selectedCity: '',
             signFormToggle: false,
-
+            userClaimsLocalData: [],
         }),
         methods: {
             ...mapMutations(['setUserLocation', 'setLanguage']),
