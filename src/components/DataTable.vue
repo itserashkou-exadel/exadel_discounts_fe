@@ -15,6 +15,7 @@
                 :items-per-page="itemsPerPage"
                 :sortCol="sortData"
         >
+
             <template v-slot:header.CompanyName>
                 <button @click="pilik">Вендор</button>
             </template>
@@ -72,7 +73,7 @@
                     <v-row class="d-flex justify-end my-5">
                         <v-col cols="1" lg="1">
                             <v-btn>
-                                <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
+                                <v-icon color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
@@ -114,7 +115,6 @@
                         <v-select v-if="page === 1"
                                   v-model="itemsPerPage"
                                   :items="itmPer"
-                                  @click="showSelect"
                                   label="items per page"
                                   dense
                                   solo
@@ -141,6 +141,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            sortOptionName: '',
             sortOption: null,
             deleteID: null,
             searchWord: '',
@@ -248,27 +249,26 @@
                 }
 
             },
-            sortData() {
-                this.sortOption = this.$store.state.sortOption.sortName;
-                if (this.sortOption !== '') {
-                    console.log('WORKING')
-                    this.inputPost(
-                        {
-                            "searchText": this.$store.state.keyWord,
-                            "searchDiscountOption": "All",
-                            "searchAddressCountry": this.$store.state.userLocation.country,
-                            "searchAddressCity": this.$store.state.userLocation.town,
-                            "searchSortFieldOption": this.$store.state.sortOption.sortName,
-                            "searchSortOption": this.$store.state.sortOption.sortOrder ? 'Desc' : 'Asc',
-                            "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 24,
-                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                        }
-                    );
+            sortData: function(){
+                this.sortOptionName = this.$store.state.sortOption.sortName;
+                if (this.sortOptionName !== '') {
+                    console.log('WATCHER')
+                    console.log(this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex])
+
                 }
             },
+            // sortData() {
+            //     console.log('WORKING')
+            //     console.log(this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex])
+            //
+            // },
         },
         watch: {
+            // sortOption: function(){
+            //     console.log("THIS IS SORTOPTION: ", this.sortOption)
+            //     this.$store.commit('setPreviousOrder')
+            //     console.log(this.$store.state.sortOption.sortOrder)
+            // },
 
             dialog(val) {
                 val || this.close()
@@ -290,8 +290,8 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": this.$store.state.sortOption.sortName,
-                                "searchSortOption": this.$store.state.sortOption.sortOrder ? 'Desc' : 'Asc',
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
@@ -304,8 +304,8 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "NameDiscount",
-                                "searchSortOption": "Asc",
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
@@ -377,34 +377,57 @@
                 this.$store.commit('setDisPage', 1)
                 if (e.target.innerText === 'Вендор') {
                     this.$store.commit('setSortName', 'CompanyName')
-                    this.$store.commit('setSortOrder')
-                    console.log(this.$store.state.sortOption)
+                    this.$store.commit('setSortOrder', 1)
+                    this.$store.commit('setPreviousOrder', 1)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.sortOption)
+                    console.log(this.$store.state.sortOption.sortOrder)
                 }
                 if (e.target.innerText === 'Скидка') {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'AmountOfDiscount')
-                    this.$store.commit('setSortOrder')
-                    console.log(this.$store.state.sortOption)
+                    this.$store.commit('setSortOrder', 2)
+                    this.$store.commit('setPreviousOrder', 2)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.$store.state.sortOption.sortOrder)
                 }
                 if (e.target.innerText === 'Дата начала') {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'DateStart')
-                    this.$store.commit('setSortOrder')
+                    this.$store.commit('setSortOrder', 3)
+                    this.$store.commit('setPreviousOrder', 3)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     console.log(this.$store.state.sortOption)
                 }
                 if (e.target.innerText === 'Дата окончания') {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'DateEnd')
-                    this.$store.commit('setSortOrder')
+                    this.$store.commit('setSortOrder', 4)
+                    this.$store.commit('setPreviousOrder', 4)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     console.log(this.$store.state.sortOption)
                 }
                 if (e.target.innerText === 'Рейтинг') {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'RatingDiscount')
-                    this.$store.commit('setSortOrder')
+                    this.$store.commit('setSortOrder', 5)
+                    this.$store.commit('setPreviousOrder', 5)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     console.log(this.$store.state.sortOption)
                 }
-                // console.log(this.sortOption.sortName, this.$store.state.sortOption.sortName)
+                this.inputPost(
+                    {
+                        "searchText": this.$store.state.keyWord,
+                        "searchDiscountOption": "All",
+                        "searchAddressCountry": this.$store.state.userLocation.country,
+                        "searchAddressCity": this.$store.state.userLocation.town,
+                        "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                        "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                        "searchPaginationPageNumber": 1,
+                        "searchPaginationCountElementPerPage": 24,
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                    }
+                );
 
             },
             headers() {
@@ -452,8 +475,8 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": this.$store.state.sortOption.sortName,
-                                "searchSortOption": this.$store.state.sortOption.sortOrder ? 'Desc' : 'Asc',
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
                                 "searchPaginationPageNumber": this.pageCount + 1,
                                 "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
@@ -509,50 +532,6 @@
                 this.getToken(goDelete)
             },
 
-            showId(id) {
-                console.log(id);
-            },
-
-            test() {
-                this.inputPost(
-                    {
-                        "searchText": 'Меха',
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Вінниця",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": 15,
-                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                    }
-                )
-
-                console.log(this.$store.state.discounts)
-
-                setTimeout(this.test_2, 1000)
-            },
-
-            test_2() {
-                this.inputPost(
-                    {
-                        "searchText": 'Меха',
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Вінниця",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 2,
-                        "searchPaginationCountElementPerPage": 5,
-                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                    }
-                )
-
-                console.log(this.$store.state.discounts)
-            },
-            showSelect() {
-
-            },
             editItem(item) {
                 this.$router.push({
                     name: 'editingDetails',
