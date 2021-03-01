@@ -3,7 +3,7 @@
         <v-data-table
                 :headers="headers()"
                 :items="result"
-                class="elevation-8"
+                class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
                 :single-expand="singleExpand"
@@ -55,7 +55,7 @@
                 <td :colspan="headers.length">
                     <v-row class="d-flex justify-end my-5">
                         <v-col cols="1" lg="1" >
-                            <v-btn>
+                            <v-btn v-on:click="addToFavorites(item.id)">
                                 <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
@@ -118,7 +118,8 @@
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
-    import token from '@/mixins/token.mixin'
+    import token from '@/mixins/token.mixin';
+
     export default {
         components: {Modal},
         name: "DataTable",
@@ -149,7 +150,11 @@
                 startDate: '',
                 endDate: '',
                 rating: 0,
-                description: ''
+                description: '',
+                viewsTotal: 0,
+                subscriptionsTotal: 0,
+                usersSubscriptionTotal: 0,
+                createDate: ''
             },
             defaultItem: {
                 id: '',
@@ -161,6 +166,10 @@
                 rating: 0,
                 description: '',
                 userClaimsLocalData: [],
+                viewsTotal: 0,
+                subscriptionsTotal: 0,
+                usersSubscriptionTotal: 0,
+                createDate: ''
             },
 
         }),
@@ -168,7 +177,7 @@
         created() {
             this.getUser2();
             const localStorage = JSON.parse(window.localStorage.getItem('key'));
-            this.$store.commit('setUserLocation', localStorage)
+            this.$store.commit('setUserLocation', localStorage);
             const resSearch = () => {
                 this.inputPost(
                     {
@@ -180,7 +189,7 @@
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
                         "searchPaginationCountElementPerPage": 24,
-                        "searchLanguage": "Ru"
+                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                     }
                 );
             }
@@ -192,10 +201,11 @@
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
-                    this.searchWord = this.$store.state.keyWord;
+                    // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    // console.log(this.info)
+                    console.log(this.info)
+                    console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -205,8 +215,12 @@
                                 amountOfDiscount: item.amountOfDiscount,
                                 startDate: moment(item.startDate).format('DD-MM-YYYY'),
                                 endDate: moment(item.endDate).format('DD-MM-YYYY'),
-                                rating: item.ratingTotal,
+                                rating: item.ratingTotal.toFixed(2),
                                 description: item.description,
+                                viewsTotal: item.viewsTotal,
+                                subscriptionsTotal: item.subscriptionsTotal,
+                                usersSubscriptionTotal: item.usersSubscriptionTotal,
+                                createDate: moment(item.createDate).format("DD-MM-YYYY")
                             }
                         )
                     })
@@ -245,7 +259,7 @@
                                 "searchSortOption": "Desc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru"
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         );
                     }else{
@@ -259,7 +273,7 @@
                                 "searchSortOption": "Asc",
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
-                                "searchLanguage": "Ru",
+                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                                 "searchAdvanced": {
                                     "companyName": this.$store.state.filtered.vendor,
                                     "searchDate": {
@@ -324,6 +338,7 @@
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             ...mapMutations(['setUserClaims']),
             headers() {
+               // console.log(this.$route.name)
                 let headerArr = [
                     {
                         text: this.$t('dtOffer'),
@@ -337,11 +352,29 @@
                     {text: this.$t('dtFinishDate'), value: 'endDate'},
                     {text: this.$t('dtRating'), value: 'rating'},
                     ];
-                if(this.$store.state.userClaimsStoreData.role !== 'Employee'){
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')){
                     headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
+                }
+                if (this.$route.name === 'statistic') {
+                    headerArr.push(
+                        {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
+                        {text: this.$t('subscriptionsTotal'), value: 'subscriptionsTotal', sortable: true},
+                        {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
+                        {text: this.$t('createDate'), value: 'createDate', sortable: true},
+                        )
                 }
                 return headerArr;
             },
+          addToFavorites: function (id) {
+            console.log('discounts',id);
+            const putSubscr = () => {
+              axios({
+                method: 'put',
+                url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
+              }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+            };
+            this.getToken(putSubscr);
+          },
             next() {
                 // console.log(this.page, this.pageCount)
                 // console.log(this.selectedPages)

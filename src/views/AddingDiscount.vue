@@ -609,46 +609,32 @@
                     }
                 }
             },
-            submit() {
+            async submit() {
                 if (this.$refs.form.validate()) {
                     const postDiscount = () => {
                         if (this.$route.params.placeOfCall === 'newDiscount') {
-
                             this.addDiscount(
                                 {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                            )
+                            ).catch((e) => this.val = false)
                             console.log({...{id: uuidv4()}, ...(this.objectWithoutId())})
+                            this.dialog = true
+                            this.val = true
                         } else {
                             console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                             this.updateDiscount(
                                 {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                            ).catch((e) => console.log(e))
+                            ).catch((e) => {console.log(55); this.val = false; this.dialog = true})
+                            .then(() => {
+                                if (this.val === true)
+                                {this.$router.push({name:'home'})}
+                            })
+                            this.val = true
                         }
                     }
-                    this.getToken(postDiscount);
-                    this.val = true;
-                    const inputDiscount = () => {
-                        this.$store.state.discounts = [];
-                        this.inputPost(
-                            {
-                                "searchText": this.$store.state.keyWord,
-                                "searchDiscountOption": "All",
-                                "searchAddressCountry": "Украина",
-                                "searchAddressCity": "Винница",
-                                "searchSortFieldOption": "NameDiscount",
-                                "searchSortOption": "Asc",
-                                "searchPaginationPageNumber": 1,
-                                "searchPaginationCountElementPerPage": 15,
-                                "searchLanguage": "Ru"
-                            }
-                        );
-                    }
-
+                    await this.getToken(postDiscount)
                 } else {
                     this.val = false;
-
                 }
-                this.dialog = true
             },
             resetForm() {
                 this.$refs.form.reset();
@@ -658,12 +644,6 @@
             selectLine(value) {
                 this.address.line = value;
             },
-            // selectCountry(value) {
-            //     this.address.country = value;
-            // },
-            // selectCity(value) {
-            //     this.address.city = value;
-            // },
             titleOfPage() {
                 if (this.$route.params.placeOfCall == 'newDiscount') {
                     return this.$tc('adEditingNewDiscount', 2)
@@ -728,7 +708,6 @@
                     this.picture = discount.pictureUrl || '';
                 }
             },
-
             transformateToDays(str) {
 
                 if (str[0] === '1') {
