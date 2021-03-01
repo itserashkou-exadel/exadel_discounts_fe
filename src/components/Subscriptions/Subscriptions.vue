@@ -5,6 +5,7 @@
         :headers="headers()"
         hide-default-footer
         show-expand
+        height="500"
     >
       <template v-slot:top>
         <v-toolbar
@@ -69,15 +70,13 @@
 <script>
 import axios from "axios";
 import AuthService from "@/services/auth.service";
-import authMixin from '@/mixins/token.mixin'
-
+import authMixin from '@/mixins/token.mixin';
+import {mapGetters, mapActions} from 'vuex'
+import Modal from "@/components/Filter/Modal";
+import Promocodes from "@/components/Subscriptions/Promocodes";
 
 const auth = new AuthService();
 const moment = require('moment')
-
-import {mapGetters, mapMutations, mapActions} from 'vuex'
-import Modal from "@/components/Filter/Modal";
-import Promocodes from "@/components/Subscriptions/Promocodes";
 
 export default {
   components: {Promocodes, Modal},
@@ -88,7 +87,6 @@ export default {
     pageCount: 1,
     pageSize: 5,
     dialog: false,
-
   }),
   computed: {
     ...mapGetters(["allSubscriptions"]),
@@ -130,7 +128,6 @@ export default {
         alert(error);
       });
     },
-
     headers() {
       return [
         {

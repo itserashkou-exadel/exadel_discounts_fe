@@ -4,6 +4,8 @@
         :items="filterData"
         :headers="headers()"
         hide-default-footer
+        show-expand
+        height="500"
     >
       <template v-slot:top>
         <v-toolbar
@@ -54,8 +56,11 @@
       </template>
     </v-data-table>
     <v-pagination
-        v-model="page"
+        v-model="pageNumber"
         :length="pageCount"
+        @next="paginateNext"
+        @previous="paginatePrev"
+        @input="paginateInput"
     ></v-pagination>
   </v-col>
 </template>
@@ -63,25 +68,22 @@
 <script>
 import axios from "axios";
 import AuthService from "@/services/auth.service";
-import authMixin from '@/mixins/token.mixin'
+import authMixin from '@/mixins/token.mixin';
+import {mapGetters, mapActions} from 'vuex'
+import Modal from "@/components/Filter/Modal";
 
 const auth = new AuthService();
 const moment = require('moment')
-
-import {mapGetters, mapMutations, mapActions} from 'vuex'
-import Modal from "@/components/Filter/Modal";
 
 export default {
   components: {Modal},
   name: "Favorites",
   mixins: [authMixin],
   data: () => ({
-    searchResult: '',
-    offers: [],
-    info: [],
-    result: [],
-    page: 1,
-    pageCount: 1
+    pageNumber: 1,
+    pageCount: 1,
+    pageSize: 5,
+    dialog: false,
   }),
   computed: {
     ...mapGetters(["allFavorites"]),
@@ -92,42 +94,39 @@ export default {
                 service: item.name,
                 vendor: item.company.name,
                 amountOfDiscount: item.amountOfDiscount,
-                startDate: moment(item.startDate.$date).format('L'),
-                endDate: moment(item.endDate.$date).format('L'),
+                startDate: moment(item.startDate).format('L'),
+                endDate: moment(item.endDate).format('L'),
                 rating: item.ratingTotal,
                 description: item.description
               }
           ))
-      console.log( 'fav2', this.$store.state.favorites);
     },
-
   },
   methods: {
     ...mapActions(['getFavorites']),
     showFavorites() {
+      const {country, town} = this.$store.state.userLocation
       const authorizationHeader = 'Authorization';
       auth.getAccessToken().then((userToken) => {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
         this.getFavorites(
             {
               "searchDiscountOption": "Favorites",
-              "searchAddressCountry": "Украина",
-              "searchAddressCity": "Винница",
+              "searchAddressCountry": country,
+              "searchAddressCity": town,
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
-              "searchPaginationPageNumber": 1,
-              "searchPaginationCountElementPerPage": 10,
+              "searchPaginationPageNumber": this.pageNumber,
+              "searchPaginationCountElementPerPage": this.pageSize,
               "searchLanguage": "Ru"
             }
-        )
-        console.log(this.$store.state.favorites)
+        ).then(response => this.updatePageCount());
       }).catch((error) => {
         alert(error);
       });
     },
     deleteFromFavor: function (id) {
-      let show = () => this. showFavorites();
-
+      let show = () => this.showFavorites();
       const putFavor = () => {
         axios({
           method: 'put',
@@ -152,10 +151,30 @@ export default {
         {text: this.$t('dtActions'), value: 'actions', sortable: false},
       ]
     },
+    paginateInput(pageNumber) {
+      this.showFavorites(pageNumber);
+    },
+    paginateNext() {
+      this.showFavorites();
+
+    },
+    paginatePrev() {
+      this.showFavorites();
+    },
+    updatePageCount() {
+      if (this.pageNumber === this.pageCount) {
+        if (this.allFavorites.length >= this.pageSize) {
+          this.pageCount++
+        } else if (this.allFavorites.length <= 0) {
+          this.pageCount--;
+          this.pageNumber = 1;
+          this.showSubscriptions();
+        }
+      }
+    }
   },
   mounted() {
     this.showFavorites();
-    console.log( 'fav', this.$store.state.favorites);
   },
 }
 </script>
