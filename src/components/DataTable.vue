@@ -55,7 +55,7 @@
                 <td :colspan="headers.length">
                     <v-row class="d-flex justify-end my-5">
                         <v-col cols="1" lg="1" >
-                            <v-btn>
+                            <v-btn v-on:click="addToFavorites(item.id)">
                                 <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
@@ -118,7 +118,8 @@
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
-    import token from '@/mixins/token.mixin'
+    import token from '@/mixins/token.mixin';
+
     export default {
         components: {Modal},
         name: "DataTable",
@@ -364,6 +365,16 @@
                 }
                 return headerArr;
             },
+          addToFavorites: function (id) {
+            console.log('discounts',id);
+            const putSubscr = () => {
+              axios({
+                method: 'put',
+                url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
+              }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+            };
+            this.getToken(putSubscr);
+          },
             next() {
                 // console.log(this.page, this.pageCount)
                 // console.log(this.selectedPages)

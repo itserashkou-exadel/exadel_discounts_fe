@@ -236,7 +236,6 @@ export default {
     },
     addToSubscr: function (event) {
       let self = this;
-      // let discountId = this.$route.params._id
       const putSubscr = () => {
         axios({
           method: 'put',
