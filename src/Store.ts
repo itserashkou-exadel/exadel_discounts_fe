@@ -32,7 +32,13 @@ let store = new Vuex.Store({
         subscriptions: [],
         favorites: [],
         itemsPerPage: 6,
-        totalStatistic: {}
+        totalStatistic: {},
+        sortOption: {
+            sortName: '',
+            sortIndex: null,
+            sortOrder: [false,false,true,true,true,false]
+        },
+
     },
     getters: {
         getTotalStatistic(state) {
@@ -76,6 +82,27 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setPreviousOrder(state, number){
+            // @ts-ignore
+            state.sortOption.sortIndex = number;
+            state.sortOption.sortOrder.forEach((item, index) => {
+                if(index <=1){
+                    if(number !== index){
+                        state.sortOption.sortOrder[index] = false;
+                    }
+                }
+                else if(index >1 && number !== index){
+                    state.sortOption.sortOrder[index] = true;
+                }
+            })
+        },
+        setSortName(state, sortName){
+          state.sortOption.sortName = sortName;
+        },
+        setSortOrder(state, sortOrder){
+            // @ts-ignore
+            state.sortOption.sortOrder[sortOrder] = !state.sortOption.sortOrder[sortOrder];
+        },
         setItemsPerPage(state, itemsPer){
             state.itemsPerPage = itemsPer;
         },

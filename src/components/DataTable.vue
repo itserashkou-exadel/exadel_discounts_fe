@@ -5,11 +5,60 @@
                 class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
+                :single-expand="singleExpand"
+                :expanded.sync="expanded"
+                show-expand
                 hide-default-footer
                 :page.sync="page"
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
+                :sortCol="sortData"
         >
+
+            <template v-slot:header.NameDiscount>
+                <div>
+                    <button @click="pilik">Предложение</button>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
+            <template v-slot:header.CompanyName>
+                <div>
+                    <button @click="pilik">Вендор</button>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
+            <template v-slot:header.AmountOfDiscount>
+                <div class="d-flex">
+                    <button @click="pilik">Скидка</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
+            <template v-slot:header.DateStart>
+                <div class="d-flex">
+                    <button @click="pilik">Дата начала</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
+            <template v-slot:header.DateEnd>
+                <div>
+                    <button @click="pilik">Дата окончания</button>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
+            <template v-slot:header.RatingDiscount>
+                <div>
+                    <button @click="pilik">Рейтинг</button>
+                    <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
+
             <template v-slot:top>
                 <v-toolbar
                         flat
@@ -52,12 +101,12 @@
                     <v-row class="d-flex justify-end my-5">
                         <v-col cols="1" lg="1" >
                             <v-btn v-on:click="addToFavorites(item.id)">
-                                <v-icon @click="showId(item.id)" color="orange">{{icons.icon}}</v-icon>
+                                <v-icon color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
 
                         <v-col cols="7" lg="11" class="d-flex justify-center">
-                            <h2 >{{$t('dtDetailsAbout')}} "{{item.service}}"</h2>
+                            <h2>{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
                         </v-col>
                         <v-spacer></v-spacer>
                         <v-col cols="11" lg="11" class="d-flex justify-center">
@@ -79,32 +128,30 @@
                 </td>
             </template>
             <template v-slot:footer>
-                    <v-row class="mt-5">
-                        <v-col xl="7" lg="7" md="7" sm="7" class="d-flex justify-end mr-xl-10">
-                            <v-pagination
-                                    v-model="page"
-                                    :length="pageCount"
-                                    :total-visible="7"
-                                    @input="next"
-                            ></v-pagination>
-                        </v-col>
-                        <v-spacer>
-                        </v-spacer>
-                        <v-col xl="1" lg="2" md="2" sm="2">
-                            <v-select v-if="page === 1"
-                                    v-model="itemsPerPage"
-                                    :items="itmPer"
-                                     @click="showSelect"
-                                    label="items per page"
-                                    dense
-                                    solo
-                            ></v-select>
-                        </v-col>
-                        <v-col xl="1" lg="1"></v-col>
-                    </v-row>
+                <v-row class="mt-5">
+                    <v-col xl="7" lg="7" md="7" sm="7" class="d-flex justify-end mr-xl-10">
+                        <v-pagination
+                                v-model="page"
+                                :length="pageCount"
+                                :total-visible="7"
+                                @input="next"
+                        ></v-pagination>
+                    </v-col>
+                    <v-spacer>
+                    </v-spacer>
+                    <v-col xl="1" lg="2" md="2" sm="2">
+                        <v-select v-if="page === 1"
+                                  v-model="itemsPerPage"
+                                  :items="itmPer"
+                                  label="items per page"
+                                  dense
+                                  solo
+                        ></v-select>
+                    </v-col>
+                    <v-col xl="1" lg="1"></v-col>
+                </v-row>
             </template>
         </v-data-table>
-
 </template>
 
 <script>
@@ -114,12 +161,14 @@
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
-    import token from '@/mixins/token.mixin';
-
+    import token from '@/mixins/token.mixin'
     export default {
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            showSortIcon: true,
+            sortOptionName: '',
+            sortOption: null,
             deleteID: null,
             searchWord: '',
             itmPer: [6, 12],
@@ -171,6 +220,11 @@
         }),
         mixins: [token],
         created() {
+            this.$store.state.sortOption.sortName = "RatingDiscount";
+            this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
+            this.$store.state.sortOption.sortOrder[5] = false;
+            this.$store.state.sortOption.sortIndex = 5;
+            this.$store.commit('setDisPage', 1)
             this.getUser2();
             const localStorage = JSON.parse(window.localStorage.getItem('key'));
             this.$store.commit('setUserLocation', localStorage);
@@ -200,18 +254,18 @@
                     // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    // console.log(this.info)
-                    // console.log(this.$store.state.userClaimsStoreData)
+                    console.log(this.info)
+                    console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
                                 id: item.id,
-                                service: item.name,
-                                vendor: item.company.name,
-                                amountOfDiscount: item.amountOfDiscount,
-                                startDate: moment(item.startDate).format('DD-MM-YYYY'),
-                                endDate: moment(item.endDate).format('DD-MM-YYYY'),
-                                rating: item.ratingTotal.toFixed(2),
+                                NameDiscount: item.name,
+                                CompanyName: item.company.name,
+                                AmountOfDiscount: item.amountOfDiscount,
+                                DateStart: moment(item.startDate).format('DD-MM-YYYY'),
+                                DateEnd: moment(item.endDate).format('DD-MM-YYYY'),
+                                RatingDiscount: item.ratingTotal.toFixed(2),
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
@@ -226,9 +280,19 @@
                 }
 
             },
-            hello: () => {
-                console.log('heh');
-            }
+            sortData: function(){
+                this.sortOptionName = this.$store.state.sortOption.sortName;
+                if (this.sortOptionName !== '') {
+                    console.log('WATCHER')
+                    console.log(this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex])
+
+                }
+            },
+            // sortData() {
+            //     console.log('WORKING')
+            //     console.log(this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex])
+            //
+            // },
         },
         watch: {
             dialog(val) {
@@ -251,8 +315,8 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "RatingDiscount",
-                                "searchSortOption": "Desc",
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
@@ -265,8 +329,8 @@
                                 "searchDiscountOption": "All",
                                 "searchAddressCountry": this.$store.state.userLocation.country,
                                 "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "NameDiscount",
-                                "searchSortOption": "Asc",
+                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
                                 "searchPaginationPageNumber": 1,
                                 "searchPaginationCountElementPerPage": 24,
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
@@ -333,6 +397,106 @@
         methods: {
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             ...mapMutations(['setUserClaims']),
+            pilik: function (e) {
+                console.log('PILICK')
+                this.$store.commit('setDisPage', 1)
+                if (e.target.innerText === 'Предложение') {
+                    this.$store.commit('setSortName', 'NameDiscount')
+                    this.$store.commit('setSortOrder', 0)
+                    this.$store.commit('setPreviousOrder', 0)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.sortOption)
+                    console.log(this.$store.state.sortOption.sortOrder)
+                }
+                if (e.target.innerText === 'Вендор') {
+                    this.$store.commit('setSortName', 'CompanyName')
+                    this.$store.commit('setSortOrder', 1)
+                    this.$store.commit('setPreviousOrder', 1)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.sortOption)
+                    console.log(this.$store.state.sortOption.sortOrder)
+                }
+                if (e.target.innerText === 'Скидка') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'AmountOfDiscount')
+                    this.$store.commit('setSortOrder', 2)
+                    this.$store.commit('setPreviousOrder', 2)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.$store.state.sortOption.sortOrder)
+                }
+                if (e.target.innerText === 'Дата начала') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'DateStart')
+                    this.$store.commit('setSortOrder', 3)
+                    this.$store.commit('setPreviousOrder', 3)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.$store.state.sortOption)
+                }
+                if (e.target.innerText === 'Дата окончания') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'DateEnd')
+                    this.$store.commit('setSortOrder', 4)
+                    this.$store.commit('setPreviousOrder', 4)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.$store.state.sortOption)
+                }
+                if (e.target.innerText === 'Рейтинг') {
+                    console.log(e.target.innerText)
+                    this.$store.commit('setSortName', 'RatingDiscount')
+                    this.$store.commit('setSortOrder', 5)
+                    this.$store.commit('setPreviousOrder', 5)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.$store.state.sortOption)
+                }
+                this.sortOptionName = this.$store.state.sortOption.sortName;
+                if (this.$store.state.filterRequest === false){
+                    this.inputPost(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
+                            "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                            "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                            "searchPaginationPageNumber": 1,
+                            "searchPaginationCountElementPerPage": 24,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                        }
+                    );
+                }else{
+                    console.log('SECOND')
+                    this.inputPost(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
+                            "searchSortFieldOption": this.$store.state.sortOption.sortName,
+                            "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                            "searchPaginationPageNumber": 1,
+                            "searchPaginationCountElementPerPage": 24,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
+                            "searchAdvanced": {
+                                "companyName": this.$store.state.filtered.vendor,
+                                "searchDate": {
+                                    "searchStartDate": this.$store.state.filtered.rangeDate[0],
+                                    "searchEndDate": this.$store.state.filtered.rangeDate[1]
+                                },
+                                "searchAmountOfDiscount": {
+                                    "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                    "searchAmountOfDiscountMax": this.$store.state.filtered.range[1]
+                                },
+                                "searchRatingTotal": {
+                                    "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                    "searchRatingTotalMax": this.$store.state.filtered.starRange[1]
+                                }
+                            }
+                        }
+                    );
+                }
+
+
+            },
             headers() {
                // console.log(this.$route.name)
                 let headerArr = [
@@ -340,14 +504,14 @@
                         text: this.$t('dtOffer'),
                         align: 'left',
                         sortable: false,
-                        value: 'service',
+                        value: 'NameDiscount',
                     },
-                    {text: this.$t('dtVendor'), value: 'vendor'},
-                    {text: this.$t('dtDiscount'), value: 'amountOfDiscount'},
-                    {text: this.$t('dtStartDate'), value: 'startDate'},
-                    {text: this.$t('dtFinishDate'), value: 'endDate'},
-                    {text: this.$t('dtRating'), value: 'rating'},
-                    ];
+                    {text: this.$t('dtVendor'), value: 'CompanyName', sortable: false},
+                    {text: this.$t('dtDiscount'), value: 'AmountOfDiscount', sortable: false},
+                    {text: this.$t('dtStartDate'), value: 'DateStart', sortable: false},
+                    {text: this.$t('dtFinishDate'), value: 'DateEnd', sortable: false},
+                    {text: this.$t('dtRating'), value: 'RatingDiscount', sortable: false},
+                ];
                 if (this.$route.name === 'statistic') {
                     headerArr.push(
                         {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
@@ -381,51 +545,59 @@
                 this.$store.commit('setDisPage', this.page)
                 console.log(this.$store.state.disPage)
                 const goNext = () => {
-                    if(this.$store.state.filterRequest === false){
-                        this.nextDiscount(
-                            {
-                                "searchText": this.$store.state.keyWord,
-                                "searchDiscountOption": "All",
-                                "searchAddressCountry": this.$store.state.userLocation.country,
-                                "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "RatingDiscount",
-                                "searchSortOption": "Asc",
-                                "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                            }
-                        )
-                    }else{
+                    if (this.$store.state.filterRequest === false) {
+                        if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
+                            console.log("PAGINATION")
+                            this.nextDiscount(
+                                {
+                                    "searchText": this.$store.state.keyWord,
+                                    "searchDiscountOption": "All",
+                                    "searchAddressCountry": this.$store.state.userLocation.country,
+                                    "searchAddressCity": this.$store.state.userLocation.town,
+                                    "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                    "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                                    "searchPaginationPageNumber": this.pageCount + 1,
+                                    "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                                    "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                                }
+                            )
+                        }
+
+                    } else {
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
                         console.log(this.$store.state.filtered.range)
-                        this.nextDiscount(
-                            {
-                                "searchText": this.$store.state.keyWord,
-                                "searchDiscountOption": "All",
-                                "searchAddressCountry": this.$store.state.userLocation.country,
-                                "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": "NameDiscount",
-                                "searchSortOption": "Asc",
-                                "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
-                                "searchAdvanced": {
-                                    "companyName": this.$store.state.filtered.vendor,
-                                    "searchDate": {
-                                        "startDate": this.$store.state.filtered.rangeDate[0],
-                                        "endDate": this.$store.state.filtered.rangeDate[1],
-                                    },
-                                    "searchAmountOfDiscount": {
-                                        "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
-                                        "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
-                                    },
-                                    "searchRatingTotal": {
-                                        "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
-                                        "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                        console.log(this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount")
+                        if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
+                            this.nextDiscount(
+                                {
+                                    "searchText": this.$store.state.keyWord,
+                                    "searchDiscountOption": "All",
+                                    "searchAddressCountry": this.$store.state.userLocation.country,
+                                    "searchAddressCity": this.$store.state.userLocation.town,
+                                    "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                    "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                                    "searchPaginationPageNumber": this.pageCount + 1,
+                                    "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                                    "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
+                                    "searchAdvanced": {
+                                        "companyName": this.$store.state.filtered.vendor,
+                                        "searchDate": {
+                                            "startDate": this.$store.state.filtered.rangeDate[0],
+                                            "endDate": this.$store.state.filtered.rangeDate[1],
+                                        },
+                                        "searchAmountOfDiscount": {
+                                            "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                            "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                        },
+                                        "searchRatingTotal": {
+                                            "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                            "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                        }
                                     }
                                 }
-                            }
-                        );
+                            );
+                        }
+
                     }
 
                 }
@@ -439,56 +611,12 @@
                     let url = 'https://localhost:9001/api/v1/discounts/delete/';
                     url += itemID;
                     axios.delete(url);
-                     this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
-                     console.log(this.info)
+                    this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                    console.log(this.info)
                 }
                 this.getToken(goDelete)
             },
 
-            showId(id){
-              console.log(id);
-            },
-
-            test(){
-                this.inputPost(
-                    {
-                        "searchText": 'Меха',
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Вінниця",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": 15,
-                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                    }
-                )
-
-                console.log(this.$store.state.discounts)
-
-                setTimeout(this.test_2,1000)
-            },
-
-            test_2(){
-                this.inputPost(
-                    {
-                        "searchText": 'Меха',
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Вінниця",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 2,
-                        "searchPaginationCountElementPerPage": 5,
-                        "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                    }
-                )
-
-                console.log(this.$store.state.discounts)
-            },
-            showSelect() {
-
-            },
             editItem(item) {
                 this.$router.push({
                     name: 'editingDetails',
@@ -526,7 +654,6 @@
                 this.close()
             },
             async getUser2() {
-
                 const result = await auth.getUser()
                 this.userClaimsLocalData = result
                 console.log('USER CLAIMS: ', result)

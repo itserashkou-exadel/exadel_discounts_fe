@@ -31,20 +31,24 @@
         methods: {
             ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost", "setFilterIcon"]),
             showSearch() {
+                // this.$store.state.sortOption.sortOrder[5] = false;
+                // this.$store.state.sortOption.sortIndex = 5;
                 this.$store.state.filterRequest = false;
                 this.$store.state.discounts = [];
+                this.$store.state.sortOption.sortName = "RatingDiscount";
+                this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
                 const resSearch = () => {
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
                             "searchDiscountOption": "All",
-                            "searchAddressCountry": "Украина",
-                            "searchAddressCity": "Винница",
+                            "searchAddressCountry": this.$store.state.userLocation.country,
+                            "searchAddressCity": this.$store.state.userLocation.town,
                             "searchSortFieldOption": "RatingDiscount",
                             "searchSortOption": "Desc",
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 20,
-                            "searchLanguage": "Ru"
+                            "searchPaginationCountElementPerPage": 24,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                         }
                     );
                 }
