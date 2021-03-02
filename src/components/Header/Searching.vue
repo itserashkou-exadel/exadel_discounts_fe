@@ -20,10 +20,12 @@
                </div>
            </template>
            <v-list dense
+                   :class="{'d-none': this.search === ''}"
                    >
                <v-list-item
                        v-for="(item, index) in tags"
                        :key="index"
+                       @click="selectTag(item)"
                >
                    {{item}}
                </v-list-item>
@@ -51,17 +53,19 @@
             searchClosed: true,
             search: null,
             tags: [],
-            offset: true
+            offset: true,
         }),
         mixins: [token],
         watch: {
             search: function () {
+                if (this.search === '') {this.tags = []}
                 const getTags = () => {
                     axios.get(`https://localhost:9001/api/v1/tags/get/${this.search}`).then((data) =>
                         this.tags = data.data
                     )
                 }
-                this.getToken(getTags);
+                this.getToken(getTags).then(() => {
+                    console.log(this.search, 888)
                 this.setKeyWord(this.search)
                 if(this.search === ''){
                     const resSearch = () => {
@@ -80,14 +84,15 @@
                         );
                     }
                     this.getToken(resSearch)
-                }
+                }})
             }
         },
         methods: {
             ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost"]),
-            // changeOnFocus () {
-            //     if (document.documentElement.clientWidth < 1080) {
-            //     this.searchClosed = false}},
+            selectTag (item){
+                console.log(item)
+                this.search = item
+            },
             showSearch() {
                // console.log(this.search)
                 this.$store.state.discounts = [];

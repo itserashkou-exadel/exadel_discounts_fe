@@ -531,8 +531,8 @@
                                 name: this.titleEn,
                                 description: this.descriptionEn,
                                 address: {
-                                    country: this.$i18n.locale === 'en' ? this.selectedCountry : '',
-                                    city: this.$i18n.locale === 'en' ? this.selectedCountry : '',
+                                    country: "ffff",//this.$i18n.locale === 'en' ? this.selectedCountry : '',
+                                    city: "ffff",//this.$i18n.locale === 'en' ? this.selectedCountry : '',
                                     street: this.street,
                                     location: {
                                         latitude: this.coordinate1,
@@ -622,7 +622,7 @@
                             console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                             this.updateDiscount(
                                 {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                            ).catch((e) => {console.log(55); this.val = false; this.dialog = true})
+                            ).catch((e) => {this.val = false; this.dialog = true})
                             .then(() => {
                                 if (this.val === true)
                                 {this.$router.push({name:'home'})}
@@ -783,8 +783,8 @@
     }
 
         },
-
         mounted() {
+            this.getCountries();
             this.fillingFields();
         }
     }
