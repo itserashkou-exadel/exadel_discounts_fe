@@ -1,16 +1,35 @@
 <template>
-   <div class="d-flex">
+       <v-menu
+               :offset-x="true"
+               :offset-y="true"
+       >
+           <template v-slot:activator="{ on, attrs }">
+               <div class="d-flex">
         <v-text-field
                 placeholder="Search"
                 class="mt-4"
                 color="blue lighten-5"
                 v-model="search"
                 @keydown.enter="showSearch"
+                v-bind="attrs"
+                v-on="on"
         ></v-text-field>
             <v-icon
                     @click="showSearch"
             >mdi-magnify</v-icon>
-   </div>
+               </div>
+           </template>
+           <v-list dense
+                   >
+               <v-list-item
+                       v-for="(item, index) in tags"
+                       :key="index"
+               >
+                   {{item}}
+               </v-list-item>
+           </v-list>
+       </v-menu>
+
 </template>
 
 <script>
@@ -30,11 +49,19 @@
             widgets: false,
             drawer: false,
             searchClosed: true,
-            search: null
+            search: null,
+            tags: [],
+            offset: true
         }),
         mixins: [token],
         watch: {
             search: function () {
+                const getTags = () => {
+                    axios.get(`https://localhost:9001/api/v1/tags/get/${this.search}`).then((data) =>
+                        this.tags = data.data
+                    )
+                }
+                this.getToken(getTags);
                 this.setKeyWord(this.search)
                 if(this.search === ''){
                     const resSearch = () => {
@@ -62,7 +89,7 @@
             //     if (document.documentElement.clientWidth < 1080) {
             //     this.searchClosed = false}},
             showSearch() {
-                // console.log(this.search)
+               // console.log(this.search)
                 this.$store.state.discounts = [];
                 this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
