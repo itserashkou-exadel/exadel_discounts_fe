@@ -127,6 +127,11 @@
     {
         // console.log(this.search)
         // console.log(this.$store.state.keyWord ? this.$store.state.filtered.rangeDate[0] : null)
+        this.$store.state.sortOption.sortName = "RatingDiscount";
+        this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
+        this.$store.state.sortOption.sortOrder[5] = false;
+        this.$store.state.sortOption.sortIndex = 5;
+        console.log("Filtered", this.$store.state.sortOption.sortOrder)
         this.$store.state.discounts = [];
         this.$store.commit('setDisPage', 1)
         const filterSearch = () => {
@@ -138,10 +143,10 @@
                     "searchDiscountOption": "All",
                     "searchAddressCountry": this.$store.state.userLocation.country,
                     "searchAddressCity": this.$store.state.userLocation.town,
-                    "searchSortFieldOption": "NameDiscount",
-                    "searchSortOption": "Asc",
+                    "searchSortFieldOption": "RatingDiscount",
+                    "searchSortOption":'Desc',
                     "searchPaginationPageNumber": 1,
-                    "searchPaginationCountElementPerPage": 18,
+                    "searchPaginationCountElementPerPage": 24,
                     "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                     "searchAdvanced": {
                         "companyName": this.$store.state.filtered.vendor,

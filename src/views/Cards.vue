@@ -57,50 +57,54 @@
             const goNext = () => {
               if(this.$store.state.filterRequest === false){
                 console.log('zzzz');
-                this.nextDiscount(
-                    {
-                      "searchText": this.$store.state.keyWord,
-                      "searchDiscountOption": "All",
-                      "searchAddressCountry": "Украина",
-                      "searchAddressCity": "Винница",
-                      "searchSortFieldOption": "RatingDiscount",
-                      "searchSortOption": "Asc",
-                      "searchPaginationPageNumber": this.pageCount + 1,
-                      "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                      "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                    }
-                )
+                if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
+                    this.nextDiscount(
+                        {
+                            "searchText": this.$store.state.keyWord,
+                            "searchDiscountOption": "All",
+                            "searchAddressCountry": "Украина",
+                            "searchAddressCity": "Винница",
+                            "searchSortFieldOption": "RatingDiscount",
+                            "searchSortOption": "Asc",
+                            "searchPaginationPageNumber": this.pageCount + 1,
+                            "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                            "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                        }
+                    )
+                }
               }else{
                 console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
                 console.log(this.$store.state.filtered.range)
-                this.nextDiscount(
-                    {
-                      "searchText": this.$store.state.keyWord,
-                      "searchDiscountOption": "All",
-                      "searchAddressCountry": "Украина",
-                      "searchAddressCity": "Винница",
-                      "searchSortFieldOption": "NameDiscount",
-                      "searchSortOption": "Asc",
-                      "searchPaginationPageNumber": this.pageCount + 1,
-                      "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                      "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
-                      "searchAdvanced": {
-                        "companyName": this.$store.state.filtered.vendor,
-                        "searchDate": {
-                          "startDate": this.$store.state.filtered.rangeDate[0],
-                          "endDate": this.$store.state.filtered.rangeDate[1],
-                        },
-                        "searchAmountOfDiscount": {
-                          "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
-                          "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
-                        },
-                        "searchRatingTotal": {
-                          "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
-                          "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
-                        }
-                      }
-                    }
-                );
+                  if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
+                      this.nextDiscount(
+                          {
+                              "searchText": this.$store.state.keyWord,
+                              "searchDiscountOption": "All",
+                              "searchAddressCountry": "Украина",
+                              "searchAddressCity": "Винница",
+                              "searchSortFieldOption": "NameDiscount",
+                              "searchSortOption": "Asc",
+                              "searchPaginationPageNumber": this.pageCount + 1,
+                              "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
+                              "searchAdvanced": {
+                                  "companyName": this.$store.state.filtered.vendor,
+                                  "searchDate": {
+                                      "startDate": this.$store.state.filtered.rangeDate[0],
+                                      "endDate": this.$store.state.filtered.rangeDate[1],
+                                  },
+                                  "searchAmountOfDiscount": {
+                                      "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                      "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                  },
+                                  "searchRatingTotal": {
+                                      "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                      "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                  }
+                              }
+                          }
+                      );
+                  }
               }
 
             }

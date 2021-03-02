@@ -36,7 +36,7 @@ let store = new Vuex.Store({
         sortOption: {
             sortName: '',
             sortIndex: null,
-            sortOrder: [false,false,true,true,true,true]
+            sortOrder: [false,false,true,true,true,false]
         },
 
     },
@@ -90,7 +90,8 @@ let store = new Vuex.Store({
                     if(number !== index){
                         state.sortOption.sortOrder[index] = false;
                     }
-                }else if(index >1 && number !== index){
+                }
+                else if(index >1 && number !== index){
                     state.sortOption.sortOrder[index] = true;
                 }
             })

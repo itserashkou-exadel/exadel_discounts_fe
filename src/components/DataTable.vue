@@ -19,8 +19,8 @@
             <template v-slot:header.CompanyName>
                 <div>
                     <button @click="pilik">Вендор</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.AmountOfDiscount>
@@ -47,7 +47,8 @@
             <template v-slot:header.RatingDiscount>
                 <div>
                     <button @click="pilik">Рейтинг</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending</v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
@@ -439,7 +440,6 @@
                 }
                 this.sortOptionName = this.$store.state.sortOption.sortName;
                 if (this.$store.state.filterRequest === false){
-                    console.log(this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc')
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
@@ -454,6 +454,7 @@
                         }
                     );
                 }else{
+                    console.log('SECOND')
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
@@ -463,7 +464,7 @@
                             "searchSortFieldOption": this.$store.state.sortOption.sortName,
                             "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
                             "searchPaginationPageNumber": 1,
-                            "searchPaginationCountElementPerPage": 18,
+                            "searchPaginationCountElementPerPage": 24,
                             "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                             "searchAdvanced": {
                                 "companyName": this.$store.state.filtered.vendor,
@@ -525,50 +526,58 @@
                 console.log(this.$store.state.disPage)
                 const goNext = () => {
                     if (this.$store.state.filterRequest === false) {
-                        this.nextDiscount(
-                            {
-                                "searchText": this.$store.state.keyWord,
-                                "searchDiscountOption": "All",
-                                "searchAddressCountry": this.$store.state.userLocation.country,
-                                "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
-                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
-                                "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-                            }
-                        )
+                        if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
+                            console.log("PAGINATION")
+                            this.nextDiscount(
+                                {
+                                    "searchText": this.$store.state.keyWord,
+                                    "searchDiscountOption": "All",
+                                    "searchAddressCountry": this.$store.state.userLocation.country,
+                                    "searchAddressCity": this.$store.state.userLocation.town,
+                                    "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                    "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                                    "searchPaginationPageNumber": this.pageCount + 1,
+                                    "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                                    "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+                                }
+                            )
+                        }
+
                     } else {
                         console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
                         console.log(this.$store.state.filtered.range)
-                        this.nextDiscount(
-                            {
-                                "searchText": this.$store.state.keyWord,
-                                "searchDiscountOption": "All",
-                                "searchAddressCountry": this.$store.state.userLocation.country,
-                                "searchAddressCity": this.$store.state.userLocation.town,
-                                "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
-                                "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
-                                "searchPaginationPageNumber": this.pageCount + 1,
-                                "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                                "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
-                                "searchAdvanced": {
-                                    "companyName": this.$store.state.filtered.vendor,
-                                    "searchDate": {
-                                        "startDate": this.$store.state.filtered.rangeDate[0],
-                                        "endDate": this.$store.state.filtered.rangeDate[1],
-                                    },
-                                    "searchAmountOfDiscount": {
-                                        "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
-                                        "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
-                                    },
-                                    "searchRatingTotal": {
-                                        "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
-                                        "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                        console.log(this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount")
+                        if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
+                            this.nextDiscount(
+                                {
+                                    "searchText": this.$store.state.keyWord,
+                                    "searchDiscountOption": "All",
+                                    "searchAddressCountry": this.$store.state.userLocation.country,
+                                    "searchAddressCity": this.$store.state.userLocation.town,
+                                    "searchSortFieldOption": this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount",
+                                    "searchSortOption": this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex] ? 'Asc' : 'Desc',
+                                    "searchPaginationPageNumber": this.pageCount + 1,
+                                    "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
+                                    "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
+                                    "searchAdvanced": {
+                                        "companyName": this.$store.state.filtered.vendor,
+                                        "searchDate": {
+                                            "startDate": this.$store.state.filtered.rangeDate[0],
+                                            "endDate": this.$store.state.filtered.rangeDate[1],
+                                        },
+                                        "searchAmountOfDiscount": {
+                                            "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+                                            "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+                                        },
+                                        "searchRatingTotal": {
+                                            "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+                                            "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+                                        }
                                     }
                                 }
-                            }
-                        );
+                            );
+                        }
+
                     }
 
                 }
