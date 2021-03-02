@@ -12,13 +12,14 @@
                           v-slot:extension
             />
         </v-toolbar-items>
-        <v-spacer></v-spacer>
+<v-spacer></v-spacer>
         <v-btn value="nearby"
                icon>
             <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
         </v-btn>
+        <v-spacer></v-spacer>
         <Searching/>
-        <v-row justify="end">
+        <v-spacer></v-spacer>
             <v-menu
                     bottom
                     min-width="200px"
@@ -41,7 +42,8 @@
                 </template>
                 <Avatar/>
             </v-menu>
-        </v-row>
+
+<!--        </v-row>-->
     </v-app-bar>
 </template>
 

@@ -1,19 +1,19 @@
 <template>
-    <v-container fill-height>
+    <div>
         <router-view/>
         <ToolBar/>
         <v-row>
             <Cards class="d-md-none"></Cards>
         </v-row>
         <v-row class=" d-none d-md-block">
-            <v-row justify="center" align="center" v-show="this.$store.state.switch === true" >
-                <DataTable/>
-            </v-row>
-            <v-row v-show="this.$store.state.switch === false" class="justify-center align-center">
-                <Cards/>
-            </v-row>
+                <DataTable
+                        v-show="this.$store.state.switch === true"
+                />
+                <Cards
+                        v-show="this.$store.state.switch === false"
+                />
         </v-row>
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -36,6 +36,5 @@
 </script>
 
 <style scoped>
-
 
 </style>

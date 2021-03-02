@@ -1,5 +1,4 @@
 <template>
-    <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
         <v-data-table
                 :headers="headers()"
                 :items="result"
@@ -100,8 +99,8 @@
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
                     <v-row class="d-flex justify-end my-5">
-                        <v-col cols="1" lg="1">
-                            <v-btn>
+                        <v-col cols="1" lg="1" >
+                            <v-btn v-on:click="addToFavorites(item.id)">
                                 <v-icon color="orange">{{icons.icon}}</v-icon>
                             </v-btn>
                         </v-col>
@@ -114,14 +113,14 @@
                             <p class="mb-0">{{ item.description }}</p>
                         </v-col>
                         <v-col cols="11" lg="11" class="text-center">
-                            <!--                            <v-btn-->
-                            <!--                                    color="primary"-->
-                            <!--                                    @click="$router.push({name:'detail'})"-->
-                            <!--                            >-->
-                            <v-btn
-                                    color="primary"
-                                    @click="$router.push({name:'detail',params:{_id:item.id}})"
-                            >
+<!--                            <v-btn-->
+<!--                                    color="primary"-->
+<!--                                    @click="$router.push({name:'detail'})"-->
+<!--                            >-->
+                          <v-btn
+                              color="primary"
+                              @click="$router.push({name:'detail',params:{_id:item.id}})"
+                          >
                                 {{$t('dtMoreInfo')}}
                             </v-btn>
                         </v-col>
@@ -153,19 +152,16 @@
                 </v-row>
             </template>
         </v-data-table>
-    </v-col>
 </template>
 
 <script>
     import axios from "axios";
     import AuthService from "@/services/auth.service";
-
     const auth = new AuthService();
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
     import token from '@/mixins/token.mixin'
-
     export default {
         components: {Modal},
         name: "DataTable",
@@ -294,25 +290,19 @@
             // },
         },
         watch: {
-            // sortOption: function(){
-            //     console.log("THIS IS SORTOPTION: ", this.sortOption)
-            //     this.$store.commit('setPreviousOrder')
-            //     console.log(this.$store.state.sortOption.sortOrder)
-            // },
-
             dialog(val) {
                 val || this.close()
             },
             dialogDelete(val) {
                 val || this.closeDelete()
             },
-            searchWord: function () {
+            searchWord: function(){
                 this.selectedPages = [1];
             },
-            itemsPerPage: function () {
+            itemsPerPage: function(){
                 this.$store.state.discounts = [];
                 const resSearch = () => {
-                    if (this.$store.state.filterRequest === false) {
+                    if(this.$store.state.filterRequest === false) {
                         console.log(this.$store.state.userLocation.country, this.$store.state.userLocation.town);
                         this.inputPost(
                             {
@@ -327,7 +317,7 @@
                                 "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
                             }
                         );
-                    } else {
+                    }else{
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -503,7 +493,7 @@
 
             },
             headers() {
-                // console.log(this.$route.name)
+               // console.log(this.$route.name)
                 let headerArr = [
                     {
                         text: this.$t('dtOffer'),
@@ -526,10 +516,23 @@
                         {text: this.$t('subscriptionsTotal'), value: 'subscriptionsTotal', sortable: true},
                         {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
                         {text: this.$t('createDate'), value: 'createDate', sortable: true},
-                    )
+                        )
+                }
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee'){
+                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
                 }
                 return headerArr;
             },
+          addToFavorites: function (id) {
+            console.log('discounts',id);
+            const putSubscr = () => {
+              axios({
+                method: 'put',
+                url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
+              }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+            };
+            this.getToken(putSubscr);
+          },
             next() {
                 // console.log(this.page, this.pageCount)
                 // console.log(this.selectedPages)
@@ -599,7 +602,7 @@
                 this.getToken(goNext)
             },
 
-            deleteDiscount() {
+            deleteDiscount(){
                 let itemID = this.deleteID;
                 const goDelete = () => {
                     console.log(itemID)
@@ -667,5 +670,15 @@
 </script>
 
 <style scoped>
+    .v-data-table {
+      box-shadow: none !important;
+     -webkit-box-shadow: none !important;
+}
+    td {
+        width: 0;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
 
 </style>

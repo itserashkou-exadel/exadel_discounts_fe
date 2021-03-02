@@ -1,19 +1,14 @@
 <template>
-    <v-container fill-height>
+    <div>
         <router-view/>
-        <ToolBar/>
-        <v-row>
-            <Cards class="d-md-none"></Cards>
-        </v-row>
-        <v-row>
-            <v-row justify="center" align="center" v-show="this.$store.state.switch === true" >
-                <DataTable/>
-            </v-row>
-            <v-row v-show="this.$store.state.switch === false" class="justify-center align-center">
-                <StatisticTotal/>
-            </v-row>
-        </v-row>
-    </v-container>
+        <ToolBar class="padding"/>
+            <DataTable
+                    v-show="this.$store.state.switch === true"
+            />
+            <StatisticTotal
+                    v-show="this.$store.state.switch === false"
+            />
+    </div>
 </template>
 
 <script>
@@ -37,6 +32,5 @@
 </script>
 
 <style scoped>
-
 
 </style>

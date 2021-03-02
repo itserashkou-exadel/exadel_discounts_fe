@@ -14,18 +14,20 @@
                 @change="selectCityHandler"
                 v-model="selectedCity"
         ></v-select>
+        <slot
+                @click="clearCountry"
+        ></slot>
     </div>
 </template>
 
 <script>
     import AuthService from "@/services/auth.service";
-
-    const moment = require('moment')
     import axios from 'axios'
-
-    const auth = new AuthService();
     import token from '@/mixins/token.mixin'
     import {mapGetters} from 'vuex'
+
+    const moment = require('moment')
+    const auth = new AuthService();
 
     export default {
         name: "ChooseOfTown",
@@ -43,6 +45,10 @@
         mixins: [token],
         //props: ['selectCountry', 'selectCity'],
         methods: {
+            // clearCountry () {
+            //     console.log(888)
+            //     this.selectedCountry = ''
+            // },
             selectCountryHandler(value) {
                 this.$emit('selectedCountryForObj', value);
                // this.selectCountry(value);
@@ -57,9 +63,10 @@
                 let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
 
                 axios.get(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/cities/${this.selectedCountry}`)
-                    .then((response) => {
+                    .then((response) =>
                         this.cities = response.data
-                    })
+                    )
+
             },
         },
         async mounted() {
@@ -71,7 +78,14 @@
                 this.selectedCity = discount.address.city || discount.translations[0].address.country;
                 this.getCities();
             }
-        }
+
+        },
+        // computed() {
+        //     StatisticTotal.$on('clearAll', () => {
+        //         console.log(555)
+        //         this.selectedCountry = ''
+        //     })
+        // }
     }
 </script>
 

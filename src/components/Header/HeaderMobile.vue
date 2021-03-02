@@ -3,6 +3,8 @@
                flat
     >
         <!-- dropdown menu -->
+        <v-row align="center">
+            <v-col cols="2">
         <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
                 <v-app-bar-nav-icon class="mr-6"
@@ -55,12 +57,17 @@
                 </v-card>
             </v-dialog>
         </v-menu>
+            </v-col>
+            <v-col>
         <v-toolbar-title>
             <span class="font-weight-light">Crazy</span>
             <span>Price</span>
         </v-toolbar-title>
-        <v-spacer></v-spacer>
+            </v-col>
+            <v-col>
         <Searching/>
+            </v-col>
+        </v-row>
     </v-toolbar>
 </template>
 
@@ -81,9 +88,9 @@
                 ]
                 if (this.$store.getters.getUserClaims.role === "Administrator") {
                     hLinks.push({id: 5, text: this.$t('hStatistic'), route: "statistic", icon: "mdi-sort-descending"})
-              }
-                    return hLinks
-               },
+                }
+                return hLinks
+            },
             changeUserLoc() {
                 localStorage.removeItem('key')
                 this.$router.push('/location')
