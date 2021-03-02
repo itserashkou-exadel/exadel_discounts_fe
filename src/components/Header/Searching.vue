@@ -68,6 +68,7 @@
                     console.log(this.search, 888)
                 this.setKeyWord(this.search)
                 if(this.search === ''){
+                    console.log('RESET')
                     const resSearch = () => {
                         this.inputPost(
                             {
