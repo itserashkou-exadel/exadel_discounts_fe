@@ -16,6 +16,13 @@
                 :sortCol="sortData"
         >
 
+            <template v-slot:header.NameDiscount>
+                <div>
+                    <button @click="pilik">Предложение</button>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                </div>
+            </template>
             <template v-slot:header.CompanyName>
                 <div>
                     <button @click="pilik">Вендор</button>
@@ -398,6 +405,14 @@
             pilik: function (e) {
                 console.log('PILICK')
                 this.$store.commit('setDisPage', 1)
+                if (e.target.innerText === 'Предложение') {
+                    this.$store.commit('setSortName', 'NameDiscount')
+                    this.$store.commit('setSortOrder', 0)
+                    this.$store.commit('setPreviousOrder', 0)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
+                    console.log(this.sortOption)
+                    console.log(this.$store.state.sortOption.sortOrder)
+                }
                 if (e.target.innerText === 'Вендор') {
                     this.$store.commit('setSortName', 'CompanyName')
                     this.$store.commit('setSortOrder', 1)
