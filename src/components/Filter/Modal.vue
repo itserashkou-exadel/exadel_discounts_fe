@@ -1,11 +1,9 @@
 <template>
-
     <v-dialog
-            content-class="zero"
             v-model="dialog"
             max-width="600px"
-
     >
+<!--        content-class="zero"-->
         <template v-slot:activator="{ on, attrs }">
             <v-icon
                     large
@@ -15,7 +13,6 @@
                     class="pointer"
                     @click="setTrue">mdi-filter-outline
             </v-icon>
-
         </template>
         <v-card>
             <v-card-title>
@@ -23,7 +20,6 @@
             </v-card-title>
             <v-card-text>
                 <v-container>
-
                     <v-row>
                         <v-col cols="6" lg="6" md="6" sm="6" class="pa-0 pl-3">
                             <h3 class="mt-2">{{$t('dtDate')}}</h3>
@@ -87,7 +83,6 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-
 </template>
 
 <script>

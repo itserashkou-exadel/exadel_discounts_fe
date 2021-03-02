@@ -12,7 +12,7 @@ import Table from '@/components/Table.vue';
 import AddingDiscount from '@/views/AddingDiscount.vue';
 import Detail from '@/views/Detail.vue';
 import ErrorPage from '@/views/ErrorPage.vue';
-import StatisticMain from "@/components/StatisticMain.vue"
+import StatisticPage from "@/views/StatisticPage.vue"
 
 Vue.use(VueRouter);
 
@@ -33,18 +33,18 @@ const router = new VueRouter({
             name: 'signWrapper',
             component: SignWrapper
         },
-        {
-            path: '/',
-            name: 'table',
-            component: Table
-        },
+        // {
+        //     path: '/',
+        //     name: 'table',
+        //     component: Table
+        // },
         {
             path: '/home',
             name: 'homePage',
             component: AppTemplate,
             children: [
                 {
-                    path: '/home',
+                    path: '/',
                     name: 'home',
                     component: HomePage,
                 }
@@ -56,24 +56,24 @@ const router = new VueRouter({
             component: AppTemplate,
             children: [
                 {
-                    path: '/home/detail/:_id',
+                    path: '/detail/:_id',
                     name: 'detail',
                     component: Detail,
                     props: true
                 }]
         },
-        {
-            path: '/home',
-            name: 'home',
-            component: AppTemplate,
-            children: [
-                {
-                    path: '/cards',
-                    name: 'cards',
-                    component: Cards,
-                }
-            ]
-        },
+        // {
+        //     path: '/home',
+        //     name: 'home',
+        //     component: AppTemplate,
+        //     children: [
+        //         {
+        //             path: '/cards',
+        //             name: 'cards',
+        //             component: Cards,
+        //         }
+        //     ]
+        // },
         {
             path: '/home',
             name: 'home',
@@ -142,7 +142,7 @@ const router = new VueRouter({
                 {
                     path: "/statistic",
                     name: "statistic",
-                    component: StatisticMain
+                    component: StatisticPage
                 }
             ]
         },

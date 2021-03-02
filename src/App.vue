@@ -8,7 +8,6 @@
 <script lang="ts">
     import Vue from 'vue';
 
-
     export default Vue.extend({
         name: 'App',
         components: {},
@@ -37,9 +36,9 @@
     /*#nav a.router-link-exact-active {*/
     /*  color: #42b983;*/
     /*}*/
-    #app {
+    /*#app {*/
 
-    }
+    /*}*/
     .zero{
         margin: 0 !important;
         max-height: 95% !important;

@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-content class="ml-10 mr-10">
         <Table/>
     </v-content>
 </template>

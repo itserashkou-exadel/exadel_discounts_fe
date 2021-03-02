@@ -1,6 +1,8 @@
 <template>
-
-    <v-col cols="2" xl="1" lg="2" md="1" class="d-flex justify-md-end ml-lg-n16 justify-sm-center">
+    <div
+           class="d-none"
+           :class="{'d-flex': $route.name !== 'statistic' || ($route.name === 'statistic'&& -this.$store.getters.switcher)}"
+    >
         <v-icon
                 large
                 class="pointer"
@@ -9,7 +11,7 @@
                 @click="showSearch"
         >mdi-filter-off-outline
         </v-icon>
-    </v-col>
+    </div>
 </template>
 
 <script>

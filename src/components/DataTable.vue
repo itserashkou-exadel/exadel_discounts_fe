@@ -1,14 +1,10 @@
 <template>
-    <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
         <v-data-table
                 :headers="headers()"
                 :items="result"
                 class="elevation-8 mb-16"
                 :data="filterData"
                 item-key="id"
-                :single-expand="singleExpand"
-                :expanded.sync="expanded"
-                show-expand
                 hide-default-footer
                 :page.sync="page"
                 @page-count="pageCount = $event"
@@ -108,7 +104,7 @@
                     </v-row>
             </template>
         </v-data-table>
-    </v-col>
+
 </template>
 
 <script>
@@ -204,8 +200,8 @@
                     // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    console.log(this.info)
-                    console.log(this.$store.state.userClaimsStoreData)
+                    // console.log(this.info)
+                    // console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -352,9 +348,6 @@
                     {text: this.$t('dtFinishDate'), value: 'endDate'},
                     {text: this.$t('dtRating'), value: 'rating'},
                     ];
-                if(this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')){
-                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
-                }
                 if (this.$route.name === 'statistic') {
                     headerArr.push(
                         {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
@@ -362,6 +355,9 @@
                         {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
                         {text: this.$t('createDate'), value: 'createDate', sortable: true},
                         )
+                }
+                if(this.$store.state.userClaimsStoreData.role !== 'Employee'){
+                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
                 }
                 return headerArr;
             },
@@ -549,5 +545,15 @@
 </script>
 
 <style scoped>
+    .v-data-table {
+      box-shadow: none !important;
+     -webkit-box-shadow: none !important;
+}
+    td {
+        width: 0;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
 
 </style>
