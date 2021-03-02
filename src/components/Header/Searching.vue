@@ -1,22 +1,16 @@
 <template>
-    <div>
+   <div class="d-flex">
         <v-text-field
                 placeholder="Search"
-                prepend-inner-icon="mdi-magnify"
-                class="expanding-search mt-4"
-                filled
-                dense
-                chips
+                class="mt-4"
                 color="blue lighten-5"
-                multiple
-                :class="{'closed' : searchClosed}"
-                @focus="searchClosed = false"
-                @blur.native="searchClosed = true"
                 v-model="search"
-                @keydown.enter="showSearch()"
+                @keydown.enter="showSearch"
         ></v-text-field>
-<!--        <v-btn @click="testing"></v-btn>-->
-    </div>
+            <v-icon
+                    @click="showSearch"
+            >mdi-magnify</v-icon>
+   </div>
 </template>
 
 <script>
@@ -41,9 +35,9 @@
         mixins: [token],
         watch: {
             search: function () {
-                console.log(this.search)
                 this.setKeyWord(this.search)
                 if(this.search === ''){
+                    console.log('RESET')
                     const resSearch = () => {
                         this.inputPost(
                             {
@@ -65,10 +59,12 @@
         },
         methods: {
             ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost"]),
+            // changeOnFocus () {
+            //     if (document.documentElement.clientWidth < 1080) {
+            //     this.searchClosed = false}},
             showSearch() {
                 // console.log(this.search)
                 this.$store.state.discounts = [];
-                console.log(this.$store.state.userLocation)
                 this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
                     this.inputPost(
@@ -86,7 +82,7 @@
                     );
                 }
                 this.getToken(resSearch)
-                console.log(this.$store.state.discounts)
+
             },
 
             //     testing: function(){
@@ -120,17 +116,17 @@
             //
             // },
 
-            onResize() {
-                this.searchClosed = document.documentElement.clientWidth < 1080 ? true : false;
-            },
+            // onResize() {
+            //     this.searchClosed = document.documentElement.clientWidth < 1080 ? true : false;
+            // },
         },
-        created() {
-            window.addEventListener('resize', this.onResize);
-            this.onResize();
-        },
-        beforeDestroy() {
-            window.removeEventListener('resize', this.onResize);
-        },
+        // created() {
+        //     window.addEventListener('resize', this.onResize);
+        //     this.onResize();
+        // },
+        // beforeDestroy() {
+        //     window.removeEventListener('resize', this.onResize);
+        // },
     }
 
 </script>

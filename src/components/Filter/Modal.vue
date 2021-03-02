@@ -1,11 +1,9 @@
 <template>
-
     <v-dialog
-            content-class="zero"
             v-model="dialog"
             max-width="600px"
-
     >
+<!--        content-class="zero"-->
         <template v-slot:activator="{ on, attrs }">
             <v-icon
                     large
@@ -15,7 +13,6 @@
                     class="pointer"
                     @click="setTrue">mdi-filter-outline
             </v-icon>
-
         </template>
         <v-card>
             <v-card-title>
@@ -23,7 +20,6 @@
             </v-card-title>
             <v-card-text>
                 <v-container>
-
                     <v-row>
                         <v-col cols="6" lg="6" md="6" sm="6" class="pa-0 pl-3">
                             <h3 class="mt-2">{{$t('dtDate')}}</h3>
@@ -87,7 +83,6 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-
 </template>
 
 <script>
@@ -127,6 +122,11 @@
     {
         // console.log(this.search)
         // console.log(this.$store.state.keyWord ? this.$store.state.filtered.rangeDate[0] : null)
+        this.$store.state.sortOption.sortName = "RatingDiscount";
+        this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
+        this.$store.state.sortOption.sortOrder[5] = false;
+        this.$store.state.sortOption.sortIndex = 5;
+        console.log("Filtered", this.$store.state.sortOption.sortOrder)
         this.$store.state.discounts = [];
         this.$store.commit('setDisPage', 1)
         const filterSearch = () => {
@@ -138,10 +138,10 @@
                     "searchDiscountOption": "All",
                     "searchAddressCountry": this.$store.state.userLocation.country,
                     "searchAddressCity": this.$store.state.userLocation.town,
-                    "searchSortFieldOption": "NameDiscount",
-                    "searchSortOption": "Asc",
+                    "searchSortFieldOption": "RatingDiscount",
+                    "searchSortOption":'Desc',
                     "searchPaginationPageNumber": 1,
-                    "searchPaginationCountElementPerPage": 18,
+                    "searchPaginationCountElementPerPage": 24,
                     "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En",
                     "searchAdvanced": {
                         "companyName": this.$store.state.filtered.vendor,

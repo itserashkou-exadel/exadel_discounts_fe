@@ -1,13 +1,14 @@
-<template v-slot:activator="{ on, attrs }">
+<template v-slot:activator="{ on, attrs }"> 
     <div id="map">
-           <div class="filter">
-               <Modal class="modal"/>
-               <DeleteFilter/>
-           </div>
+        <div class="filter">
+            <Modal class="modal"/>
+            <DeleteFilter/>
+        </div>
         <nav class="mapNavPanel">
             <LeftSideBar
-                    v-bind:markersData="markersData"
+                    v-bind:discountsFromStore="discountsFromStore"
                     v-bind:jumpToMarker="jumpToMarker"
+                    :filterData="filterData"
             >
 
             </LeftSideBar>
@@ -17,14 +18,13 @@
                 :mapStyle="mapStyle"
                 @load="onMapLoaded"
                 :center="coordinates"
-                :zoom=11
+                :zoom=3
         >
-            <MglMarker :coordinates="[marker.address.location.latitude, marker.address.location.longitude]"
-                       v-for="marker in markersData"
+            <MglMarker :coordinates="[marker.address.location.longitude, marker.address.location.latitude]"
+                       v-for="marker in discountsFromStore"
                        @click="test"
 
             >
-
                 <MglPopup>
                     <VCard flat>
                         <v-card-title>
@@ -34,7 +34,7 @@
                             <h4>Company:</h4> <span>{{marker.company.name}}</span>
                             <hr>
                             <p>
-                                {{marker.company.description}}
+                                {{marker.description}}
                             </p>
                             <p>{{marker.amountOfDiscount}}%</p>
                         </v-card-text>
@@ -73,62 +73,82 @@
                 accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA', // your access token. Needed if you using Mapbox maps
                 mapStyle: 'mapbox://styles/mapbox/streets-v11', // your map style
                 coordinates: [27.544592, 53.898477],
-                markersData: [],
                 dialog: false,
+                discountsFromStore: [],
+                result: [],
             };
         },
-        // watch:{
-        //     range: function(){
-        //         this.changeFilter({
-        //             ...this.$store.getters.getFilterData,
-        //             range: [this.range[0], this.range[1]]
-        //         })
-        //     }
-        // },
         mixins: [token],
 
         async mounted() {
-            const getData = () => {
-                axios.post('https://localhost:9001/api/v1/discounts/search', {
-                    "searchText": "Меха",
-                    "searchDiscountOption": "All",
-                    "searchAddressCountry": "Беларусь",
-                    "searchAddressCity": "Минск",
-                    "searchSortFieldOption": "NameDiscount",
-                    "searchSortOption": "Asc",
-                    "searchPaginationPageNumber": 1,
-                    "searchPaginationCountElementPerPage": 20,
-                    "searchLanguage": "Ru",
-                    // "searchAdvanced": {
-                    //     "companyName": this.$store.state.filtered.vendor,
-                    //     "searchDate": {
-                    //         "startDate": this.$store.state.filtered.rangeDate[0],
-                    //         "endDate": this.$store.state.filtered.rangeDate[1],
-                    //     },
-                    //     "searchAmountOfDiscount": {
-                    //         "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
-                    //         "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
-                    //     },
-                    //     "searchRatingTotal": {
-                    //         "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
-                    //         "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
-                    //     }
-                    // }
-                })
-                    .then((response) => {
-                        this.markersData = response.data;
-                        console.log(this.markersData)
-                    })
-                    .catch((error) => {
-                        alert(error);
-                    });
-            }
-
-            await this.getToken(getData)
+            // const getData = () => {
+            //     axios.post('https://localhost:9001/api/v1/discounts/search', {
+            //         "searchText": "Меха",
+            //         "searchDiscountOption": "All",
+            //         "searchAddressCountry": "Беларусь",
+            //         "searchAddressCity": "Минск",
+            //         "searchSortFieldOption": "NameDiscount",
+            //         "searchSortOption": "Asc",
+            //         "searchPaginationPageNumber": 1,
+            //         "searchPaginationCountElementPerPage": 20,
+            //         "searchLanguage": "Ru",
+            //         // "searchAdvanced": {
+            //         //     "companyName": this.$store.state.filtered.vendor,
+            //         //     "searchDate": {
+            //         //         "startDate": this.$store.state.filtered.rangeDate[0],
+            //         //         "endDate": this.$store.state.filtered.rangeDate[1],
+            //         //     },
+            //         //     "searchAmountOfDiscount": {
+            //         //         "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
+            //         //         "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
+            //         //     },
+            //         //     "searchRatingTotal": {
+            //         //         "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
+            //         //         "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
+            //         //     }
+            //         // }
+            //     })
+            //         .then((response) => {
+            //             this.markersData = response.data;
+            //             console.log(this.markersData)
+            //         })
+            //         .catch((error) => {
+            //             alert(error);
+            //         });
+            // }
+            //
+            // await this.getToken(getData)
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
+        },
+        computed: {
+            filterData: function () {
+                if (this.$store.state.discounts.length > 0) {
+                    const arr = [];
+                    this.discountsFromStore = this.$store.state.discounts;
+                    console.log('DISCOUNTS FETCHED FROM STORE: ', this.discountsFromStore)
+                    // this.discountsFromStore.map((item) => {
+                    //     arr.push(
+                    //         {
+                    //             id: item.id,
+                    //             service: item.name,
+                    //             vendor: item.company.name,
+                    //             amountOfDiscount: item.amountOfDiscount,
+                    //             //startDate: moment(item.startDate).format('DD-MM-YYYY'),
+                    //             //endDate: moment(item.endDate).format('DD-MM-YYYY'),
+                    //             rating: item.ratingTotal,
+                    //             description: item.description,
+                    //             location: item.address.location
+                    //         }
+                    //     )
+                    // })
+                    // this.result = arr;
+                    // console.log(this.result);
+                    // return this.result;
+                }
+            },
         },
         methods: {
             onMapLoaded(event) {
