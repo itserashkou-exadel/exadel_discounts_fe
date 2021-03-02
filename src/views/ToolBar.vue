@@ -1,22 +1,24 @@
 <template>
-    <v-row class="align-center flex-nowrap">
-        <v-col cols="12" md="6"></v-col>
-        <v-col
+    <v-row class="align-center">
+        <v-col cols="12" sm="6"
+               class="hidden-sm-and-down"
+        ></v-col>
+        <v-col cols="12" sm="1"
                class="d-none"
                :class="{'d-block': $route.name !== 'statistic' ||
                ($route.name === 'statistic'&& this.$store.getters.switcher)}">
             <Modal/>
         </v-col>
-        <v-col >
+        <v-col cols="12" sm="1">
         <DeleteFilter
         />
         </v-col>
-        <v-col
+        <v-col cols="12" sm="2"
                align-self="start"
                :class="{'d-none d-md-block': $route.name !== 'statistic'}">
             <SwitchButton></SwitchButton>
         </v-col>
-        <v-col
+        <v-col cols="12" sm="2"
                 v-if="this.$store.state.userClaimsStoreData.role !=='Employee'">
             <v-btn
                     color="primary"
@@ -93,5 +95,8 @@
 <style scoped>
     .pointer {
         cursor: pointer;
+    }
+    .row {
+        margin: 0;
     }
 </style>

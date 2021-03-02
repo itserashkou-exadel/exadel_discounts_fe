@@ -1,7 +1,10 @@
 <template>
-    <v-container>
-<!--        <router-view/>-->
+    <v-container fill-height>
+        <router-view/>
         <ToolBar/>
+        <v-row>
+            <Cards class="d-md-none"></Cards>
+        </v-row>
         <v-row class=" d-none d-md-block">
                 <DataTable
                         v-show="this.$store.state.switch === true"
