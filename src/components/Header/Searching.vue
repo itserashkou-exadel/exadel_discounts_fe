@@ -10,9 +10,10 @@
                 class="mt-4"
                 color="blue lighten-5"
                 v-model="search"
+                full-width
                 @keydown.enter="showSearch"
-                v-bind="attrs"
                 v-on="on"
+                filled
         ></v-text-field>
             <v-icon
                     @click="showSearch"
@@ -58,6 +59,7 @@
         mixins: [token],
         watch: {
             search: function () {
+
                 if (this.search === '') {this.tags = []}
                 const getTags = () => {
                     axios.get(`https://localhost:9001/api/v1/tags/get/${this.search}`).then((data) =>
