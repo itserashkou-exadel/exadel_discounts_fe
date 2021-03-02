@@ -74,8 +74,12 @@
                 const id = this.$route.params.idOfDiscount;
                 const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
                 const discount = response.data;
+                if (this.$store.getters.language === 'Ru') {
                 this.selectedCountry = discount.address.country || discount.translations[0].address.country;
-                this.selectedCity = discount.address.city || discount.translations[0].address.country;
+                this.selectedCity = discount.address.city || discount.translations[0].address.country;}
+                if (this.$store.getters.language === 'En') {
+                    this.selectedCountry = discount.translations[0].address.country || discount.address.country;
+                    this.selectedCity = discount.translations[0].address.city || discount.address.city}
                 this.getCities();
             }
 

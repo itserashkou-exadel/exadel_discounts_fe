@@ -132,12 +132,7 @@
         },
         mixins: [token],
         mounted() {
-            const getCountries = () => {
-                let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
-                //Берем списаок стран с бэка и оложим в стор
-                this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
-            this.getToken(getCountries)
-
+            this.getCountries()
         },
         watch: {
             language() {
@@ -148,6 +143,7 @@
                         this.$i18n.setLocaleMessage('ru', msg);
                         this.$i18n.locale = 'ru';
                     })
+
                 } else {
                     this.setLanguage(false);
                     import(`../langs/en.json`).then((msg) => {
@@ -155,6 +151,7 @@
                         this.$i18n.locale = 'en';
                     })
                 }
+                this.getCountries()
             }
         },
     };
