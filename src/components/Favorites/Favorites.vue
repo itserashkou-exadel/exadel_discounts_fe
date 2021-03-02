@@ -4,13 +4,15 @@
         :items="filterData"
         :headers="headers()"
         hide-default-footer
+        show-expand
+        height="500"
     >
       <template v-slot:top>
         <v-toolbar
             flat
         >
           <v-toolbar-title>
-            <h3>Подписки</h3>
+            <h3>Избранное</h3>
           </v-toolbar-title>
           <v-dialog max-width="500px">
             <v-card>
@@ -29,7 +31,7 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
             small
-            @click="deleteFromSubscr(item.id)"
+            @click="deleteFromFavor(item.id)"
         >
           mdi-delete
         </v-icon>
@@ -54,8 +56,11 @@
       </template>
     </v-data-table>
     <v-pagination
-        v-model="page"
+        v-model="pageNumber"
         :length="pageCount"
+        @next="paginateNext"
+        @previous="paginatePrev"
+        @input="paginateInput"
     ></v-pagination>
   </v-col>
 </template>
@@ -63,37 +68,34 @@
 <script>
 import axios from "axios";
 import AuthService from "@/services/auth.service";
-import authMixin from '@/mixins/token.mixin'
+import authMixin from '@/mixins/token.mixin';
+import {mapGetters, mapActions} from 'vuex'
+import Modal from "@/components/Filter/Modal";
 
 const auth = new AuthService();
 const moment = require('moment')
 
-import {mapGetters, mapMutations, mapActions} from 'vuex'
-import Modal from "@/components/Filter/Modal";
-
 export default {
   components: {Modal},
-  name: "Subscriptions",
+  name: "Favorites",
   mixins: [authMixin],
   data: () => ({
-    searchResult: '',
-    offers: [],
-    info: [],
-    result: [],
-    page: 1,
-    pageCount: 1
+    pageNumber: 1,
+    pageCount: 1,
+    pageSize: 5,
+    dialog: false,
   }),
   computed: {
-    ...mapGetters(["allSubscriptions"]),
+    ...mapGetters(["allFavorites"]),
     filterData: function () {
-      return this.allSubscriptions.map((item) =>
+      return this.allFavorites.map((item) =>
           new Object({
                 id: item.id,
                 service: item.name,
                 vendor: item.company.name,
                 amountOfDiscount: item.amountOfDiscount,
-                startDate: moment(item.startDate.$date).format('L'),
-                endDate: moment(item.endDate.$date).format('L'),
+                startDate: moment(item.startDate).format('L'),
+                endDate: moment(item.endDate).format('L'),
                 rating: item.ratingTotal,
                 description: item.description
               }
@@ -101,37 +103,37 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getSubscription']),
-    showSubscriptions() {
+    ...mapActions(['getFavorites']),
+    showFavorites() {
+      const {country, town} = this.$store.state.userLocation
       const authorizationHeader = 'Authorization';
       auth.getAccessToken().then((userToken) => {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-        this.getSubscription(
+        this.getFavorites(
             {
-              "searchDiscountOption": "Subscriptions",
-              "searchAddressCountry": "Украина",
-              "searchAddressCity": "Винница",
+              "searchDiscountOption": "Favorites",
+              "searchAddressCountry": country,
+              "searchAddressCity": town,
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
-              "searchPaginationPageNumber": 1,
-              "searchPaginationCountElementPerPage": 10,
+              "searchPaginationPageNumber": this.pageNumber,
+              "searchPaginationCountElementPerPage": this.pageSize,
               "searchLanguage": "Ru"
             }
-        )
+        ).then(response => this.updatePageCount());
       }).catch((error) => {
         alert(error);
       });
     },
-    deleteFromSubscr: function (id) {
-      let show = () => this.showSubscriptions();
-
-      const putSubscr = () => {
+    deleteFromFavor: function (id) {
+      let show = () => this.showFavorites();
+      const putFavor = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/subscriptions/delete/${id}`,
+          url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
         }).then(response => show());
       };
-      this.getToken(putSubscr);
+      this.getToken(putFavor);
     },
     headers() {
       return [
@@ -149,9 +151,30 @@ export default {
         {text: this.$t('dtActions'), value: 'actions', sortable: false},
       ]
     },
+    paginateInput(pageNumber) {
+      this.showFavorites(pageNumber);
+    },
+    paginateNext() {
+      this.showFavorites();
+
+    },
+    paginatePrev() {
+      this.showFavorites();
+    },
+    updatePageCount() {
+      if (this.pageNumber === this.pageCount) {
+        if (this.allFavorites.length >= this.pageSize) {
+          this.pageCount++
+        } else if (this.allFavorites.length <= 0) {
+          this.pageCount--;
+          this.pageNumber = 1;
+          this.showSubscriptions();
+        }
+      }
+    }
   },
   mounted() {
-    this.showSubscriptions();
+    this.showFavorites();
   },
 }
 </script>

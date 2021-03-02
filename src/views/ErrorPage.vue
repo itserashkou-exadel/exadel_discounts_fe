@@ -1,37 +1,33 @@
 <template>
-  <v-container>
-    <Error/>
-    <div> hghgjhgjglkfjg
-      fgfj
-    </div>
-  </v-container>
+  <v-content>
+    <Error :error="errors[code]"/>
+  </v-content>
 </template>
 
 <script>
 
-import Error from "@/components/Error.vue";
+import Error from "@/components/Error";
 
 export default {
   components: {Error},
   name: 'ErrorPage',
+  props: {
+    code: {
+      type: Number,
+    },
+  },
   data() {
     return {
-      errors: [
-        {id: 1, text: 'Internal Server Error', route: '500', title: '500'},
-        {id: 2, text: 'Bad Gateway', route: '502', title: '502'},
-        {id: 3, text: "Sorry, we can't find this page", route: '404', title: '404'},
-      ],
+      errors: {
+        500: {text: 'Internal Server Error', title: '500'},
+        502: {text: 'Bad Gateway', title: '502'},
+        404: {text: "Sorry, we can't find this page", title: '404'},
+      },
     }
   }
 }
 </script>
 
 <style scoped>
-.v-card__title {
-  color: #40bfef;
-  font-size: 7vw;
-}
-.v-card__text {
-  font-size: 3vw;
-}
+
 </style>

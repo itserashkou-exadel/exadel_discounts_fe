@@ -44,6 +44,7 @@
         },
         methods: {
             userLogOut() {
+                localStorage.removeItem('key')
                 auth.logout()
             },
         },
