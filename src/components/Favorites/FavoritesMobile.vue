@@ -53,7 +53,9 @@ export default {
   methods: {
     ...mapActions(['getFavorites']),
     showFavorites() {
-      const {country, town} = this.$store.state.userLocation
+      let loc = JSON.parse(localStorage.getItem('key'));
+      let country = loc.country ? loc.country : 'Беларусь';
+      let city = loc.city ? loc.city : 'Минск';
       const authorizationHeader = 'Authorization';
       auth.getAccessToken().then((userToken) => {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
@@ -61,7 +63,7 @@ export default {
             {
               "searchDiscountOption": "Favorites",
               "searchAddressCountry": country,
-              "searchAddressCity": town,
+              "searchAddressCity": city,
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": this.pageNumber,

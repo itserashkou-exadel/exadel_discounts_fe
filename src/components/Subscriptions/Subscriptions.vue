@@ -99,7 +99,6 @@ export default {
                 amountOfDiscount: item.amountOfDiscount,
                 startDate: moment(item.startDate.$date).format('L'),
                 endDate: moment(item.endDate.$date).format('L'),
-                rating: item.ratingTotal,
                 description: item.description,
               }
           ))
@@ -108,7 +107,9 @@ export default {
   methods: {
     ...mapActions(['getSubscription']),
     showSubscriptions() {
-      const {country, town} = this.$store.state.userLocation
+      let loc = JSON.parse(localStorage.getItem('key'));
+      let country = loc.country ? loc.country : 'Беларусь';
+      let city = loc.city ? loc.city : 'Минск';
       const authorizationHeader = 'Authorization';
       auth.getAccessToken().then((userToken) => {
         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
@@ -116,7 +117,7 @@ export default {
             {
               "searchDiscountOption": "Subscriptions",
               "searchAddressCountry": country,
-              "searchAddressCity": town,
+              "searchAddressCity": city,
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": this.pageNumber,
@@ -155,11 +156,11 @@ export default {
     },
     updatePageCount() {
       if (this.pageNumber === this.pageCount) {
-        if (this.allSubscriptions.length >= this.pageSize  ) {
+        if (this.allSubscriptions.length >= this.pageSize) {
           this.pageCount++
-        }else if (this.allSubscriptions.length <= 0  ) {
+        } else if (this.allSubscriptions.length <= 0) {
           this.pageCount--;
-          this.pageNumber=1;
+          this.pageNumber = 1;
           this.showSubscriptions();
         }
       }
@@ -168,6 +169,7 @@ export default {
 
   mounted() {
     this.showSubscriptions();
+
   },
 }
 </script>
