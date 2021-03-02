@@ -220,6 +220,11 @@
         }),
         mixins: [token],
         created() {
+            this.$store.state.sortOption.sortName = "RatingDiscount";
+            this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
+            this.$store.state.sortOption.sortOrder[5] = false;
+            this.$store.state.sortOption.sortIndex = 5;
+            this.$store.commit('setDisPage', 1)
             this.getUser2();
             const localStorage = JSON.parse(window.localStorage.getItem('key'));
             this.$store.commit('setUserLocation', localStorage);
@@ -507,9 +512,6 @@
                     {text: this.$t('dtFinishDate'), value: 'DateEnd', sortable: false},
                     {text: this.$t('dtRating'), value: 'RatingDiscount', sortable: false},
                 ];
-                if (this.$store.state.userClaimsStoreData.role !== 'Employee' && !(this.$route.name === 'statistic')) {
-                    headerArr.push({text: this.$t('dtActions'), value: 'actions', sortable: false})
-                }
                 if (this.$route.name === 'statistic') {
                     headerArr.push(
                         {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
