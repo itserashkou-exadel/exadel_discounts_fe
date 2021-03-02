@@ -10,7 +10,9 @@
     </v-app-bar>
     <v-main>
 <!--      <v-container fluid>-->
-        <router-view></router-view>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
 <!--      </v-container>-->
     </v-main>
     <v-footer absolute app flat color="primary">
