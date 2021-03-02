@@ -1,6 +1,6 @@
 <template>
   <v-app-bar color="primary" flat>
-    <router-link to="home">
+    <router-link to="/home">
       <v-btn text>
         <v-toolbar-title class="headline text-uppercase mr-6">
         <span class="text--accent-4"
@@ -17,76 +17,36 @@
       />
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-btn text>
-      <span>{{currentLoc.country}}, {{currentLoc.town}}</span>
+    <v-btn text class="font-weight-light">
+      <span>{{ currentLoc.country }}, {{ currentLoc.town }}</span>
       <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
     <Searching/>
-    <v-row justify="end">
-      <v-menu
-          bottom
-          min-width="200px"
-          rounded
-          offset-y
-      >
-        <template v-slot:activator="{ on }">
-          <v-btn
-              icon
-              x-large
-              v-on="on"
+    <v-spacer></v-spacer>
+    <v-menu
+        bottom
+        min-width="200px"
+        rounded
+        offset-y
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+            icon
+            x-large
+            v-on="on"
+        >
+          <v-avatar
+              color="blue lighten-4"
+              size="48"
           >
-            <v-avatar
-                color="blue lighten-4"
-                size="48"
-            >
-              <span class="white--text headline">{{ user.initials }}</span>
-            </v-avatar>
-          </v-btn>
-        </template>
-        <Avatar/>
-      </v-menu>
-    </v-row>
-  </v-app-bar>
-        <v-toolbar-items v-for="(item, i) in headerButtons()"
-                         :key="i">
-            <HeaderButton v-bind:headerButton="item"
-                          v-slot:extension
-            />
-        </v-toolbar-items>
-<v-spacer></v-spacer>
-        <v-btn value="nearby"
-               icon>
-            <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
+            <span class="white--text headline">{{ user.initials }}</span>
+          </v-avatar>
         </v-btn>
-        <v-spacer></v-spacer>
-        <Searching/>
-        <v-spacer></v-spacer>
-            <v-menu
-                    bottom
-                    min-width="200px"
-                    rounded
-                    offset-y
-            >
-                <template v-slot:activator="{ on }">
-                    <v-btn
-                            icon
-                            x-large
-                            v-on="on"
-                    >
-                        <v-avatar
-                                color="blue lighten-4"
-                                size="48"
-                        >
-                            <span class="white--text headline">{{ user.initials }}</span>
-                        </v-avatar>
-                    </v-btn>
-                </template>
-                <Avatar/>
-            </v-menu>
-
-<!--        </v-row>-->
-    </v-app-bar>
+      </template>
+      <Avatar/>
+    </v-menu>
+  </v-app-bar>
 </template>
 
 <script>
@@ -99,7 +59,7 @@ export default {
   name: "Header",
   components: {Searching, Avatar, HeaderButton},
   data() {
-    const loc =  JSON.parse(localStorage.getItem('key'));
+    const loc = JSON.parse(localStorage.getItem('key'));
     return {
       signIn: "sign",
       user: {
@@ -111,7 +71,6 @@ export default {
         country: loc.country,
         town: loc.town
       }
-
     }
   },
   methods: {
@@ -133,8 +92,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getUserClaims']),
-    },
+    ...
+        mapGetters(['getUserClaims'])
+  }
 }
-
 </script>
