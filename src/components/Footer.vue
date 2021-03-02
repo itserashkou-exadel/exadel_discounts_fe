@@ -58,9 +58,6 @@ export default {
       this.getCountries()
     }
   },
-  mounted() {
-    this.getCountries();
-  }
 }
 </script>
 

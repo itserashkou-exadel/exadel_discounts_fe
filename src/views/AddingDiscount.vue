@@ -74,9 +74,9 @@
 <!--                            </v-text-field>-->
                             <v-textarea v-if="i === 3"
                                         @keydown.enter="nothing"
-                                        :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                        :placeholder='item.placeholderRu'
                                         v-model='descriptionRu'
-                                        :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                        :label='item.labelRu'
                                         :rules='nameRules'
                                         outlined>
                             </v-textarea>
@@ -100,9 +100,9 @@
                             <v-text-field v-if="i === 0"
                                           @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='item.placeholderEn'
                                           v-model="titleEn"
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          :label='item.labelEn'
                                           outlined
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"-->
@@ -116,9 +116,9 @@
                             <v-text-field v-if="i === 1"
                                           @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorEn'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          :label='item.labelEn'
                                           outlined
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"-->
@@ -132,9 +132,9 @@
                             <v-text-field v-if="i === 2"
                                           @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorDescrEn'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          :label='item.labelEn'
                                           outlined
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"-->
@@ -148,9 +148,9 @@
                             <v-textarea v-if="i === 3"
                                         @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
-                                        :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                        :placeholder='item.placeholderEn'
                                         v-model='descriptionEn'
-                                        :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                        :label='item.labelEn'
                                         outlined
                             ></v-textarea>
 <!--                            <v-textarea v-if="i === 3 && ($i18n.locale === 'en')"-->
@@ -778,6 +778,9 @@
         },
         computed: {
             ...mapGetters(['allDiscounts', 'language', 'allCountries']),
+      changeOfModel: function () {
+        console.log(4444)
+    }
 
         },
 

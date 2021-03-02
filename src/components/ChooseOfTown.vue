@@ -14,9 +14,6 @@
                 @change="selectCityHandler"
                 v-model="selectedCity"
         ></v-select>
-        <slot
-                @click="clearCountry"
-        ></slot>
     </div>
 </template>
 
@@ -43,21 +40,14 @@
             ...mapGetters(['allCountries'])
         },
         mixins: [token],
-        //props: ['selectCountry', 'selectCity'],
         methods: {
-            // clearCountry () {
-            //     console.log(888)
-            //     this.selectedCountry = ''
-            // },
             selectCountryHandler(value) {
                 this.$emit('selectedCountryForObj', value);
-               // this.selectCountry(value);
                 this.selectedCity = '';
                 this.getCities()
             },
             selectCityHandler(value) {
                 this.$emit('selectedCityForObj', value);
-                //this.selectCity(value);
             },
             getCities() {
                 let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
@@ -66,7 +56,6 @@
                     .then((response) =>
                         this.cities = response.data
                     )
-
             },
         },
         async mounted() {
@@ -82,14 +71,7 @@
                     this.selectedCity = discount.translations[0].address.city || discount.address.city}
                 this.getCities();
             }
-
         },
-        // computed() {
-        //     StatisticTotal.$on('clearAll', () => {
-        //         console.log(555)
-        //         this.selectedCountry = ''
-        //     })
-        // }
     }
 </script>
 
