@@ -3,7 +3,9 @@
         <v-form ref="form">
             <v-row>
                 <v-col>
-                    <v-list-item-title>{{$t('dateOfCreatedOfDiscount')}}</v-list-item-title>
+                    <v-list-item-title
+                            align="center"
+                    >{{$t('dateOfCreatedOfDiscount')}}</v-list-item-title>
                     <date-piker
                             class="mt-16"
                             v-on:selectedDateStart="setStartDate"
