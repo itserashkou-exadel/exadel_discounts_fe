@@ -1,5 +1,4 @@
 <template>
-<!--    <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">-->
         <v-data-table
                 :headers="headers()"
                 :items="result"
@@ -105,7 +104,7 @@
                     </v-row>
             </template>
         </v-data-table>
-<!--    </v-col>-->
+
 </template>
 
 <script>
@@ -539,6 +538,11 @@
       box-shadow: none !important;
      -webkit-box-shadow: none !important;
 }
+    td {
+        width: 0;
+        white-space: nowrap;
+        vertical-align: top;
+    }
 
 
 </style>

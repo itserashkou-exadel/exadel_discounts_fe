@@ -1,18 +1,13 @@
 <template>
     <div>
-        <v-row>
-        <ToolBar/>
-        </v-row>
-        <v-row>
-            <v-col>
-        <DataTable
-                v-show="this.$store.state.switch === true"
-        />
-        <StatisticTotal
-                v-show="this.$store.state.switch === false"
-        />
-            </v-col>
-        </v-row>
+        <router-view/>
+        <ToolBar class="padding"/>
+            <DataTable
+                    v-show="this.$store.state.switch === true"
+            />
+            <StatisticTotal
+                    v-show="this.$store.state.switch === false"
+            />
     </div>
 </template>
 
@@ -37,7 +32,5 @@
 </script>
 
 <style scoped>
-.padding {
-    padding: 64px 0 12px;
-}
+
 </style>

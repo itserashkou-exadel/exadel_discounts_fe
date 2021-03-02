@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height>
+    <div>
         <router-view/>
         <ToolBar/>
         <v-row>
@@ -13,7 +13,7 @@
                         v-show="this.$store.state.switch === false"
                 />
         </v-row>
-    </v-container>
+    </div>
 </template>
 
 <script>
