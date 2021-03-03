@@ -86,6 +86,7 @@
                 :src="pictureCheck(info.pictureUrl)"
                 class="d-flex"
             >
+<!--              <&#45;&#45;merge &ndash;&gt;-->
               <v-icon class="ml-6 mt-4" large color="blue">
                 mdi-heart-outline
               </v-icon>
