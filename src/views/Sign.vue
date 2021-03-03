@@ -80,6 +80,7 @@
         }),
         methods: {
             ...mapMutations(['setUserLocation', 'setLanguage']),
+            ...mapActions(['goForAuth']),
             setUserLocAndLocalStorage() {
                 this.setUserLocation({
                     country: this.selectedCountry,
@@ -132,7 +133,11 @@
         },
         mixins: [token],
         mounted() {
-            this.getCountries()
+            const auth = new AuthService();
+            console.log(auth);
+            this.goForAuth(auth);
+            console.log(this.$store.getters.getAuth)
+            this.getCountries();
         },
         watch: {
             language() {

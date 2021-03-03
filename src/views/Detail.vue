@@ -163,17 +163,16 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import axios from "axios";
-    import AuthService from "@/services/auth.service";
     import paginationMixin from '@/mixins/token.mixin'
+    import token from '@/mixins/token.mixin'
     import DetailPageMap from "@/components/Map/DetailPageMap";
 
 
-    const auth = new AuthService();
     const moment = require('moment')
     export default {
         name: "Detail",
         components: {DetailPageMap},
-        mixins: [paginationMixin],
+        mixins: [paginationMixin, token],
         data: () => ({
             info: {},
             results: [],
@@ -198,15 +197,14 @@
             },
             ...mapActions(['getDiscountById']),
             detailView: function () {
-                let self = this;
-                const authorizationHeader = 'Authorization';
-                auth.getAccessToken().then((userToken) => {
-                    axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-                    this.getDiscountById(self.$route.params._id)
-                        .catch((error) => {
-                            alert(error);
-                        });
-                });
+                const func = () => {
+                        this.getDiscountById(this.$route.params._id)
+                            .catch((error) => {
+                                alert(error);
+                            });
+
+                }
+this.getToken(func)
             },
             addToSubscr: function (event) {
                 let self = this;

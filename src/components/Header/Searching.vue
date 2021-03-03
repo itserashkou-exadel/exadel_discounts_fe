@@ -14,6 +14,7 @@
                               @keydsown.enter="showSearch"
                               v-on="on"
                               autocomplete="off"
+                              dense
                 ></v-text-field>
                 <v-icon
                         @click="showSearch"
