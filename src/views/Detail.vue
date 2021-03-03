@@ -14,9 +14,14 @@
                                 :src="pictureCheck(info.pictureUrl)"
                                 class="d-flex"
                         >
-                            <v-icon class="ml-6 mt-4" large color="blue">
-                                mdi-heart-outline
-                            </v-icon>
+                          <v-icon v-on:click="iconSwitch(info.id)"
+                                  class="ml-6 mt-4" large color="blue">
+
+                            {{ card }}
+                          </v-icon>
+<!--                            <v-icon class="ml-6 mt-4" large color="blue">-->
+<!--                                mdi-heart-outline-->
+<!--                            </v-icon>-->
                         </v-img>
                         <v-row>
                             <v-col cols="5" class="mt-n4">
@@ -26,37 +31,45 @@
                                 text-lg-h2
                                 text-md-h2
                                 text-h2
-                                name">
-                                    {{ info.name }}
-                                </v-card-title>
-                                <v-rating
-                                        class="ml-4 mb-5 mt-n4 "
-                                        color="yellow darken-3"
-                                        :value="info.ratingTotal"
-                                        background-color="grey darken-1"
-                                        empty-icon="$ratingFull"
-                                        half-increments
-                                        hover
-                                ></v-rating>
-                                <v-row class="ml-2" align-center>
-                                    <v-card-subtitle class="black--text mb-8 font-weight-bold" style="font-size:32px;">
-                                        {{info.amountOfDiscount + "% Скидка"}}
-                                    </v-card-subtitle>
-                                    <!--                                    <v-icon color="white" large class="ml-14">-->
-                                    <!--                                        mdi-heart-outline-->
-                                    <!--                                    </v-icon>-->
-                                </v-row>
-                                <v-card-text class="black--text ml-2 mt-n14">
-                                    <p>{{info.company.name}}</p>
-                                    <p class="mt-n4">{{info.startDate + " - " + info.endDate}}</p>
-                                </v-card-text>
-                                <v-btn height="60px" width="300px" color="#1E88E5" style="font-size:24px;"
-                                       class="white--text ml-6 mt-n5 font-weight-bold"
-                                       v-on:click="addToSubscr">Воспользоваться
-                                </v-btn>
-                            </v-col>
-                            <v-col
-                                    class="
+                                " style="word-break: normal">
+                  {{ info.name }}
+                </v-card-title>
+                <v-row align="center" class="mt-1 mb-n8">
+
+                <v-rating
+                    v-model="info.ratingTotal"
+                    @input="ratingChose"
+                    class="ml-6 mb-5 mt-n4 "
+                    color="yellow darken-3"
+                    :value="info.ratingTotal"
+                    background-color="grey darken-1"
+                    empty-icon="$ratingFull"
+                    half-increments
+                    hover
+                ></v-rating>
+                  <div class="grey--text mb-9 ml-2">
+                    {{info.ratingTotal}}
+                  </div>
+                </v-row>
+                <v-row class="ml-2" align-center>
+                  <v-card-subtitle class="black--text mb-8 font-weight-bold" style="font-size:32px;">
+                    {{info.amountOfDiscount + "% Скидка"}}
+                  </v-card-subtitle>
+                  <!--                                    <v-icon color="white" large class="ml-14">-->
+                  <!--                                        mdi-heart-outline-->
+                  <!--                                    </v-icon>-->
+                </v-row>
+                <v-card-text class="black--text ml-2 mt-n14">
+                  <p>{{info.company.name}}</p>
+                  <p class="mt-n4">{{info.startDate + " - " + info.endDate}}</p>
+                </v-card-text>
+                <v-btn height="60px" width="300px" color="#1E88E5" style="font-size:24px;"
+                       class="white--text ml-6 mt-n5 font-weight-bold"
+                       v-on:click="addToSubscr">Воспользоваться
+                </v-btn>
+              </v-col>
+              <v-col
+                  class="
                             d-none d-md-block
                             col-md-6
                             col-xs-12"
@@ -78,9 +91,11 @@
                                 :src="pictureCheck(info.pictureUrl)"
                                 class="d-flex"
                         >
-                            <v-icon class="ml-6 mt-4" large color="blue">
-                                mdi-heart-outline
-                            </v-icon>
+                          <v-icon v-on:click="iconSwitch(info.id)"
+                                  class="ml-6 mt-4" large color="blue">
+
+                            {{ card }}
+                          </v-icon>
                         </v-img>
                         <v-col class="mt-1">
                             <v-row justify="center">
@@ -90,51 +105,56 @@
                                 text-lg-h2
                                 text-md-h2
                                 text-h4
-                                name" style="">
+                                " style="word-break: normal">
                                     {{ info.name }}
                                 </v-card-title>
                             </v-row>
 
 
-                            <v-row justify="center">
-                                <v-rating
-                                        class="mt-n3"
-                                        color="yellow darken-3"
-                                        background-color="grey darken-1"
-                                        empty-icon="$ratingFull"
-                                        half-increments
-                                        size="20px"
-                                        hover
-                                ></v-rating>
-                            </v-row>
-                            <v-row justify="center">
-                                <v-card-subtitle class="black--text mr-1 font-weight-bold" style="font-size:32px;">
-                                    {{info.amountOfDiscount + "% Скидка"}}
-                                </v-card-subtitle>
-                            </v-row>
-                            <v-row align="center" justify="end">
-                                <v-card-text class="black--text ">
-                                    <v-row justify="center">
-                                        <p>{{info.company.name}}</p>
-                                    </v-row>
-                                    <v-row justify="center">
-                                        <p class="mt-n4">{{info.startDate + " - " + info.endDate}}</p>
-                                    </v-row>
-                                </v-card-text>
-                            </v-row>
-                            <v-row justify="center">
-                                <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
-                                       class="white--text mb-8 font-weight-bold"
-                                       v-on:click="addToSubscr">Воспользоваться
-                                </v-btn>
-                            </v-row>
-                        </v-col>
-                    </v-card>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col
-                        class="
+              <v-row align="center" justify="center">
+                <v-rating
+                    v-model="info.ratingTotal"
+                    @input="ratingChose"
+                    class="mt-n3"
+                    color="yellow darken-3"
+                    background-color="grey darken-1"
+                    empty-icon="$ratingFull"
+                    half-increments
+                    size="20px"
+                    hover
+                ></v-rating>
+                <div class="grey--text mb-2 ml-2">
+                  {{info.ratingTotal}}
+                </div>
+              </v-row>
+              <v-row justify="center">
+                <v-card-subtitle class="black--text mr-1 font-weight-bold" style="font-size:32px;">
+                  {{info.amountOfDiscount + "% Скидка"}}
+                </v-card-subtitle>
+              </v-row>
+              <v-row align="center" justify="end">
+                <v-card-text class="black--text ">
+                  <v-row justify="center">
+                    <p>{{info.company.name}}</p>
+                  </v-row>
+                  <v-row justify="center">
+                    <p class="mt-n4">{{info.startDate + " - " + info.endDate}}</p>
+                  </v-row>
+                </v-card-text>
+              </v-row>
+              <v-row justify="center">
+                <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
+                       class="white--text mb-8 font-weight-bold"
+                       v-on:click="addToSubscr">Воспользоваться
+                </v-btn>
+              </v-row>
+            </v-col>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+            class="
                 d-md-none
                 col-xs-12
                 ml-9"
@@ -175,71 +195,95 @@
         components: {DetailPageMap},
         mixins: [paginationMixin],
         data: () => ({
+            card: "mdi-heart-outline",
             info: {},
             results: [],
             detailId: "",
         }),
 
-        props: {
-            _id: {
-                type: String,
-                required: true
-            }
-        },
-
-        methods: {
-            pictureCheck(url) {
-                console.log(url)
-                if (url === false)
-                    return "../../public/cat_404.jpg.jpg"
-                else
-                    // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
-                    return url
-            },
-            ...mapActions(['getDiscountById']),
-            detailView: function () {
-                let self = this;
-                const authorizationHeader = 'Authorization';
-                auth.getAccessToken().then((userToken) => {
-                    axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-                    this.getDiscountById(self.$route.params._id)
-                        .catch((error) => {
-                            alert(error);
-                        });
-                });
-            },
-            addToSubscr: function (event) {
-                let self = this;
-                // let discountId = this.$route.params._id
-                const putSubscr = () => {
-                    axios({
-                        method: 'put',
-                        url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
-                    }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
-                };
-                this.getToken(putSubscr);
-            },
-        },
-        mounted: function () {
-            this.detailView();
-        },
-        computed: {
-            ...mapGetters(["getDetailView"]),
-            filterData() {
-                const arr = [];
-                this.info = this.getDetailView;
-                this.info.startDate = moment(this.info.startDate).format('L');
-                this.info.endDate = moment(this.info.endDate).format('L');
-                return this.info;
-            },
-            discounts() {
-                return this.$store.state.discounts
-            },
-            subscriptions() {
-                return this.$store.state.subscriptions
-            }
-        },
+  props: {
+    _id: {
+      type: String,
+      required: true
     }
+  },
+  methods: {
+    iconSwitch(id) {
+      if (this.card === "mdi-heart-outline") {
+        this.card = "mdi-heart"
+        // this.addToFavorites(id);
+      } else
+        this.card = "mdi-heart-outline"
+    },
+    ...mapActions["putRatingById"],
+    ratingChose(rate){
+      console.log(rate)
+      let str = "";
+      let self = this;
+      const putRate = () => {
+        str+=self.$route.params._id+'/';
+        str+=rate;
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/vote/${str}`,
+        }).then(this.detailView);
+      }
+      this.getToken(putRate)
+    },
+    pictureCheck(url){
+      console.log(url)
+      if(url === false)
+        return "../../public/cat_404.jpg.jpg"
+      else
+          // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        return url
+    },
+    ...mapActions(['getDiscountById']),
+    detailView: function () {
+      let self = this;
+      const authorizationHeader = 'Authorization';
+      auth.getAccessToken().then((userToken) => {
+        axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+        this.getDiscountById(self.$route.params._id)
+            .catch((error) => {
+              alert(error);
+            });
+      });
+    },
+    addToSubscr: function (event) {
+      let self = this;
+      // let discountId = this.$route.params._id
+      const putSubscr = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
+        }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+      };
+      this.getToken(putSubscr);
+    },
+  },
+  mounted: function () {
+    this.detailView();
+    console.log(this.info.ratingTotal)
+  },
+  computed: {
+    ...mapGetters(["getDetailView"]),
+    filterData() {
+      console.log(this.info.ratingTotal)
+      this.info = this.getDetailView;
+      this.info.startDate = moment(this.info.startDate).format('L');
+      this.info.endDate = moment(this.info.endDate).format('L');
+      this.info.ratingTotal = +Number.parseFloat(this.info.ratingTotal).toFixed(2);
+      return this.info;
+    },
+    discounts() {
+      return this.$store.state.discounts
+    },
+    subscriptions() {
+      return this.$store.state.subscriptions
+    }
+  },
+}
 
 
 </script>
