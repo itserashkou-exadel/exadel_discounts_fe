@@ -46,7 +46,7 @@
           </div>
         </v-row>
       </v-col>
-      <v-icon v-on:click="iconSwitch(description.id)"
+      <v-icon v-on:click="iconSwitch(description.id) " color="red"
               class="mr-7 mt-7" large>>
 
         {{ card }}
