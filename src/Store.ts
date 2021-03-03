@@ -39,11 +39,15 @@ let store = new Vuex.Store({
             sortIndex: null,
             sortOrder: [false,false,true,true,true,false]
         },
+        auth: null
 
     },
     getters: {
         getTotalStatistic(state) {
             return state.totalStatistic;
+        },
+        getAuth (state) {
+            return state.auth
         },
         getUserClaims(state) {
             return state.userClaimsStoreData;
@@ -83,6 +87,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setAuth (state, auth) {
+            state.auth = auth
+        },
         setPreviousOrder(state, number){
             // @ts-ignore
             state.sortOption.sortIndex = number;
@@ -184,6 +191,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        goForAuth({commit}, auth){
+            commit('setAuth', auth);
+        },
         setFilterIcon({commit}, state){
             commit('changeFilterIcon', state);
         },

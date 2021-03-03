@@ -18,13 +18,12 @@
 </template>
 
 <script>
-    import AuthService from "@/services/auth.service";
     import axios from 'axios'
     import token from '@/mixins/token.mixin'
     import {mapGetters} from 'vuex'
 
     const moment = require('moment')
-    const auth = new AuthService();
+
 
     export default {
         name: "ChooseOfTown",

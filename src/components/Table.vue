@@ -19,12 +19,9 @@
 </template>
 
 <script>
-    import AuthService from '@/services/auth.service';
     import ToolBar from "@/views/ToolBar";
     import Cards from "@/views/Cards";
     import DataTable from "@/components/DataTable";
-
-    const auth = new AuthService();
 
     export default {
         name: "Table",

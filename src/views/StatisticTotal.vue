@@ -1,11 +1,11 @@
 <template>
-    <v-container fluid :key="componentKey">
+    <v-container fluid>
         <v-form ref="form">
             <v-row>
                 <v-col>
                     <v-list-item-title
                             align="center"
-                    >{{$t('dateOfCreatedOfDiscount')}}
+                    ><b>{{$t('dateOfCreatedOfDiscount')}}</b>
                     </v-list-item-title>
                     <date-piker
                             class="mt-16"
@@ -62,7 +62,9 @@
                                 :key="i"
                         >
                             <v-list-item-content>
-                                <v-list-item-title v-text="item"></v-list-item-title>
+                                <v-list-item-title v-text="item"
+                                                   :key="componentKey"
+                                ></v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-item-group>

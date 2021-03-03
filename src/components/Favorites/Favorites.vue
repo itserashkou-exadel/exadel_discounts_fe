@@ -12,7 +12,7 @@
             flat
         >
           <v-toolbar-title>
-            <h3>Избранное</h3>
+            <h3>{{$t('hFavorites')}}</h3>
           </v-toolbar-title>
           <v-dialog max-width="500px">
             <v-card>

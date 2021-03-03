@@ -12,7 +12,7 @@
             flat
         >
           <v-toolbar-title>
-            <h3>Подписки</h3>
+            <h3>{{$t('hSubscribe')}}</h3>
           </v-toolbar-title>
           <v-dialog max-width="500px">
             <v-card>
