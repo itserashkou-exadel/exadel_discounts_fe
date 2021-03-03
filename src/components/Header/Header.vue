@@ -17,9 +17,10 @@
       />
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-btn text class="font-weight-light">
-      <span>{{ currentLoc.country }}, {{ currentLoc.town }}</span>
-      <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
+    <v-btn text class="font-weight-light"
+           @click="changeUserLoc">
+      <span class="loc">{{ currentLoc.country }}, {{ currentLoc.town }}</span>
+      <v-icon>mdi-map-marker</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
     <Searching/>
@@ -97,3 +98,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.loc {
+  font-size: smaller;
+}
+
+
+</style>
+

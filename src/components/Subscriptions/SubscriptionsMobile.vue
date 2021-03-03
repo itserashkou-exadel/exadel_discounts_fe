@@ -1,7 +1,10 @@
 <template>
   <v-container fluid>
-    <v-card class="mb-16 pb-5">
+    <v-card class="mb-5 pb-5">
       <v-row>
+        <v-toolbar-title class="ml-7">
+          <h3>Подписки</h3>
+        </v-toolbar-title>
         <v-col lg="4"
                sm="12"
                md="6"
@@ -34,9 +37,7 @@ import SwitchButton from "@/views/SwitchButton";
 import Modal from "@/components/Filter/Modal";
 import {mapActions, mapGetters} from 'vuex'
 import token from '@/mixins/token.mixin'
-import AuthService from "@/services/auth.service";
 
-const auth = new AuthService();
 const moment = require('moment')
 
 export default {
@@ -56,9 +57,7 @@ export default {
       let loc = JSON.parse(localStorage.getItem('key'));
       let country = loc.country ? loc.country : 'Беларусь';
       let city = loc.city ? loc.city : 'Минск';
-      const authorizationHeader = 'Authorization';
-      auth.getAccessToken().then((userToken) => {
-        axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+      const getSubscrResult = () => {
         this.getSubscription(
             {
               "searchDiscountOption": "Subscriptions",
@@ -70,10 +69,11 @@ export default {
               "searchPaginationCountElementPerPage": this.pageSize,
               "searchLanguage": "Ru"
             }
-        ).then(response => this.updatePageCount());
-      }).catch((error) => {
-        alert(error);
-      });
+        ).then(response => this.updatePageCount())
+            .catch((error) => {
+              alert(error)}
+            )}
+      this.getToken(getSubscrResult);
     },
     headers() {
       return [

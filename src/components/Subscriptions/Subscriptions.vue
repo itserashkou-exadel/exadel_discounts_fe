@@ -1,11 +1,14 @@
 <template>
-  <v-col cols="12" lg="10" md="12" sm="10" class="pb-10">
+  <div>
     <v-data-table
         :items="filterData"
         :headers="headers()"
         hide-default-footer
+        height="400"
+        class="elevation-8 mb-16"
         show-expand
-        height="500"
+        :single-expand="singleExpand"
+        :expanded.sync="expanded"
     >
       <template v-slot:top>
         <v-toolbar
@@ -20,10 +23,8 @@
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text>{{ $t('dtCancel') }}</v-btn>
-                <v-btn color="blue darken-1" text>{{ $t('dtOk') }}</v-btn>
-                <template v-slot:item.calories="{ item }">
-                </template>
+                <!--                <v-btn color="blue darken-1" text>{{ $t('dtCancel') }}</v-btn>-->
+                <!--                <v-btn color="blue darken-1" text>{{ $t('dtOk') }}</v-btn>-->
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -31,7 +32,7 @@
         </v-toolbar>
       </template>
       <template v-slot:expanded-item="{ headers, item }">
-        <td :colspan="headers.length" class="content">
+        <td :colspan="headers.length">
           <v-row class="d-flex justify-center my-5">
             <v-col cols="12" lg="12" class="d-flex justify-center">
               <h2>{{ $t('dtDetailsAbout') }} "{{ item.service }}"</h2>
@@ -41,9 +42,9 @@
               <p class="mb-0">{{ item.description }}</p>
             </v-col>
             <v-col cols="9" lg="9" class="d-flex justify-space-around">
-              <v-btn
-                  color="primary"
-                  @click="$router.push({name:'detail'})"
+              <v-btn class="font-weight-light"
+                     color="primary"
+                     @click="$router.push({name:'detail',params:{_id:item.id}})"
               >
                 {{ $t('dtMoreInfo') }}
               </v-btn>
@@ -64,18 +65,18 @@
         @previous="paginatePrev"
         @input="paginateInput"
     ></v-pagination>
-  </v-col>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
-import AuthService from "@/services/auth.service";
+// import AuthService from "@/services/auth.service";
 import authMixin from '@/mixins/token.mixin';
 import {mapGetters, mapActions} from 'vuex'
 import Modal from "@/components/Filter/Modal";
 import Promocodes from "@/components/Subscriptions/Promocodes";
 
-const auth = new AuthService();
+// const auth = new AuthService();
 const moment = require('moment')
 
 export default {
@@ -87,6 +88,8 @@ export default {
     pageCount: 1,
     pageSize: 5,
     dialog: false,
+    expanded: [],
+    singleExpand: true,
   }),
   computed: {
     ...mapGetters(["allSubscriptions"]),
@@ -100,6 +103,7 @@ export default {
                 startDate: moment(item.startDate.$date).format('L'),
                 endDate: moment(item.endDate.$date).format('L'),
                 description: item.description,
+                rating: item.ratingTotal
               }
           ))
     },
@@ -110,9 +114,7 @@ export default {
       let loc = JSON.parse(localStorage.getItem('key'));
       let country = loc.country ? loc.country : 'Беларусь';
       let city = loc.city ? loc.city : 'Минск';
-      const authorizationHeader = 'Authorization';
-      auth.getAccessToken().then((userToken) => {
-        axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+      const getSubscrResult = () => {
         this.getSubscription(
             {
               "searchDiscountOption": "Subscriptions",
@@ -124,11 +126,12 @@ export default {
               "searchPaginationCountElementPerPage": this.pageSize,
               "searchLanguage": "Ru"
             }
-        ).then(response => this.updatePageCount());
-      }).catch((error) => {
-        alert(error);
-      });
-    },
+        ).then(response => this.updatePageCount())
+      .catch((error) => {
+      alert(error)}
+    )}
+    this.getToken(getSubscrResult);
+  }  ,
     headers() {
       return [
         {
@@ -183,4 +186,16 @@ export default {
 tr {
   box-shadow: none !important;
 }
+
+.v-data-table {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+td {
+  width: 0;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
 </style>
