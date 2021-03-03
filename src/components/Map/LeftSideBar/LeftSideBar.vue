@@ -67,6 +67,9 @@
                 return url ? url : "../../public/cat_404.jpg"
             },
         },
+        mounted() {
+            console.log('PROPS:', this.props)
+        }
     }
 </script>
 

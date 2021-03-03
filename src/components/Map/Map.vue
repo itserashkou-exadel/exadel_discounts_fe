@@ -121,6 +121,7 @@
             // await this.getToken(getData)
             //console.log(this.discountsFromStore)
             console.log(this.$store.getters.getUserLocation.town)
+            console.log('1212314124243')
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
@@ -165,7 +166,7 @@
                     zoom: 16,
                     speed: 2
                 })
-                console.log('WORK', coordinates)
+                //console.log('WORK', coordinates)
             },
             test() {
                 console.log('CLICK TEST!')
