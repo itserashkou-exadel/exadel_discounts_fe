@@ -15,7 +15,7 @@
                                 class="d-flex"
                         >
                           <v-icon v-on:click="iconSwitch(info.id)"
-                                  class="ml-6 mt-4" large color="blue">
+                                  class="ml-6 mt-4" large color="red">
 
                             {{ card }}
                           </v-icon>
@@ -92,7 +92,7 @@
                                 class="d-flex"
                         >
                           <v-icon v-on:click="iconSwitch(info.id)"
-                                  class="ml-6 mt-4" large color="blue">
+                                  class="ml-6 mt-4" large color="red">
 
                             {{ card }}
                           </v-icon>
