@@ -11,9 +11,7 @@
         </v-btn>
 
         <v-navigation-drawer
-                permanent
                 fixed
-                permanent
                 v-model="drawer"
                 class="navDrawer mt-10"
         >
@@ -58,7 +56,7 @@
         props: ['discountsFromStore', 'jumpToMarker'],
         data() {
             return {
-                drawer: true,
+                drawer: false,
             }
         },
         methods: {
