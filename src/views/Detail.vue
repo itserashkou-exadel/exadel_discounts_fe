@@ -31,7 +31,7 @@
                                 text-lg-h2
                                 text-md-h2
                                 text-h2
-                                name" style="word-break: normal">
+                                " style="word-break: normal">
                   {{ info.name }}
                 </v-card-title>
                 <v-row align="center" class="mt-1 mb-n8">
@@ -48,7 +48,7 @@
                     hover
                 ></v-rating>
                   <div class="grey--text mb-9 ml-2">
-                    {{info.ratingTotal.toFixed(2)}}
+                    {{info.ratingTotal}}
                   </div>
                 </v-row>
                 <v-row class="ml-2" align-center>
@@ -124,7 +124,7 @@
                     hover
                 ></v-rating>
                 <div class="grey--text mb-2 ml-2">
-                  {{info.ratingTotal.toFixed(2)}}
+                  {{info.ratingTotal}}
                 </div>
               </v-row>
               <v-row justify="center">
@@ -264,7 +264,7 @@
   },
   mounted: function () {
     this.detailView();
-
+    console.log(this.info.ratingTotal)
   },
   computed: {
     ...mapGetters(["getDetailView"]),
@@ -273,6 +273,7 @@
       this.info = this.getDetailView;
       this.info.startDate = moment(this.info.startDate).format('L');
       this.info.endDate = moment(this.info.endDate).format('L');
+      this.info.ratingTotal = +Number.parseFloat(this.info.ratingTotal).toFixed(2);
       return this.info;
     },
     discounts() {
