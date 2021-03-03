@@ -4,7 +4,6 @@
             :offset-y="true"
     >
         <template v-slot:activator="{ on, attrs }">
-            <v-form>
             <div class="d-flex">
                 <v-text-field
                               placeholder="Search"
@@ -21,7 +20,6 @@
                 >mdi-magnify
                 </v-icon>
             </div>
-            </v-form>
         </template>
         <v-list dense
                 :class="{'d-none': search === ''}"

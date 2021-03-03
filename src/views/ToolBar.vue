@@ -1,19 +1,19 @@
 <template>
     <v-row class="d-flex align-center justify-end">
-        <v-col cols="1" xl="1" lg="1" md="1"
+        <v-col md="1" sm="2" xs="2"
                class="d-none"
                :class="{'d-block': $route.name !== 'statistic' ||
                ($route.name === 'statistic'&& this.$store.getters.switcher)}">
             <Modal/>
         </v-col>
-        <v-col cols="1">
+        <v-col md="1" sm="2" xs="2">
         <DeleteFilter/>
         </v-col>
-        <v-col cols="2"
+        <v-col md="2" sm="2" xs="2"
                :class="{'d-none d-md-block': $route.name !== 'statistic'}">
             <SwitchButton></SwitchButton>
         </v-col>
-        <v-col cols="2"
+        <v-col md="2" sm="3" xs="3"
                 v-if="this.$store.state.userClaimsStoreData.role !=='Employee'">
             <v-btn
                     color="primary"
