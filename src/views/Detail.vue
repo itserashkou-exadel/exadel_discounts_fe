@@ -145,8 +145,19 @@
               <v-row justify="center">
                 <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
                        class="white--text mb-8 font-weight-bold"
-                       v-on:click="addToSubscr">{{$t('use')}}
+                       v-on:click="addToSubscr"
+                       @click="snackbar = true"
+                >{{$t('use')}}
                 </v-btn>
+                <v-snackbar
+                    v-model="snackbar"
+                    :timeout="timeout"
+                    absolute
+                    centered
+                    color="primary"
+                >
+                  {{ text }}
+                </v-snackbar>
               </v-row>
             </v-col>
           </v-card>
@@ -186,18 +197,22 @@
     import paginationMixin from '@/mixins/token.mixin'
     import token from '@/mixins/token.mixin'
     import DetailPageMap from "@/components/Map/DetailPageMap";
+    import Promocodes from "@/components/Subscriptions/Promocodes";
 
 
     const moment = require('moment')
     export default {
         name: "Detail",
-        components: {DetailPageMap},
+        components: {Promocodes, DetailPageMap},
         mixins: [paginationMixin, token],
         data: () => ({
             card: "mdi-heart-outline",
             info: {},
             results: [],
             detailId: "",
+            snackbar: false,
+            text: 'ПРОМОКОД ДОБАВЛЕН В ПОДПИСКИ',
+            timeout: 2000,
         }),
 
   props: {

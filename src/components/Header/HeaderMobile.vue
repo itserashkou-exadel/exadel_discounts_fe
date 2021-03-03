@@ -65,10 +65,16 @@
         </v-menu>
       </v-col>
       <v-col>
-        <v-toolbar-title>
-          <span class="font-weight-light">Crazy</span>
-          <span>Price</span>
-        </v-toolbar-title>
+        <router-link to="/home">
+          <v-btn text>
+            <v-toolbar-title class="headline text-uppercase mr-6">
+                      <span class="text--accent-4"
+                            color="blue lighten-5">Crazy</span>
+              <span class="font-weight-light"
+                    color="blue lighten-5">Price</span>
+            </v-toolbar-title>
+          </v-btn>
+        </router-link>
       </v-col>
       <v-col>
         <Searching/>
@@ -126,17 +132,23 @@ export default {
   transition: max-width 0.8s;
 }
 
-.v-input__slot :before,:after {
+.v-input__slot :before, :after {
   border-color: transparent !important;
 }
+
 .closed {
   max-width: 45px;
 }
+
 .v-app-bar__nav-icon {
   margin-left: -24px;
 }
 
 .v-toolbar__content, .v-toolbar__extension {
   padding: 4px 13px;
+}
+
+.v-btn .v-btn--icon .v-btn--round .theme--dark .v-size--default {
+  margin-left: -9px !important;
 }
 </style>
