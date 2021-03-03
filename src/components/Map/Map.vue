@@ -18,7 +18,7 @@
                 :mapStyle="mapStyle"
                 @load="onMapLoaded"
                 :center="setUserLoc()"
-                :zoom=9
+                :zoom=11
         >
             <MglMarker :coordinates="[marker.address.location.longitude, marker.address.location.latitude]"
                        v-for="marker in discountsFromStore"
@@ -50,7 +50,6 @@
     import Mapbox from "mapbox-gl";
     import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
     import LeftSideBar from "@/components/Map/LeftSideBar/LeftSideBar";
-    import axios from "axios";
     import Modal from "@/components/Filter/Modal";
 
     import AuthService from "@/services/auth.service";
@@ -130,7 +129,6 @@
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
-                    const arr = [];
                     this.discountsFromStore = this.$store.state.discounts;
                     console.log('DISCOUNTS FETCHED FROM STORE: ', this.discountsFromStore)
                     // this.discountsFromStore.map((item) => {
@@ -176,52 +174,52 @@
                 return url ? url : "../../public/cat_404.jpg"
             },
             setUserLoc() {
-                if (this.$store.getters.getUserLocation.town === 'Минск' || 'Minsk') {
+                const userTown = this.$store.getters.getUserLocation.town
+                if (userTown === 'Минск' || userTown === 'Minsk') {
                     this.coordinates = [27.556265080371784, 53.900853106872894]
-                } else if (this.$store.getters.getUserLocation.town === 'Гродно' || 'Grodno') {
+                } else if (userTown === 'Гродно' || userTown === 'Grodno') {
                     this.coordinates = [23.821290940502898, 53.67018624655573]
-                }else if (this.$store.getters.getUserLocation.town === 'Брест'  || 'Brest') {
+                } else if (userTown === 'Брест' || userTown === 'Brest') {
                     this.coordinates = [23.713864391355475, 52.106804702096255]
-                }else if (this.$store.getters.getUserLocation.town === 'Гомель' || 'Gomel') {
+                } else if (userTown === 'Гомель' || userTown === 'Gomel') {
                     this.coordinates = [30.985821597248332, 52.437059977979644]
-                }else if (this.$store.getters.getUserLocation.town === 'Вильнюс' || 'Vilnius') {
+                } else if (userTown === 'Вильнюс' || userTown === 'Vilnius') {
                     this.coordinates = [25.261185109081957, 54.667765625184714]
-                }else if (this.$store.getters.getUserLocation.town === 'Клайпеда' || 'Klaipeda') {
+                } else if (userTown === 'Клайпеда' || 'Klaipeda') {
                     this.coordinates = [21.155826546179373, 55.705647243214884]
-                }else if (this.$store.getters.getUserLocation.town === 'Беласток' || 'Bialystock') {
+                } else if (userTown === 'Беласток' || userTown === 'Bialystock') {
                     this.coordinates = [23.158810835791517, 53.13399030244814]
-                }else if (this.$store.getters.getUserLocation.town === 'Варшава' || 'Warsaw') {
+                } else if (userTown === 'Варшава' || userTown === 'Warsaw') {
                     this.coordinates = [21.05020133968254, 52.23621882731236]
-                }else if (this.$store.getters.getUserLocation.town === 'Щецин' || 'Szczecin') {
+                } else if (userTown === 'Щецин' || userTown === 'Szczecin') {
                     this.coordinates = [14.543855316369838, 53.432944135462435]
-                }else if (this.$store.getters.getUserLocation.town === 'Познань' || 'Poznan') {
+                } else if (userTown === 'Познань' || userTown === 'Poznan') {
                     this.coordinates = [16.91290904438683, 52.40306045752039]
-                }else if (this.$store.getters.getUserLocation.town === 'Ташкент' || 'Tashkent') {
+                } else if (userTown === 'Ташкент' || userTown === 'Tashkent') {
                     this.coordinates = [69.26410055783313, 41.29545885172744]
-                }else if (this.$store.getters.getUserLocation.town === 'Винница' || 'Vynnytsia') {
+                } else if (userTown === 'Винница' || userTown === 'Vynnytsia') {
                     this.coordinates = [28.47994460571252, 49.23016918857903]
-                }else if (this.$store.getters.getUserLocation.town === 'Львов' || 'Lviv') {
+                } else if (userTown === 'Львов' || userTown === 'Lviv') {
                     this.coordinates = [24.026310082753604, 49.83820380047078]
-                }else if (this.$store.getters.getUserLocation.town === 'Одесса' || 'Odesa') {
+                } else if (userTown === 'Одесса' || userTown === 'Odesa') {
                     this.coordinates = [30.729353117526045, 46.458077445054215]
-                }else if (this.$store.getters.getUserLocation.town === 'Харьков' || 'Kharkiv') {
+                } else if (userTown === 'Харьков' || userTown === 'Kharkiv') {
                     this.coordinates = [36.271398424596036, 49.98258686896893]
-                }else if (this.$store.getters.getUserLocation.town === 'Киев' || 'Kyiv') {
+                } else if (userTown === 'Киев' || userTown === 'Kyiv') {
                     this.coordinates = [30.54916399444433, 50.445697829160686]
-                }else if (this.$store.getters.getUserLocation.town === 'Дрезден' || 'Dresden') {
+                } else if (userTown === 'Дрезден' || userTown === 'Dresden') {
                     this.coordinates = [13.734378796098722, 51.04838431086731]
-                }else if (this.$store.getters.getUserLocation.town === 'Челябинск' || 'Chelyabinsk') {
+                } else if (userTown === 'Челябинск' || userTown === 'Chelyabinsk') {
                     this.coordinates = [61.39951117616081, 55.16016712388462]
-                }else if (this.$store.getters.getUserLocation.town === 'Екатеринбург' || 'Yekaterinburg') {
+                } else if (userTown === 'Екатеринбург' || userTown === 'Yekaterinburg') {
                     this.coordinates = [60.61451771229935, 56.83157715872755]
-                }else if (this.$store.getters.getUserLocation.town === 'Walnut Creek' || 'Walnut Creek') {
+                } else if (userTown === 'Walnut Creek' || userTown === 'Walnut Creek') {
                     this.coordinates = [-122.05648884499455, 37.90218934298263]
-                }else if (this.$store.getters.getUserLocation.town === 'Boulder' || 'Boulder') {
+                } else if (userTown === 'Boulder' || userTown === 'Boulder') {
                     this.coordinates = [-105.2552595074929, 40.01641836015882]
                 }
                 return this.coordinates
             }
-
         }
     };
 </script>
