@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-container >
         <v-btn
                 color="primary"
                 dark
@@ -12,7 +12,6 @@
 
         <v-navigation-drawer
                 fixed
-                permanent
                 v-model="drawer"
                 class="navDrawer mt-10"
         >
@@ -26,7 +25,7 @@
             </v-btn>
             <v-divider></v-divider>
 
-            <v-expansion-panels class="d-flex mx-auto">
+            <v-expansion-panels >
                 <v-expansion-panel
                         v-for="(item,i) in discountsFromStore"
                         :key="i"
@@ -37,13 +36,17 @@
                     </v-expansion-panel-header>
 
                     <v-expansion-panel-content>{{item.description}}</v-expansion-panel-content>
+                    <v-expansion-panel-content>
+                        <v-img :src="pictureCheck(item.pictureUrl)"></v-img>
+
+                    </v-expansion-panel-content>
                     <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
                     <v-expansion-panel-content><p>{{item.amountOfDiscount}}%</p></v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
 
         </v-navigation-drawer>
-    </div>
+    </v-container>
 
 </template>
 
@@ -53,7 +56,6 @@
         props: ['discountsFromStore', 'jumpToMarker'],
         data() {
             return {
-                something: 0,
                 drawer: false,
             }
         },
@@ -61,7 +63,13 @@
             test() {
                 console.log('TEST!')
             },
+            pictureCheck(url) {
+                return url ? url : "../../public/cat_404.jpg"
+            },
         },
+        mounted() {
+            console.log('PROPS:', this.props)
+        }
     }
 </script>
 

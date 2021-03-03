@@ -90,7 +90,7 @@
                 const userLoc = this.$store.getters.getUserLocation
                 localStorage.setItem('key', JSON.stringify(userLoc))
                 console.group('User data')
-                console.log('User location in VueX store: ', this.$store.getters.getUserLocation)
+                console.log('User location in VueX store: ', this.$store.getters.getUserLocation.town)
                 console.groupEnd()
                 this.$router.push('/home')
             },
