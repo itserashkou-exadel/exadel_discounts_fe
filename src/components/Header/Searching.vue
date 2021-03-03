@@ -5,16 +5,15 @@
        >
            <template v-slot:activator="{ on, attrs }">
                <div class="d-flex">
-        <v-text-field
+        <v-text-field id="textSearch"
                 placeholder="Search"
                 class="mt-4"
                 color="blue lighten-5"
                 v-model="search"
                 full-width
-                @keydown.enter="showSearch"
+                @keydsown.enter="showSearch"
                 v-on="on"
-                filled
-        ></v-text-field>
+               ></v-text-field>
             <v-icon
                     @click="showSearch"
             >mdi-magnify</v-icon>
@@ -59,8 +58,11 @@
         mixins: [token],
         watch: {
             search: function () {
-
-                if (this.search === '') {this.tags = []}
+                if (this.search === '') {
+                    let textSearch = getElementById('#textSearch')
+                    textSearch.preventDefault();
+                    textSearch.style.opacity = 100;
+                    this.tags = []}
                 const getTags = () => {
                     axios.get(`https://localhost:9001/api/v1/tags/get/${this.search}`).then((data) =>
                         this.tags = data.data
