@@ -40,7 +40,7 @@
                                 ></v-rating>
                                 <v-row class="ml-2" align-center>
                                     <v-card-subtitle class="black--text mb-8 font-weight-bold" style="font-size:32px;">
-                                        {{info.amountOfDiscount + "% Скидка"}}
+                                        {{info.amountOfDiscount + "% " + $t('cardDiscount')}}}
                                     </v-card-subtitle>
                                     <!--                                    <v-icon color="white" large class="ml-14">-->
                                     <!--                                        mdi-heart-outline-->
@@ -52,7 +52,7 @@
                                 </v-card-text>
                                 <v-btn height="60px" width="300px" color="#1E88E5" style="font-size:24px;"
                                        class="white--text ml-6 mt-n5 font-weight-bold"
-                                       v-on:click="addToSubscr">Воспользоваться
+                                       v-on:click="addToSubscr">{{$t('use')}}
                                 </v-btn>
                             </v-col>
                             <v-col
@@ -61,7 +61,7 @@
                             col-md-6
                             col-xs-12"
                             >
-                                <h1 class="">Условия использования</h1>
+                                <h1 class="">{{$t('conditionOfUse')}}</h1>
                                 <p>{{info.description}}
                                 </p>
                             </v-col>
@@ -109,7 +109,7 @@
                             </v-row>
                             <v-row justify="center">
                                 <v-card-subtitle class="black--text mr-1 font-weight-bold" style="font-size:32px;">
-                                    {{info.amountOfDiscount + "% Скидка"}}
+                                    {{info.amountOfDiscount + "% " + $t('cardDiscount')}}
                                 </v-card-subtitle>
                             </v-row>
                             <v-row align="center" justify="end">
@@ -125,7 +125,7 @@
                             <v-row justify="center">
                                 <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
                                        class="white--text mb-8 font-weight-bold"
-                                       v-on:click="addToSubscr">Воспользоваться
+                                       v-on:click="addToSubscr">{{$t('use')}}
                                 </v-btn>
                             </v-row>
                         </v-col>
@@ -140,7 +140,7 @@
                 ml-9"
                 >
                     <v-row justify="center" class="mb-2">
-                        <h1 class="">Условия использования</h1>
+                        <h1 class="">{{$t('conditionOfUse')}}</h1>
                     </v-row>
                     <p>{{info.description}}</p>
                 </v-col>
@@ -148,7 +148,7 @@
             <v-row>
                 <v-col cols="12" class="mb-10">
                     <v-row justify="center" justify-md="start" class="mb-2 mt-2">
-                        <h1 class="mb-2 ml-9">Где находится</h1>
+                        <h1 class="mb-2 ml-9">{{$t('whereIsIt')}}</h1>
                     </v-row>
                     <v-card max-width="100%">
                         <!--            <v-img src="../../public/image1.png" height="60%"></v-img>-->
