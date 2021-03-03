@@ -2,7 +2,6 @@
   <v-toolbar color="primary"
              flat
              app
-             dark
              fixed
   >
     <!-- dropdown menu -->

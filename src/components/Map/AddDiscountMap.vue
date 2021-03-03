@@ -67,7 +67,7 @@ export default {
 
       axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${params.access_token}&limit=1`)
           .then(function (response) {
-            response.data.features.forEach(f => console.log(`${f.center}-${f.place_name}`))
+            // response.data.features.forEach(f => console.log(`${f.center}-${f.place_name}`))
             if (response.data.features) {
               updateFn(response.data.features[0].center);
             }

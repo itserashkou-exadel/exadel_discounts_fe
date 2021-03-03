@@ -9,9 +9,9 @@
       <Header class="hidden-sm-and-down"/>
     </v-app-bar>
     <v-main>
-<!--      <v-container fluid>-->
+      <v-container fluid>
         <router-view></router-view>
-<!--      </v-container>-->
+      </v-container>
     </v-main>
     <v-footer absolute app flat color="primary">
       <Footer/>
