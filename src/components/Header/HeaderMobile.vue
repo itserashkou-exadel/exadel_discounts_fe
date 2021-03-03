@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="primary"
+  <v-app-bar color="primary"
              flat
              app
              fixed
@@ -37,26 +37,28 @@
                 <router-link to="/home">
                   <v-btn text>
                     <v-toolbar-title class="headline text-uppercase mr-6">
-                      <span class="text--accent-4"
-                            color="blue lighten-5">Crazy</span>
+        <span class="text--accent-4"
+              color="blue lighten-5">Crazy</span>
                       <span class="font-weight-light"
                             color="blue lighten-5">Price</span>
                     </v-toolbar-title>
                   </v-btn>
                 </router-link>
                 <v-spacer></v-spacer>
+                <v-toolbar-items>
+                </v-toolbar-items>
               </v-toolbar>
               <v-list
                   three-line
                   subheader
               >
-                <v-list-item v-for="link in links()" :key="link.text" router :to="{name:link.route}"
+                <v-list-item v-for="link in links()" :key="link.text" router :to="link.route"
                              @click="sideNav= false">
                   <v-list-item-title>{{ link.text }}</v-list-item-title>
                 </v-list-item>
                 <v-btn text>
                   <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
-                  <span>{{ currentLoc.country }}, {{ currentLoc.town }}</span>
+                  <span>{{currentLoc.country}}, {{currentLoc.town}}</span>
                 </v-btn>
                 <Avatar/>
               </v-list>
@@ -65,28 +67,21 @@
         </v-menu>
       </v-col>
       <v-col>
-        <router-link to="/home">
-          <v-btn text>
-            <v-toolbar-title class="headline text-uppercase mr-6">
-                      <span class="text--accent-4"
-                            color="blue lighten-5">Crazy</span>
-              <span class="font-weight-light"
-                    color="blue lighten-5">Price</span>
-            </v-toolbar-title>
-          </v-btn>
-        </router-link>
+        <v-toolbar-title>
+          <span class="font-weight-light">Crazy</span>
+          <span>Price</span>
+        </v-toolbar-title>
       </v-col>
       <v-col>
         <Searching/>
       </v-col>
     </v-row>
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script>
 import Avatar from "@/components/Header/Avatar";
 import Searching from "@/components/Header/Searching";
-
 export default {
   name: "Header_mobile",
   components: {Searching, Avatar},
@@ -127,28 +122,14 @@ export default {
 }
 </script>
 
-<style>
-.expanding-search {
-  transition: max-width 0.8s;
-}
-
-.v-input__slot :before, :after {
-  border-color: transparent !important;
-}
-
-.closed {
-  max-width: 45px;
-}
-
-.v-app-bar__nav-icon {
-  margin-left: -24px;
-}
-
-.v-toolbar__content, .v-toolbar__extension {
-  padding: 4px 13px;
-}
-
-.v-btn .v-btn--icon .v-btn--round .theme--dark .v-size--default {
-  margin-left: -9px !important;
-}
+<style lang="sass">
+.expanding-search
+  transition: max-width 0.8s
+  .v-input__slot
+    &:before, &:after
+      border-color: transparent !important
+  &.closed
+    max-width: 45px
+  .v-app-bar__nav-icon
+    margin-left: -24px
 </style>

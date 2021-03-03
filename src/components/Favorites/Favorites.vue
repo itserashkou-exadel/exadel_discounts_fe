@@ -115,9 +115,6 @@ export default {
       let loc = JSON.parse(localStorage.getItem('key'));
       let country = loc.country ? loc.country : 'Беларусь';
       let city = loc.city ? loc.city : 'Минск';
-      // const authorizationHeader = 'Authorization';
-      // auth.getAccessToken().then((userToken) => {
-      //   axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
       const getFavoritesResult = () => {
         this.getFavorites(
             {
