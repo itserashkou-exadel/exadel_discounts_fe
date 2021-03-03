@@ -2,9 +2,6 @@
     <div>
         <router-view/>
         <ToolBar/>
-      <v-btn @click="forceRerender">
-        Run
-      </v-btn >
         <v-row>
             <Cards class="d-md-none"></Cards>
         </v-row>
@@ -12,7 +9,7 @@
                 <DataTable
                         v-show="this.$store.state.switch === true"
                 />
-                <Cards  :key="componentKey"
+                <Cards  :key="this.$store.state.switch"
                         v-show="this.$store.state.switch === false"
 
                 />
@@ -37,15 +34,6 @@
                 windowInnerWidth: window.innerWidth,
             }
         },
-      methods: {
-        forceRerender: function() {
-          if(this.$store.state.switch === false) {
-            console.log("")
-            this.componentKey += 1;
-          }
-        },
-      },
-
         components: {ToolBar, DataTable, Cards},
     }
 </script>

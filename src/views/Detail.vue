@@ -14,9 +14,14 @@
                                 :src="pictureCheck(info.pictureUrl)"
                                 class="d-flex"
                         >
-                            <v-icon class="ml-6 mt-4" large color="blue">
-                                mdi-heart-outline
-                            </v-icon>
+                          <v-icon v-on:click="iconSwitch(info.id)"
+                                  class="ml-6 mt-4" large color="blue">
+
+                            {{ card }}
+                          </v-icon>
+<!--                            <v-icon class="ml-6 mt-4" large color="blue">-->
+<!--                                mdi-heart-outline-->
+<!--                            </v-icon>-->
                         </v-img>
                         <v-row>
                             <v-col cols="5" class="mt-n4">
@@ -26,7 +31,7 @@
                                 text-lg-h2
                                 text-md-h2
                                 text-h2
-                                name">
+                                " style="word-break: normal">
                                     {{ info.name }}
                                 </v-card-title>
                                 <v-rating
@@ -78,9 +83,11 @@
                                 :src="pictureCheck(info.pictureUrl)"
                                 class="d-flex"
                         >
-                            <v-icon class="ml-6 mt-4" large color="blue">
-                                mdi-heart-outline
-                            </v-icon>
+                          <v-icon v-on:click="iconSwitch(info.id)"
+                                  class="ml-6 mt-4" large color="blue">
+
+                            {{ card }}
+                          </v-icon>
                         </v-img>
                         <v-col class="mt-1">
                             <v-row justify="center">
@@ -90,7 +97,7 @@
                                 text-lg-h2
                                 text-md-h2
                                 text-h4
-                                name" style="">
+                                " style="word-break: normal">
                                     {{ info.name }}
                                 </v-card-title>
                             </v-row>
@@ -175,6 +182,7 @@
         components: {DetailPageMap},
         mixins: [paginationMixin],
         data: () => ({
+            card: "mdi-heart-outline",
             info: {},
             results: [],
             detailId: "",
@@ -188,6 +196,13 @@
         },
 
         methods: {
+          iconSwitch(id) {
+            if (this.card === "mdi-heart-outline") {
+              this.card = "mdi-heart"
+              // this.addToFavorites(id);
+            } else
+              this.card = "mdi-heart-outline"
+          },
             pictureCheck(url) {
                 console.log(url)
                 if (url === false)
