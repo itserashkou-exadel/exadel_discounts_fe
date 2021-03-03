@@ -79,8 +79,8 @@
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeDelete">Отмена</v-btn>
-          <v-btn color="blue darken-1" text @click="deleteItemConfirm(description.id)">Да</v-btn>
+          <v-btn color="blue darken-1" text @click="closeDelete">{{$t('dtCancel')}}</v-btn>
+          <v-btn color="blue darken-1" text @click="deleteItemConfirm(description.id)">{{$t('dtOk')}}</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
