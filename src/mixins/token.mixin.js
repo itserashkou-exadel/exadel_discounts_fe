@@ -25,6 +25,11 @@ export default {
                axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
                 func()
             });
+        },
+        getCountries () {
+            const getCountries = () => {
+            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${this.$store.getters.language}/countries`)}
+            this.getToken(getCountries)
         }
     }
 
