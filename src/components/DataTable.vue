@@ -98,29 +98,19 @@
 
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
-                    <v-row class="d-flex justify-end my-5">
-                        <v-col cols="1" lg="1" >
-                            <v-btn v-on:click="addToFavorites(item.id)">
-                                <v-icon color="orange">{{icons.icon}}</v-icon>
-                            </v-btn>
-                        </v-col>
+                    <v-row class="d-flex  my-5">
 
-                        <v-col cols="7" lg="11" class="d-flex justify-center">
-                            <h2>{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
-                        </v-col>
-                        <v-spacer></v-spacer>
-                        <v-col cols="11" lg="11" class="d-flex justify-center">
-                            <p class="mb-0">{{ item.description }}</p>
-                        </v-col>
-                        <v-col cols="11" lg="11" class="text-center">
-<!--                            <v-btn-->
-<!--                                    color="primary"-->
-<!--                                    @click="$router.push({name:'detail'})"-->
-<!--                            >-->
-                          <v-btn
-                              color="primary"
-                              @click="$router.push({name:'detail',params:{_id:item.id}})"
-                          >
+
+                        <v-col cols="12" class="d-flex flex-column align-center justify-center">
+                            <v-btn elevation="2" fab class="align-self-start" v-on:click="addToFavorites(item.id)">
+                                <v-icon large color="red">{{icons.icon}}</v-icon>
+                            </v-btn>
+                            <h2 class="align-self-center" >{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
+                            <p class="my-5">{{ item.description }}</p>
+                            <v-btn
+                                    color="primary mb-5"
+                                    @click="$router.push({name:'detail',params:{_id:item.id}})"
+                            >
                                 {{$t('dtMoreInfo')}}
                             </v-btn>
                         </v-col>
@@ -181,7 +171,7 @@
             dialog: false,
             dialogDelete: false,
             icons: {
-                icon: "mdi-star"
+                icon: "mdi-heart-outline"
             },
             offers: [],
             info: [],
