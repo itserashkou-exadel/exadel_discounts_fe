@@ -19,6 +19,7 @@
               :length="paginationLength"
               :total-visible="7"
               @input="next"
+              class="mb-16 pb-6"
           ></v-pagination>
     </v-container>
 </template>
