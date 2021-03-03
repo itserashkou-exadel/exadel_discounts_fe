@@ -13,6 +13,7 @@
         <v-navigation-drawer
                 permanent
                 fixed
+                permanent
                 v-model="drawer"
                 class="navDrawer mt-10"
         >

@@ -434,6 +434,7 @@
                 }
             },
             nothing(event) {
+                console.log(event)
                 event.preventDefault()
             },
             agree() {
