@@ -17,8 +17,8 @@
                 :accessToken="accessToken"
                 :mapStyle="mapStyle"
                 @load="onMapLoaded"
-                :center="coordinates"
-                :zoom=3
+                :center="setUserLoc()"
+                :zoom=9
         >
             <MglMarker :coordinates="[marker.address.location.longitude, marker.address.location.latitude]"
                        v-for="marker in discountsFromStore"
@@ -73,7 +73,8 @@
             return {
                 accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA', // your access token. Needed if you using Mapbox maps
                 mapStyle: 'mapbox://styles/mapbox/streets-v11', // your map style
-                coordinates: [27.544592, 53.898477],
+                //coordinates: [27.544592, 53.898477],
+                coordinates: null,
                 dialog: false,
                 discountsFromStore: [],
                 result: [],
@@ -119,7 +120,8 @@
             // }
             //
             // await this.getToken(getData)
-            console.log(this.discountsFromStore)
+            //console.log(this.discountsFromStore)
+            console.log(this.$store.getters.getUserLocation.town)
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
@@ -173,6 +175,15 @@
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"
             },
+            setUserLoc() {
+                if (this.$store.getters.getUserLocation.town === 'Минск') {
+                    this.coordinates = [27.556265080371784, 53.900853106872894]
+                } else if (this.$store.getters.getUserLocation.town === 'Гродно') {
+                    this.coordinates = [23.821290940502898, 53.67018624655573]
+                }
+                return this.coordinates
+            }
+
         }
     };
 </script>

@@ -11,6 +11,7 @@
         </v-btn>
 
         <v-navigation-drawer
+                permanent
                 fixed
                 v-model="drawer"
                 class="navDrawer mt-10"
