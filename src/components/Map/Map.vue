@@ -1,4 +1,4 @@
-<template v-slot:activator="{ on, attrs }"> 
+<template v-slot:activator="{ on, attrs }">
     <div id="map">
         <div class="filter">
             <Modal class="modal"/>
@@ -33,6 +33,7 @@
                         <v-card-text>
                             <h4>Company:</h4> <span>{{marker.company.name}}</span>
                             <hr>
+                            <v-img :src="pictureCheck(marker.pictureUrl)"></v-img>
                             <p>
                                 {{marker.description}}
                             </p>
@@ -118,6 +119,7 @@
             // }
             //
             // await this.getToken(getData)
+            console.log(this.discountsFromStore)
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
@@ -167,7 +169,10 @@
             },
             test() {
                 console.log('CLICK TEST!')
-            }
+            },
+            pictureCheck(url) {
+                return url ? url : "../../public/cat_404.jpg"
+            },
         }
     };
 </script>
