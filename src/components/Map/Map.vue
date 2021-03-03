@@ -177,45 +177,68 @@
                 const userTown = this.$store.getters.getUserLocation.town
                 if (userTown === 'Минск' || userTown === 'Minsk') {
                     this.coordinates = [27.556265080371784, 53.900853106872894]
-                } else if (userTown === 'Гродно' || userTown === 'Grodno') {
+                }
+                if (userTown === 'Гродно' || userTown === 'Grodno') {
                     this.coordinates = [23.821290940502898, 53.67018624655573]
-                } else if (userTown === 'Брест' || userTown === 'Brest') {
+                }
+                if (userTown === 'Брест' || userTown === 'Brest') {
                     this.coordinates = [23.713864391355475, 52.106804702096255]
-                } else if (userTown === 'Гомель' || userTown === 'Gomel') {
+                }
+                if (userTown === 'Гомель' || userTown === 'Gomel') {
                     this.coordinates = [30.985821597248332, 52.437059977979644]
-                } else if (userTown === 'Вильнюс' || userTown === 'Vilnius') {
+                }
+                if (userTown === 'Витебск' || userTown === 'Vitebsk') {
+                    this.coordinates = [30.202789083737947, 55.183766663654396]
+                }
+                if (userTown === 'Вильнюс' || userTown === 'Vilnius') {
                     this.coordinates = [25.261185109081957, 54.667765625184714]
-                } else if (userTown === 'Клайпеда' || 'Klaipeda') {
+                }
+                if (userTown === 'Клайпеда' || 'Klaipeda') {
                     this.coordinates = [21.155826546179373, 55.705647243214884]
-                } else if (userTown === 'Беласток' || userTown === 'Bialystock') {
-                    this.coordinates = [23.158810835791517, 53.13399030244814]
-                } else if (userTown === 'Варшава' || userTown === 'Warsaw') {
+                }
+                if (userTown === 'Беласток' || userTown === 'Bialystock') {
+                    this.coordinates = [23.159497627634497, 53.13872756721303]
+                }
+                if (userTown === 'Варшава' || userTown === 'Warsaw') {
                     this.coordinates = [21.05020133968254, 52.23621882731236]
-                } else if (userTown === 'Щецин' || userTown === 'Szczecin') {
+                }
+                if (userTown === 'Щецин' || userTown === 'Szczecin') {
                     this.coordinates = [14.543855316369838, 53.432944135462435]
-                } else if (userTown === 'Познань' || userTown === 'Poznan') {
+                }
+                if (userTown === 'Познань' || userTown === 'Poznan') {
                     this.coordinates = [16.91290904438683, 52.40306045752039]
-                } else if (userTown === 'Ташкент' || userTown === 'Tashkent') {
+                }
+                if (userTown === 'Ташкент' || userTown === 'Tashkent') {
                     this.coordinates = [69.26410055783313, 41.29545885172744]
-                } else if (userTown === 'Винница' || userTown === 'Vynnytsia') {
+                }
+                if (userTown === 'Винница' || userTown === 'Vynnytsia') {
                     this.coordinates = [28.47994460571252, 49.23016918857903]
-                } else if (userTown === 'Львов' || userTown === 'Lviv') {
+                }
+                if (userTown === 'Львов' || userTown === 'Lviv') {
                     this.coordinates = [24.026310082753604, 49.83820380047078]
-                } else if (userTown === 'Одесса' || userTown === 'Odesa') {
+                }
+                if (userTown === 'Одесса' || userTown === 'Odesa') {
                     this.coordinates = [30.729353117526045, 46.458077445054215]
-                } else if (userTown === 'Харьков' || userTown === 'Kharkiv') {
+                }
+                if (userTown === 'Харьков' || userTown === 'Kharkiv') {
                     this.coordinates = [36.271398424596036, 49.98258686896893]
-                } else if (userTown === 'Киев' || userTown === 'Kyiv') {
+                }
+                if (userTown === 'Киев' || userTown === 'Kyiv') {
                     this.coordinates = [30.54916399444433, 50.445697829160686]
-                } else if (userTown === 'Дрезден' || userTown === 'Dresden') {
+                }
+                if (userTown === 'Дрезден' || userTown === 'Dresden') {
                     this.coordinates = [13.734378796098722, 51.04838431086731]
-                } else if (userTown === 'Челябинск' || userTown === 'Chelyabinsk') {
+                }
+                if (userTown === 'Челябинск' || userTown === 'Chelyabinsk') {
                     this.coordinates = [61.39951117616081, 55.16016712388462]
-                } else if (userTown === 'Екатеринбург' || userTown === 'Yekaterinburg') {
+                }
+                if (userTown === 'Екатеринбург' || userTown === 'Yekaterinburg') {
                     this.coordinates = [60.61451771229935, 56.83157715872755]
-                } else if (userTown === 'Walnut Creek' || userTown === 'Walnut Creek') {
+                }
+                if (userTown === 'Walnut Creek' || userTown === 'Walnut Creek') {
                     this.coordinates = [-122.05648884499455, 37.90218934298263]
-                } else if (userTown === 'Boulder' || userTown === 'Boulder') {
+                }
+                if (userTown === 'Boulder' || userTown === 'Boulder') {
                     this.coordinates = [-105.2552595074929, 40.01641836015882]
                 }
                 return this.coordinates
