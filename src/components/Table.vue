@@ -9,10 +9,12 @@
                 <DataTable
                         v-show="this.$store.state.switch === true"
                 />
-                <Cards
+                <Cards  :key="this.$store.state.switch"
                         v-show="this.$store.state.switch === false"
+
                 />
         </v-row>
+
     </div>
 </template>
 
@@ -28,6 +30,7 @@
         name: "Table",
         data() {
             return {
+              componentKey:0,
                 windowInnerWidth: window.innerWidth,
             }
         },
