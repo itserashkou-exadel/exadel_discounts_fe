@@ -31,14 +31,11 @@
                         :key="i"
                         @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude])"
                 >
-                    <v-expansion-panel-header>
-                        {{item.name}}
-                    </v-expansion-panel-header>
-
+                    <v-expansion-panel-header class="bold">{{item.name}} </v-expansion-panel-header>
+                    <v-expansion-panel-content>{{item.company.name}}</v-expansion-panel-content>
                     <v-expansion-panel-content>{{item.description}}</v-expansion-panel-content>
                     <v-expansion-panel-content>
                         <v-img :src="pictureCheck(item.pictureUrl)"></v-img>
-
                     </v-expansion-panel-content>
                     <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
                     <v-expansion-panel-content><p>{{item.amountOfDiscount}}%</p></v-expansion-panel-content>
@@ -68,7 +65,7 @@
             },
         },
         mounted() {
-            console.log('PROPS:', this.props)
+            console.log('PROPS navBar:', this.props)
         }
     }
 </script>
