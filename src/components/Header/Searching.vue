@@ -37,7 +37,7 @@
             search: function () {
                 this.setKeyWord(this.search)
                 if(this.search === ''){
-                    console.log('RESET')
+                    this.$store.commit('setNoFound', false)
                     const resSearch = () => {
                         this.inputPost(
                             {
@@ -65,6 +65,7 @@
             showSearch() {
                 // console.log(this.search)
                 this.$store.state.discounts = [];
+                this.$store.commit('setNoFound', false)
                 this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
                     this.inputPost(
