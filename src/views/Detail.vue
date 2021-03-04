@@ -3,6 +3,7 @@
     <v-container fluid class="pt-8" :data="filterData">
       <v-row class="mt-1">
         <v-col cols="12">
+<!--          dekstop-->
           <v-card max-width="100%" class="d-none mt-n7 d-md-block" style="position:relative">
             <!-- <v-img-->
             <!-- max-height="50vh"-->
@@ -64,7 +65,7 @@ text-h2
                   <p class="mt-n4">{{ info.startDate + " - " + info.endDate }}</p>
                 </v-card-text>
                 <v-btn height="60px" width="300px" color="#1E88E5" style="font-size:24px;"
-                       class="white--text ml-6 mt-n5 font-weight-bold"
+                       class="white--text ml-6 mt-n5 mb-8 font-weight-bold"
                        v-on:click="addToSubscr"
                        @click="snackbar = true"
                 >{{ $t('use') }}
@@ -78,9 +79,14 @@ text-h2
                 >
                   {{ text }}
                 </v-snackbar>
+                <v-row class="ml-6 mb-2">
                 <Promocodes v-bind:subscrItem="info"
                             :showSubscriptions="showSubscriptions"
                 />
+                </v-row>
+              </v-col>
+              <v-col cols="1">
+
               </v-col>
               <v-col
                   class="
@@ -94,6 +100,7 @@ col-xs-12"
               </v-col>
             </v-row>
           </v-card>
+<!--mobile-->
           <v-card max-width="100%" class="d-md-none">
             <!-- <v-img-->
             <!-- max-height="70vh"-->
@@ -119,7 +126,7 @@ font-weight-bold
 text-lg-h2
 text-md-h2
 text-h4
-" style="word-break: normal">
+" style="word-break: normal;text-align: center">
                   {{ info.name }}
                 </v-card-title>
               </v-row>
@@ -158,11 +165,13 @@ text-h4
               </v-row>
               <v-row justify="center">
                 <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
-                       class="white--text mb-8 font-weight-bold"
+                       class="white--text mb-5 font-weight-bold"
                        v-on:click="addToSubscr"
                        @click="snackbar = true"
                 >{{ $t('use') }}
                 </v-btn>
+              </v-row>
+              <v-row justify="center ma-5">
                 <Promocodes v-bind:subscrItem="info"
                             :showSubscriptions="showSubscriptions"
                 />
@@ -185,18 +194,18 @@ text-h4
             class="
 d-md-none
 col-xs-12
-ml-9"
+"
         >
           <v-row justify="center" class="mb-2">
             <h1 class="">{{ $t('conditionOfUse') }}</h1>
           </v-row>
-          <p>{{ info.description }}</p>
+          <p style="text-align: center">{{ info.description }}</p>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" class="mb-10">
           <v-row justify="center" justify-md="start" class="mb-2 mt-2">
-            <h1 class="mb-2 ml-9">{{ $t('whereIsIt') }}</h1>
+            <h1 class="mb-2 ">{{ $t('whereIsIt') }}</h1>
           </v-row>
           <v-card max-width="100%">
             <!-- <v-img src="../../public/image1.png" height="60%"></v-img>-->
