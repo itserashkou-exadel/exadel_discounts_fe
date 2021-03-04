@@ -1,28 +1,28 @@
 <template>
     <v-container>
-        <v-btn
-                color="primary"
-                dark
-                @click="drawer = !drawer"
-                class="showMenuBtn ml-13 mt-2"
-                v-bind:class="{'showMenuBtn': drawer}"
-        >
-            Show menu
-        </v-btn>
+<!--        <v-btn-->
+<!--                color="primary"-->
+<!--                dark-->
+<!--                @click="drawer = !drawer"-->
+<!--                class="showMenuBtn ml-13 mt-2"-->
+<!--                v-bind:class="{'showMenuBtn': drawer}"-->
+<!--        >-->
+<!--            Show menu-->
+<!--        </v-btn>-->
 
         <v-navigation-drawer
-                fixed
-                v-model="drawer"
-                class="navDrawer mt-10"
+                permanent
+                class="d-flex mb-5"
+                width="375px"
         >
-            <v-btn
-                    color="primary"
-                    dark
-                    class="mapMenuToggleBtn mt-8 mb-2"
-                    @click="drawer = !drawer"
-            >
-                Hide menu
-            </v-btn>
+<!--            <v-btn-->
+<!--                    color="primary"-->
+<!--                    dark-->
+<!--                    class="mapMenuToggleBtn mt-8 mb-2"-->
+<!--                    @click="drawer = !drawer"-->
+<!--            >-->
+<!--                Hide menu-->
+<!--            </v-btn>-->
             <v-divider></v-divider>
 
             <v-expansion-panels :key="myKey">

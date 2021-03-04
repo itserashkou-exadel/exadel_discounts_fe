@@ -9,9 +9,7 @@
                     v-bind:discountsFromStore="discountsFromStore"
                     v-bind:jumpToMarker="jumpToMarker"
                     :filterData="filterData"
-            >
-
-            </LeftSideBar>
+            />
         </nav>
         <MglMap
                 :accessToken="accessToken"
@@ -237,16 +235,7 @@
     }
 
     .mapNavPanel {
-        position: fixed;
-        z-index: 1;
         margin-bottom: 25px;
-    }
-
-    .testBtn {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 10;
     }
 
     .filter {
@@ -260,5 +249,34 @@
         right: 100px;
         height: 40px;
         border-radius: 5px;
+    }
+
+    @media screen and (max-width: 375px){
+        #map{
+            display: flex;
+            flex-direction: column;
+        }
+        MglMap{
+            width: 375px;
+            height: 400px;
+            order: 1;
+        }
+        .mapNavPanel{
+            order: 2;
+            overflow: scroll;
+        }
+
+        .filter{
+            width: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            z-index: 10;
+            top: 20px;
+            right: 40px;
+            height: 20px;
+            border-radius: 5px;
+        }
     }
 </style>
