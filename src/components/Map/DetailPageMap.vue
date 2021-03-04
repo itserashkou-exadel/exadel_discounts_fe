@@ -34,6 +34,7 @@
         },
         mounted() {
             this.getProps()
+            console.log('dataInfo: ', this.dataInfo)
         },
         methods: {
             async onMapLoaded(event) {
@@ -46,10 +47,11 @@
                 const asyncActions = event.component.actions
                 const newParams = await asyncActions.flyTo({
                     center: [this.dataInfo.latitude, this.dataInfo.longitude],
+                    //center: [this.dataInfo.latitude, this.dataInfo.longitude],
                     zoom: 9,
                     speed: 1
                 })
-                //console.log(newParams)
+                console.log(newParams)
             },
             getProps(){
                 let self = this;
