@@ -9,9 +9,7 @@
                     v-bind:discountsFromStore="discountsFromStore"
                     v-bind:jumpToMarker="jumpToMarker"
                     :filterData="filterData"
-            >
-
-            </LeftSideBar>
+            />
         </nav>
         <MglMap
                 :accessToken="accessToken"
@@ -117,7 +115,7 @@
             // await this.getToken(getData)
             //console.log(this.discountsFromStore)
             console.log(this.$store.getters.getUserLocation.town)
-            console.log('1212314124243')
+            console.log('Map.vue Rendred')
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
@@ -218,7 +216,7 @@
                     case 'Boulder' || 'Boulder':
                         return this.coordinates = [-105.2552595074929, 40.01641836015882]
                     default:
-                        alert('Location Error')
+                        //alert('Location Error')
                 }
             }
         }
@@ -233,16 +231,7 @@
     }
 
     .mapNavPanel {
-        position: fixed;
-        z-index: 1;
         margin-bottom: 25px;
-    }
-
-    .testBtn {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 10;
     }
 
     .filter {
@@ -256,5 +245,34 @@
         right: 100px;
         height: 40px;
         border-radius: 5px;
+    }
+
+    @media screen and (max-width: 375px){
+        #map{
+            display: flex;
+            flex-direction: column;
+        }
+        MglMap{
+            width: 375px;
+            height: 400px;
+            order: 1;
+        }
+        .mapNavPanel{
+            order: 2;
+            overflow: scroll;
+        }
+
+        .filter{
+            width: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            z-index: 10;
+            top: 20px;
+            right: 40px;
+            height: 20px;
+            border-radius: 5px;
+        }
     }
 </style>
