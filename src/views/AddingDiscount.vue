@@ -393,7 +393,8 @@
                     country: null,
                     city: null,
                     line: null
-                }
+                },
+                discount: null
             }
         },
         mixins: [token],
@@ -662,54 +663,56 @@
             async fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
-                    const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
-                    const discount = response.data;
-                    console.log(discount);
-                    if (discount.language === 'Ru') {
-                        this.titleRu = discount.name;
-                        this.titleEn = discount.translations[0].name;
-                        this.vendorRu = discount.company.name;
-                        this.vendorEn = discount.translations[0].company.name;
-                        this.vendorDescrRu = discount.company.description;
-                        this.vendorDescrEn = discount.translations[0].company.description;
-                        this.tagsRu = discount.tags;
-                        this.tagsEn = discount.translations[0].tags;
-                        this.descriptionRu = discount.description;
-                        this.descriptionEn = discount.translations[0].description
+                    const funcForDisc = () => {
+                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                    this.discount = response.data
+                    if (this.discount.language === 'Ru') {
+                        this.titleRu = this.discount.name;
+                        this.titleEn = this.discount.translations[0].name;
+                        this.vendorRu = this.discount.company.name;
+                        this.vendorEn = this.discount.translations[0].company.name;
+                        this.vendorDescrRu = this.discount.company.description;
+                        this.vendorDescrEn = this.discount.translations[0].company.description;
+                        this.tagsRu = this.discount.tags;
+                        this.tagsEn = this.discount.translations[0].tags;
+                        this.descriptionRu = this.discount.description;
+                        this.descriptionEn = this.discount.translations[0].description
                     }
-                    if (discount.language === 'En') {
-                        this.titleEn = discount.name;
-                        this.titleRu = discount.translations[0].name;
-                        this.vendorEn = discount.company.name;
-                        this.vendorRu = discount.translations[0].company.name;
-                        this.vendorDescrEn = discount.company.description;
-                        this.vendorDescrRu = discount.translations[0].company.description;
-                        this.tagsEn = discount.tags;
-                        this.tagsRu = discount.translations[0].tags;
-                        this.descriptionEn = discount.description;
-                        this.descriptionRu = discount.translations[0].description
+                    if (this.discount.language === 'En') {
+                        this.titleEn = this.discount.name;
+                        this.titleRu = this.discount.translations[0].name;
+                        this.vendorEn = this.discount.company.name;
+                        this.vendorRu = this.discount.translations[0].company.name;
+                        this.vendorDescrEn = this.discount.company.description;
+                        this.vendorDescrRu = this.discount.translations[0].company.description;
+                        this.tagsEn = this.discount.tags;
+                        this.tagsRu = this.discount.translations[0].tags;
+                        this.descriptionEn = this.discount.description;
+                        this.descriptionRu = this.discount.translations[0].description
                     }
                     if (this.$i18n.locale === 'ru') {
-                    this.selectedCountry = discount.address.country || discount.translations[0].address.country;
-                    this.selectedCity = discount.address.city || discount.translations[0].address.city;}
+                    this.selectedCountry = this.discount.address.country || this.discount.translations[0].address.country;
+                    this.selectedCity = this.discount.address.city || this.discount.translations[0].address.city;}
                     if (this.$i18n.locale === 'en') {
-                        this.selectedCountry = discount.translations[0].address.country || discount.address.country;
-                        this.selectedCity = discount.translations[0].address.city || discount.address.city}
-                    if (discount.promocodeOptions !== undefined) {
-                    this.promo1 = discount.promocodeOptions.countActivePromocodePerUser,
-                    this.promo2 = discount.promocodeOptions.daysDurationPromocode,
-                    this.promo3 = discount.promocodeOptions.countSymbolsPromocode,
-                    this.promo4 = discount.promocodeOptions.timeLimitAddingInSeconds}
-                    this.vendorPhone = discount.company.phoneNumber;
-                    this.vendorEmail = discount.company.mail;
-                    this.transformateToDays(discount.workingDaysOfTheWeek);
-                    this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = discount.startDate.substr(0, 10);
-                    this.dateFinish = discount.endDate.substr(0, 10);
-                    this.street = discount.address.street;
-                    this.coordinate1 = discount.address.location.latitude;
-                    this.coordinate2 = discount.address.location.longitude;
-                    this.picture = discount.pictureUrl || '';
+                        this.selectedCountry = this.discount.translations[0].address.country || this.discount.address.country;
+                        this.selectedCity = this.discount.translations[0].address.city || this.discount.address.city}
+                    if (this.discount.promocodeOptions !== undefined) {
+                    this.promo1 = this.discount.promocodeOptions.countActivePromocodePerUser,
+                    this.promo2 = this.discount.promocodeOptions.daysDurationPromocode,
+                    this.promo3 = this.discount.promocodeOptions.countSymbolsPromocode,
+                    this.promo4 = this.discount.promocodeOptions.timeLimitAddingInSeconds}
+                    this.vendorPhone = this.discount.company.phoneNumber;
+                    this.vendorEmail = this.discount.company.mail;
+                    this.transformateToDays(this.discount.workingDaysOfTheWeek);
+                    this.valueOfDiscount = this.discount.amountOfDiscount;
+                    this.dateStart = this.discount.startDate.substr(0, 10);
+                    this.dateFinish = this.discount.endDate.substr(0, 10);
+                    this.street = this.discount.address.street;
+                    this.coordinate1 = this.discount.address.location.latitude;
+                    this.coordinate2 = this.discount.address.location.longitude;
+                    this.picture = this.discount.pictureUrl || '';
+                    })}
+                    this.getToken(funcForDisc)
                 }
             },
             transformateToDays(str) {
