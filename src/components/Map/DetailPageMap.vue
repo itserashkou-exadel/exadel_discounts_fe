@@ -34,7 +34,6 @@
         },
         mounted() {
             this.getProps()
-            console.log('dataInfo: ', this.dataInfo)
         },
         methods: {
             async onMapLoaded(event) {
