@@ -160,6 +160,7 @@
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
     import token from '@/mixins/token.mixin'
+
     export default {
         components: {Modal},
         name: "DataTable",
@@ -218,6 +219,8 @@
         }),
         mixins: [token],
         created() {
+            const auth = this.getAuth
+            this.setSecondAuth(auth);
             this.$store.state.sortOption.sortName = "RatingDiscount";
             this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
             this.$store.state.sortOption.sortOrder[5] = false;
@@ -659,7 +662,6 @@
 
                     //email: result.profile.email
                 })
-                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
         },
     }

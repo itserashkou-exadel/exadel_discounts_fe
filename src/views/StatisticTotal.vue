@@ -111,12 +111,11 @@
             },
             headers() {
                 let headerArr = [
+                    {text: this.$t('discountsTotal')},
+                    {text: this.$t('ratedTotal')},
+                    {text: this.$t('favoritesTotal')},
                     {text: this.$t('viewsTotal')},
                     {text: this.$t('subscriptionsTotal')},
-                    {text: this.$t('usersSubscriptionTotal')},
-                    {text: this.$t('dtStartDate')},
-                    {text: this.$t('dtFinishDate')},
-                    {text: this.$t('dtRating')}
                 ];
                 return headerArr;
             },
