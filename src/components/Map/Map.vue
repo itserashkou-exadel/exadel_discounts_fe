@@ -36,6 +36,9 @@
                                 {{marker.description}}
                             </p>
                             <p>{{marker.amountOfDiscount}}%</p>
+                            <p>{{marker.id}}</p>
+                            <!--                            <p>{{marker.address.location.longitude}}</p>-->
+                            <!--                            <p>{{marker.address.location.latitude}}</p>-->
                         </v-card-text>
                     </VCard>
                 </MglPopup>
@@ -185,16 +188,22 @@
                 // or just to store if you want have access from other components
                 //this.$store.map = event.map;
             },
-            jumpToMarker(coordinates) {
-                this.map.flyTo({
-                    center: coordinates,
-                    zoom: 16,
-                    speed: 2
+            jumpToMarker(coordinates, id) {
+                this.discountsFromStore.find((i) => {
+                    if (i.id === id) {
+                        this.map.flyTo({
+                            center: coordinates,
+                            zoom: 16,
+                            speed: 2
+                        })
+                        console.log('FLY TO WORK')
+                    }
                 })
+
                 //console.log('WORK', coordinates)
             },
             test() {
-                console.log('CLICK TEST!')
+                //console.log('CLICK TEST!')
             },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"

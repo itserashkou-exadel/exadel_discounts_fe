@@ -9,15 +9,15 @@
         <template>
             <v-expansion-panels focusable>
                 <v-expansion-panel
-                        :key="i"
-                        v-for="(item,i) in discountsFromStore"
-                        @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude])"
+                        :key="item.id"
+                        v-for="item in discountsFromStore"
+                        @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude], item.id)"
                 >
                     <v-expansion-panel-header>{{item.name}}</v-expansion-panel-header>
                     <v-expansion-panel-content>
                         <v-card
                                 class="mx-auto"
-                                max-width="400"
+                                max-width="450"
                                 flat
                         >
                             <v-img
@@ -53,6 +53,7 @@
                             <v-card-text class="text--primary">
                                 <div>{{item.description}}</div>
                                 <v-divider></v-divider>
+                                <div>{{item.id}}</div>
                                 <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
                                 <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
                             </v-card-text>
