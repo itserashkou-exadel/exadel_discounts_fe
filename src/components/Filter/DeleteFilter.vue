@@ -54,8 +54,8 @@
                 }
                 this.getToken(resSearch)
                 this.setFilterIcon(false);
-                this.$store.commit('setDisPage', 1)
-                console.log(this.$store.state.discounts)
+                this.$store.commit('setDisPage', 1);
+                this.$store.commit('setNoFound', false)
             },
 
         }

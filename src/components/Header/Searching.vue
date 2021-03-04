@@ -37,7 +37,7 @@
             search: function () {
                 this.setKeyWord(this.search)
                 if(this.search === ''){
-                    this.$store.commit('setNoFound', false)
+                    this.$store.commit('setNoFound', false);
                     const resSearch = () => {
                         this.inputPost(
                             {

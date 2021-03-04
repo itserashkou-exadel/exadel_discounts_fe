@@ -1,8 +1,8 @@
 <template>
     <div>
         <router-view/>
-        <ToolBar/>
         <div v-if="$store.state.notFound === false">
+            <ToolBar/>
             <v-row>
                 <Cards class="d-md-none"></Cards>
             </v-row>
@@ -15,9 +15,13 @@
                 />
             </v-row>
         </div>
-<!--        <div class="d-flex flex-column justify-center align-center not_found" v-else>-->
-<!--            <h2>No services found, please, try another word!</h2>-->
-<!--        </div>-->
+        <div class="d-flex flex-column justify-center align-center not_found" v-else-if="this.$store.state.filterRequest === true">
+        <DeleteFilter></DeleteFilter>
+            <h2>No services found! Try to change filtered settings.</h2>
+        </div>
+        <div class="d-flex flex-column justify-center align-center not_found" v-else>
+            <h2>No services found!</h2>
+        </div>
     </div>
 </template>
 
@@ -26,6 +30,7 @@
     import ToolBar from "@/views/ToolBar";
     import Cards from "@/views/Cards";
     import DataTable from "@/components/DataTable";
+    import DeleteFilter from "@/components/Filter/DeleteFilter";
 
     const auth = new AuthService();
 
@@ -36,7 +41,7 @@
                 windowInnerWidth: window.innerWidth,
             }
         },
-        components: {ToolBar, DataTable, Cards},
+        components: {ToolBar, DataTable, Cards, DeleteFilter},
     }
 </script>
 

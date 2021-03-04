@@ -115,23 +115,19 @@
         methods: {
             ...mapActions(['changeFilter', 'inputPost', 'setFilterRequest', 'setTrueFilterRequest', 'setFilterIcon']),
             setTrue: function(){
-                console.log('Set to true')
-        this.$store.commit('setTrueFilterRequest');
     },
     getFilteredData()
     {
         // console.log(this.search)
         // console.log(this.$store.state.keyWord ? this.$store.state.filtered.rangeDate[0] : null)
+        this.$store.commit('setTrueFilterRequest');
         this.$store.state.sortOption.sortName = "RatingDiscount";
         this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
         this.$store.state.sortOption.sortOrder[5] = false;
         this.$store.state.sortOption.sortIndex = 5;
-        console.log("Filtered", this.$store.state.sortOption.sortOrder)
         this.$store.state.discounts = [];
         this.$store.commit('setDisPage', 1)
         const filterSearch = () => {
-            console.log('Set to false')
-            console.log(this.$store.state.filtered.rangeDate[0], this.$store.state.filtered.rangeDate[1])
             this.inputPost(
                 {
                     "searchText": this.$store.state.keyWord,

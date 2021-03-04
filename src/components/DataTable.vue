@@ -240,9 +240,10 @@
                     // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    console.log(this.info)
-                    console.log(this.$store.state.userClaimsStoreData)
+                    // console.log(this.info)
+                    // console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
+                        console.log(item.ratingTotal)
                         arr.push(
                             {
                                 id: item.id,
@@ -261,18 +262,13 @@
                         )
                     })
                     this.result = arr;
-                    // console.log(this.result);
+                    console.log(this.result);
                     return this.result;
                 }
 
             },
             sortData: function(){
                 this.sortOptionName = this.$store.state.sortOption.sortName;
-                if (this.sortOptionName !== '') {
-                    console.log('WATCHER')
-                    console.log(this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex])
-
-                }
             },
             // sortData() {
             //     console.log('WORKING')
@@ -340,7 +336,6 @@
                     }
                 }
                 this.getToken(resSearch)
-                console.log(this.$store.state.discounts)
             }
             // result: function(){
             //     console.log('res')
@@ -384,23 +379,19 @@
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             ...mapMutations(['setUserClaims']),
             pilik: function (e) {
-                console.log('PILICK')
                 // this.$store.commit('setDisPage', 1)
                 if (e.target.innerText === 'Предложение') {
                     this.$store.commit('setSortName', 'NameDiscount')
                     this.$store.commit('setSortOrder', 0)
                     this.$store.commit('setPreviousOrder', 0)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.sortOption)
-                    console.log(this.$store.state.sortOption.sortOrder)
                 }
                 if (e.target.innerText === 'Вендор') {
                     this.$store.commit('setSortName', 'CompanyName')
                     this.$store.commit('setSortOrder', 1)
                     this.$store.commit('setPreviousOrder', 1)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.sortOption)
-                    console.log(this.$store.state.sortOption.sortOrder)
+
                 }
                 if (e.target.innerText === 'Скидка') {
                     console.log(e.target.innerText)
@@ -408,7 +399,6 @@
                     this.$store.commit('setSortOrder', 2)
                     this.$store.commit('setPreviousOrder', 2)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption.sortOrder)
                 }
                 if (e.target.innerText === 'Дата начала') {
                     console.log(e.target.innerText)
@@ -416,23 +406,18 @@
                     this.$store.commit('setSortOrder', 3)
                     this.$store.commit('setPreviousOrder', 3)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption)
                 }
                 if (e.target.innerText === 'Дата окончания') {
-                    console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'DateEnd')
                     this.$store.commit('setSortOrder', 4)
                     this.$store.commit('setPreviousOrder', 4)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption)
                 }
                 if (e.target.innerText === 'Рейтинг') {
-                    console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'RatingDiscount')
                     this.$store.commit('setSortOrder', 5)
                     this.$store.commit('setPreviousOrder', 5)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption)
                 }
                 this.sortOptionName = this.$store.state.sortOption.sortName;
                 if (this.$store.state.filterRequest === false){
@@ -450,7 +435,6 @@
                         }
                     );
                 }else{
-                    console.log('SECOND')
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
@@ -484,7 +468,6 @@
 
             },
             headers() {
-               // console.log(this.$route.name)
                 let headerArr = [
                     {
                         text: this.$t('dtOffer'),
@@ -529,11 +512,9 @@
                 // console.log(this.page, this.pageCount);
                 //     console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
-                console.log(this.$store.state.disPage)
                 const goNext = () => {
                     if (this.$store.state.filterRequest === false) {
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
-                            console.log("PAGINATION")
                             this.nextDiscount(
                                 {
                                     "searchText": this.$store.state.keyWord,
@@ -550,9 +531,6 @@
                         }
 
                     } else {
-                        console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
-                        console.log(this.$store.state.filtered.range)
-                        console.log(this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount")
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
                             this.nextDiscount(
                                 {
@@ -593,12 +571,10 @@
             deleteDiscount(){
                 let itemID = this.deleteID;
                 const goDelete = () => {
-                    console.log(itemID)
                     let url = 'https://localhost:9001/api/v1/discounts/delete/';
                     url += itemID;
                     axios.delete(url);
                     this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
-                    console.log(this.info)
                 }
                 this.getToken(goDelete)
             },
@@ -642,7 +618,7 @@
             async getUser2() {
                 const result = await auth.getUser()
                 this.userClaimsLocalData = result
-                console.log('USER CLAIMS: ', result)
+                // console.log('USER CLAIMS: ', result)
 
                 this.setUserClaims({
                     name: result.profile.name,
@@ -651,7 +627,7 @@
 
                     //email: result.profile.email
                 })
-                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
+                // console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
         },
     }
