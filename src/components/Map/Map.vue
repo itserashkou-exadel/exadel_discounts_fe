@@ -120,10 +120,37 @@
             //console.log(this.discountsFromStore)
             console.log(this.$store.getters.getUserLocation.town)
             console.log('Map.vue Rendred')
+
+
         },
         async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
+            //
+            // this.$store.state.sortOption.sortName = "RatingDiscount";
+            // this.$store.state.sortOption.sortOrder = [false, false, true, true, true, false];
+            // this.$store.state.sortOption.sortOrder[5] = false;
+            // this.$store.state.sortOption.sortIndex = 5;
+            // this.$store.commit('setDisPage', 1)
+            // await this.getUser2();
+            // const localStorage = JSON.parse(window.localStorage.getItem('key'));
+            // this.$store.commit('setUserLocation', localStorage);
+            // const resSearch = () => {
+            //     this.inputPost(
+            //         {
+            //             "searchText": null,
+            //             "searchDiscountOption": "All",
+            //             "searchAddressCountry": localStorage.country,
+            //             "searchAddressCity": localStorage.town,
+            //             "searchSortFieldOption": "RatingDiscount",
+            //             "searchSortOption": "Desc",
+            //             "searchPaginationPageNumber": 1,
+            //             "searchPaginationCountElementPerPage": 24,
+            //             "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
+            //         }
+            //     );
+            // }
+            // await this.getToken(resSearch)
         },
         computed: {
             filterData: function () {
@@ -220,7 +247,7 @@
                     case 'Boulder' || 'Boulder':
                         return this.coordinates = [-105.2552595074929, 40.01641836015882]
                     default:
-                        //alert('Location Error')
+                    //alert('Location Error')
                 }
             }
         }
@@ -251,22 +278,24 @@
         border-radius: 5px;
     }
 
-    @media screen and (max-width: 375px){
-        #map{
+    @media screen and (max-width: 375px) {
+        #map {
             display: flex;
             flex-direction: column;
         }
-        MglMap{
+
+        MglMap {
             width: 375px;
             height: 500px;
             order: 1;
         }
-        .mapNavPanel{
+
+        .mapNavPanel {
             order: 2;
             overflow: scroll;
         }
 
-        .filter{
+        .filter {
             width: 50px;
             display: flex;
             justify-content: space-between;

@@ -5,7 +5,7 @@
                 :mapStyle.sync="mapStyle"
                 @load="onMapLoaded"
         >
-            <MglMarker :coordinates="[this.dataInfo.latitude, this.dataInfo.longitude]">
+            <MglMarker :coordinates="[this.dataInfo.latitude, this.dataInfo.longitude]" color="yellow">
             </MglMarker>
         </MglMap>
     </div>
@@ -49,14 +49,7 @@
                     zoom: 9,
                     speed: 1
                 })
-                console.log(newParams)
-                /* => {
-                        center: [30, 30],
-                        zoom: 9,
-                        bearing: 9,
-                        pitch: 7
-                      }
-                */
+                //console.log(newParams)
             },
             getProps(){
                 let self = this;

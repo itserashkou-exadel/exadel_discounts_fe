@@ -19,7 +19,6 @@
                                 class="mx-auto"
                                 max-width="400"
                                 flat
-
                         >
                             <v-img
                                     class="white--text align-end mt-1"
@@ -29,7 +28,7 @@
                                 <v-card-title class="text--darken-4">{{item.company.name}}</v-card-title>
                                 <v-card-subtitle class="white--text">{{item.address.street}}</v-card-subtitle>
                                 <v-rating
-                                        :value="4.5"
+                                        :value="item.ratingTotal"
                                         color="amber"
                                         dense
                                         half-increments
@@ -42,8 +41,8 @@
                                 <!--                                <v-card-subtitle class="text-button blue-grey&#45;&#45;text" >Подписаться</v-card-subtitle>-->
                                 <v-btn
                                         class="ml-3 mb-3 primary"
-                                        @click="addToSubscr"
-                                >Воспользоватся
+                                        @click="$router.push({name:'detail',params:{_id:item.id}})"
+                                >Подробно
                                 </v-btn>
                             </v-img>
 
@@ -86,17 +85,6 @@
             },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"
-            },
-            addToSubscr: function (event) {
-                let self = this;
-                // let discountId = this.$route.params._id
-                const putSubscr = () => {
-                    axios({
-                        method: 'put',
-                        url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
-                    }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
-                };
-                this.getToken(putSubscr);
             },
         },
         mounted() {
