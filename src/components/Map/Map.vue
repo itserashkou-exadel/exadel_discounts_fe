@@ -258,7 +258,7 @@
         }
         MglMap{
             width: 375px;
-            height: 400px;
+            height: 500px;
             order: 1;
         }
         .mapNavPanel{
