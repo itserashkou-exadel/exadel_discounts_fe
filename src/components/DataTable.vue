@@ -156,8 +156,6 @@
 
 <script>
     import axios from "axios";
-    import AuthService from "@/services/auth.service";
-    const auth = new AuthService();
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
@@ -246,6 +244,7 @@
             this.getToken(resSearch)
         },
         computed: {
+            ...mapGetters(['getAuth']),
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
@@ -539,11 +538,11 @@
                 // console.log(this.page, this.pageCount);
                 //     console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
-                console.log(this.$store.state.disPage)
+               // console.log(this.$store.state.disPage)
                 const goNext = () => {
                     if (this.$store.state.filterRequest === false) {
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
-                            console.log("PAGINATION")
+                          //  console.log("PAGINATION")
                             this.nextDiscount(
                                 {
                                     "searchText": this.$store.state.keyWord,
@@ -650,6 +649,7 @@
                 this.close()
             },
             async getUser2() {
+                const auth = this.getAuth
                 const result = await auth.getUser()
                 this.userClaimsLocalData = result
                 this.setUserClaims({

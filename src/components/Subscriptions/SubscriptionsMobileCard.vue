@@ -47,13 +47,9 @@
 </template>
 <script>
 
-import AuthService from "@/services/auth.service";
 import Mixin from "@/mixins/token.mixin";
 import Promocodes from "@/components/Subscriptions/Promocodes";
-
-
 const moment = require('moment')
-const auth = new AuthService();
 import token from '@/mixins/token.mixin'
 
 export default {

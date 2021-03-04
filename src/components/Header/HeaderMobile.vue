@@ -1,6 +1,8 @@
 <template>
-  <v-toolbar color="primary"
+  <v-app-bar color="primary"
              flat
+             app
+             fixed
   >
     <!-- dropdown menu -->
     <v-row align="center">
@@ -74,7 +76,7 @@
         <Searching/>
       </v-col>
     </v-row>
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script>

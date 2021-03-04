@@ -26,9 +26,7 @@
 </template>
 
 <script>
-    import AuthService from '@/services/auth.service';
-
-    const auth = new AuthService();
+   import {mapGetters} from 'vuex'
 
     export default {
         name: "Avatar",
@@ -45,9 +43,13 @@
         methods: {
             userLogOut() {
                 localStorage.removeItem('key')
+                const auth = this.getAuth
                 auth.logout()
             },
         },
+        computed: {
+            ...mapGetters(['getAuth'])
+        }
     }
 </script>
 

@@ -2,7 +2,7 @@
   <v-app-bar color="primary" flat>
     <router-link to="/home">
       <v-btn text>
-        <v-toolbar-title class="headline text-uppercase mr-6">
+        <v-toolbar-title class="headline mr-6">
         <span class="text--accent-4"
               color="blue lighten-5">Crazy</span>
           <span class="font-weight-light"
@@ -17,9 +17,10 @@
       />
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-btn text class="font-weight-light">
-      <span>{{ currentLoc.country }}, {{ currentLoc.town }}</span>
-      <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
+    <v-btn text class="font-weight-light"
+           @click="changeUserLoc">
+      <span class="loc">{{ currentLoc.country }}, {{ currentLoc.town }}</span>
+      <v-icon>mdi-map-marker</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
     <Searching/>
@@ -97,3 +98,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.loc {
+  font-size: smaller;
+}
+
+
+</style>
+

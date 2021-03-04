@@ -18,7 +18,7 @@
     import DataTable from "@/components/DataTable";
     import StatisticTotal from "@/views/StatisticTotal";
 
-    const auth = new AuthService();
+
 
     export default {
         name: "Table",
