@@ -37,9 +37,14 @@
                                         size="25"
                                         class="d-flex justify-center"
                                 ></v-rating>
-                                <v-card-subtitle class="white--text d-flex justify-end" >{{item.amountOfDiscount}}%</v-card-subtitle>
-<!--                                <v-card-subtitle class="text-button blue-grey&#45;&#45;text" >Подписаться</v-card-subtitle>-->
-                                <v-btn class="ml-3 mb-3 primary" >Подписаться</v-btn>
+                                <v-card-subtitle class="white--text d-flex justify-end">{{item.amountOfDiscount}}%
+                                </v-card-subtitle>
+                                <!--                                <v-card-subtitle class="text-button blue-grey&#45;&#45;text" >Подписаться</v-card-subtitle>-->
+                                <v-btn
+                                        class="ml-3 mb-3 primary"
+                                        @click="addToSubscr"
+                                >Воспользоватся
+                                </v-btn>
                             </v-img>
 
                             <v-card-subtitle class="pb-0">
@@ -49,9 +54,8 @@
                             <v-card-text class="text--primary">
                                 <div>{{item.description}}</div>
                                 <v-divider></v-divider>
-
-<!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
-<!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
+                                <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
+                                <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
                             </v-card-text>
 
                         </v-card>
@@ -59,65 +63,14 @@
                 </v-expansion-panel>
             </v-expansion-panels>
         </template>
-
-
-        <!--        <template>-->
-        <!--            <v-expansion-panels>-->
-        <!--                <v-expansion-panel>-->
-        <!--                    <v-card-->
-        <!--                            class="mx-auto"-->
-        <!--                            max-width="400"-->
-        <!--                            v-for="(item,i) in discountsFromStore"-->
-        <!--                            :key="i"-->
-        <!--                            @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude])"-->
-        <!--                    >-->
-        <!--                        <v-img-->
-        <!--                                class="white&#45;&#45;text align-end"-->
-        <!--                                height="200px"-->
-        <!--                                :src="pictureCheck(item.pictureUrl)"-->
-        <!--                        >-->
-        <!--                            <v-card-title>{{item.name}}</v-card-title>-->
-        <!--                        </v-img>-->
-
-        <!--                        <v-card-subtitle class="pb-0">-->
-        <!--                            Number 10-->
-        <!--                        </v-card-subtitle>-->
-
-        <!--                        <v-card-text class="text&#45;&#45;primary">-->
-        <!--                            <div>Whitehaven Beach</div>-->
-
-        <!--                            <div>Whitsunday Island, Whitsunday Islands</div>-->
-        <!--                        </v-card-text>-->
-
-        <!--                    </v-card>-->
-        <!--                </v-expansion-panel>-->
-        <!--            </v-expansion-panels>-->
-
-
-        <!--        </template>-->
-
-
-        <!--        <v-expansion-panels :key="myKey">-->
-        <!--            <v-expansion-panel-->
-<!--                            v-for="(item,i) in discountsFromStore"-->
-<!--                            :key="i"-->
-<!--                            @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude])"-->
-        <!--            >-->
-        <!--                <v-expansion-panel-header class="bold">{{item.name}}</v-expansion-panel-header>-->
-        <!--                <v-expansion-panel-content>{{item.company.name}}</v-expansion-panel-content>-->
-        <!--                <v-expansion-panel-content>{{item.description}}</v-expansion-panel-content>-->
-        <!--                <v-expansion-panel-content>-->
-        <!--                    <v-img :src="pictureCheck(item.pictureUrl)"></v-img>-->
-        <!--                </v-expansion-panel-content>-->
-        <!--                <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>-->
-        <!--                <v-expansion-panel-content><p>{{item.amountOfDiscount}}%</p></v-expansion-panel-content>-->
-        <!--            </v-expansion-panel>-->
-        <!--        </v-expansion-panels>-->
     </v-navigation-drawer>
 
 </template>
 
 <script>
+
+    import axios from "axios";
+
     export default {
         name: "LeftSideBar",
         props: ['discountsFromStore', 'jumpToMarker'],
@@ -133,6 +86,17 @@
             },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"
+            },
+            addToSubscr: function (event) {
+                let self = this;
+                // let discountId = this.$route.params._id
+                const putSubscr = () => {
+                    axios({
+                        method: 'put',
+                        url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
+                    }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+                };
+                this.getToken(putSubscr);
             },
         },
         mounted() {
