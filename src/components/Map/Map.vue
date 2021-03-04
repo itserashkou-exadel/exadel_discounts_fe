@@ -220,7 +220,7 @@
                     case 'Boulder' || 'Boulder':
                         return this.coordinates = [-105.2552595074929, 40.01641836015882]
                     default:
-                        alert('Location Error')
+                        //alert('Location Error')
                 }
             }
         }
