@@ -14,6 +14,7 @@
             ...mapActions(['goForAuth'])
         },
         mounted() {
+           // localStorage.setItem('auth', JSON.stringify(auth));
              this.goForAuth(auth).then(() =>
                  token.methods.setFirstAuth(auth))
         },
