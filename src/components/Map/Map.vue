@@ -24,23 +24,20 @@
 
             >
                 <MglPopup>
-                    <VCard flat>
-                        <v-card-title>
-                            <h5>{{marker.name}}</h5>
-                        </v-card-title>
+                    <v-card
+                            flat
+                    >
+                        <v-card-title class="cardTitleBorder"><h5>{{marker.name}}</h5></v-card-title>
+                        <v-img :src="pictureCheck(marker.pictureUrl)"/>
                         <v-card-text>
-                            <h4>Company:</h4> <span>{{marker.company.name}}</span>
+                            <h4>Company:{{marker.company.name}}</h4>
                             <hr>
-                            <v-img :src="pictureCheck(marker.pictureUrl)"></v-img>
-                            <p>
-                                {{marker.description}}
-                            </p>
                             <p>{{marker.amountOfDiscount}}%</p>
                             <p>{{marker.id}}</p>
-                            <!--                            <p>{{marker.address.location.longitude}}</p>-->
-                            <!--                            <p>{{marker.address.location.latitude}}</p>-->
+                            <p>{{marker.address.location.longitude}}</p>
+                            <p>{{marker.address.location.latitude}}</p>
                         </v-card-text>
-                    </VCard>
+                    </v-card>
                 </MglPopup>
             </MglMarker>
         </MglMap>
@@ -123,7 +120,6 @@
             //console.log(this.discountsFromStore)
             console.log(this.$store.getters.getUserLocation.town)
             console.log('Map.vue Rendred')
-
 
         },
         async created() {
@@ -268,6 +264,12 @@
         width: 100vw;
         height: 90vh;
         display: flex;
+    }
+
+    .cardTitleBorder {
+        border: 1px solid dodgerblue;
+        border-radius: 3px;
+        margin-bottom: 3px;
     }
 
     .mapNavPanel {

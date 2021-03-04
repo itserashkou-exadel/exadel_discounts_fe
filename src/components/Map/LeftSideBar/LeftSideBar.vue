@@ -54,6 +54,8 @@
                                 <div>{{item.description}}</div>
                                 <v-divider></v-divider>
                                 <div>{{item.id}}</div>
+                                <div>{{item.address.location.longitude}}</div>
+                                <div>{{item.address.location.latitude}}</div>
                                 <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
                                 <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
                             </v-card-text>
