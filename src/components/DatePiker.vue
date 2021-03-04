@@ -127,10 +127,15 @@
         async mounted() {
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                 const id = this.$route.params.idOfDiscount;
-                const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
-                const discount = response.data;
-                this.dateStart = discount.startDate.substr(0, 10),
-                this.dateFinish = discount.endDate.substr(0, 10)
+                const funcForDate = () => {
+                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                            const discount = response.data;
+                            this.dateStart = discount.startDate.substr(0, 10),
+                                this.dateFinish = discount.endDate.substr(0, 10)
+                    }
+                    )
+                }
+                this.getToken(funcForDate)
             }
         }
     }
