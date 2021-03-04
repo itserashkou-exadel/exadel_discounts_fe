@@ -80,6 +80,7 @@
         }),
         methods: {
             ...mapMutations(['setUserLocation', 'setLanguage']),
+            // ...mapActions(['goForAuth']),
             setUserLocAndLocalStorage() {
                 this.setUserLocation({
                     country: this.selectedCountry,
@@ -132,7 +133,8 @@
         },
         mixins: [token],
         mounted() {
-            this.getCountries()
+            this.goForAuth(auth);
+            this.getCountries();
         },
         watch: {
             language() {

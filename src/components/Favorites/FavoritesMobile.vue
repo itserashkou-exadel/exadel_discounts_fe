@@ -28,15 +28,12 @@
 </template>
 <script>
 
-import axios from "axios";
 import FavoritesMobileCard from "@/components/Favorites/FavoritesMobileCard";
 import SwitchButton from "@/views/SwitchButton";
 import Modal from "@/components/Filter/Modal";
 import {mapActions, mapGetters} from 'vuex'
 import token from '@/mixins/token.mixin'
-import AuthService from "@/services/auth.service";
 
-const auth = new AuthService();
 const moment = require('moment')
 
 export default {
@@ -53,27 +50,27 @@ export default {
   methods: {
     ...mapActions(['getFavorites']),
     showFavorites() {
-      const {country, town} = this.$store.state.userLocation
-      const authorizationHeader = 'Authorization';
-      auth.getAccessToken().then((userToken) => {
-        axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
+      let loc = JSON.parse(localStorage.getItem('key'));
+      let country = loc.country ? loc.country : 'Беларусь';
+      let city = loc.city ? loc.city : 'Минск';
+      const getFavoritesResult = () => {
         this.getFavorites(
             {
               "searchDiscountOption": "Favorites",
               "searchAddressCountry": country,
-              "searchAddressCity": town,
+              "searchAddressCity": city,
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": this.pageNumber,
               "searchPaginationCountElementPerPage": this.pageSize,
               "searchLanguage": "Ru"
             }
-        ).then(response => this.updatePageCount());
-      }).catch((error) => {
-        alert(error);
-      });
+        ).then(response => this.updatePageCount())
+            .catch((error) => {
+              alert(error)}
+            )}
+      this.getToken(getFavoritesResult);
     },
-
     headers() {
       return [
         {

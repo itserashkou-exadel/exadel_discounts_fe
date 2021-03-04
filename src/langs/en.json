@@ -85,5 +85,16 @@
  "ClearAll": "Clear all",
  "Form": "Form",
  "discountsTotal": "Total discounts",
- "dateOfCreatedOfDiscount": "Discount creation date"
+ "ratedTotal": "Total rated",
+ "favoritesTotal": "Total favourites",
+ "viewsTotal": "Total views",
+ "subscriptionsTotal": "Total subscriptions",
+ "dateOfCreatedOfDiscount": "Discount creation date",
+ "cardDiscount": "discount",
+ "use": "to use",
+ "conditionOfUse": "condition of use",
+ "whereIsIt": "where is it",
+ "сhoose": "сhoose",
+ "Description:": "Description:",
+ "deletingOfDiscount": "Are you sure you want to remove this discount"
 }

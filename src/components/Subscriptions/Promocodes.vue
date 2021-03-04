@@ -5,7 +5,7 @@
         width="1000"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
+        <v-btn class="font-weight-light"
             color="primary"
             dark
             v-bind="attrs"
@@ -64,12 +64,10 @@
 <script>
 
 import axios from "axios";
-import AuthService from "@/services/auth.service";
 import authMixin from '@/mixins/token.mixin'
 
 
 const moment = require('moment');
-const auth = new AuthService();
 
 export default {
   name: "Promocodes",

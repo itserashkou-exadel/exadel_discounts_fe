@@ -156,12 +156,11 @@
 
 <script>
     import axios from "axios";
-    import AuthService from "@/services/auth.service";
-    const auth = new AuthService();
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
     import token from '@/mixins/token.mixin'
+
     export default {
         components: {Modal},
         name: "DataTable",
@@ -220,6 +219,8 @@
         }),
         mixins: [token],
         created() {
+            const auth = this.getAuth
+            this.setSecondAuth(auth);
             this.$store.state.sortOption.sortName = "RatingDiscount";
             this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
             this.$store.state.sortOption.sortOrder[5] = false;
@@ -246,6 +247,7 @@
             this.getToken(resSearch)
         },
         computed: {
+            ...mapGetters(['getAuth']),
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
@@ -263,7 +265,7 @@
                                 AmountOfDiscount: item.amountOfDiscount,
                                 DateStart: moment(item.startDate).format('DD-MM-YYYY'),
                                 DateEnd: moment(item.endDate).format('DD-MM-YYYY'),
-                                RatingDiscount: item.ratingTotal.toFixed(2),
+                                RatingDiscount: item.ratingTotal,
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
@@ -539,11 +541,11 @@
                 // console.log(this.page, this.pageCount);
                 //     console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
-                console.log(this.$store.state.disPage)
+               // console.log(this.$store.state.disPage)
                 const goNext = () => {
                     if (this.$store.state.filterRequest === false) {
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
-                            console.log("PAGINATION")
+                          //  console.log("PAGINATION")
                             this.nextDiscount(
                                 {
                                     "searchText": this.$store.state.keyWord,
@@ -650,6 +652,7 @@
                 this.close()
             },
             async getUser2() {
+                const auth = this.getAuth
                 const result = await auth.getUser()
                 this.userClaimsLocalData = result
                 this.setUserClaims({
@@ -659,7 +662,6 @@
 
                     //email: result.profile.email
                 })
-                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
         },
     }

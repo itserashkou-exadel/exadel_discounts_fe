@@ -1,11 +1,11 @@
 <template>
-    <v-container fluid :key="componentKey">
+    <v-container fluid>
         <v-form ref="form">
             <v-row>
                 <v-col>
                     <v-list-item-title
                             align="center"
-                    >{{$t('dateOfCreatedOfDiscount')}}
+                    ><b>{{$t('dateOfCreatedOfDiscount')}}</b>
                     </v-list-item-title>
                     <date-piker
                             class="mt-16"
@@ -62,7 +62,9 @@
                                 :key="i"
                         >
                             <v-list-item-content>
-                                <v-list-item-title v-text="item"></v-list-item-title>
+                                <v-list-item-title v-text="item"
+                                                   :key="componentKey"
+                                ></v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-item-group>
@@ -88,8 +90,8 @@
             selectedItem: 1,
             country: '',
             city: '',
-            startDate: '',
-            finishDate: '',
+            startDate: '2000-01-01T00:00:00.459Z',
+            finishDate: '2100-01-01T00:00:00.459Z',
             valuesForText: [0,0,0,0,0],
             componentKey: 0
         }),
@@ -101,16 +103,19 @@
                 this.valuesForText[2] = 0
                 this.valuesForText[3] = 0
                 this.valuesForText[4] = 0
+                this.country = '',
+                this.city = '',
+                this.startDate = '2000-01-01T00:00:00.459Z',
+                this.finishDate = '2100-01-01T00:00:00.459Z',
                 this.componentKey +=1
             },
             headers() {
                 let headerArr = [
-                    {text: this.$t('dtOffer')},
-                    {text: this.$t('dtVendor')},
-                    {text: this.$t('dtDiscount')},
-                    {text: this.$t('dtStartDate')},
-                    {text: this.$t('dtFinishDate')},
-                    {text: this.$t('dtRating')}
+                    {text: this.$t('discountsTotal')},
+                    {text: this.$t('ratedTotal')},
+                    {text: this.$t('favoritesTotal')},
+                    {text: this.$t('viewsTotal')},
+                    {text: this.$t('subscriptionsTotal')},
                 ];
                 return headerArr;
             },
@@ -134,6 +139,7 @@
                         searchAddressCountry: this.country,
                         searchAddressCity: this.city
                     }
+                    console.log(surchObj);
                     axios.post('https://localhost:9001/api/v1/statistics/discounts', surchObj).then(
                         (data) => {
                             this.valuesForText[0] = data.data.discountsTotal;

@@ -19,7 +19,7 @@
                     color="primary"
                     dark
                     class="mb-2"
-                    @click="goToPageAd()"            >
+                    @click="goToPageAd()">
                 {{$t('dtNewItem')}}
             </v-btn>
         </v-col>
@@ -30,11 +30,9 @@
     import SwitchButton from "./SwitchButton";
     import Modal from "../components/Filter/Modal";
     import {mapActions, mapGetters} from "vuex"
-    import AuthService from "@/services/auth.service";
     import token from '@/mixins/token.mixin'
     import DeleteFilter from "@/components/Filter/DeleteFilter";
 
-    const auth = new AuthService();
     export default {
         name: "ToolBar",
         data() {

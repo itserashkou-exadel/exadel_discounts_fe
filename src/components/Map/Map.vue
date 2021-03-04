@@ -49,12 +49,8 @@
     import {MglMap, MglMarker, MglPopup} from "vue-mapbox";
     import LeftSideBar from "@/components/Map/LeftSideBar/LeftSideBar";
     import Modal from "@/components/Filter/Modal";
-
-    import AuthService from "@/services/auth.service";
     import token from '@/mixins/token.mixin'
     import DeleteFilter from "@/components/Filter/DeleteFilter";
-
-    const auth = new AuthService();
 
 
     export default {

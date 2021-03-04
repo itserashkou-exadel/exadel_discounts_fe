@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <FavoritesMobile class="hidden-md-and-up"/>
-    <Favorites class="hidden-sm-and-down"/>
+    <Favorites class="hidden-sm-and-down ml-10 mr-10"/>
   </v-content>
 </template>
 

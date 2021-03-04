@@ -42,7 +42,7 @@
               size="14"
           ></v-rating>
           <div class="grey--text ml-2">
-            {{ description.rating.toFixed(2) }}
+            {{ description.rating}}
           </div>
         </v-row>
       </v-col>
@@ -54,11 +54,11 @@
     </v-row>
     <v-divider></v-divider>
     <v-card-subtitle v-if="description.description.length<120">
-      <b>Description:<br></b>
+      <b>{{$t('Description:')}}<br></b>
       {{ description.description.substring(0, 120) }}
     </v-card-subtitle>
     <v-card-subtitle v-else>
-      <b>Description:<br></b>
+      <b>{{$t('Description:')}}<br></b>
       {{ description.description.substring(0, 120) + " ..." }}
     </v-card-subtitle>
     <v-sheet>
@@ -75,12 +75,12 @@
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
 
-        <v-card-title class="headline">Вы уверены, что хотите удалить эту скидку
+        <v-card-title class="headline">{{$t('deletingOfDiscount')}}
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeDelete">Отмена</v-btn>
-          <v-btn color="blue darken-1" text @click="deleteItemConfirm(description.id)">Да</v-btn>
+          <v-btn color="blue darken-1" text @click="closeDelete">{{$t('dtCancel')}}</v-btn>
+          <v-btn color="blue darken-1" text @click="deleteItemConfirm(description.id)">{{$t('dtOk')}}</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -88,7 +88,7 @@
     <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
       <!--            <v-btn @click="$router.push({name:'detail'},detailView())" color="blue" raised>-->
       <v-btn @click="$router.push({name:'detail',params:{_id:description.id}})" color="blue" raised  class="white--text">
-        Choose
+          {{$t('сhoose')}}
       </v-btn>
       <div v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" class="mr-12">
         <v-icon @click="editItem(description)">
@@ -102,17 +102,13 @@
   </v-card>
 </template>
 <script>
-import {mapActions} from "vuex";
-import axios from "axios";
-import AuthService from "@/services/auth.service";
-import Mixin from "@/mixins/token.mixin";
+    import {mapActions} from "vuex";
+    import axios from "axios";
+    import Mixin from "@/mixins/token.mixin";
+    const moment = require('moment')
+    import token from '@/mixins/token.mixin'
 
-
-const moment = require('moment')
-const auth = new AuthService();
-import token from '@/mixins/token.mixin'
-
-export default {
+    export default {
   name: "Card",
   mixins: [token, Mixin],
   data: () => ({
