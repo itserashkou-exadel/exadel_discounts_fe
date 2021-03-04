@@ -15,7 +15,7 @@
             flat
         >
           <v-toolbar-title>
-            <h3>Подписки</h3>
+            <h3>{{$t('hSubscribe')}}</h3>
           </v-toolbar-title>
           <v-dialog max-width="500px">
             <v-card>
@@ -23,8 +23,6 @@
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <!--                <v-btn color="blue darken-1" text>{{ $t('dtCancel') }}</v-btn>-->
-                <!--                <v-btn color="blue darken-1" text>{{ $t('dtOk') }}</v-btn>-->
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -69,14 +67,13 @@
 </template>
 
 <script>
-import axios from "axios";
-// import AuthService from "@/services/auth.service";
+
 import authMixin from '@/mixins/token.mixin';
 import {mapGetters, mapActions} from 'vuex'
 import Modal from "@/components/Filter/Modal";
 import Promocodes from "@/components/Subscriptions/Promocodes";
 
-// const auth = new AuthService();
+
 const moment = require('moment')
 
 export default {

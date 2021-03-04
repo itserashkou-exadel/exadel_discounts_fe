@@ -39,7 +39,7 @@
 
 <script>
     import axios from "axios";
-
+    import token from "@/mixins/token.mixin"
     export default {
         name: "PromocodesForAdding",
         data: () => ({
@@ -50,6 +50,7 @@
                 numberOnly: [v => /^-?\d*(\.\d+)?/.test(v) || 'The fiesld must contain only numbers'],
             }
         ),
+        mixins: [token],
         props: ['item1'],
         methods: {
             handler() {
@@ -63,15 +64,18 @@
         async mounted() {
             if (this.$route.params.placeOfCall === 'editingOfDiscount') {
                 const id = this.$route.params.idOfDiscount;
-                const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
-                const discount = response.data;
-                this.countActivePromocodePerUser = discount.promocodeOptions.countActivePromocodePerUser
-                this.daysDurationPromocode = discount.promocodeOptions.daysDurationPromocode
-                this.countSymbolsPromocode = discount.promocodeOptions.countSymbolsPromocode
-                this.timeLimitAddingInSeconds = discount.promocodeOptions.timeLimitAddingInSeconds
+                const funcForPromos = () => {
+                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                        const discount = response.data
+                        this.countActivePromocodePerUser = discount.promocodeOptions.countActivePromocodePerUser
+                        this.daysDurationPromocode = discount.promocodeOptions.daysDurationPromocode
+                        this.countSymbolsPromocode = discount.promocodeOptions.countSymbolsPromocode
+                        this.timeLimitAddingInSeconds = discount.promocodeOptions.timeLimitAddingInSeconds
+                    })
+                }
+                this.getToken(funcForPromos);
             }
         }
-
     }
 </script>
 

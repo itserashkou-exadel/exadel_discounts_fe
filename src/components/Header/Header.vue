@@ -2,7 +2,7 @@
   <v-app-bar color="primary" flat>
     <router-link to="/home">
       <v-btn text>
-        <v-toolbar-title class="headline text-uppercase mr-6">
+        <v-toolbar-title class="headline mr-6">
         <span class="text--accent-4"
               color="blue lighten-5">Crazy</span>
           <span class="font-weight-light"

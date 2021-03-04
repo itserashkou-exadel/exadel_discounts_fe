@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 import logger from "vuex/types/logger";
+import AuthService from "@/services/auth.service";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
 
 let store = new Vuex.Store({
     state: {
+
         filterIcon: false,
         filterRequest: false,
         keyWord: null,
@@ -38,11 +40,15 @@ let store = new Vuex.Store({
             sortIndex: null,
             sortOrder: [false,false,true,true,true,false]
         },
+        auth: null
 
     },
     getters: {
         getTotalStatistic(state) {
             return state.totalStatistic;
+        },
+        getAuth (state) {
+            return state.auth
         },
         getUserClaims(state) {
             return state.userClaimsStoreData;
@@ -82,6 +88,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setAuth (state, auth) {
+            state.auth = auth
+        },
         setPreviousOrder(state, number){
             // @ts-ignore
             state.sortOption.sortIndex = number;
@@ -183,6 +192,9 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        goForAuth({commit}, auth){
+            commit('setAuth', auth);
+        },
         setFilterIcon({commit}, state){
             commit('changeFilterIcon', state);
         },
@@ -233,14 +245,14 @@ let store = new Vuex.Store({
         },
         async getSubscription({commit}, searchSub) {
             const response = await axios.post(searchDiscount, searchSub).catch(error => {
-                console.log(error.response.data.error);
+              //  console.log(error.response.data.error);
                 return {data: []};
             });
             commit('receiveSubscription', response.data)
         },
         async getFavorites({commit}, searchFav) {
             const response = await axios.post(searchDiscount, searchFav).catch(error => {
-                console.log(error.response.data.error);
+           //     console.log(error.response.data.error);
                 return {data: []};
             });
             commit('receiveFavorites', response.data)
@@ -259,7 +271,7 @@ let store = new Vuex.Store({
                 // if(e.response && e.response.status === 404) {
                 //     console.clear();
                 // }
-                console.log(e)
+             //   console.log(e)
             }
         },
 
@@ -268,9 +280,9 @@ let store = new Vuex.Store({
               let url = deleteURL;
               url += id;
               const response = await axios.delete(url);
-              console.log(response);
+            //  console.log(response);
           }catch (e) {
-              console.log(e)
+            //  console.log(e)
           }
         }
     }

@@ -17,42 +17,42 @@
 
             <template v-slot:header.NameDiscount>
                 <div>
-                    <button @click="pilik">Предложение</button>
+                    <button @click="pilik">{{$t('dtOffer')}}</button>
                     <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.CompanyName>
                 <div>
-                    <button @click="pilik">Вендор</button>
+                    <button @click="pilik">{{$t('dtVendor')}}</button>
                     <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.AmountOfDiscount>
                 <div class="d-flex">
-                    <button @click="pilik">Скидка</button>
+                    <button @click="pilik">{{$t('dtDiscount')}}</button>
                     <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateStart>
                 <div class="d-flex">
-                    <button @click="pilik">Дата начала</button>
+                    <button @click="pilik">{{$t('dtStartDate')}}</button>
                     <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateEnd>
                 <div>
-                    <button @click="pilik">Дата окончания</button>
+                    <button @click="pilik">{{$t('dtFinishDate')}}</button>
                     <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.RatingDiscount>
                 <div>
-                    <button @click="pilik">Рейтинг</button>
+                    <button @click="pilik">{{$t('dtRating')}}</button>
                     <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending</v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
@@ -156,12 +156,11 @@
 
 <script>
     import axios from "axios";
-    import AuthService from "@/services/auth.service";
-    const auth = new AuthService();
     const moment = require('moment')
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import Modal from "@/components/Filter/Modal";
     import token from '@/mixins/token.mixin'
+
     export default {
         components: {Modal},
         name: "DataTable",
@@ -220,6 +219,8 @@
         }),
         mixins: [token],
         created() {
+            const auth = this.getAuth
+            this.setSecondAuth(auth);
             this.$store.state.sortOption.sortName = "RatingDiscount";
             this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
             this.$store.state.sortOption.sortOrder[5] = false;
@@ -246,6 +247,7 @@
             this.getToken(resSearch)
         },
         computed: {
+            ...mapGetters(['getAuth']),
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
@@ -254,8 +256,6 @@
                     // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    console.log(this.info)
-                    console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -265,7 +265,7 @@
                                 AmountOfDiscount: item.amountOfDiscount,
                                 DateStart: moment(item.startDate).format('DD-MM-YYYY'),
                                 DateEnd: moment(item.endDate).format('DD-MM-YYYY'),
-                                RatingDiscount: item.ratingTotal.toFixed(2),
+                                RatingDiscount: item.ratingTotal,
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
@@ -283,8 +283,6 @@
             sortData: function(){
                 this.sortOptionName = this.$store.state.sortOption.sortName;
                 if (this.sortOptionName !== '') {
-                    console.log('WATCHER')
-                    console.log(this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex])
 
                 }
             },
@@ -400,7 +398,7 @@
             pilik: function (e) {
                 console.log('PILICK')
                 this.$store.commit('setDisPage', 1)
-                if (e.target.innerText === 'Предложение') {
+                if (e.target.innerText === this.$t('dtOffer')) {
                     this.$store.commit('setSortName', 'NameDiscount')
                     this.$store.commit('setSortOrder', 0)
                     this.$store.commit('setPreviousOrder', 0)
@@ -408,7 +406,7 @@
                     console.log(this.sortOption)
                     console.log(this.$store.state.sortOption.sortOrder)
                 }
-                if (e.target.innerText === 'Вендор') {
+                if (e.target.innerText === this.$t('dtVendor')) {
                     this.$store.commit('setSortName', 'CompanyName')
                     this.$store.commit('setSortOrder', 1)
                     this.$store.commit('setPreviousOrder', 1)
@@ -416,7 +414,7 @@
                     console.log(this.sortOption)
                     console.log(this.$store.state.sortOption.sortOrder)
                 }
-                if (e.target.innerText === 'Скидка') {
+                if (e.target.innerText === this.$t('dtDiscount')) {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'AmountOfDiscount')
                     this.$store.commit('setSortOrder', 2)
@@ -424,7 +422,7 @@
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     console.log(this.$store.state.sortOption.sortOrder)
                 }
-                if (e.target.innerText === 'Дата начала') {
+                if (e.target.innerText === this.$t('dtStartDate')) {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'DateStart')
                     this.$store.commit('setSortOrder', 3)
@@ -432,7 +430,7 @@
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     console.log(this.$store.state.sortOption)
                 }
-                if (e.target.innerText === 'Дата окончания') {
+                if (e.target.innerText === this.$t('dtFinishDate')) {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'DateEnd')
                     this.$store.commit('setSortOrder', 4)
@@ -440,7 +438,7 @@
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     console.log(this.$store.state.sortOption)
                 }
-                if (e.target.innerText === 'Рейтинг') {
+                if (e.target.innerText === this.$t('dtRating')) {
                     console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'RatingDiscount')
                     this.$store.commit('setSortOrder', 5)
@@ -543,11 +541,11 @@
                 // console.log(this.page, this.pageCount);
                 //     console.log(this.page,this.pageCount)
                 this.$store.commit('setDisPage', this.page)
-                console.log(this.$store.state.disPage)
+               // console.log(this.$store.state.disPage)
                 const goNext = () => {
                     if (this.$store.state.filterRequest === false) {
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
-                            console.log("PAGINATION")
+                          //  console.log("PAGINATION")
                             this.nextDiscount(
                                 {
                                     "searchText": this.$store.state.keyWord,
@@ -654,10 +652,9 @@
                 this.close()
             },
             async getUser2() {
+                const auth = this.getAuth
                 const result = await auth.getUser()
                 this.userClaimsLocalData = result
-                console.log('USER CLAIMS: ', result)
-
                 this.setUserClaims({
                     name: result.profile.name,
                     surname: result.profile.surname,
@@ -665,7 +662,6 @@
 
                     //email: result.profile.email
                 })
-                console.log('USER CLAIMS STORED IN VUEX STORE: ', this.$store.getters.getUserClaims)
             },
         },
     }

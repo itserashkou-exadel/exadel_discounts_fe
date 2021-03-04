@@ -2,7 +2,7 @@
     <div>
         <v-container v-if="signFormToggle" class="d-flex align-center wrapper" fluid>
             <v-card width="500" class="mx-auto ">
-                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">Your city is:
+                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">{{$t('yourLocationIs')}}
                     {{this.$store.state.userLocation.town}}
                 </v-card-title>
                 <v-card-text>
@@ -19,7 +19,7 @@
                                block
                                color="primary"
                         >
-                            Login
+                            {{$t('sLogIn')}}
                         </v-btn>
 
 <!--                        <v-btn @click="logout()">-->
@@ -39,7 +39,7 @@
                     {{$t('sChooseLocation')}}
                 </v-card-text>
                 <v-container class="d-flex justify-center align-center">
-                    <v-btn @click="backToSelectTown" color="primary">Change Location</v-btn>
+                    <v-btn @click="backToSelectTown" color="primary">{{$t('sButtonChangeLocation')}}</v-btn>
                 </v-container>
                 <v-container>
                     <v-row>
@@ -80,6 +80,7 @@
         }),
         methods: {
             ...mapMutations(['setUserLocation', 'setLanguage']),
+            // ...mapActions(['goForAuth']),
             setUserLocAndLocalStorage() {
                 this.setUserLocation({
                     country: this.selectedCountry,
@@ -89,7 +90,7 @@
                 const userLoc = this.$store.getters.getUserLocation
                 localStorage.setItem('key', JSON.stringify(userLoc))
                 console.group('User data')
-                console.log('User location in VueX store: ', this.$store.getters.getUserLocation)
+                console.log('User location in VueX store: ', this.$store.getters.getUserLocation.town)
                 console.groupEnd()
                 this.$router.push('/home')
             },
@@ -132,12 +133,8 @@
         },
         mixins: [token],
         mounted() {
-            const getCountries = () => {
-                let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
-                //Берем списаок стран с бэка и оложим в стор
-                this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`);}
-            this.getToken(getCountries)
-
+            this.goForAuth(auth);
+            this.getCountries();
         },
         watch: {
             language() {
@@ -155,6 +152,7 @@
                         this.$i18n.locale = 'en';
                     })
                 }
+                this.getCountries()
             }
         },
     };

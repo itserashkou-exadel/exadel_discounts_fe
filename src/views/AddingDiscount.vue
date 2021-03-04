@@ -24,7 +24,7 @@
                             v-for="(item, i) in fieldsForDiscount()"
                             :key="i">
                         <div class="d-flex align-content-center">
-                            <v-text-field v-if="i === 0 && $i18n.locale === 'ru'"
+                            <v-text-field v-if="i === 0"
                                           @keydown.enter="nothing"
                                           :placeholder='item.placeholderRu'
                                           v-model='titleRu'
@@ -32,15 +32,15 @@
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 0 && $i18n.locale === 'en'"
-                                          @keydown.enter="nothing"
-                                          :placeholder='item.placeholderEn'
-                                          v-model='titleEn'
-                                          :label='item.labelEn'
-                                          :rules='nameRules'
-                                          outlined>
-                            </v-text-field>
-                            <v-text-field v-if="i === 1 && $i18n.locale === 'ru'"
+<!--                            <v-text-field v-if="i === 0 && $i18n.locale === 'en'"-->
+<!--                                          @keydown.enter="nothing"-->
+<!--                                          :placeholder='item.placeholderEn'-->
+<!--                                          v-model='titleEn'-->
+<!--                                          :label='item.labelEn'-->
+<!--                                          :rules='nameRules'-->
+<!--                                          outlined>-->
+<!--                            </v-text-field>-->
+                            <v-text-field v-if="i === 1"
                                           @keydown.enter="nothing"
                                           :placeholder='item.placeholderRu'
                                           v-model='vendorRu'
@@ -48,15 +48,15 @@
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 1 && $i18n.locale === 'en'"
-                                          @keydown.enter="nothing"
-                                          :placeholder='item.placeholderEn'
-                                          v-model='vendorEn'
-                                          :label='item.labelEn'
-                                          :rules='nameRules'
-                                          outlined>
-                            </v-text-field>
-                            <v-text-field v-if="i === 2 && $i18n.locale === 'ru'"
+<!--                            <v-text-field v-if="i === 1 && $i18n.locale === 'en'"-->
+<!--                                          @keydown.enter="nothing"-->
+<!--                                          :placeholder='item.placeholderEn'-->
+<!--                                          v-model='vendorEn'-->
+<!--                                          :label='item.labelEn'-->
+<!--                                          :rules='nameRules'-->
+<!--                                          outlined>-->
+<!--                            </v-text-field>-->
+                            <v-text-field v-if="i === 2"
                                           @keydown.enter="nothing"
                                           :placeholder='item.placeholderRu'
                                           v-model='vendorDescrRu'
@@ -64,30 +64,30 @@
                                           :rules='nameRules'
                                           outlined>
                             </v-text-field>
-                            <v-text-field v-if="i === 2 && $i18n.locale === 'en'"
-                                          @keydown.enter="nothing"
-                                          :placeholder='item.placeholderEn'
-                                          v-model='vendorDescrEn'
-                                          :label='item.labelEn'
-                                          :rules='nameRules'
-                                          outlined>
-                            </v-text-field>
-                            <v-textarea v-if="i === 3 && $i18n.locale === 'ru'"
+<!--                            <v-text-field v-if="i === 2 && $i18n.locale === 'en'"-->
+<!--                                          @keydown.enter="nothing"-->
+<!--                                          :placeholder='item.placeholderEn'-->
+<!--                                          v-model='vendorDescrEn'-->
+<!--                                          :label='item.labelEn'-->
+<!--                                          :rules='nameRules'-->
+<!--                                          outlined>-->
+<!--                            </v-text-field>-->
+                            <v-textarea v-if="i === 3"
                                         @keydown.enter="nothing"
-                                        :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
+                                        :placeholder='item.placeholderRu'
                                         v-model='descriptionRu'
-                                        :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
+                                        :label='item.labelRu'
                                         :rules='nameRules'
                                         outlined>
                             </v-textarea>
-                            <v-textarea v-if="i === 3 && $i18n.locale === 'en'"
-                                        @keydown.enter="nothing"
-                                        :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'
-                                        v-model='descriptionEn'
-                                        :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'
-                                        :rules='nameRules'
-                                        outlined>
-                            </v-textarea>
+<!--                            <v-textarea v-if="i === 3 && $i18n.locale === 'en'"-->
+<!--                                        @keydown.enter="nothing"-->
+<!--                                        :placeholder='($i18n.locale === "ru") ? item.placeholderRu : item.placeholderEn'-->
+<!--                                        v-model='descriptionEn'-->
+<!--                                        :label='($i18n.locale === "ru") ? item.labelRu : item.labelEn'-->
+<!--                                        :rules='nameRules'-->
+<!--                                        outlined>-->
+<!--                            </v-textarea>-->
                             <v-icon
                                     large
                                     color="orange darken-2"
@@ -97,96 +97,96 @@
                             </v-icon>
                         </div>
                         <v-expand-transition>
-                            <v-text-field v-if="i === 0 && ($i18n.locale === 'ru')"
+                            <v-text-field v-if="i === 0"
                                           @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='item.placeholderEn'
                                           v-model="titleEn"
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          :label='item.labelEn'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"
+<!--                            <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"-->
+<!--                                          @keydown.enter="nothing"-->
+<!--                                          v-show='trueOrFalseArr[i]'-->
+<!--                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'-->
+<!--                                          v-model="titleRu"-->
+<!--                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'-->
+<!--                                          outlined-->
+<!--                            ></v-text-field>-->
+                            <v-text-field v-if="i === 1"
                                           @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
-                                          v-model="titleRu"
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          outlined
-                            ></v-text-field>
-                            <v-text-field v-if="i === 1 && ($i18n.locale === 'ru')"
-                                          @keydown.enter="nothing"
-                                          v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorEn'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          :label='item.labelEn'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"
+<!--                            <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"-->
+<!--                                          @keydown.enter="nothing"-->
+<!--                                          v-show='trueOrFalseArr[i]'-->
+<!--                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'-->
+<!--                                          v-model='vendorRu'-->
+<!--                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'-->
+<!--                                          outlined-->
+<!--                            ></v-text-field>-->
+                            <v-text-field v-if="i === 2"
                                           @keydown.enter="nothing"
                                           v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
-                                          v-model='vendorRu'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          outlined
-                            ></v-text-field>
-                            <v-text-field v-if="i === 2 && ($i18n.locale === 'ru')"
-                                          @keydown.enter="nothing"
-                                          v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                          :placeholder='item.placeholderEn'
                                           v-model='vendorDescrEn'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                          :label='item.labelEn'
                                           outlined
                             ></v-text-field>
-                            <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"
-                                          @keydown.enter="nothing"
-                                          v-show='trueOrFalseArr[i]'
-                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
-                                          v-model='vendorDescrRu'
-                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                          outlined
-                            ></v-text-field>
-                            <v-textarea v-if="i === 3 && ($i18n.locale === 'ru')"
+<!--                            <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"-->
+<!--                                          @keydown.enter="nothing"-->
+<!--                                          v-show='trueOrFalseArr[i]'-->
+<!--                                          :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'-->
+<!--                                          v-model='vendorDescrRu'-->
+<!--                                          :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'-->
+<!--                                          outlined-->
+<!--                            ></v-text-field>-->
+                            <v-textarea v-if="i === 3"
                                         @keydown.enter="nothing"
                                         v-show='trueOrFalseArr[i]'
-                                        :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
+                                        :placeholder='item.placeholderEn'
                                         v-model='descriptionEn'
-                                        :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
+                                        :label='item.labelEn'
                                         outlined
                             ></v-textarea>
-                            <v-textarea v-if="i === 3 && ($i18n.locale === 'en')"
-                                        @keydown.enter="nothing"
-                                        v-show='trueOrFalseArr[i]'
-                                        :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'
-                                        v-model='descriptionRu'
-                                        :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'
-                                        outlined
-                            ></v-textarea>
+<!--                            <v-textarea v-if="i === 3 && ($i18n.locale === 'en')"-->
+<!--                                        @keydown.enter="nothing"-->
+<!--                                        v-show='trueOrFalseArr[i]'-->
+<!--                                        :placeholder='($i18n.locale === "ru") ? item.placeholderEn : item.placeholderRu'-->
+<!--                                        v-model='descriptionRu'-->
+<!--                                        :label='($i18n.locale === "ru") ? item.labelEn : item.labelRu'-->
+<!--                                        outlined-->
+<!--                            ></v-textarea>-->
                         </v-expand-transition>
                     </div>
-                    <chips-for-tags v-if="$i18n.locale === 'ru'"
+                    <chips-for-tags
                                     v-bind:icon-show="true"
                                     v-bind:tags="tagsRu"
                                     v-on:tagShow="changeTagShow"
                                     v-on:sendTags="setTagsRu"
                     />
-                    <chips-for-tags v-if="$i18n.locale === 'en'"
-                                    v-bind:icon-show="true"
-                                    v-bind:tags="tagsEn"
-                                    v-on:tagShow="changeTagShow"
-                                    v-on:sendTags="setTagsEn"
-                    />
-                    <chips-for-tags v-if="$i18n.locale === 'ru'"
+<!--                    <chips-for-tags v-if="$i18n.locale === 'en'"-->
+<!--                                    v-bind:icon-show="true"-->
+<!--                                    v-bind:tags="tagsEn"-->
+<!--                                    v-on:tagShow="changeTagShow"-->
+<!--                                    v-on:sendTags="setTagsEn"-->
+<!--                    />-->
+                    <chips-for-tags
                                     v-show="tagShowAd"
                                     v-bind:tags="tagsEn"
                                     v-bind:icon-show="false"
                                     v-on:sendTags="setTagsEn"
                     />
-                    <chips-for-tags v-if="$i18n.locale === 'en'"
-                                    v-show="tagShowAd"
-                                    v-bind:tags="tagsRu"
-                                    v-bind:icon-show="false"
-                                    v-on:sendTags="setTagsRu"
-                    />
+<!--                    <chips-for-tags v-if="$i18n.locale === 'en'"-->
+<!--                                    v-show="tagShowAd"-->
+<!--                                    v-bind:tags="tagsRu"-->
+<!--                                    v-bind:icon-show="false"-->
+<!--                                    v-on:sendTags="setTagsRu"-->
+<!--                    />-->
                     <v-text-field
                             @keydown.enter="nothing"
                             :label="this.$t('adLabelOfDiscountVendorPhone')"
@@ -393,7 +393,8 @@
                     country: null,
                     city: null,
                     line: null
-                }
+                },
+                discount: null
             }
         },
         mixins: [token],
@@ -434,6 +435,7 @@
                 }
             },
             nothing(event) {
+                console.log(event)
                 event.preventDefault()
             },
             agree() {
@@ -496,7 +498,6 @@
                 ]
             },
             objectWithoutId() {
-                if (this.$i18n.locale === 'ru') {
                     return {
                         name: this.titleRu,
                         description: this.descriptionRu,
@@ -504,8 +505,8 @@
                         startDate: this.dateStart,
                         endDate: this.dateFinish,
                         address: {
-                            country: this.selectedCountry,
-                            city: this.selectedCity,
+                            country: this.$i18n.locale === 'ru' ? this.selectedCountry : '',
+                            city: this.$i18n.locale === 'ru' ? this.selectedCity : '',
                             street: this.street,
                             location: {
                                 latitude: this.coordinate1,
@@ -532,8 +533,8 @@
                                 name: this.titleEn,
                                 description: this.descriptionEn,
                                 address: {
-                                    country: this.selectedCountry,
-                                    city: this.selectedCity,
+                                    country: "ffff",//this.$i18n.locale === 'en' ? this.selectedCountry : '',
+                                    city: "ffff",//this.$i18n.locale === 'en' ? this.selectedCountry : '',
                                     street: this.street,
                                     location: {
                                         latitude: this.coordinate1,
@@ -552,62 +553,62 @@
                             }
                         ]
                     }
-                }
-                if (this.$i18n.locale === 'en') {
-                    return {
-                        name: this.titleEn,
-                        description: this.descriptionEn,
-                        amountOfDiscount: this.valueOfDiscount,
-                        startDate: this.dateStart,
-                        endDate: this.dateFinish,
-                        address: {
-                            country: this.selectedCountry,
-                            city: this.selectedCity,
-                            street: this.street,
-                            location: {
-                                latitude: this.coordinate1,
-                                longitude: this.coordinate2
-                            }
-                        },
-                        company: {
-                            name: this.vendorEn,
-                            description: this.vendorDescrEn,
-                            phoneNumber: this.vendorPhone,
-                            mail: this.vendorEmail
-                        },
-                        workingDaysOfTheWeek: this.transformateDays(),
-                        tags: this.tagsEn,
-                        promocodeOptions: {
-                            countActivePromocodePerUser: this.promo1,
-                            daysDurationPromocode: this.promo2,
-                            countSymbolsPromocode: this.promo3,
-                            timeLimitAddingInSeconds: this.promo4},
-                        language: "En",
-                        translations: [
-                            {
-                                name: this.titleRu,
-                                description: this.descriptionRu,
-                                address: {
-                                    country: this.selectedCountry,
-                                    city: this.selectedCity,
-                                    street: this.street,
-                                    location: {
-                                        latitude: this.coordinate1,
-                                        longitude: this.coordinate2
-                                    }
-                                },
-                                company: {
-                                    name: this.vendorRu,
-                                    description: this.vendorDescrRu,
-                                    phoneNumber: this.vendorPhone,
-                                    mail: this.vendorEmail
-                                },
-                                tags: this.tagsRu,
-                                language: "Ru"
-                            }
-                        ]
-                    }
-                }
+
+                // if (this.$i18n.locale === 'en') {
+                //     return {
+                //         name: this.titleEn,
+                //         description: this.descriptionEn,
+                //         amountOfDiscount: this.valueOfDiscount,
+                //         startDate: this.dateStart,
+                //         endDate: this.dateFinish,
+                //         address: {
+                //             country: this.selectedCountry,
+                //             city: this.selectedCity,
+                //             street: this.street,
+                //             location: {
+                //                 latitude: this.coordinate1,
+                //                 longitude: this.coordinate2
+                //             }
+                //         },
+                //         company: {
+                //             name: this.vendorEn,
+                //             description: this.vendorDescrEn,
+                //             phoneNumber: this.vendorPhone,
+                //             mail: this.vendorEmail
+                //         },
+                //         workingDaysOfTheWeek: this.transformateDays(),
+                //         tags: this.tagsEn,
+                //         promocodeOptions: {
+                //             countActivePromocodePerUser: this.promo1,
+                //             daysDurationPromocode: this.promo2,
+                //             countSymbolsPromocode: this.promo3,
+                //             timeLimitAddingInSeconds: this.promo4},
+                //         language: "En",
+                //         translations: [
+                //             {
+                //                 name: this.titleRu,
+                //                 description: this.descriptionRu,
+                //                 address: {
+                //                     country: this.selectedCountry,
+                //                     city: this.selectedCity,
+                //                     street: this.street,
+                //                     location: {
+                //                         latitude: this.coordinate1,
+                //                         longitude: this.coordinate2
+                //                     }
+                //                 },
+                //                 company: {
+                //                     name: this.vendorRu,
+                //                     description: this.vendorDescrRu,
+                //                     phoneNumber: this.vendorPhone,
+                //                     mail: this.vendorEmail
+                //                 },
+                //                 tags: this.tagsRu,
+                //                 language: "Ru"
+                //             }
+                //         ]
+                //     }
+
             },
             async submit() {
                 if (this.$refs.form.validate()) {
@@ -623,7 +624,7 @@
                             console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                             this.updateDiscount(
                                 {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                            ).catch((e) => {console.log(55); this.val = false; this.dialog = true})
+                            ).catch((e) => {this.val = false; this.dialog = true})
                             .then(() => {
                                 if (this.val === true)
                                 {this.$router.push({name:'home'})}
@@ -662,51 +663,56 @@
             async fillingFields() {
                 if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
-                    const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
-                    const discount = response.data;
-                    console.log(discount);
-                    if (discount.language === 'Ru') {
-                        this.titleRu = discount.name;
-                        this.titleEn = discount.translations[0].name;
-                        this.vendorRu = discount.company.name;
-                        this.vendorEn = discount.translations[0].company.name;
-                        this.vendorDescrRu = discount.company.description;
-                        this.vendorDescrEn = discount.translations[0].company.description;
-                        this.tagsRu = discount.tags;
-                        this.tagsEn = discount.translations[0].tags;
-                        this.descriptionRu = discount.description;
-                        this.descriptionEn = discount.translations[0].description
+                    const funcForDisc = () => {
+                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                    this.discount = response.data
+                    if (this.discount.language === 'Ru') {
+                        this.titleRu = this.discount.name;
+                        this.titleEn = this.discount.translations[0].name;
+                        this.vendorRu = this.discount.company.name;
+                        this.vendorEn = this.discount.translations[0].company.name;
+                        this.vendorDescrRu = this.discount.company.description;
+                        this.vendorDescrEn = this.discount.translations[0].company.description;
+                        this.tagsRu = this.discount.tags;
+                        this.tagsEn = this.discount.translations[0].tags;
+                        this.descriptionRu = this.discount.description;
+                        this.descriptionEn = this.discount.translations[0].description
                     }
-                    if (discount.language === 'En') {
-                        this.titleEn = discount.name;
-                        this.titleRu = discount.translations[0].name;
-                        this.vendorEn = discount.company.name;
-                        this.vendorRu = discount.translations[0].company.name;
-                        this.vendorDescrEn = discount.company.description;
-                        this.vendorDescrRu = discount.translations[0].company.description;
-                        this.tagsEn = discount.tags;
-                        this.tagsRu = discount.translations[0].tags;
-                        this.descriptionEn = discount.description;
-                        this.descriptionRu = discount.translations[0].description
+                    if (this.discount.language === 'En') {
+                        this.titleEn = this.discount.name;
+                        this.titleRu = this.discount.translations[0].name;
+                        this.vendorEn = this.discount.company.name;
+                        this.vendorRu = this.discount.translations[0].company.name;
+                        this.vendorDescrEn = this.discount.company.description;
+                        this.vendorDescrRu = this.discount.translations[0].company.description;
+                        this.tagsEn = this.discount.tags;
+                        this.tagsRu = this.discount.translations[0].tags;
+                        this.descriptionEn = this.discount.description;
+                        this.descriptionRu = this.discount.translations[0].description
                     }
-                    this.selectedCountry = discount.address.country || discount.translations[0].address.country;
-                    this.selectedCity = discount.address.city || discount.translations[0].address.city;
-                    if (discount.promocodeOptions !== undefined) {
-                               console.log(1);
-                    this.promo1 = discount.promocodeOptions.countActivePromocodePerUser,
-                    this.promo2 = discount.promocodeOptions.daysDurationPromocode,
-                    this.promo3 = discount.promocodeOptions.countSymbolsPromocode,
-                    this.promo4 = discount.promocodeOptions.timeLimitAddingInSeconds}
-                    this.vendorPhone = discount.company.phoneNumber;
-                    this.vendorEmail = discount.company.mail;
-                    this.transformateToDays(discount.workingDaysOfTheWeek);
-                    this.valueOfDiscount = discount.amountOfDiscount;
-                    this.dateStart = discount.startDate.substr(0, 10);
-                    this.dateFinish = discount.endDate.substr(0, 10);
-                    this.street = discount.address.street;
-                    this.coordinate1 = discount.address.location.latitude;
-                    this.coordinate2 = discount.address.location.longitude;
-                    this.picture = discount.pictureUrl || '';
+                    if (this.$i18n.locale === 'ru') {
+                    this.selectedCountry = this.discount.address.country || this.discount.translations[0].address.country;
+                    this.selectedCity = this.discount.address.city || this.discount.translations[0].address.city;}
+                    if (this.$i18n.locale === 'en') {
+                        this.selectedCountry = this.discount.translations[0].address.country || this.discount.address.country;
+                        this.selectedCity = this.discount.translations[0].address.city || this.discount.address.city}
+                    if (this.discount.promocodeOptions !== undefined) {
+                    this.promo1 = this.discount.promocodeOptions.countActivePromocodePerUser,
+                    this.promo2 = this.discount.promocodeOptions.daysDurationPromocode,
+                    this.promo3 = this.discount.promocodeOptions.countSymbolsPromocode,
+                    this.promo4 = this.discount.promocodeOptions.timeLimitAddingInSeconds}
+                    this.vendorPhone = this.discount.company.phoneNumber;
+                    this.vendorEmail = this.discount.company.mail;
+                    this.transformateToDays(this.discount.workingDaysOfTheWeek);
+                    this.valueOfDiscount = this.discount.amountOfDiscount;
+                    this.dateStart = this.discount.startDate.substr(0, 10);
+                    this.dateFinish = this.discount.endDate.substr(0, 10);
+                    this.street = this.discount.address.street;
+                    this.coordinate1 = this.discount.address.location.latitude;
+                    this.coordinate2 = this.discount.address.location.longitude;
+                    this.picture = this.discount.pictureUrl || '';
+                    })}
+                    this.getToken(funcForDisc)
                 }
             },
             transformateToDays(str) {
@@ -776,10 +782,13 @@
         },
         computed: {
             ...mapGetters(['allDiscounts', 'language', 'allCountries']),
+      changeOfModel: function () {
+        console.log(4444)
+    }
 
         },
-
         mounted() {
+            this.getCountries();
             this.fillingFields();
         }
     }

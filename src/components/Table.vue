@@ -9,25 +9,25 @@
                 <DataTable
                         v-show="this.$store.state.switch === true"
                 />
-                <Cards
+                <Cards  :key="this.$store.state.switch"
                         v-show="this.$store.state.switch === false"
+
                 />
         </v-row>
+
     </div>
 </template>
 
 <script>
-    import AuthService from '@/services/auth.service';
     import ToolBar from "@/views/ToolBar";
     import Cards from "@/views/Cards";
     import DataTable from "@/components/DataTable";
-
-    const auth = new AuthService();
 
     export default {
         name: "Table",
         data() {
             return {
+              componentKey:0,
                 windowInnerWidth: window.innerWidth,
             }
         },
