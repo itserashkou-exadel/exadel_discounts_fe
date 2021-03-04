@@ -15,9 +15,9 @@
                 />
             </v-row>
         </div>
-        <div class="d-flex flex-column justify-center align-center not_found" v-else>
-            <h2>No services found, please, try another word!</h2>
-        </div>
+<!--        <div class="d-flex flex-column justify-center align-center not_found" v-else>-->
+<!--            <h2>No services found, please, try another word!</h2>-->
+<!--        </div>-->
     </div>
 </template>
 

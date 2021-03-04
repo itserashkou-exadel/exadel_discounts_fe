@@ -131,7 +131,7 @@
                 amountOfDiscount: item.amountOfDiscount,
                 startDate: moment(item.startDate.$date).format('L'),
                 endDate: moment(item.endDate.$date).format('L'),
-                rating: item.ratingTotal,
+                rating: +Number.parseFloat(item.ratingTotal).toFixed(2),
                 description: item.description,
                 tags: item.tags,
                 picture: item.pictureUrl

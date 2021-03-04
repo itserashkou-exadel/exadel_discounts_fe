@@ -223,6 +223,7 @@ let store = new Vuex.Store({
             try{
                 const response = await axios.post(searchDiscount, search);
                 commit('receiveSearch', response.data);
+                commit('setDisPage', 1);
             }catch (e) {
                 commit('setNoFound', true);
             }

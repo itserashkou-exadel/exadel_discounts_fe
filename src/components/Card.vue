@@ -41,7 +41,7 @@
                             size="14"
                     ></v-rating>
                     <div class="grey--text ml-2">
-                      {{description.rating.toFixed(2)}}
+                      {{description.rating}}
                     </div>
                 </v-row>
             </v-col>
