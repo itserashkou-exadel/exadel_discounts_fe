@@ -19,7 +19,7 @@
                     color="primary"
                     dark
                     class="mb-2"
-                    @click="goToPageAd()"            >
+                    @click="goToPageAd()">
                 {{$t('dtNewItem')}}
             </v-btn>
         </v-col>

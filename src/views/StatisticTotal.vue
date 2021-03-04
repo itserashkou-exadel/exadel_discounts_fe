@@ -107,9 +107,9 @@
             },
             headers() {
                 let headerArr = [
-                    {text: this.$t('dtOffer')},
-                    {text: this.$t('dtVendor')},
-                    {text: this.$t('dtDiscount')},
+                    {text: this.$t('viewsTotal')},
+                    {text: this.$t('subscriptionsTotal')},
+                    {text: this.$t('usersSubscriptionTotal')},
                     {text: this.$t('dtStartDate')},
                     {text: this.$t('dtFinishDate')},
                     {text: this.$t('dtRating')}

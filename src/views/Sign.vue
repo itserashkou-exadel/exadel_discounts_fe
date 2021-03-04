@@ -133,7 +133,6 @@
         },
         mixins: [token],
         mounted() {
-           const auth = new AuthService();
             this.goForAuth(auth);
             this.getCountries();
         },
