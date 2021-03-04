@@ -1,5 +1,5 @@
 <template>
-    <v-container >
+    <v-container>
         <v-btn
                 color="primary"
                 dark
@@ -25,13 +25,13 @@
             </v-btn>
             <v-divider></v-divider>
 
-            <v-expansion-panels >
+            <v-expansion-panels :key="myKey">
                 <v-expansion-panel
                         v-for="(item,i) in discountsFromStore"
                         :key="i"
                         @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude])"
                 >
-                    <v-expansion-panel-header class="bold">{{item.name}} </v-expansion-panel-header>
+                    <v-expansion-panel-header class="bold">{{item.name}}</v-expansion-panel-header>
                     <v-expansion-panel-content>{{item.company.name}}</v-expansion-panel-content>
                     <v-expansion-panel-content>{{item.description}}</v-expansion-panel-content>
                     <v-expansion-panel-content>
@@ -54,6 +54,7 @@
         data() {
             return {
                 drawer: false,
+                myKey: 0,
             }
         },
         methods: {
@@ -66,7 +67,18 @@
         },
         mounted() {
             console.log('PROPS navBar:', this.props)
-        }
+        },
+        computed: {
+            propsFromMap: function () {
+                return this.discountsFromStore
+            }
+        },
+        watch: {
+            discountsFromStore(){
+                console.log('WATCH')
+                this.myKey+=1
+            }
+        },
     }
 </script>
 
