@@ -1,5 +1,4 @@
 <template>
-    <v-container>
 <!--        <v-btn-->
 <!--                color="primary"-->
 <!--                dark-->
@@ -43,7 +42,6 @@
             </v-expansion-panels>
 
         </v-navigation-drawer>
-    </v-container>
 
 </template>
 
