@@ -262,7 +262,7 @@
                                 AmountOfDiscount: item.amountOfDiscount,
                                 DateStart: moment(item.startDate).format('DD-MM-YYYY'),
                                 DateEnd: moment(item.endDate).format('DD-MM-YYYY'),
-                                RatingDiscount: item.ratingTotal.toFixed(2),
+                                RatingDiscount: item.ratingTotal,
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,

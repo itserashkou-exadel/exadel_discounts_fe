@@ -35,8 +35,12 @@ export default {
             if (auth !== undefined) {
             auth.login()}
         },
-        setSecondAuth (auth) {this.goForAuth(auth)}
-
+        setSecondAuth (auth) {
+            if (auth === undefined || auth === null) {
+                const auth2 = new AuthService()
+                this.goForAuth(auth2)
+            }
+        }
     }
 
 }

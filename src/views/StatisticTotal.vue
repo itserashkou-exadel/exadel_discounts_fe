@@ -90,8 +90,8 @@
             selectedItem: 1,
             country: '',
             city: '',
-            startDate: '',
-            finishDate: '',
+            startDate: '2000-01-01T00:00:00.459Z',
+            finishDate: '2100-01-01T00:00:00.459Z',
             valuesForText: [0,0,0,0,0],
             componentKey: 0
         }),
@@ -103,6 +103,10 @@
                 this.valuesForText[2] = 0
                 this.valuesForText[3] = 0
                 this.valuesForText[4] = 0
+                this.country = '',
+                this.city = '',
+                this.startDate = '2000-01-01T00:00:00.459Z',
+                this.finishDate = '2100-01-01T00:00:00.459Z',
                 this.componentKey +=1
             },
             headers() {
@@ -136,6 +140,7 @@
                         searchAddressCountry: this.country,
                         searchAddressCity: this.city
                     }
+                    console.log(surchObj);
                     axios.post('https://localhost:9001/api/v1/statistics/discounts', surchObj).then(
                         (data) => {
                             this.valuesForText[0] = data.data.discountsTotal;

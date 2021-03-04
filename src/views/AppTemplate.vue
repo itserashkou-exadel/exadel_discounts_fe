@@ -22,9 +22,18 @@
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer";
 import HeadermMobile from "@/components/Header/HeaderMobile";
-
+import token from "@/mixins/token.mixin"
+import {mapGetters} from 'vuex'
 export default {
   components: {HeadermMobile, Footer, Header},
+  mixins: [token],
+  computed: {
+    ...mapGetters(['getAuth'])
+  },
+  mounted() {
+    const auth = this.getAuth
+    this.setSecondAuth(auth)
+  }
 }
 </script>
 

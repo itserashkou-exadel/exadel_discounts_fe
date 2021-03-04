@@ -23,7 +23,6 @@ export default class AuthService {
     }
 
     public getUser(): Promise<User | null> {
-        console.log('getUser')
         return this.userManager.getUser()
     }
 
@@ -32,17 +31,14 @@ export default class AuthService {
     }
 
     public login(): Promise<void> {
-        console.log('login')
         return this.userManager.signinRedirect();
     }
 
     public logout(): Promise<void> {
-        console.log('logout')
         return this.userManager.signoutRedirect();
     }
 
     public getAccessToken(): Promise<string> {
-        console.log('getToken')
         return this.userManager.getUser().then((data: any) => {
             return data.access_token;
         });
