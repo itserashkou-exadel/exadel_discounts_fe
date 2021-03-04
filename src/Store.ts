@@ -245,14 +245,14 @@ let store = new Vuex.Store({
         },
         async getSubscription({commit}, searchSub) {
             const response = await axios.post(searchDiscount, searchSub).catch(error => {
-                console.log(error.response.data.error);
+              //  console.log(error.response.data.error);
                 return {data: []};
             });
             commit('receiveSubscription', response.data)
         },
         async getFavorites({commit}, searchFav) {
             const response = await axios.post(searchDiscount, searchFav).catch(error => {
-                console.log(error.response.data.error);
+           //     console.log(error.response.data.error);
                 return {data: []};
             });
             commit('receiveFavorites', response.data)
@@ -271,7 +271,7 @@ let store = new Vuex.Store({
                 // if(e.response && e.response.status === 404) {
                 //     console.clear();
                 // }
-                console.log(e)
+             //   console.log(e)
             }
         },
 
@@ -280,9 +280,9 @@ let store = new Vuex.Store({
               let url = deleteURL;
               url += id;
               const response = await axios.delete(url);
-              console.log(response);
+            //  console.log(response);
           }catch (e) {
-              console.log(e)
+            //  console.log(e)
           }
         }
     }

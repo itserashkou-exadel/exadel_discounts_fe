@@ -30,10 +30,7 @@ export default {
   computed: {
     ...mapGetters(['getAuth'])
   },
-  mounted() {
-    const auth = this.getAuth
-    this.setSecondAuth(auth)
-  }
+
 }
 </script>
 
