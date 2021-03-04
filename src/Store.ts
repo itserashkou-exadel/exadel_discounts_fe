@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 import logger from "vuex/types/logger";
+import AuthService from "@/services/auth.service";
 
 Vue.use(Vuex);
 

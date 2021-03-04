@@ -64,12 +64,10 @@
 <script>
 
 import axios from "axios";
-import AuthService from "@/services/auth.service";
 import authMixin from '@/mixins/token.mixin'
 
 
 const moment = require('moment');
-const auth = new AuthService();
 
 export default {
   name: "Promocodes",

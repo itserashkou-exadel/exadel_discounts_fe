@@ -39,9 +39,6 @@
 </template>
 
 <script>
-    import AuthService from "@/services/auth.service";
-
-    const auth = new AuthService();
     import axios from "axios"
     import {mapActions} from "vuex";
     import token from '@/mixins/token.mixin'
