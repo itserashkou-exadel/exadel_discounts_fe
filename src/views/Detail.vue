@@ -105,7 +105,7 @@
                                 text-lg-h2
                                 text-md-h2
                                 text-h4
-                                " style="word-break: normal">
+                                " style="word-break: normal; text-align:center">
                                     {{ info.name }}
                                 </v-card-title>
                             </v-row>
@@ -162,7 +162,7 @@
                     <v-row justify="center" class="mb-2">
                         <h1 class="">Условия использования</h1>
                     </v-row>
-                    <p>{{info.description}}</p>
+                    <p style="text-align:center">{{info.description}}</p>
                 </v-col>
             </v-row>
             <v-row>
