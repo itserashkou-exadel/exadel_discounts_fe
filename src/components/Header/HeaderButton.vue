@@ -31,9 +31,9 @@ export default {
   cursor: pointer;
   text-decoration: none;
 }
-/*.v-btn:not(.v-btn--round).v-size--default {*/
-/*  height: 67px;*/
-/*}*/
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 67px;
+}
 /*.font-weight-light {*/
 /*  font-weight: lighter !important;*/
 /*}*/
