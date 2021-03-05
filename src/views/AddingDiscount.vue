@@ -505,8 +505,8 @@
                         startDate: this.dateStart,
                         endDate: this.dateFinish,
                         address: {
-                            country: this.$i18n.locale === 'ru' ? this.selectedCountry : '',
-                            city: this.$i18n.locale === 'ru' ? this.selectedCity : '',
+                            country: this.$i18n.locale === 'ru' ? this.selectedCountry : this.selectedCountry,
+                            city: this.$i18n.locale === 'ru' ? this.selectedCity : this.selectedCity,
                             street: this.street,
                             location: {
                                 latitude: this.coordinate1,
@@ -533,8 +533,8 @@
                                 name: this.titleEn,
                                 description: this.descriptionEn,
                                 address: {
-                                    country: this.$i18n.locale === 'en' ? this.selectedCountry : '',
-                                    city: this.$i18n.locale === 'en' ? this.selectedCountry : '',
+                                    country: this.$i18n.locale === 'en' ? this.selectedCountry : this.selectedCity,
+                                    city: this.$i18n.locale === 'en' ? this.selectedCountry : this.selectedCity,
                                     street: this.street,
                                     location: {
                                         latitude: this.coordinate1,
