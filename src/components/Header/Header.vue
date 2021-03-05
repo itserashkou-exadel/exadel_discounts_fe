@@ -79,19 +79,19 @@ export default {
   methods: {
     ...mapActions(['goForCurrentComponent']),
     seeCurrentComponent (item) {
-      if (item.text === 'СКИДКИ') {
+      if (item.text === 'СКИДКИ' || item.text ==='DISCOUNTS') {
         this.goForCurrentComponent('HomePage')
       }
-      if (item.text === 'КАРТА') {
+      if (item.text === 'КАРТА' || item.text ==='MAP') {
         this.goForCurrentComponent('MapPage')
       }
-      if (item.text === 'ПОДПИСКИ') {
+      if (item.text === 'ПОДПИСКИ' || item.text ==='SUBSCRIBE') {
         this.goForCurrentComponent('SubscribesPage')
       }
-      if (item.text === 'ИЗБРАННОЕ') {
+      if (item.text === 'ИЗБРАННОЕ' || item.text ==='FAVORITES') {
         this.goForCurrentComponent('FavoritesPage')
       }
-      if (item.text === 'СТАТИСТИКА') {
+      if (item.text === 'СТАТИСТИКА' || item.text ==='STATISTICS') {
         this.goForCurrentComponent('StatisticPage')
       }
     },
