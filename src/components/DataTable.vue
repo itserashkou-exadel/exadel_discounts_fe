@@ -257,6 +257,7 @@
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
                     this.info.map((item) => {
+                      //  console.log(item)
                         arr.push(
                             {
                                 id: item.id,
