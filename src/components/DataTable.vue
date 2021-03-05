@@ -237,6 +237,8 @@
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
+                    console.log("COMPUTED")
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     // this.searchWord = this.$store.state.keyWord;
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
