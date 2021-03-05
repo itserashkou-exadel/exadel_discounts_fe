@@ -119,6 +119,7 @@
 
         },
         async created() {
+
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
             //
@@ -147,6 +148,7 @@
             // }
             // await this.getToken(resSearch)
         },
+
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
