@@ -14,6 +14,7 @@ const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
 
 let store = new Vuex.Store({
     state: {
+        disablePag: false,
         currentComponent: 'HomePage',
         notFound: false,
         filterIcon: false,
@@ -85,6 +86,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        disPag(state, value){
+          state.disablePag = value;
+        },
         setCurrentComponent (state, component) {
           state.currentComponent = component
         },
@@ -233,6 +237,7 @@ let store = new Vuex.Store({
             try{
                 const response = await axios.post(searchDiscount, search);
                 commit('receiveSearch', response.data);
+                console.log("Render")
                 commit('setDisPage', 1);
             }catch (e) {
                 commit('setNoFound', true);
@@ -267,15 +272,21 @@ let store = new Vuex.Store({
             commit('receiveGetById', response.data);
         },
         async nextDiscount({commit}, search) {
-                const response = await axios.post(searchDiscount, search);
-                commit('addNextDis', response.data);
+                try{
+                    const response = await axios.post(searchDiscount, search);
+                    commit('addNextDis', response.data);
+                    commit('disPag', false);
+                }catch (e) {
+                    if (e.response.status === 404){
+                        commit('disPag', false);
+                    }
+                }
         },
 
         async deleteDiscount({commit}, id){
               let url = deleteURL;
               url += id;
               const response = await axios.delete(url);
-              console.log(response);
         }
     }
 

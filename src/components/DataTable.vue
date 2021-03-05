@@ -123,6 +123,7 @@
                                 :length="pageCount"
                                 :total-visible="7"
                                 @input="next"
+                                :disabled="isLoad"
                         ></v-pagination>
                     </v-col>
                     <v-col cols="1" class="d-flex align-center justify-center">
@@ -150,6 +151,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            isLoad: null,
             showSortIcon: true,
             sortOptionName: '',
             sortOption: null,
@@ -235,6 +237,8 @@
             ...mapGetters(['getAuth']),
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
+                    console.log(this.$store.state.disablePag)
+                    this.isLoad = this.$store.state.disablePag;
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
@@ -381,8 +385,6 @@
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             ...mapMutations(['setUserClaims']),
             pilik: function (e) {
-                console.log('PILICK')
-                this.$store.commit('setDisPage', 1)
                 if (e.target.innerText === this.$t('dtOffer')) {
                     this.$store.commit('setSortName', 'NameDiscount')
                     this.$store.commit('setSortOrder', 0)
@@ -522,6 +524,7 @@
                     if (this.$store.state.filterRequest === false) {
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
                           //  console.log("PAGINATION")
+                            this.$store.commit('disPag', true);
                             this.nextDiscount(
                                 {
                                     "searchText": this.$store.state.keyWord,
