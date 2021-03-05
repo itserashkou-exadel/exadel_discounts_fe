@@ -16,9 +16,7 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex"
-    import AuthService from "@/services/auth.service";
     import token from '@/mixins/token.mixin'
-    const auth = new AuthService();
     export default {
         name: "DeleteFilter",
         components: {

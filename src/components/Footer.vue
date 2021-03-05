@@ -1,5 +1,5 @@
 <template>
-  <v-footer fixed color="primary"  dark app padless
+  <v-footer absolute color="primary"  dark app padless
   >
     <v-container fluid>
       <v-row no-gutters>
@@ -39,13 +39,6 @@ export default {
   methods: {
     ...mapActions(['goFetchForCountries']),
     ...mapMutations(['setLanguage']),
-    getCountries () {
-      const getCountries = () => {
-      let languageForCountries = (this.isRuLocale ? 'Ru' : 'En');
-      this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/countries`)
-    };
-      this.getToken(getCountries)
-    }
   },
   watch: {
     isRuLocale (){
@@ -65,9 +58,6 @@ export default {
       this.getCountries()
     }
   },
-  mounted() {
-    this.getCountries();
-  }
 }
 </script>
 

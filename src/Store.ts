@@ -12,9 +12,9 @@ const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
 const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
 const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
 
-
 let store = new Vuex.Store({
     state: {
+        currentComponent: 'HomePage',
         notFound: false,
         filterIcon: false,
         filterRequest: false,
@@ -33,17 +33,19 @@ let store = new Vuex.Store({
         subscriptions: [],
         favorites: [],
         itemsPerPage: 6,
-        totalStatistic: {},
         sortOption: {
             sortName: '',
             sortIndex: null,
             sortOrder: [false,false,true,true,true,false]
         },
-
+        auth: null,
     },
     getters: {
-        getTotalStatistic(state) {
-            return state.totalStatistic;
+        getCurrentComponent(state) {
+            return state.currentComponent
+        },
+        getAuth (state) {
+            return state.auth
         },
         getUserClaims(state) {
             return state.userClaimsStoreData;
@@ -83,6 +85,12 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setCurrentComponent (state, component) {
+          state.currentComponent = component
+        },
+        setAuth (state, auth) {
+            state.auth = auth
+        },
         setNoFound(state, status){
           state.notFound = status;
         },
@@ -132,12 +140,7 @@ let store = new Vuex.Store({
             state.keyWord = key;
         },
         receiveSearch(state, dis) {
-            // @ts-ignore
             state.discounts = dis;
-        },
-        receiveTotalStatistic(state, dis) {
-            // @ts-ignore
-            state.totalStatistic = dis;
         },
         addNextDis(state, nextDis){
           // @ts-ignore
@@ -177,6 +180,7 @@ let store = new Vuex.Store({
            const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
                 //@ts-ignore
                state.discounts.splice(index, 1, updatedDiscount);
+              // console.log(state.discounts)
         },
         setLanguage (state, lang) {
             if (lang) {
@@ -187,6 +191,12 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+        goForCurrentComponent({commit}, component) {
+          commit('setCurrentComponent', component)
+        },
+        goForAuth({commit}, auth){
+            commit('setAuth', auth);
+        },
         setFilterIcon({commit}, state){
             commit('changeFilterIcon', state);
         },
@@ -228,10 +238,6 @@ let store = new Vuex.Store({
                 commit('setNoFound', true);
             }
         },
-        async statisticPost({commit}, search){
-            const response = await axios.post(searchDiscount, search);
-            commit('receiveTotalStatistic', response.data)
-        },
         async allInputPost({commit}, search){
             await axios.all([
                 axios.post(searchDiscount, search[0]),
@@ -242,14 +248,14 @@ let store = new Vuex.Store({
         },
         async getSubscription({commit}, searchSub) {
             const response = await axios.post(searchDiscount, searchSub).catch(error => {
-                console.log(error.response.data.error);
+              //  console.log(error.response.data.error);
                 return {data: []};
             });
             commit('receiveSubscription', response.data)
         },
         async getFavorites({commit}, searchFav) {
             const response = await axios.post(searchDiscount, searchFav).catch(error => {
-                console.log(error.response.data.error);
+           //     console.log(error.response.data.error);
                 return {data: []};
             });
             commit('receiveFavorites', response.data)

@@ -91,9 +91,7 @@
     import RangeSlider from "@/components/Filter/RangeSlider";
     import StarSlider from "@/components/Filter/StarSlider";
     import token from '@/mixins/token.mixin'
-    import AuthService from "@/services/auth.service";
 
-    const auth = new AuthService();
     export default {
         name: "Modal.vue",
         components: {StarSlider, RangeSlider, DataPicker},

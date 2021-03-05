@@ -12,7 +12,7 @@ name: "MapPage",
 </script>
 
 <style>
-    .container {
-        padding: 0px;
-    }
+    /*.container {*/
+    /*    padding: 0px;*/
+    /*}*/
 </style>

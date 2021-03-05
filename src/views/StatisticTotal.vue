@@ -5,7 +5,8 @@
                 <v-col>
                     <v-list-item-title
                             align="center"
-                    >{{$t('dateOfCreatedOfDiscount')}}</v-list-item-title>
+                    ><b>{{$t('dateOfCreatedOfDiscount')}}</b>
+                    </v-list-item-title>
                     <date-piker
                             class="mt-16"
                             v-on:selectedDateStart="setStartDate"
@@ -19,42 +20,55 @@
                     />
                 </v-col>
             </v-row>
-                <v-btn
-                        block
-                        @click="clearAll"
-                >{{$t('ClearAll')}}
-                </v-btn>
-                <v-btn class="mt-10"
-                        block
-                        @click="generate"
-                >{{$t('Form')}}
-                </v-btn>
-                <v-col>
+            <v-btn
+                    block
+                    @click="clearAll"
+            >{{$t('ClearAll')}}
+            </v-btn>
+            <v-btn class="mt-10"
+                   block
+                   @click="generate"
+            >{{$t('Form')}}
+            </v-btn>
+            <v-col>
 
-                </v-col>
+            </v-col>
 
             <v-card
                     class="mx-auto"
                     tile
             >
-                <v-list shaped>
-                    <v-subheader>REPORTS</v-subheader>
+                <v-list>
+                    <div class="d-flex justify-space-around">
                     <v-list-item-group
                             v-model="selectedItem"
                             color="primary"
                     >
                         <v-list-item
-                                v-for="(item, i) in items"
+                                v-for="(item, i) in headers()"
                                 :key="i"
                         >
                             <v-list-item-content>
                                 <v-list-item-title v-text="item.text"></v-list-item-title>
                             </v-list-item-content>
+                        </v-list-item>
+                    </v-list-item-group>
+                    <v-list-item-group
+                            v-model="selectedItem"
+                            color="primary"
+                    >
+                        <v-list-item
+                                v-for="(item, i) in valuesForText"
+                                :key="i"
+                        >
                             <v-list-item-content>
-                                <v-list-item-title v-text="item.value"></v-list-item-title>
+                                <v-list-item-title v-text="item"
+                                                   :key="componentKey"
+                                ></v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-item-group>
+                    </div>
                 </v-list>
             </v-card>
         </v-form>
@@ -74,26 +88,36 @@
         components: {DatePiker, ChooseOfTown},
         data: () => ({
             selectedItem: 1,
-            items: [
-                {text: 'discountsTotal', value: '0'},
-                {text: 'ratedTotal', value: '0'},
-                {text: 'inFavoritesListTotal', value: '0'},
-                {text: 'viewsTotal', value: '0'},
-                {text: 'subscriptionsTotal', value: '0'},
-            ],
             country: '',
             city: '',
-            startDate: '',
-            finishDate: ''
+            startDate: '2000-01-01T00:00:00.459Z',
+            finishDate: '2100-01-01T00:00:00.459Z',
+            valuesForText: [0,0,0,0,0],
+            componentKey: 0
         }),
         methods: {
             clearAll() {
                 this.$refs.form.reset();
-                this.items[0].value = 0
-                this.items[1].value = 0
-                this.items[2].value = 0
-                this.items[3].value = 0
-                this.items[4].value = 0
+                this.valuesForText[0] = 0
+                this.valuesForText[1] = 0
+                this.valuesForText[2] = 0
+                this.valuesForText[3] = 0
+                this.valuesForText[4] = 0
+                this.country = '',
+                this.city = '',
+                this.startDate = '2000-01-01T00:00:00.459Z',
+                this.finishDate = '2100-01-01T00:00:00.459Z',
+                this.componentKey +=1
+            },
+            headers() {
+                let headerArr = [
+                    {text: this.$t('discountsTotal')},
+                    {text: this.$t('subscriptionsTotal')},
+                    {text: this.$t('favoritesTotal')},
+                    {text: this.$t('viewsTotal')},
+                    {text: this.$t('ratedTotal')},
+                ];
+                return headerArr;
             },
             setCountry(country) {
                 this.country = country
@@ -115,19 +139,21 @@
                         searchAddressCountry: this.country,
                         searchAddressCity: this.city
                     }
+                    console.log(surchObj);
                     axios.post('https://localhost:9001/api/v1/statistics/discounts', surchObj).then(
                         (data) => {
-                            this.items[0].value = data.data.discountsTotal;
-                            this.items[1].value = data.data.ratedTotal;
-                            this.items[2].value = data.data.favoritesTotal;
-                            this.items[3].value = data.data.viewsTotal;
-                            this.items[4].value = data.data.subscriptionsTotal;
+                            this.valuesForText[0] = data.data.discountsTotal;
+                            this.valuesForText[1] = data.data.subscriptionsTotal;
+                            this.valuesForText[2] = data.data.favoritesTotal;
+                            this.valuesForText[3] = data.data.viewsTotal;
+                            this.valuesForText[4] = data.data.ratedTotal;
+                            this.componentKey +=1
                         }
                     )
                 }
                 this.getToken(getStatistic);
             }
-        }
+        },
     }
 </script>
 <style scoped>

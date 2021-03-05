@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <SubscriptionsMobile class="hidden-md-and-up"/>
-    <Subscriptions class="hidden-sm-and-down"/>
+    <Subscriptions class="hidden-sm-and-down ml-10 mr-10"/>
   </v-content>
 </template>
 

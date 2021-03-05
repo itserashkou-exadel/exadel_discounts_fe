@@ -1,6 +1,5 @@
 <template>
     <v-container fluid>
-        <v-card class="mb-16 pb-5">
             <v-row >
                 <v-col lg="4"
                        sm="12"
@@ -20,8 +19,8 @@
               :length="paginationLength"
               :total-visible="7"
               @input="next"
+              class="mb-16 pb-6"
           ></v-pagination>
-        </v-card >
     </v-container>
 </template>
 <script>

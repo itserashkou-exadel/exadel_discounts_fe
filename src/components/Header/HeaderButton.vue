@@ -1,12 +1,12 @@
 <template>
   <router-link :to="{name:headerButton.route}" class="nav-links" active-class="router-link-active">
-  <v-btn class="font-weight-light"
+  <v-btn
          text>
     <div class="flex-column">
     <div>
         <v-icon> {{ headerButton.icon }}</v-icon>
     </div>
-    <div>{{ headerButton.text }}</div>
+    <div class="header-button">{{ headerButton.text }}</div>
     </div>
   </v-btn>
   </router-link>
@@ -33,5 +33,8 @@ export default {
 }
 .v-btn:not(.v-btn--round).v-size--default {
   height: 67px;
+}
+.header-button {
+  font-weight: lighter !important;
 }
 </style>

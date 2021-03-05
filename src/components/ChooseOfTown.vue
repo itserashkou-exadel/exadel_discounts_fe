@@ -14,20 +14,16 @@
                 @change="selectCityHandler"
                 v-model="selectedCity"
         ></v-select>
-        <slot
-                @click="clearCountry"
-        ></slot>
     </div>
 </template>
 
 <script>
-    import AuthService from "@/services/auth.service";
     import axios from 'axios'
     import token from '@/mixins/token.mixin'
     import {mapGetters} from 'vuex'
 
     const moment = require('moment')
-    const auth = new AuthService();
+
 
     export default {
         name: "ChooseOfTown",
@@ -43,49 +39,46 @@
             ...mapGetters(['allCountries'])
         },
         mixins: [token],
-        //props: ['selectCountry', 'selectCity'],
         methods: {
-            // clearCountry () {
-            //     console.log(888)
-            //     this.selectedCountry = ''
-            // },
             selectCountryHandler(value) {
                 this.$emit('selectedCountryForObj', value);
-               // this.selectCountry(value);
                 this.selectedCity = '';
                 this.getCities()
             },
             selectCityHandler(value) {
                 this.$emit('selectedCityForObj', value);
-                //this.selectCity(value);
             },
             getCities() {
-                let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
+               const funcForCities = () => {
+                   let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
 
                 axios.get(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/cities/${this.selectedCountry}`)
                     .then((response) =>
                         this.cities = response.data
-                    )
-
+                    )}
+                    this.getToken(funcForCities);
             },
         },
         async mounted() {
             if (this.$route.params.placeOfCall === 'editingOfDiscount') {
                 const id = this.$route.params.idOfDiscount;
-                const response = await axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`);
-                const discount = response.data;
-                this.selectedCountry = discount.address.country || discount.translations[0].address.country;
-                this.selectedCity = discount.address.city || discount.translations[0].address.country;
-                this.getCities();
-            }
+                const funcForCountries = () => {
+                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                        const discount = response.data;
+                        if (this.$store.getters.language === 'Ru') {
+                            this.selectedCountry = discount.address.country || discount.translations[0].address.country;
+                            this.selectedCity = discount.address.city || discount.translations[0].address.country;}
+                        if (this.$store.getters.language === 'En') {
+                            this.selectedCountry = discount.translations[0].address.country || discount.address.country;
+                            this.selectedCity = discount.translations[0].address.city || discount.address.city}
+                        this.getCities();
+                        }
+                    )
+                }
+                this.getToken(funcForCountries)
 
+            }
         },
-        // computed() {
-        //     StatisticTotal.$on('clearAll', () => {
-        //         console.log(555)
-        //         this.selectedCountry = ''
-        //     })
-        // }
     }
 </script>
 
