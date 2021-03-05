@@ -36,12 +36,12 @@ export default {
 
 <style>
 html { overflow-y: auto }
-/*h3 {*/
-/*  font-weight: normal;*/
-/*  text-transform: uppercase;*/
-/*}*/
+h3 {
+  font-weight: normal;
+  text-transform: uppercase;
+}
 
-/*.v-btn__content {*/
-/*  font-weight: normal;*/
-/*}*/
+.v-btn__content {
+  font-weight: normal;
+}
 </style>

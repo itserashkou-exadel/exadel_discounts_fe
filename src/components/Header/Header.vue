@@ -93,18 +93,14 @@ export default {
     },
   },
   computed: {
-    ...
-        mapGetters(['getUserClaims'])
+    ...mapGetters(['getUserClaims'])
   }
 }
 </script>
 
 <style scoped>
-
 .loc {
   font-size: smaller;
 }
-
-
 </style>
 
