@@ -17,42 +17,42 @@
 
             <template v-slot:header.NameDiscount>
                 <div>
-                    <button @click="pilik">{{$t('dtOffer')}}</button>
+                    <button class="disOutline" @click="pilik">{{$t('dtOffer')}}</button>
                     <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.CompanyName>
                 <div>
-                    <button @click="pilik">{{$t('dtVendor')}}</button>
+                    <button class="disOutline" @click="pilik">{{$t('dtVendor')}}</button>
                     <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.AmountOfDiscount>
                 <div class="d-flex">
-                    <button @click="pilik">{{$t('dtDiscount')}}</button>
+                    <button class="disOutline" @click="pilik">{{$t('dtDiscount')}}</button>
                     <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateStart>
                 <div class="d-flex">
-                    <button @click="pilik">{{$t('dtStartDate')}}</button>
+                    <button class="disOutline" @click="pilik">{{$t('dtStartDate')}}</button>
                     <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateEnd>
                 <div>
-                    <button @click="pilik">{{$t('dtFinishDate')}}</button>
+                    <button class="disOutline" @click="pilik">{{$t('dtFinishDate')}}</button>
                     <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-sort-descending</v-icon>
                 </div>
             </template>
             <template v-slot:header.RatingDiscount>
                 <div>
-                    <button @click="pilik">{{$t('dtRating')}}</button>
+                    <button class="disOutline" @click="pilik">{{$t('dtRating')}}</button>
                     <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-sort-ascending </v-icon>
                     <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending</v-icon>
                     <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
@@ -98,29 +98,17 @@
 
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
-                    <v-row class="d-flex justify-end my-5">
-                        <v-col cols="1" lg="1" >
-                            <v-btn v-on:click="addToFavorites(item.id)">
-                                <v-icon color="orange">{{icons.icon}}</v-icon>
+                    <v-row class="d-flex  my-5">
+                        <v-col cols="12" class="d-flex flex-column align-center justify-center">
+                            <v-btn elevation="2" fab class="align-self-start" v-on:click="addToFavorites(item.id)">
+                                <v-icon large color="red">{{icons.icon}}</v-icon>
                             </v-btn>
-                        </v-col>
-
-                        <v-col cols="7" lg="11" class="d-flex justify-center">
-                            <h2>{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
-                        </v-col>
-                        <v-spacer></v-spacer>
-                        <v-col cols="11" lg="11" class="d-flex justify-center">
-                            <p class="mb-0">{{ item.description }}</p>
-                        </v-col>
-                        <v-col cols="11" lg="11" class="text-center">
-<!--                            <v-btn-->
-<!--                                    color="primary"-->
-<!--                                    @click="$router.push({name:'detail'})"-->
-<!--                            >-->
-                          <v-btn
-                              color="primary"
-                              @click="$router.push({name:'detail',params:{_id:item.id}})"
-                          >
+                            <h2 class="align-self-center" >{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
+                            <p class="my-5">{{ item.description }}</p>
+                            <v-btn
+                                    color="primary mb-5"
+                                    @click="$router.push({name:'detail',params:{_id:item.id}})"
+                            >
                                 {{$t('dtMoreInfo')}}
                             </v-btn>
                         </v-col>
@@ -129,17 +117,16 @@
             </template>
             <template v-slot:footer>
                 <v-row class="mt-5">
-                    <v-col xl="7" lg="7" md="7" sm="7" class="d-flex justify-end mr-xl-10">
+                    <v-col cols="11" class="d-flex flex-column align-center justify-center">
                         <v-pagination
                                 v-model="page"
                                 :length="pageCount"
                                 :total-visible="7"
                                 @input="next"
+                                :disabled="isLoad"
                         ></v-pagination>
                     </v-col>
-                    <v-spacer>
-                    </v-spacer>
-                    <v-col xl="1" lg="2" md="2" sm="2">
+                    <v-col cols="1" class="d-flex align-center justify-center">
                         <v-select v-if="page === 1"
                                   v-model="itemsPerPage"
                                   :items="itmPer"
@@ -148,7 +135,6 @@
                                   solo
                         ></v-select>
                     </v-col>
-                    <v-col xl="1" lg="1"></v-col>
                 </v-row>
             </template>
         </v-data-table>
@@ -165,6 +151,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            isLoad: null,
             showSortIcon: true,
             sortOptionName: '',
             sortOption: null,
@@ -180,7 +167,7 @@
             dialog: false,
             dialogDelete: false,
             icons: {
-                icon: "mdi-star"
+                icon: "mdi-heart-outline"
             },
             offers: [],
             info: [],
@@ -250,14 +237,13 @@
             ...mapGetters(['getAuth']),
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
+                    this.isLoad = this.$store.state.disablePag;
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
-                    // this.searchWord = this.$store.state.keyWord;
-                    // console.log(this.searchWord)
+                    this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                     this.info = this.$store.state.discounts;
                     this.info.map((item) => {
-                      //  console.log(item)
                         arr.push(
                             {
                                 id: item.id,
@@ -276,16 +262,12 @@
                         )
                     })
                     this.result = arr;
-                    // console.log(this.result);
                     return this.result;
                 }
 
             },
             sortData: function(){
                 this.sortOptionName = this.$store.state.sortOption.sortName;
-                if (this.sortOptionName !== '') {
-
-                }
             },
             // sortData() {
             //     console.log('WORKING')
@@ -353,7 +335,6 @@
                     }
                 }
                 this.getToken(resSearch)
-                console.log(this.$store.state.discounts)
             }
             // result: function(){
             //     console.log('res')
@@ -397,23 +378,18 @@
             ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
             ...mapMutations(['setUserClaims']),
             pilik: function (e) {
-                console.log('PILICK')
-                this.$store.commit('setDisPage', 1)
                 if (e.target.innerText === this.$t('dtOffer')) {
                     this.$store.commit('setSortName', 'NameDiscount')
                     this.$store.commit('setSortOrder', 0)
                     this.$store.commit('setPreviousOrder', 0)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.sortOption)
-                    console.log(this.$store.state.sortOption.sortOrder)
                 }
                 if (e.target.innerText === this.$t('dtVendor')) {
                     this.$store.commit('setSortName', 'CompanyName')
                     this.$store.commit('setSortOrder', 1)
                     this.$store.commit('setPreviousOrder', 1)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.sortOption)
-                    console.log(this.$store.state.sortOption.sortOrder)
+
                 }
                 if (e.target.innerText === this.$t('dtDiscount')) {
                     console.log(e.target.innerText)
@@ -421,7 +397,6 @@
                     this.$store.commit('setSortOrder', 2)
                     this.$store.commit('setPreviousOrder', 2)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption.sortOrder)
                 }
                 if (e.target.innerText === this.$t('dtStartDate')) {
                     console.log(e.target.innerText)
@@ -429,7 +404,6 @@
                     this.$store.commit('setSortOrder', 3)
                     this.$store.commit('setPreviousOrder', 3)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption)
                 }
                 if (e.target.innerText === this.$t('dtFinishDate')) {
                     console.log(e.target.innerText)
@@ -437,7 +411,6 @@
                     this.$store.commit('setSortOrder', 4)
                     this.$store.commit('setPreviousOrder', 4)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption)
                 }
                 if (e.target.innerText === this.$t('dtRating')) {
                     console.log(e.target.innerText)
@@ -445,7 +418,6 @@
                     this.$store.commit('setSortOrder', 5)
                     this.$store.commit('setPreviousOrder', 5)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    console.log(this.$store.state.sortOption)
                 }
                 this.sortOptionName = this.$store.state.sortOption.sortName;
                 if (this.$store.state.filterRequest === false){
@@ -463,7 +435,6 @@
                         }
                     );
                 }else{
-                    console.log('SECOND')
                     this.inputPost(
                         {
                             "searchText": this.$store.state.keyWord,
@@ -497,7 +468,6 @@
 
             },
             headers() {
-               // console.log(this.$route.name)
                 let headerArr = [
                     {
                         text: this.$t('dtOffer'),
@@ -547,6 +517,7 @@
                     if (this.$store.state.filterRequest === false) {
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
                           //  console.log("PAGINATION")
+                            this.$store.commit('disPag', true);
                             this.nextDiscount(
                                 {
                                     "searchText": this.$store.state.keyWord,
@@ -563,9 +534,6 @@
                         }
 
                     } else {
-                        console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
-                        console.log(this.$store.state.filtered.range)
-                        console.log(this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount")
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
                             this.nextDiscount(
                                 {
@@ -606,12 +574,10 @@
             deleteDiscount(){
                 let itemID = this.deleteID;
                 const goDelete = () => {
-                    console.log(itemID)
                     let url = 'https://localhost:9001/api/v1/discounts/delete/';
                     url += itemID;
                     axios.delete(url);
                     this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
-                    console.log(this.info)
                 }
                 this.getToken(goDelete)
             },
@@ -679,5 +645,8 @@
         vertical-align: top;
     }
 
+    .disOutline{
+        outline: none;
+    }
 
 </style>

@@ -11,7 +11,7 @@
                               color="blue lighten-5"
                               v-model="search"
                               full-width
-                              @keydsown.enter="showSearch"
+                              @keydown.enter="showSearch"
                               v-on="on"
                               autocomplete="off"
                               dense
@@ -43,7 +43,6 @@
     import {mapActions} from "vuex";
     import token from '@/mixins/token.mixin'
 
-   // const textSearch = document.getElementById('textSearch')
     export default {
         name: "Searching",
         data: () => ({
@@ -74,6 +73,7 @@
                 this.getToken(getTags).then(() => {
                     this.setKeyWord(this.search)
                     if (this.search === '') {
+                        this.$store.commit('setNoFound', false);
                         const resSearch = () => {
                             this.inputPost(
                                 {
@@ -101,6 +101,7 @@
             },
             showSearch() {
                 this.$store.state.discounts = [];
+                this.$store.commit('setNoFound', false)
                 this.$store.commit('setDisPage', 1)
                 const resSearch = () => {
                     this.inputPost(
