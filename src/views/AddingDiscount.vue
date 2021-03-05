@@ -533,8 +533,8 @@
                                 name: this.titleEn,
                                 description: this.descriptionEn,
                                 address: {
-                                    country: "ffff",//this.$i18n.locale === 'en' ? this.selectedCountry : '',
-                                    city: "ffff",//this.$i18n.locale === 'en' ? this.selectedCountry : '',
+                                    country: this.$i18n.locale === 'en' ? this.selectedCountry : '',
+                                    city: this.$i18n.locale === 'en' ? this.selectedCountry : '',
                                     street: this.street,
                                     location: {
                                         latitude: this.coordinate1,
