@@ -5,7 +5,7 @@
                 :mapStyle.sync="mapStyle"
                 @load="onMapLoaded"
         >
-            <MglMarker :coordinates="[this.dataInfo.latitude, this.dataInfo.longitude]">
+            <MglMarker :coordinates="[this.dataInfo.longitude, this.dataInfo.latitude]" color="yellow">
             </MglMarker>
         </MglMap>
     </div>
@@ -45,18 +45,12 @@
                 // Here we cathing 'load' map event
                 const asyncActions = event.component.actions
                 const newParams = await asyncActions.flyTo({
-                    center: [this.dataInfo.latitude, this.dataInfo.longitude],
+                    center: [this.dataInfo.longitude, this.dataInfo.latitude],
+                    //center: [this.dataInfo.latitude, this.dataInfo.longitude],
                     zoom: 9,
                     speed: 1
                 })
                 console.log(newParams)
-                /* => {
-                        center: [30, 30],
-                        zoom: 9,
-                        bearing: 9,
-                        pitch: 7
-                      }
-                */
             },
             getProps(){
                 let self = this;
