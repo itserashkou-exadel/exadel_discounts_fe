@@ -15,6 +15,8 @@ const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
 let store = new Vuex.Store({
     state: {
         currentComponent: sessionStorage.getItem('currentComponent') || 'HomePage',
+        disablePag: false,
+        notFound: false,
         filterIcon: false,
         filterRequest: false,
         keyWord: null,
@@ -84,11 +86,17 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        disPag(state, value){
+          state.disablePag = value;
+        },
         setCurrentComponent (state, component) {
           state.currentComponent = component
         },
         setAuth (state, auth) {
             state.auth = auth
+        },
+        setNoFound(state, status){
+          state.notFound = status;
         },
         setPreviousOrder(state, number){
             // @ts-ignore
@@ -226,8 +234,14 @@ let store = new Vuex.Store({
             commit('updTask', discount);
         },
         async inputPost({commit}, search){
-            const response = await axios.post(searchDiscount, search);
-            commit('receiveSearch', response.data)
+            try{
+                const response = await axios.post(searchDiscount, search);
+                commit('receiveSearch', response.data);
+                console.log("Render")
+                commit('setDisPage', 1);
+            }catch (e) {
+                commit('setNoFound', true);
+            }
         },
         async allInputPost({commit}, search){
             await axios.all([
@@ -255,29 +269,24 @@ let store = new Vuex.Store({
             let url = urlGetDiscountsById;
             url += id;
             const response = await axios.get(url);
-            commit('receiveGetById', response.data)
+            commit('receiveGetById', response.data);
         },
         async nextDiscount({commit}, search) {
-            try{
-                const response = await axios.post(searchDiscount, search);
-                commit('addNextDis', response.data)
-            } catch (e) {
-                // if(e.response && e.response.status === 404) {
-                //     console.clear();
-                // }
-             //   console.log(e)
-            }
+                try{
+                    const response = await axios.post(searchDiscount, search);
+                    commit('addNextDis', response.data);
+                    commit('disPag', false);
+                }catch (e) {
+                    if (e.response.status === 404){
+                        commit('disPag', false);
+                    }
+                }
         },
 
         async deleteDiscount({commit}, id){
-          try{
               let url = deleteURL;
               url += id;
               const response = await axios.delete(url);
-            //  console.log(response);
-          }catch (e) {
-            //  console.log(e)
-          }
         }
     }
 
