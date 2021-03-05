@@ -80,19 +80,24 @@ export default {
     ...mapActions(['goForCurrentComponent']),
     seeCurrentComponent (item) {
       if (item.text === 'СКИДКИ' || item.text ==='DISCOUNTS') {
-        this.goForCurrentComponent('HomePage')
+        this.goForCurrentComponent('HomePage');
+        sessionStorage.setItem('currentComponent', 'HomePage')
       }
       if (item.text === 'КАРТА' || item.text ==='MAP') {
         this.goForCurrentComponent('MapPage')
+        sessionStorage.setItem('currentComponent', 'MapPage')
       }
       if (item.text === 'ПОДПИСКИ' || item.text ==='SUBSCRIBE') {
         this.goForCurrentComponent('SubscribesPage')
+        sessionStorage.setItem('currentComponent', 'SubscribesPage')
       }
       if (item.text === 'ИЗБРАННОЕ' || item.text ==='FAVORITES') {
         this.goForCurrentComponent('FavoritesPage')
+        sessionStorage.setItem('currentComponent', 'FavoritesPage')
       }
       if (item.text === 'СТАТИСТИКА' || item.text ==='STATISTICS') {
         this.goForCurrentComponent('StatisticPage')
+        sessionStorage.setItem('currentComponent', 'StatisticPage')
       }
     },
     headerButtons() {
