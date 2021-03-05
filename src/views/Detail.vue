@@ -3,12 +3,13 @@
     <v-container fluid class="pt-8" :data="filterData">
       <v-row class="mt-1">
         <v-col cols="12">
+          <!--          dekstop-->
           <v-card max-width="100%" class="d-none mt-n7 d-md-block" style="position:relative">
-            <!--            <v-img-->
-            <!--                max-height="50vh"-->
-            <!--                src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
-            <!--                class="d-flex"-->
-            <!--            >-->
+            <!-- <v-img-->
+            <!-- max-height="50vh"-->
+            <!-- src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
+            <!-- class="d-flex"-->
+            <!-- >-->
             <v-img
                 max-height="70vh"
                 :src="pictureCheck(info.pictureUrl)"
@@ -19,19 +20,19 @@
 
                 {{ card }}
               </v-icon>
-              <!--                            <v-icon class="ml-6 mt-4" large color="blue">-->
-              <!--                                mdi-heart-outline-->
-              <!--                            </v-icon>-->
+              <!-- <v-icon class="ml-6 mt-4" large color="blue">-->
+              <!-- mdi-heart-outline-->
+              <!-- </v-icon>-->
             </v-img>
             <v-row>
               <v-col cols="5" class="mt-n4">
                 <v-card-title class="black--text
-                                ml-1 mt-3
-                                font-weight-bold
-                                text-lg-h2
-                                text-md-h2
-                                text-h2
-                                " style="word-break: normal">
+ml-1 mt-3
+font-weight-bold
+text-lg-h2
+text-md-h2
+text-h2
+" style="word-break: normal">
                   {{ info.name }}
                 </v-card-title>
                 <v-row align="center" class="mt-1 mb-n8">
@@ -55,16 +56,16 @@
                   <v-card-subtitle class="black--text mb-8 font-weight-bold" style="font-size:32px;">
                     {{ info.amountOfDiscount + "% " + $t('cardDiscount') }}
                   </v-card-subtitle>
-                  <!--                                    <v-icon color="white" large class="ml-14">-->
-                  <!--                                        mdi-heart-outline-->
-                  <!--                                    </v-icon>-->
+                  <!-- <v-icon color="white" large class="ml-14">-->
+                  <!-- mdi-heart-outline-->
+                  <!-- </v-icon>-->
                 </v-row>
                 <v-card-text class="black--text ml-2 mt-n14">
                   <p>{{ info.company.name }}</p>
                   <p class="mt-n4">{{ info.startDate + " - " + info.endDate }}</p>
                 </v-card-text>
                 <v-btn height="60px" width="300px" color="#1E88E5" style="font-size:24px;"
-                       class="white--text ml-6 mt-n5 font-weight-bold"
+                       class="white--text ml-6 mt-n5 mb-8 font-weight-bold"
                        v-on:click="addToSubscr"
                        @click="snackbar = true"
                 >{{ $t('use') }}
@@ -78,15 +79,20 @@
                 >
                   {{ text }}
                 </v-snackbar>
-                <Promocodes v-bind:subscrItem="info"
-                            :showSubscriptions="showSubscriptions"
-                />
+                <v-row class="ml-6 mb-2">
+                  <Promocodes v-bind:subscrItem="info"
+                              :showSubscriptions="showSubscriptions"
+                  />
+                </v-row>
+              </v-col>
+              <v-col cols="1">
+
               </v-col>
               <v-col
                   class="
-                            d-none d-md-block
-                            col-md-6
-                            col-xs-12"
+d-none d-md-block
+col-md-6
+col-xs-12"
               >
                 <h1 class="">{{ $t('conditionOfUse') }}</h1>
                 <p>{{ info.description }}
@@ -94,12 +100,13 @@
               </v-col>
             </v-row>
           </v-card>
+          <!--mobile-->
           <v-card max-width="100%" class="d-md-none">
-            <!--            <v-img-->
-            <!--                max-height="70vh"-->
-            <!--                src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
-            <!--                class="d-flex"-->
-            <!--            >-->
+            <!-- <v-img-->
+            <!-- max-height="70vh"-->
+            <!-- src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
+            <!-- class="d-flex"-->
+            <!-- >-->
             <v-img
                 max-height="70vh"
                 :src="pictureCheck(info.pictureUrl)"
@@ -115,11 +122,11 @@
               <v-row justify="center">
                 <v-card-title
                     class="black--text
-                                font-weight-bold
-                                text-lg-h2
-                                text-md-h2
-                                text-h4
-                                " style="word-break: normal">
+font-weight-bold
+text-lg-h2
+text-md-h2
+text-h4
+" style="word-break: normal;text-align: center">
                   {{ info.name }}
                 </v-card-title>
               </v-row>
@@ -158,14 +165,16 @@
               </v-row>
               <v-row justify="center">
                 <v-btn height="40px" width="200px" color="#1E88E5" style="font-size:16px;"
-                       class="white--text mb-8 font-weight-bold"
+                       class="white--text mb-5 font-weight-bold"
                        v-on:click="addToSubscr"
                        @click="snackbar = true"
                 >{{ $t('use') }}
                 </v-btn>
-                <Promocodes v-bind:subscrItem="info"
-                            :showSubscriptions="showSubscriptions"
-                />
+              </v-row>
+              <v-row justify="center ma-5">
+                                <Promocodes v-bind:subscrItem="info"
+                                            :showSubscriptions="showSubscriptions"
+                                />
                 <v-snackbar
                     v-model="snackbar"
                     :timeout="timeout"
@@ -182,24 +191,21 @@
       </v-row>
       <v-row>
         <v-col
-            class="
-                d-md-none
-                col-xs-12
-                ml-9"
+            class="d-md-none col-xs-12"
         >
           <v-row justify="center" class="mb-2">
             <h1 class="">{{ $t('conditionOfUse') }}</h1>
           </v-row>
-          <p>{{ info.description }}</p>
+          <p style="text-align: center">{{ info.description }}</p>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" class="mb-10">
           <v-row justify="center" justify-md="start" class="mb-2 mt-2">
-            <h1 class="mb-2 ml-9">{{ $t('whereIsIt') }}</h1>
+            <h1 class="mb-2 ">{{ $t('whereIsIt') }}</h1>
           </v-row>
           <v-card max-width="100%">
-            <!--            <v-img src="../../public/image1.png" height="60%"></v-img>-->
+            <!-- <v-img src="../../public/image1.png" height="60%"></v-img>-->
             <DetailPageMap v-bind:info="info"/>
           </v-card>
         </v-col>
@@ -222,7 +228,6 @@ export default {
   name: "Detail",
   components: {Promocodes, DetailPageMap},
   mixins: [paginationMixin, token],
-
   data: () => ({
     card: "mdi-heart-outline",
     info: {},
@@ -232,18 +237,9 @@ export default {
     text: 'ПРОМОКОД ДОБАВЛЕН В ПОДПИСКИ',
     timeout: 2000,
   }),
-
   props: {
     _id: {
       type: String,
-      required: true
-    },
-    subscrItem: {
-      type: Object,
-      required: true
-    },
-    showSubscriptions: {
-      type: Object,
       required: true
     },
   },
@@ -251,7 +247,7 @@ export default {
     iconSwitch(id) {
       if (this.card === "mdi-heart-outline") {
         this.card = "mdi-heart"
-        // this.addToFavorites(id);
+// this.addToFavorites(id);
       } else
         this.card = "mdi-heart-outline"
     },
@@ -275,7 +271,7 @@ export default {
       if (url === false)
         return "../../public/cat_404.jpg.jpg"
       else
-          // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
+// return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
         return url
     },
     ...mapActions(['getDiscountById']),
@@ -291,7 +287,6 @@ export default {
     },
     addToSubscr: function (event) {
       let self = this;
-      // let discountId = this.$route.params._id
       const putSubscr = () => {
         axios({
           method: 'put',
@@ -299,6 +294,43 @@ export default {
         }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
       };
       this.getToken(putSubscr);
+    },
+    getPromo: function (id) {
+      let updatePromocodes = (promocodes) => this.promocodes = promocodes;
+      const promo = () => {
+        axios({
+          method: 'get',
+          url: `https://localhost:9001/api/v1/discounts/subscriptions/get/${id}`,
+        }).then(response => {
+          updatePromocodes(response.data.promocodes);
+        }).catch(error => {
+          console.log("ERROR:", error);
+          updatePromocodes([]);
+        })
+      };
+      this.getToken(promo);
+    },
+    ...mapActions(['getSubscription']),
+    showSubscriptions() {
+      let loc = JSON.parse(localStorage.getItem('key'));
+      let country = loc.country ? loc.country : 'Беларусь';
+      let city = loc.city ? loc.city : 'Минск';
+      const getSubscrResult = () => {
+        this.getSubscription(
+            {
+              "searchDiscountOption": "Subscriptions",
+              "searchAddressCountry": country,
+              "searchAddressCity": city,
+              "searchSortFieldOption": "NameDiscount",
+              "searchSortOption": "Asc",
+              "searchPaginationPageNumber": this.pageNumber,
+              "searchPaginationCountElementPerPage": this.pageSize,
+              "searchLanguage": "Ru"
+            }
+        ).catch((error) => {
+              alert(error)}
+            )}
+      this.getToken(getSubscrResult);
     },
   },
   mounted: function () {
