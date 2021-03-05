@@ -1,7 +1,8 @@
 <template>
   <router-link :to="{name:headerButton.route}" class="nav-links" active-class="router-link-active">
   <v-btn class="font-weight-light"
-         text>
+         text
+  >
     <div class="flex-column">
     <div>
         <v-icon> {{ headerButton.icon }}</v-icon>
@@ -19,6 +20,7 @@ export default {
       type: Object,
     }
   },
+
   name: "HeaderButton"
 }
 

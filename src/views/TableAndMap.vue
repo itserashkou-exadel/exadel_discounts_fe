@@ -1,30 +1,22 @@
 <template>
-  <div>
-
-  </div>
+    <keep-alive>
+        <component v-bind:is="$store.getters.getCurrentComponent"></component>
+    </keep-alive>
 </template>
 <script>
-  import HomePage from "./HomePage";
-  import
-  import {mapGetters} from 'vuex'
-  export default {
-    components: {HeadermMobile, Footer, Header},
-    mixins: [token],
-    computed: {
-      ...mapGetters(['getAuth'])
-    },
+  import HomePage from "@/views/HomePage";
+  import MapPage from "@/views/MapPage";
+  import FavoritesPage from "@/views/FavoritesPage.vue"
+  import SubscribesPage from "@/views/SubscriptionsPage.vue"
+  import StatisticPage from "@/views/StatisticPage.vue"
 
+
+  export default {
+    name: 'TableAndMap',
+    components: {MapPage, HomePage, FavoritesPage, SubscribesPage, StatisticPage},
   }
 </script>
 
 <style>
-  html { overflow-y: auto }
-  /*h3 {*/
-  /*  font-weight: normal;*/
-  /*  text-transform: uppercase;*/
-  /*}*/
 
-  /*.v-btn__content {*/
-  /*  font-weight: normal;*/
-  /*}*/
 </style>

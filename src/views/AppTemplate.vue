@@ -9,9 +9,7 @@
       <Header class="hidden-sm-and-down"/>
     </v-app-bar>
     <v-main>
-      <keep-alive>
         <router-view></router-view>
-      </keep-alive>
     </v-main>
     <v-footer absolute app flat color="primary">
       <Footer/>

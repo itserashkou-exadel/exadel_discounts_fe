@@ -1,4 +1,4 @@
-<template :key="keyFromStore">
+<template>
     <v-container
             :key="componentKey"
             class="mb-6 ml-10 mb-15 pr-10 font-weight-regular"
@@ -163,6 +163,7 @@
 <!--                            ></v-textarea>-->
                         </v-expand-transition>
                     </div>
+<!--                    <TableAndMap/>-->
                     <chips-for-tags
                                     v-bind:icon-show="true"
                                     v-bind:tags="tagsRu"
@@ -343,7 +344,6 @@
     import ChipsForTags from "@/components/ChipsForTags";
     import PromocodesForAdding from "@/components/PromocodesForAdding";
 
-
     export default {
         name: "AddingDiscount",
         data() {
@@ -395,7 +395,6 @@
                     line: null
                 },
                 discount: null,
-                keyFromStore: 0
             }
         },
         mixins: [token],
@@ -789,16 +788,16 @@
 
         },
         mounted() {
-            this.keyFromStore = this.$store.state.keyForAdditingDiscount
-            // this.getCountries();
-            // this.fillingFields();
+            // this.keyFromStore = this.$store.state.keyForAdditingDiscount
+            this.getCountries();
+            this.fillingFields();
         },
-        watch: {
-            keyFromStore () {
-                this.getCountries();
-                this.fillingFields();
-            }
-        }
+        // watch: {
+        //     keyFromStore () {
+        //         this.getCountries();
+        //         this.fillingFields();
+        //     }
+        // }
     }
 </script>
 <style scoped>

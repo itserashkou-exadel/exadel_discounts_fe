@@ -257,7 +257,7 @@
                     // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
                     this.info.map((item) => {
-                        console.log(item)
+                      //  console.log(item)
                         arr.push(
                             {
                                 id: item.id,
@@ -621,7 +621,6 @@
                     name: 'editingDetails',
                     params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
                 });
-                this.$store.commit('setKeyAdditing')
             },
             deleteItem(id) {
                 this.deleteID = id;
