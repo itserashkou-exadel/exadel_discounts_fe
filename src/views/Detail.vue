@@ -3,7 +3,7 @@
     <v-container fluid class="pt-8" :data="filterData">
       <v-row class="mt-1">
         <v-col cols="12">
-<!--          dekstop-->
+          <!--          dekstop-->
           <v-card max-width="100%" class="d-none mt-n7 d-md-block" style="position:relative">
             <!-- <v-img-->
             <!-- max-height="50vh"-->
@@ -80,9 +80,9 @@ text-h2
                   {{ text }}
                 </v-snackbar>
                 <v-row class="ml-6 mb-2">
-                <Promocodes v-bind:subscrItem="info"
-                            :showSubscriptions="showSubscriptions"
-                />
+                  <Promocodes v-bind:subscrItem="info"
+                              :showSubscriptions="showSubscriptions"
+                  />
                 </v-row>
               </v-col>
               <v-col cols="1">
@@ -100,7 +100,7 @@ col-xs-12"
               </v-col>
             </v-row>
           </v-card>
-<!--mobile-->
+          <!--mobile-->
           <v-card max-width="100%" class="d-md-none">
             <!-- <v-img-->
             <!-- max-height="70vh"-->
@@ -172,9 +172,9 @@ text-h4
                 </v-btn>
               </v-row>
               <v-row justify="center ma-5">
-                <Promocodes v-bind:subscrItem="info"
-                            :showSubscriptions="showSubscriptions"
-                />
+                                <Promocodes v-bind:subscrItem="info"
+                                            :showSubscriptions="showSubscriptions"
+                                />
                 <v-snackbar
                     v-model="snackbar"
                     :timeout="timeout"
@@ -191,10 +191,7 @@ text-h4
       </v-row>
       <v-row>
         <v-col
-            class="
-d-md-none
-col-xs-12
-"
+            class="d-md-none col-xs-12"
         >
           <v-row justify="center" class="mb-2">
             <h1 class="">{{ $t('conditionOfUse') }}</h1>
@@ -231,7 +228,6 @@ export default {
   name: "Detail",
   components: {Promocodes, DetailPageMap},
   mixins: [paginationMixin, token],
-
   data: () => ({
     card: "mdi-heart-outline",
     info: {},
@@ -241,18 +237,9 @@ export default {
     text: 'ПРОМОКОД ДОБАВЛЕН В ПОДПИСКИ',
     timeout: 2000,
   }),
-
   props: {
     _id: {
       type: String,
-      required: true
-    },
-    subscrItem: {
-      type: Object,
-      required: true
-    },
-    showSubscriptions: {
-      type: Object,
       required: true
     },
   },
@@ -300,7 +287,6 @@ export default {
     },
     addToSubscr: function (event) {
       let self = this;
-// let discountId = this.$route.params._id
       const putSubscr = () => {
         axios({
           method: 'put',
@@ -308,6 +294,43 @@ export default {
         }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
       };
       this.getToken(putSubscr);
+    },
+    getPromo: function (id) {
+      let updatePromocodes = (promocodes) => this.promocodes = promocodes;
+      const promo = () => {
+        axios({
+          method: 'get',
+          url: `https://localhost:9001/api/v1/discounts/subscriptions/get/${id}`,
+        }).then(response => {
+          updatePromocodes(response.data.promocodes);
+        }).catch(error => {
+          console.log("ERROR:", error);
+          updatePromocodes([]);
+        })
+      };
+      this.getToken(promo);
+    },
+    ...mapActions(['getSubscription']),
+    showSubscriptions() {
+      let loc = JSON.parse(localStorage.getItem('key'));
+      let country = loc.country ? loc.country : 'Беларусь';
+      let city = loc.city ? loc.city : 'Минск';
+      const getSubscrResult = () => {
+        this.getSubscription(
+            {
+              "searchDiscountOption": "Subscriptions",
+              "searchAddressCountry": country,
+              "searchAddressCity": city,
+              "searchSortFieldOption": "NameDiscount",
+              "searchSortOption": "Asc",
+              "searchPaginationPageNumber": this.pageNumber,
+              "searchPaginationCountElementPerPage": this.pageSize,
+              "searchLanguage": "Ru"
+            }
+        ).catch((error) => {
+              alert(error)}
+            )}
+      this.getToken(getSubscrResult);
     },
   },
   mounted: function () {
