@@ -237,18 +237,12 @@
             ...mapGetters(['getAuth']),
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
-                    console.log(this.$store.state.disablePag)
                     this.isLoad = this.$store.state.disablePag;
                     this.$store.commit('setItemsPerPage', this.itemsPerPage)
                     const arr = [];
                     this.page = this.$store.state.disPage;
-                    console.log("COMPUTED")
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
-                    // this.searchWord = this.$store.state.keyWord;
-                    // console.log(this.searchWord)
                     this.info = this.$store.state.discounts;
-                    // console.log(this.info)
-                    // console.log(this.$store.state.userClaimsStoreData)
                     this.info.map((item) => {
                         arr.push(
                             {
@@ -268,7 +262,6 @@
                         )
                     })
                     this.result = arr;
-                    console.log(this.result);
                     return this.result;
                 }
 
