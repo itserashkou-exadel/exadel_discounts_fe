@@ -100,9 +100,6 @@
                 <td :colspan="headers.length">
                     <v-row class="d-flex  my-5">
                         <v-col cols="12" class="d-flex flex-column align-center justify-center">
-                            <v-btn elevation="2" fab class="align-self-start" v-on:click="addToFavorites(item.id)">
-                                <v-icon large color="red">{{icons.icon}}</v-icon>
-                            </v-btn>
                             <h2 class="align-self-center" >{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
                             <p class="my-5">{{ item.description }}</p>
                             <v-btn
@@ -166,9 +163,6 @@
             singleExpand: true,
             dialog: false,
             dialogDelete: false,
-            icons: {
-                icon: "mdi-heart-outline"
-            },
             offers: [],
             info: [],
             result: [],
@@ -252,7 +246,7 @@
                                 AmountOfDiscount: item.amountOfDiscount,
                                 DateStart: moment(item.startDate).format('DD-MM-YYYY'),
                                 DateEnd: moment(item.endDate).format('DD-MM-YYYY'),
-                                RatingDiscount: item.ratingTotal,
+                                RatingDiscount: +Number.parseFloat(item.ratingTotal).toFixed(2),
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
