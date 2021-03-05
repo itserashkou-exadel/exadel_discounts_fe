@@ -15,7 +15,7 @@
             flat
         >
           <v-toolbar-title>
-            <h3>{{$t('hSubscribe')}}</h3>
+            <h3>{{ $t('hSubscribe') }}</h3>
           </v-toolbar-title>
           <v-dialog max-width="500px">
             <v-card>
@@ -52,9 +52,7 @@
             </v-col>
           </v-row>
         </td>
-
       </template>
-
     </v-data-table>
     <v-pagination
         v-model="pageNumber"
@@ -97,8 +95,8 @@ export default {
                 service: item.name,
                 vendor: item.company.name,
                 amountOfDiscount: item.amountOfDiscount,
-                startDate: moment(item.startDate.$date).format('L'),
-                endDate: moment(item.endDate.$date).format('L'),
+                startDate: moment(item.startDate).format('L'),
+                endDate: moment(item.endDate).format('L'),
                 description: item.description,
                 rating: item.ratingTotal
               }
@@ -124,11 +122,13 @@ export default {
               "searchLanguage": "Ru"
             }
         ).then(response => this.updatePageCount())
-      .catch((error) => {
-      alert(error)}
-    )}
-    this.getToken(getSubscrResult);
-  }  ,
+            .catch((error) => {
+                  alert(error)
+                }
+            )
+      }
+      this.getToken(getSubscrResult);
+    },
     headers() {
       return [
         {
@@ -166,7 +166,6 @@ export default {
       }
     }
   },
-
   mounted() {
     this.showSubscriptions();
 

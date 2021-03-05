@@ -163,6 +163,7 @@
 <!--                            ></v-textarea>-->
                         </v-expand-transition>
                     </div>
+<!--                    <TableAndMap/>-->
                     <chips-for-tags
                                     v-bind:icon-show="true"
                                     v-bind:tags="tagsRu"
@@ -343,7 +344,6 @@
     import ChipsForTags from "@/components/ChipsForTags";
     import PromocodesForAdding from "@/components/PromocodesForAdding";
 
-
     export default {
         name: "AddingDiscount",
         data() {
@@ -394,7 +394,7 @@
                     city: null,
                     line: null
                 },
-                discount: null
+                discount: null,
             }
         },
         mixins: [token],
@@ -788,9 +788,16 @@
 
         },
         mounted() {
+            // this.keyFromStore = this.$store.state.keyForAdditingDiscount
             this.getCountries();
             this.fillingFields();
-        }
+        },
+        // watch: {
+        //     keyFromStore () {
+        //         this.getCountries();
+        //         this.fillingFields();
+        //     }
+        // }
     }
 </script>
 <style scoped>

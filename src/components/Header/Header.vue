@@ -11,7 +11,9 @@
       </v-btn>
     </router-link>
     <v-toolbar-items v-for="(item, i) in headerButtons()"
-                     :key="i">
+                     :key="i"
+                     @click="seeCurrentComponent(item)"
+    >
       <HeaderButton v-bind:headerButton="item"
                     v-slot:extension
       />
@@ -54,7 +56,7 @@
 import HeaderButton from "@/components/Header/HeaderButton";
 import Avatar from "@/components/Header/Avatar";
 import Searching from "@/components/Header/Searching";
-import {mapGetters} from "vuex"
+import {mapGetters, mapActions} from "vuex"
 
 export default {
   name: "Header",
@@ -75,6 +77,24 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['goForCurrentComponent']),
+    seeCurrentComponent (item) {
+      if (item.text === 'СКИДКИ') {
+        this.goForCurrentComponent('HomePage')
+      }
+      if (item.text === 'КАРТА') {
+        this.goForCurrentComponent('MapPage')
+      }
+      if (item.text === 'ПОДПИСКИ') {
+        this.goForCurrentComponent('SubscribesPage')
+      }
+      if (item.text === 'ИЗБРАННОЕ') {
+        this.goForCurrentComponent('FavoritesPage')
+      }
+      if (item.text === 'СТАТИСТИКА') {
+        this.goForCurrentComponent('StatisticPage')
+      }
+    },
     headerButtons() {
       let hButtons = [
         {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
@@ -93,18 +113,14 @@ export default {
     },
   },
   computed: {
-    ...
-        mapGetters(['getUserClaims'])
+    ...mapGetters(['getUserClaims'])
   }
 }
 </script>
 
 <style scoped>
-
 .loc {
   font-size: smaller;
 }
-
-
 </style>
 
