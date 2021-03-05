@@ -39,6 +39,7 @@ text-h2
 
                   <v-rating
                       v-model="info.ratingTotal"
+                      :readonly="readonlyRating"
                       @input="ratingChose"
                       class="ml-6 mb-5 mt-n4 "
                       color="yellow darken-3"
@@ -135,6 +136,7 @@ text-h4
               <v-row align="center" justify="center">
                 <v-rating
                     v-model="info.ratingTotal"
+                    :readonly="readonlyRating"
                     @input="ratingChose"
                     class="mt-n3"
                     color="yellow darken-3"
@@ -229,6 +231,7 @@ export default {
   components: {Promocodes, DetailPageMap},
   mixins: [paginationMixin, token],
   data: () => ({
+    readonlyRating:false,
     card: "mdi-heart-outline",
     info: {},
     results: [],
@@ -262,7 +265,7 @@ export default {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/vote/${str}`,
-        }).then(this.detailView);
+        }).then(this.detailView).then(()=> this.readonlyRating = true);
       }
       this.getToken(putRate)
     },
@@ -317,7 +320,8 @@ export default {
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/vote/exists/${this.$route.params._id}`,
         }).then((promise) => {
-          console.log(promise.status)
+          this.readonlyRating = true;
+          console.log(promise.status, "STATUS");
           })
       };
       this.getToken(checkRating);
