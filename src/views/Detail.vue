@@ -4,7 +4,7 @@
       <v-row class="mt-1">
         <v-col cols="12">
           <!--          dekstop-->
-          <v-card max-width="100%" class="d-none mt-n7 d-md-block" style="position:relative">
+          <v-card max-width="100%" class="d-none mt-n7 d-md-block" style=" position:relative">
             <!-- <v-img-->
             <!-- max-height="50vh"-->
             <!-- src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
@@ -250,9 +250,71 @@ export default {
     iconSwitch(id) {
       if (this.card === "mdi-heart-outline") {
         this.card = "mdi-heart"
-// this.addToFavorites(id);
-      } else
+        this.addToFavorites(id);
+      } else{
         this.card = "mdi-heart-outline"
+        this.deleteFromFavor(id)}
+
+    },
+    addToFavorites: function (id) {
+      const putSubscr = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
+        }).then(()=>{
+          this.showFavorites()
+          console.log("ddd")})
+      // .then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+      };
+      this.getToken(putSubscr);
+    },
+    deleteFromFavor: function (id) {
+      let show = () => this.showFavorites();
+      const putFavor = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
+        }).then(()=>{
+          this.$store.state.favorites = this.$store.state.favorites.filter(item => item.id !== id);
+          console.log("ddd")})
+        // .then(response => console.log(response.status, "delete"));
+      };
+      this.getToken(putFavor);
+    },
+    checkToFavorites: function (id) {
+      // console.log('discounts', id);
+      const checkFavor = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/favorites/exists/${id}`,
+        }).then((promise) => {
+          console.log(promise.status,id)
+          this.card="mdi-heart"})
+      };
+      this.getToken(checkFavor);
+    },
+    ...mapActions(['getFavorites']),
+    showFavorites() {
+      let loc = JSON.parse(localStorage.getItem('key'));
+      let country = loc.country ? loc.country : 'Беларусь';
+      let city = loc.city ? loc.city : 'Минск';
+      console.log("1")
+      const getFavoritesResult = () => {
+        console.log("2")
+        this.getFavorites(
+            {
+              "searchDiscountOption": "Favorites",
+              "searchAddressCountry": country,
+              "searchAddressCity": city,
+              "searchSortFieldOption": "NameDiscount",
+              "searchSortOption": "Asc",
+              "searchPaginationPageNumber": 1,
+              "searchPaginationCountElementPerPage": 24,
+              "searchLanguage": "Ru"
+            }
+        )
+      }
+      this.getToken(getFavoritesResult);
     },
     ...mapActions["putRatingById"],
     ratingChose(rate) {
@@ -352,6 +414,7 @@ export default {
   mounted: function () {
     this.detailView();
     this.checkToRating();
+    this.checkToFavorites(this.$route.params._id)
     console.log(this.info.ratingTotal)
   },
   computed: {
