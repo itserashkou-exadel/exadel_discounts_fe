@@ -112,10 +112,10 @@
             headers() {
                 let headerArr = [
                     {text: this.$t('discountsTotal')},
-                    {text: this.$t('ratedTotal')},
+                    {text: this.$t('subscriptionsTotal')},
                     {text: this.$t('favoritesTotal')},
                     {text: this.$t('viewsTotal')},
-                    {text: this.$t('subscriptionsTotal')},
+                    {text: this.$t('ratedTotal')},
                 ];
                 return headerArr;
             },
@@ -143,10 +143,10 @@
                     axios.post('https://localhost:9001/api/v1/statistics/discounts', surchObj).then(
                         (data) => {
                             this.valuesForText[0] = data.data.discountsTotal;
-                            this.valuesForText[1] = data.data.ratedTotal;
+                            this.valuesForText[1] = data.data.subscriptionsTotal;
                             this.valuesForText[2] = data.data.favoritesTotal;
                             this.valuesForText[3] = data.data.viewsTotal;
-                            this.valuesForText[4] = data.data.subscriptionsTotal;
+                            this.valuesForText[4] = data.data.ratedTotal;
                             this.componentKey +=1
                         }
                     )

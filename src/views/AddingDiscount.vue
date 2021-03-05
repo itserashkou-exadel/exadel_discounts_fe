@@ -1,4 +1,4 @@
-<template>
+<template :key="keyFromStore">
     <v-container
             :key="componentKey"
             class="mb-6 ml-10 mb-15 pr-10 font-weight-regular"
@@ -394,7 +394,8 @@
                     city: null,
                     line: null
                 },
-                discount: null
+                discount: null,
+                keyFromStore: 0
             }
         },
         mixins: [token],
@@ -788,8 +789,15 @@
 
         },
         mounted() {
-            this.getCountries();
-            this.fillingFields();
+            this.keyFromStore = this.$store.state.keyForAdditingDiscount
+            // this.getCountries();
+            // this.fillingFields();
+        },
+        watch: {
+            keyFromStore () {
+                this.getCountries();
+                this.fillingFields();
+            }
         }
     }
 </script>

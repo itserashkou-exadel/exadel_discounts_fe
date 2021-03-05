@@ -40,8 +40,8 @@ let store = new Vuex.Store({
             sortIndex: null,
             sortOrder: [false,false,true,true,true,false]
         },
-        auth: null
-
+        auth: null,
+        keyForAdditingDiscount: 0
     },
     getters: {
         getTotalStatistic(state) {
@@ -88,6 +88,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+       setKeyAdditing (state, key) {
+           state.keyForAdditingDiscount++
+       },
         setAuth (state, auth) {
             state.auth = auth
         },
@@ -182,6 +185,7 @@ let store = new Vuex.Store({
            const index = state.discounts.findIndex(t => t.id === updatedDiscount.id);
                 //@ts-ignore
                state.discounts.splice(index, 1, updatedDiscount);
+               console.log(state.discounts)
         },
         setLanguage (state, lang) {
             if (lang) {
@@ -192,6 +196,7 @@ let store = new Vuex.Store({
         }
     },
     actions: {
+
         goForAuth({commit}, auth){
             commit('setAuth', auth);
         },
