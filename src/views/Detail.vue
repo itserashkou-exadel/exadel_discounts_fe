@@ -310,6 +310,18 @@ export default {
       };
       this.getToken(promo);
     },
+    checkToRating: function () {
+      // console.log('discounts', id);
+      const checkRating = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/vote/exists/${this.$route.params._id}`,
+        }).then((promise) => {
+          console.log(promise.status)
+          })
+      };
+      this.getToken(checkRating);
+    },
     ...mapActions(['getSubscription']),
     showSubscriptions() {
       let loc = JSON.parse(localStorage.getItem('key'));
@@ -335,6 +347,7 @@ export default {
   },
   mounted: function () {
     this.detailView();
+    this.checkToRating();
     console.log(this.info.ratingTotal)
   },
   computed: {

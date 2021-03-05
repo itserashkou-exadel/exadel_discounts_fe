@@ -87,7 +87,7 @@ export default {
   data: () => ({
     pageNumber: 1,
     pageCount: 1,
-    pageSize: 5,
+    pageSize: 24,
     dialog: false,
     expanded: [],
     singleExpand: true,
