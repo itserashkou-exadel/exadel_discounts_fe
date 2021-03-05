@@ -112,6 +112,7 @@
   name: "Card",
   mixins: [token, Mixin],
   data: () => ({
+    discountInFavourites: null,
     componentKey:0,
     dialogDelete: false,
     editedIndex: -1,
@@ -134,7 +135,6 @@
       type: Object,
       required: true
     },
-    deleteFromFavor: ['deleteFromFavor']
   },
   methods: {
 
@@ -150,18 +150,45 @@
       if (this.card === "mdi-heart-outline") {
         this.card = "mdi-heart"
         this.addToFavorites(id);
-      } else
+      } else{
+        this.deleteFromFavor(id)
         this.card = "mdi-heart-outline"
+      }
+
     },
     addToFavorites: function (id) {
-      console.log('discounts', id);
+      // console.log('discounts', id);
       const putSubscr = () => {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
-        }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+        })
+            // .then(response => console.log("RESPONSE :" + JSON.stringify(response)));
       };
       this.getToken(putSubscr);
+    },
+    deleteFromFavor: function (id) {
+      let show = () => this.showFavorites();
+      const putFavor = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
+        })
+            // .then(response => console.log(response.status, "delete"));
+      };
+      this.getToken(putFavor);
+    },
+    checkToFavorites: function (id) {
+      // console.log('discounts', id);
+      const checkFavor = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/favorites/exists/${id}`,
+        }).then((promise) => {
+          console.log(promise.status,id)
+          this.card="mdi-heart"})
+      };
+      this.getToken(checkFavor);
     },
     ...mapActions(['goFetch', 'addDiscount', 'updateDiscount']),
     ...mapActions(['getDiscountById']),
@@ -224,7 +251,9 @@
       return this.$store.state.favorites
     }
   },
-
+  mounted() {
+    this.checkToFavorites(this.description.id);
+  }
 
 
 }

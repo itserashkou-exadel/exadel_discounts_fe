@@ -1,53 +1,78 @@
 <template>
-    <v-container>
-<!--        <v-btn-->
-<!--                color="primary"-->
-<!--                dark-->
-<!--                @click="drawer = !drawer"-->
-<!--                class="showMenuBtn ml-13 mt-2"-->
-<!--                v-bind:class="{'showMenuBtn': drawer}"-->
-<!--        >-->
-<!--            Show menu-->
-<!--        </v-btn>-->
+    <v-navigation-drawer
+            permanent
+            class="d-flex mb-5"
+            width="375px"
+    >
+        <v-divider></v-divider>
 
-        <v-navigation-drawer
-                permanent
-                class="d-flex mb-5"
-                width="375px"
-        >
-<!--            <v-btn-->
-<!--                    color="primary"-->
-<!--                    dark-->
-<!--                    class="mapMenuToggleBtn mt-8 mb-2"-->
-<!--                    @click="drawer = !drawer"-->
-<!--            >-->
-<!--                Hide menu-->
-<!--            </v-btn>-->
-            <v-divider></v-divider>
-
-            <v-expansion-panels :key="myKey">
+        <template>
+            <v-expansion-panels focusable>
                 <v-expansion-panel
-                        v-for="(item,i) in discountsFromStore"
-                        :key="i"
-                        @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude])"
+                        :key="item.id"
+                        v-for="item in discountsFromStore"
+                        @click="jumpToMarker([item.address.location.longitude, item.address.location.latitude], item.id)"
                 >
-                    <v-expansion-panel-header class="bold">{{item.name}}</v-expansion-panel-header>
-                    <v-expansion-panel-content>{{item.company.name}}</v-expansion-panel-content>
-                    <v-expansion-panel-content>{{item.description}}</v-expansion-panel-content>
+                    <v-expansion-panel-header>{{item.name}}</v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-img :src="pictureCheck(item.pictureUrl)"></v-img>
+                        <v-card
+                                class="mx-auto"
+                                max-width="450"
+                                flat
+                        >
+                            <v-img
+                                    class="white--text align-end mt-1"
+                                    height="250px"
+                                    :src="pictureCheck(item.pictureUrl)"
+                            >
+                                <v-card-title class="text--darken-4">{{item.company.name}}</v-card-title>
+                                <v-card-subtitle class="white--text">{{item.address.street}}</v-card-subtitle>
+                                <v-rating
+                                        :value="item.ratingTotal"
+                                        color="amber"
+                                        dense
+                                        half-increments
+                                        readonly
+                                        size="25"
+                                        class="d-flex justify-center"
+                                ></v-rating>
+                                <v-card-subtitle class="white--text d-flex justify-end">{{item.amountOfDiscount}}%
+                                </v-card-subtitle>
+                                <!--                                <v-card-subtitle class="text-button blue-grey&#45;&#45;text" >Подписаться</v-card-subtitle>-->
+                                <v-btn
+                                        class="ml-3 mb-3 primary"
+                                        @click="$router.push({name:'detail',params:{_id:item.id}})"
+                                >Подробно
+                                </v-btn>
+                            </v-img>
+
+                            <v-card-subtitle class="pb-0">
+                                Описание:
+                            </v-card-subtitle>
+
+                            <v-card-text class="text--primary">
+                                <div>{{item.description}}</div>
+                                <v-divider></v-divider>
+                                <div>{{item.id}}</div>
+                                <div>{{item.address.location.longitude}}</div>
+                                <div>{{item.address.location.latitude}}</div>
+                                <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
+                                <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
+                            </v-card-text>
+
+                        </v-card>
                     </v-expansion-panel-content>
-                    <v-expansion-panel-content>{{item.address.street}}</v-expansion-panel-content>
-                    <v-expansion-panel-content><p>{{item.amountOfDiscount}}%</p></v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
-
-        </v-navigation-drawer>
-    </v-container>
+        </template>
+    </v-navigation-drawer>
 
 </template>
 
 <script>
+
+    import axios from "axios";
+
     export default {
         name: "LeftSideBar",
         props: ['discountsFromStore', 'jumpToMarker'],
@@ -74,25 +99,14 @@
             }
         },
         watch: {
-            discountsFromStore(){
+            discountsFromStore() {
                 console.log('WATCH')
-                this.myKey+=1
+                this.myKey += 1
             }
         },
     }
 </script>
 
 <style scoped>
-    .mapMenuToggleBtn {
-        margin-left: 60px;
-    }
 
-    .showMenuBtn {
-        /*visibility: hidden;*/
-    }
-
-    .navDrawer {
-        border-radius: 3px;
-        /*z-index: 5;*/
-    }
 </style>
