@@ -405,8 +405,8 @@ export default {
               "searchAddressCity": city,
               "searchSortFieldOption": "NameDiscount",
               "searchSortOption": "Asc",
-              "searchPaginationPageNumber": this.pageNumber,
-              "searchPaginationCountElementPerPage": this.pageSize,
+              "searchPaginationPageNumber": 5,
+              "searchPaginationCountElementPerPage": 24,
               "searchLanguage": "Ru"
             }
         ).catch((error) => {
