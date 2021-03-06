@@ -15,6 +15,7 @@
                 </v-col>
             </v-row>
           <v-pagination
+                  :disabled="isLoad"
               v-model="page"
               :length="paginationLength"
               :total-visible="7"
@@ -37,6 +38,7 @@
         components: {Modal, SwitchButton, Card},
         data: () => ({
           arr:[],
+            isLoad: null,
                 info: [],
                 results:[],
           itemsPerPage:6,
@@ -46,17 +48,11 @@
         methods: {
           ...mapActions(['goFetch', 'changeItemsPerPage', 'inputPost', 'nextDiscount']),
           next() {
-            console.log("rrrr")
-            console.log(this.page, this.pageCount)
-            console.log(this.$store.state.discounts)
-            console.log(this.page, this.pageCount);
             this.$store.commit('setDisPage', this.page)
-            console.log(this.$store.state.disPage)
-            console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS');
               const goNext = () => {
                   if (this.$store.state.filterRequest === false) {
                       if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
-                          console.log("PAGINATION")
+                          this.$store.commit('disPag', true);
                           this.nextDiscount(
                               {
                                   "searchText": this.$store.state.keyWord,
@@ -73,9 +69,6 @@
                       }
 
                   } else {
-                      console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
-                      console.log(this.$store.state.filtered.range)
-                      console.log(this.$store.state.sortOption.sortName ? this.$store.state.sortOption.sortName : "RatingDiscount")
                       if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
                           this.nextDiscount(
                               {
@@ -118,6 +111,7 @@
             // this.$store.commit('setItemsPerPage', this.itemsPerPage)
             // console.log(this.$store.state.itemsPerPage)
             this.page = this.$store.state.disPage;
+              this.isLoad = this.$store.state.disablePag;
             // this.searchWord = this.$store.state.keyWord;
             let arr = [];
             let info = this.allDiscounts.slice((this.page - 1)* this.$store.state.itemsPerPage, this.page* this.$store.state.itemsPerPage);
@@ -130,7 +124,7 @@
                 amountOfDiscount: item.amountOfDiscount,
                 startDate: moment(item.startDate.$date).format('L'),
                 endDate: moment(item.endDate.$date).format('L'),
-                rating: item.ratingTotal,
+                rating: +Number.parseFloat(item.ratingTotal).toFixed(2),
                 description: item.description,
                 tags: item.tags,
                 picture: item.pictureUrl
