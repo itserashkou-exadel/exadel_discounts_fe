@@ -46,7 +46,6 @@ text-h2
                       :value="info.ratingTotal"
                       background-color="grey darken-1"
                       empty-icon="$ratingFull"
-                      half-increments
                       hover
                   ></v-rating>
                   <div class="grey--text mb-9 ml-2">
@@ -142,7 +141,6 @@ text-h4
                     color="yellow darken-3"
                     background-color="grey darken-1"
                     empty-icon="$ratingFull"
-                    half-increments
                     size="20px"
                     hover
                 ></v-rating>
@@ -203,7 +201,7 @@ text-h4
       </v-row>
       <v-row>
         <v-col cols="12" class="mb-10">
-          <v-row justify="center" justify-md="start" class="mb-2 mt-2">
+          <v-row justify="center" justify-md="start" class="mb-2 mt-2 ml-md-6">
             <h1 class="mb-2 ">{{ $t('whereIsIt') }}</h1>
           </v-row>
           <v-card max-width="100%">
