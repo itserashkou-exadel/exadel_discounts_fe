@@ -39,6 +39,9 @@
     /*#app {*/
 
     /*}*/
+    .deletedItem {
+        background-color: lightpink;
+    }
     .zero{
         margin: 0 !important;
         max-height: 95% !important;
