@@ -35,6 +35,6 @@ export default {
   height: 67px;
 }
 .header-button {
-  font-weight: lighter !important;
+  font-weight: normal !important;
 }
 </style>

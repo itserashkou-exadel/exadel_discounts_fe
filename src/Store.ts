@@ -14,8 +14,8 @@ const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
 
 let store = new Vuex.Store({
     state: {
+        currentComponent: sessionStorage.getItem('currentComponent') || 'HomePage',
         disablePag: false,
-        currentComponent: 'HomePage',
         notFound: false,
         filterIcon: false,
         filterRequest: false,

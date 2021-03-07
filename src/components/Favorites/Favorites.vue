@@ -176,7 +176,7 @@ export default {
         } else if (this.allFavorites.length <= 0) {
           this.pageCount--;
           this.pageNumber = 1;
-          this.showSubscriptions();
+          this.showFavorites();
         }
       }
     }

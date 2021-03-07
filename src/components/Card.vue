@@ -61,17 +61,18 @@
       <b>{{$t('Description:')}}<br></b>
       {{ description.description.substring(0, 120) + " ..." }}
     </v-card-subtitle>
-    <v-sheet>
-      <v-chip-group
-          show-arrows
-          class="v-slide-group--has-affixes v-slide-group__next"
-          active-class="light-blue accent-4 white--text">
-        <v-chip v-for="tag in description.tags"
-                :key="tag"
-        > {{ tag }}
-        </v-chip>
-      </v-chip-group>
-    </v-sheet>
+<!--    <v-sheet>-->
+<!--      <v-chip-group-->
+<!--          show-arrows-->
+<!--          class="v-slide-group&#45;&#45;has-affixes v-slide-group__next"-->
+<!--          active-class="light-blue accent-4 white&#45;&#45;text">-->
+<!--        <v-chip v-for="tag in description.tags"-->
+<!--                disabled-->
+<!--                :key="tag"-->
+<!--        > {{ tag }}-->
+<!--        </v-chip>-->
+<!--      </v-chip-group>-->
+<!--    </v-sheet>-->
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
 
@@ -156,24 +157,53 @@
       }
 
     },
+    ...mapActions(['getFavorites']),
+    showFavorites() {
+      let loc = JSON.parse(localStorage.getItem('key'));
+      let country = loc.country ? loc.country : 'Беларусь';
+      let city = loc.city ? loc.city : 'Минск';
+      console.log("1")
+      const getFavoritesResult = () => {
+        console.log("2")
+        this.getFavorites(
+            {
+              "searchDiscountOption": "Favorites",
+              "searchAddressCountry": country,
+              "searchAddressCity": city,
+              "searchSortFieldOption": "NameDiscount",
+              "searchSortOption": "Asc",
+              "searchPaginationPageNumber": 1,
+              "searchPaginationCountElementPerPage": 24,
+              "searchLanguage": "Ru"
+            }
+        )
+
+
+      }
+      this.getToken(getFavoritesResult);
+      },
     addToFavorites: function (id) {
       // console.log('discounts', id);
       const putSubscr = () => {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
-        })
+        }).then(()=>{
+          this.showFavorites()
+          console.log("ddd")})
             // .then(response => console.log("RESPONSE :" + JSON.stringify(response)));
       };
       this.getToken(putSubscr);
     },
     deleteFromFavor: function (id) {
-      let show = () => this.showFavorites();
+
       const putFavor = () => {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
-        })
+        }).then(()=>{
+          this.$store.state.favorites = this.$store.state.favorites.filter(item => item.id !== id);
+          console.log("ddd")})
             // .then(response => console.log(response.status, "delete"));
       };
       this.getToken(putFavor);
