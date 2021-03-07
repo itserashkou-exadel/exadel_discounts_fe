@@ -18,44 +18,44 @@
             <template v-slot:header.NameDiscount>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtOffer')}}</button>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.CompanyName>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtVendor')}}</button>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.AmountOfDiscount>
                 <div class="d-flex">
                     <button class="disOutline" @click="pilik">{{$t('dtDiscount')}}</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateStart>
                 <div class="d-flex">
                     <button class="disOutline" @click="pilik">{{$t('dtStartDate')}}</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateEnd>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtFinishDate')}}</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.RatingDiscount>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtRating')}}</button>
-                    <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending</v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
 
