@@ -13,6 +13,7 @@
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
                 :sortCol="sortData"
+                :item-class="rowClass"
         >
 
             <template v-slot:header.NameDiscount>
@@ -90,7 +91,7 @@
                 </v-icon>
                 <v-icon
                         small
-                        @click="deleteItem(item.id)"
+                        @click="deleteItem(item)"
                 >
                     mdi-delete
                 </v-icon>
@@ -148,6 +149,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            delItem: null,
             isLoad: null,
             showSortIcon: true,
             sortOptionName: '',
@@ -251,7 +253,8 @@
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
                                 usersSubscriptionTotal: item.usersSubscriptionTotal,
-                                createDate: moment(item.createDate).format("DD-MM-YYYY")
+                                createDate: moment(item.createDate).format("DD-MM-YYYY"),
+                                deleted: item.deleted
                             }
                         )
                     })
@@ -571,7 +574,14 @@
                     let url = 'https://localhost:9001/api/v1/discounts/delete/';
                     url += itemID;
                     axios.delete(url);
-                    this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                    if(this.$store.state.userClaimsStoreData.role !== "Administrator" && this.delItem.deleted !== true){
+                        this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                    }
+                    if(this.$store.state.userClaimsStoreData.role === "Administrator"){
+                        this.delItem.deleted = true;
+                        let rowClass = 'deletedItem';
+                        return rowClass;
+                    }
                 }
                 this.getToken(goDelete)
             },
@@ -582,12 +592,13 @@
                     params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
                 });
             },
-            deleteItem(id) {
-                this.deleteID = id;
+            deleteItem(item) {
+                this.delItem = item;
+                this.deleteID = item.id;
                 this.dialogDelete = true;
             },
-            deleteItemConfirm(id) {
-                this.deleteDiscount(id);
+            deleteItemConfirm() {
+                this.deleteDiscount();
                 this.closeDelete();
             },
             close() {
@@ -624,6 +635,12 @@
                     //email: result.profile.email
                 })
             },
+            rowClass(item){
+                if(this.$store.state.userClaimsStoreData.role === "Administrator" && item.deleted === true){
+                    let rowClass = 'deletedItem';
+                    return rowClass;
+                }
+            }
         },
     }
 </script>
