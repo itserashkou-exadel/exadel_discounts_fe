@@ -53,7 +53,7 @@
                   subheader
               >
                 <v-list-item v-for="link in links()" :key="link.text" router :to="{name:link.route}"
-                             @click="sideNav= false">
+                             @click="seeCurrentComponent(link)">
                   <v-list-item-title>{{ link.text }}</v-list-item-title>
                 </v-list-item>
                 <v-btn text>
@@ -82,10 +82,36 @@
 <script>
 import Avatar from "@/components/Header/Avatar";
 import Searching from "@/components/Header/Searching";
+import {mapActions} from "vuex";
+
 export default {
   name: "Header_mobile",
   components: {Searching, Avatar},
   methods: {
+    ...mapActions(['goForCurrentComponent']),
+    seeCurrentComponent(item) {
+      this.sideNav= false
+      if (item.text === 'СКИДКИ' || item.text ==='DISCOUNTS') {
+        this.goForCurrentComponent('HomePage');
+        sessionStorage.setItem('currentComponent', 'HomePage')
+      }
+      if (item.text === 'КАРТА' || item.text ==='MAP') {
+        this.goForCurrentComponent('MapPage')
+        sessionStorage.setItem('currentComponent', 'MapPage')
+      }
+      if (item.text === 'ПОДПИСКИ' || item.text ==='SUBSCRIBE') {
+        this.goForCurrentComponent('SubscribesPage')
+        sessionStorage.setItem('currentComponent', 'SubscribesPage')
+      }
+      if (item.text === 'ИЗБРАННОЕ' || item.text ==='FAVORITES') {
+        this.goForCurrentComponent('FavoritesPage')
+        sessionStorage.setItem('currentComponent', 'FavoritesPage')
+      }
+      if (item.text === 'СТАТИСТИКА' || item.text ==='STATISTICS') {
+        this.goForCurrentComponent('StatisticPage')
+        sessionStorage.setItem('currentComponent', 'StatisticPage')
+      }
+    },
     links() {
       let hLinks = [
         {id: 2, text: this.$t('hDiscounts'), route: "home", icon: "mdi-clipboard-text"},
