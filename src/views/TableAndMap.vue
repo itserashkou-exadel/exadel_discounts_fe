@@ -9,11 +9,12 @@
   import FavoritesPage from "@/views/FavoritesPage.vue"
   import SubscribesPage from "@/views/SubscriptionsPage.vue"
   import StatisticPage from "@/views/StatisticPage.vue"
+  import PreDetail from "@/views/PreDetail";
 
 
   export default {
     name: 'TableAndMap',
-    components: {MapPage, HomePage, FavoritesPage, SubscribesPage, StatisticPage},
+    components: {MapPage, HomePage, FavoritesPage, SubscribesPage, StatisticPage, PreDetail},
   }
 </script>
 

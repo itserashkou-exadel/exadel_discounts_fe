@@ -140,7 +140,8 @@
             },
             ...mapGetters(["allDiscounts"]),
 
-    }}
+    },
+    }
 </script>
 <style scoped>
 </style>

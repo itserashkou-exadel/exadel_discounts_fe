@@ -14,6 +14,7 @@ const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
 
 let store = new Vuex.Store({
     state: {
+        detailId: null,
         currentComponent: sessionStorage.getItem('currentComponent') || 'HomePage',
         disablePag: false,
         notFound: false,
@@ -86,6 +87,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        setDetId(state, id){
+          state.detailId = id;
+        },
         disPag(state, value){
           state.disablePag = value;
         },

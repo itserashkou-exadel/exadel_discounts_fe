@@ -105,7 +105,7 @@
                             <p class="my-5">{{ item.description }}</p>
                             <v-btn
                                     color="primary mb-5"
-                                    @click="$router.push({name:'detail',params:{_id:item.id}})"
+                                    @click="goDetail(item)"
                             >
                                 {{$t('dtMoreInfo')}}
                             </v-btn>
@@ -640,6 +640,11 @@
                     let rowClass = 'deletedItem';
                     return rowClass;
                 }
+            },
+            goDetail(item){
+                this.$store.commit('setCurrentComponent', 'PreDetail')
+                this.$store.commit('setDetId', item.id);
+                this.$router.push({name:'detail',params:{_id:item.id}});
             }
         },
     }

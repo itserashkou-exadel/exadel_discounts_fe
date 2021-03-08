@@ -49,7 +49,7 @@ const router = new VueRouter({
                 {
                     path: '/home/detail/:_id',
                     name: 'detail',
-                    component: Detail,
+                    component: TableAndMap,
                     props: true
                 }]
         },

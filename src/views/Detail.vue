@@ -346,7 +346,6 @@ export default {
       const func = () => {
         this.getDiscountById(this.$route.params._id)
             .catch((error) => {
-              alert(error);
             });
 
       }
@@ -408,7 +407,7 @@ export default {
               "searchLanguage": "Ru"
             }
         ).catch((error) => {
-              alert(error)}
+             }
             )}
       this.getToken(getSubscrResult);
     },
@@ -417,16 +416,20 @@ export default {
     this.detailView();
     this.checkToRating();
     this.checkToFavorites(this.$route.params._id)
-    console.log(this.info.ratingTotal)
   },
   computed: {
     ...mapGetters(["getDetailView"]),
     filterData() {
       console.log(this.info.ratingTotal)
       this.info = this.getDetailView;
+      this.info.id = this.$store.state.detailId;
+      console.log("WWWOOOOOOORRRRKKKKKKK")
       this.info.startDate = moment(this.info.startDate).format('L');
       this.info.endDate = moment(this.info.endDate).format('L');
       this.info.ratingTotal = +Number.parseFloat(this.info.ratingTotal).toFixed(2);
+      this.detailView();
+      this.checkToRating();
+      this.checkToFavorites(this.$route.params._id)
       return this.info;
     },
     discounts() {
