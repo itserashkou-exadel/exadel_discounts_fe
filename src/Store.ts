@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 const urlDiscounts = `http://localhost:3000/discounts`;
 const searchDiscount = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/search`;
-const urlGetDiscountsById = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/get/Ru/`;
+const urlGetDiscountsById = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/get/`;
 const urlCountries = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/addresses/all/Ru/countries`
 const deleteURL = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/delete/`
 const urlRating = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/vote/`
@@ -245,10 +245,11 @@ let store = new Vuex.Store({
             try{
                 const response = await axios.post(searchDiscount, search);
                 commit('receiveSearch', response.data);
-                console.log("Render")
                 commit('setDisPage', 1);
             }catch (e) {
-                commit('setNoFound', true);
+                if (e.response.status === 404) {
+                    commit('setNoFound', true);
+                }
             }
         },
         async allInputPost({commit}, search){
@@ -275,6 +276,7 @@ let store = new Vuex.Store({
         },
         async getDiscountById({commit},id) {
             let url = urlGetDiscountsById;
+            url += this.state.language +"/"
             url += id;
             const response = await axios.get(url);
             commit('receiveGetById', response.data);

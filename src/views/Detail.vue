@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-container fluid class="pt-8" :data="filterData">
-      <v-row class="mt-1">
+    <v-container fluid class="pt-6" :data="filterData">
+      <v-row class="">
         <v-col cols="12">
           <!--          dekstop-->
           <v-card max-width="100%" class="d-none mt-n7 d-md-block" style=" position:relative">
@@ -312,8 +312,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 1,
               "searchPaginationCountElementPerPage": 24,
-              "searchLanguage": "Ru"
-            }
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"            }
         )
       }
       this.getToken(getFavoritesResult);
@@ -405,7 +404,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 5,
               "searchPaginationCountElementPerPage": 24,
-              "searchLanguage": "Ru"
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
             }
         ).catch((error) => {
               alert(error)}
