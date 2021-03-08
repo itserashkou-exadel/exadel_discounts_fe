@@ -38,7 +38,7 @@
 <!--                            <p>{{marker.address.location.longitude}}</p>-->
 <!--                            <p>{{marker.address.location.latitude}}</p>-->
                             <v-btn
-                                    class="ml-3 mb-3 primary"
+                                    class="ml-8 mb-3 primary"
                                     @click="$router.push({name:'detail',params:{_id:marker.id}})"
                             >Подробно
                             </v-btn>
