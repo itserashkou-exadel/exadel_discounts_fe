@@ -204,6 +204,8 @@
         created() {
             const auth = this.getAuth
             this.setSecondAuth(auth);
+            this.$store.state.filterRequest = false;
+            this.$store.state.filterIcon = false;
             this.$store.state.sortOption.sortName = "RatingDiscount";
             this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
             this.$store.state.sortOption.sortOrder[5] = false;
