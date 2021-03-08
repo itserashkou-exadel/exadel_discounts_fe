@@ -53,7 +53,9 @@
                   subheader
               >
                 <v-list-item v-for="link in links()" :key="link.text" router :to="{name:link.route}"
-                             @click="seeCurrentComponent(link)">
+                             @click="seeCurrentComponent(link)"
+
+                >
                   <v-list-item-title>{{ link.text }}</v-list-item-title>
                 </v-list-item>
                 <v-btn text>
@@ -82,6 +84,7 @@
 <script>
 import Avatar from "@/components/Header/Avatar";
 import Searching from "@/components/Header/Searching";
+import {mapActions} from "vuex";
 import {mapActions} from "vuex";
 
 export default {

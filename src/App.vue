@@ -11,7 +11,9 @@
     export default Vue.extend({
         name: 'App',
         components: {},
-
+        created(): void {
+            console.log('Vue App Title : ', process.env.VUE_APP_URL)
+        },
         data: () => ({
             //
         }),
@@ -39,6 +41,9 @@
     /*#app {*/
 
     /*}*/
+    .deletedItem {
+        background-color: lightpink;
+    }
     .zero{
         margin: 0 !important;
         max-height: 95% !important;

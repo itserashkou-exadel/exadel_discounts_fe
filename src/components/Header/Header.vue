@@ -40,7 +40,7 @@
             v-on="on"
         >
           <v-avatar
-              color="blue lighten-4"
+              color="#2196f3"
               size="48"
           >
             <span class="white--text headline">{{ user.initials }}</span>

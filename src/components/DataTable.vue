@@ -13,49 +13,50 @@
                 @page-count="pageCount = $event"
                 :items-per-page="itemsPerPage"
                 :sortCol="sortData"
+                :item-class="rowClass"
         >
 
             <template v-slot:header.NameDiscount>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtOffer')}}</button>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'NameDiscount' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'NameDiscount'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.CompanyName>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtVendor')}}</button>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'CompanyName' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'CompanyName'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.AmountOfDiscount>
                 <div class="d-flex">
                     <button class="disOutline" @click="pilik">{{$t('dtDiscount')}}</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'AmountOfDiscount' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'AmountOfDiscount'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateStart>
                 <div class="d-flex">
                     <button class="disOutline" @click="pilik">{{$t('dtStartDate')}}</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateStart' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateStart'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.DateEnd>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtFinishDate')}}</button>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'DateEnd' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'DateEnd'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
             <template v-slot:header.RatingDiscount>
                 <div>
                     <button class="disOutline" @click="pilik">{{$t('dtRating')}}</button>
-                    <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-sort-ascending </v-icon>
-                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-sort-ascending</v-icon>
-                    <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-sort-descending</v-icon>
+                    <v-icon v-show="sortOption === null" class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === false && sortOptionName === 'RatingDiscount' " class="pl-2" dense>mdi-arrow-down</v-icon>
+                    <v-icon v-show="sortOption === true && sortOptionName === 'RatingDiscount'" class="pl-2" dense>mdi-arrow-up</v-icon>
                 </div>
             </template>
 
@@ -90,7 +91,7 @@
                 </v-icon>
                 <v-icon
                         small
-                        @click="deleteItem(item.id)"
+                        @click="deleteItem(item)"
                 >
                     mdi-delete
                 </v-icon>
@@ -100,9 +101,6 @@
                 <td :colspan="headers.length">
                     <v-row class="d-flex  my-5">
                         <v-col cols="12" class="d-flex flex-column align-center justify-center">
-                            <v-btn elevation="2" fab class="align-self-start" v-on:click="addToFavorites(item.id)">
-                                <v-icon large color="red">{{icons.icon}}</v-icon>
-                            </v-btn>
                             <h2 class="align-self-center" >{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
                             <p class="my-5">{{ item.description }}</p>
                             <v-btn
@@ -151,6 +149,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
+            delItem: null,
             isLoad: null,
             showSortIcon: true,
             sortOptionName: '',
@@ -166,9 +165,6 @@
             singleExpand: true,
             dialog: false,
             dialogDelete: false,
-            icons: {
-                icon: "mdi-heart-outline"
-            },
             offers: [],
             info: [],
             result: [],
@@ -252,12 +248,13 @@
                                 AmountOfDiscount: item.amountOfDiscount,
                                 DateStart: moment(item.startDate).format('DD-MM-YYYY'),
                                 DateEnd: moment(item.endDate).format('DD-MM-YYYY'),
-                                RatingDiscount: item.ratingTotal,
+                                RatingDiscount: +Number.parseFloat(item.ratingTotal).toFixed(2),
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
                                 usersSubscriptionTotal: item.usersSubscriptionTotal,
-                                createDate: moment(item.createDate).format("DD-MM-YYYY")
+                                createDate: moment(item.createDate).format("DD-MM-YYYY"),
+                                deleted: item.deleted
                             }
                         )
                     })
@@ -577,7 +574,14 @@
                     let url = 'https://localhost:9001/api/v1/discounts/delete/';
                     url += itemID;
                     axios.delete(url);
-                    this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                    if(this.$store.state.userClaimsStoreData.role !== "Administrator" && this.delItem.deleted !== true){
+                        this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+                    }
+                    if(this.$store.state.userClaimsStoreData.role === "Administrator"){
+                        this.delItem.deleted = true;
+                        let rowClass = 'deletedItem';
+                        return rowClass;
+                    }
                 }
                 this.getToken(goDelete)
             },
@@ -588,12 +592,13 @@
                     params: {placeOfCall: 'editingOfDiscount', idOfDiscount: item.id}
                 });
             },
-            deleteItem(id) {
-                this.deleteID = id;
+            deleteItem(item) {
+                this.delItem = item;
+                this.deleteID = item.id;
                 this.dialogDelete = true;
             },
-            deleteItemConfirm(id) {
-                this.deleteDiscount(id);
+            deleteItemConfirm() {
+                this.deleteDiscount();
                 this.closeDelete();
             },
             close() {
@@ -630,6 +635,12 @@
                     //email: result.profile.email
                 })
             },
+            rowClass(item){
+                if(this.$store.state.userClaimsStoreData.role === "Administrator" && item.deleted === true){
+                    let rowClass = 'deletedItem';
+                    return rowClass;
+                }
+            }
         },
     }
 </script>
