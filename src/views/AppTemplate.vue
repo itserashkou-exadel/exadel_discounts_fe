@@ -5,7 +5,7 @@
                    dark
                    color="primary"
         >
-            <HeadermMobile class="hidden-md-and-up"/>
+            <HeadermMobile class="hidden-lg-and-up"/>
             <Header class="hidden-sm-and-down"/>
         </v-app-bar>
         <v-main>
