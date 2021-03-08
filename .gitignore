@@ -4,7 +4,7 @@ node_modules
 .idea
 
 # local env files
-.env
+.env.development.local
 .env.local
 .env.*.local
 .env.production.local
