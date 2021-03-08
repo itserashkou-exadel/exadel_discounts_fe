@@ -5,12 +5,20 @@ import logger from "vuex/types/logger";
 
 Vue.use(Vuex);
 
-const urlDiscounts = 'http://localhost:3000/discounts';
-const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
-const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
-const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
-const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
-const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
+const urlDiscounts = `http://localhost:3000/discounts`;
+const searchDiscount = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/search`;
+const urlGetDiscountsById = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/get/`;
+const urlCountries = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/addresses/all/Ru/countries`
+const deleteURL = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/delete/`
+const urlRating = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/vote/`
+
+// const urlDiscounts = 'http://localhost:3000/discounts';
+// const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
+// const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
+// const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
+// const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
+// const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
+
 
 let store = new Vuex.Store({
     state: {
@@ -267,6 +275,7 @@ let store = new Vuex.Store({
         },
         async getDiscountById({commit},id) {
             let url = urlGetDiscountsById;
+            url += this.state.language +"/"
             url += id;
             const response = await axios.get(url);
             commit('receiveGetById', response.data);

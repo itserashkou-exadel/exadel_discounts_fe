@@ -127,7 +127,8 @@
                 rating: +Number.parseFloat(item.ratingTotal).toFixed(2),
                 description: item.description,
                 tags: item.tags,
-                picture: item.pictureUrl
+                picture: item.pictureUrl,
+                deleted: item.deleted
               })
             })
             return this.results = arr;

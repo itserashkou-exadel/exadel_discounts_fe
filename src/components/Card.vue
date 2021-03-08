@@ -1,5 +1,6 @@
 <template>
   <v-card
+      :color="deletedCheck(description)"
       :key="componentKey"
       class="mx-4 my-12"
       max-width="370px"
@@ -113,6 +114,10 @@
   name: "Card",
   mixins: [token, Mixin],
   data: () => ({
+    delItem: null,
+    deleteID: null,
+    defaultCardColor: "#FFFFF",
+    deletedCardColor:"#F8BBD0",
     discountInFavourites: null,
     componentKey:0,
     dialogDelete: false,
@@ -174,8 +179,7 @@
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 1,
               "searchPaginationCountElementPerPage": 24,
-              "searchLanguage": "Ru"
-            }
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"            }
         )
 
 
@@ -208,6 +212,12 @@
       };
       this.getToken(putFavor);
     },
+    deletedCheck: function(item){
+      if(item.deleted === true )
+        return this.deletedCardColor
+      else
+        return this.defaultCardColor
+    },
     checkToFavorites: function (id) {
       // console.log('discounts', id);
       const checkFavor = () => {
@@ -233,24 +243,28 @@
       });
     },
     deleteItem(item) {
-      this.editedIndex = this.offers.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.delItem = item;
+      this.deleteID = item.id;
       this.dialogDelete = true;
     },
-    deleteDiscount(id) {
-      let itemID = id;
+
+    deleteDiscount(){
+      let itemID = this.deleteID;
       const goDelete = () => {
-        console.log(id)
         let url = 'https://localhost:9001/api/v1/discounts/delete/';
         url += itemID;
         axios.delete(url);
-        this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
-        console.log(this.info)
+        if(this.$store.state.userClaimsStoreData.role !== "Administrator" && this.delItem.deleted !== true){
+          this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
+        }
+        if(this.$store.state.userClaimsStoreData.role === "Administrator"){
+          this.delItem.deleted = true;
+        }
       }
       this.getToken(goDelete)
     },
-    deleteItemConfirm(id) {
-      this.deleteDiscount(id)
+    deleteItemConfirm() {
+      this.deleteDiscount();
       this.closeDelete();
     },
     close() {
