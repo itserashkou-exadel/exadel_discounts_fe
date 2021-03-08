@@ -6,6 +6,22 @@
                 @load="onMapLoaded"
         >
             <MglMarker :coordinates="[this.dataInfo.longitude, this.dataInfo.latitude]" color="yellow">
+<!--                <MglPopup>-->
+<!--                    <v-card-->
+<!--                            flat-->
+<!--                    >-->
+<!--                        <v-card-title class="cardTitleBorder"><h5>{{marker.name}}</h5></v-card-title>-->
+<!--                        <v-img :src="pictureCheck(marker.pictureUrl)"/>-->
+<!--                        <v-card-text>-->
+<!--                            <h4>Company:{{marker.company.name}}</h4>-->
+<!--                            <hr>-->
+<!--                            <p>{{marker.amountOfDiscount}}%</p>-->
+<!--                            <p>{{marker.id}}</p>-->
+<!--                            <p>{{marker.address.location.longitude}}</p>-->
+<!--                            <p>{{marker.address.location.latitude}}</p>-->
+<!--                        </v-card-text>-->
+<!--                    </v-card>-->
+<!--                </MglPopup>-->
             </MglMarker>
         </MglMap>
     </div>
@@ -47,7 +63,7 @@
                 const newParams = await asyncActions.flyTo({
                     center: [this.dataInfo.longitude, this.dataInfo.latitude],
                     //center: [this.dataInfo.latitude, this.dataInfo.longitude],
-                    zoom: 9,
+                    zoom: 20,
                     speed: 1
                 })
                 console.log(newParams)
@@ -64,6 +80,6 @@
 <style scoped>
     #map {
         width: 100vw;
-        height: 100vh;
+        height: 80vh;
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-container fluid class="pt-8" :data="filterData">
-      <v-row class="mt-1">
+    <v-container fluid class="pt-6" :data="filterData">
+      <v-row class="">
         <v-col cols="12">
           <!--          dekstop-->
           <v-card max-width="100%" class="d-none mt-n7 d-md-block" style=" position:relative">
@@ -46,7 +46,6 @@ text-h2
                       :value="info.ratingTotal"
                       background-color="grey darken-1"
                       empty-icon="$ratingFull"
-                      half-increments
                       hover
                   ></v-rating>
                   <div class="grey--text mb-9 ml-2">
@@ -142,7 +141,6 @@ text-h4
                     color="yellow darken-3"
                     background-color="grey darken-1"
                     empty-icon="$ratingFull"
-                    half-increments
                     size="20px"
                     hover
                 ></v-rating>
@@ -203,7 +201,7 @@ text-h4
       </v-row>
       <v-row>
         <v-col cols="12" class="mb-10">
-          <v-row justify="center" justify-md="start" class="mb-2 mt-2">
+          <v-row justify="center" justify-md="start" class="mb-2 mt-2 ml-md-6">
             <h1 class="mb-2 ">{{ $t('whereIsIt') }}</h1>
           </v-row>
           <v-card max-width="100%">
@@ -314,8 +312,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 1,
               "searchPaginationCountElementPerPage": 24,
-              "searchLanguage": "Ru"
-            }
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"            }
         )
       }
       this.getToken(getFavoritesResult);
@@ -407,7 +404,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 5,
               "searchPaginationCountElementPerPage": 24,
-              "searchLanguage": "Ru"
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
             }
         ).catch((error) => {
               alert(error)}
