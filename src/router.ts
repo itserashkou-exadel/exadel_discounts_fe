@@ -8,8 +8,9 @@ import AppTemplate from "@/views/AppTemplate.vue";
 import AddingDiscount from '@/views/AddingDiscount.vue';
 import Detail from '@/views/Detail.vue';
 import ErrorPage from '@/views/ErrorPage.vue';
-import StatisticPage from "@/views/StatisticPage.vue"
-import TableAndMap from '@/views/TableAndMap.vue'
+import StatisticPage from "@/views/StatisticPage.vue";
+import TableAndMap from '@/views/TableAndMap.vue';
+import Profile from '@/views/Profile.vue'
 
 Vue.use(VueRouter);
 
@@ -134,6 +135,18 @@ const router = new VueRouter({
                     path: "/statistic",
                     name: "statistic",
                     component: TableAndMap
+                }
+            ]
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: AppTemplate,
+            children: [
+                {
+                    path: '/profile',
+                    name: 'profile',
+                    component: Profile
                 }
             ]
         },

@@ -55,6 +55,7 @@
   "hDiscounts": "СКИДКИ",
   "hSubscribe": "ПОДПИСКИ",
   "hFavorites": "ИЗБРАННОЕ",
+  "hAccount": "Учетная запись",
   "hLogOut": "Выйти",
   "sLogIn": "Войти",
   "sChooseLocation": "Выберите ваше местопложения",
@@ -96,5 +97,15 @@
   "whereIsIt": "где находится",
   "сhoose": "выбрать",
   "Description:": "Описаиние:",
-  "deletingOfDiscount": "Вы уверены, что хотите удалить эту скидку?"
+  "deletingOfDiscount": "Вы уверены, что хотите удалить эту скидку?",
+  "uPhoneNumber": "Номер телефона",
+  "uNewPassword": "Новый пароль",
+  "uRepeatPassword": "Повторите пароль",
+  "uPhotoUrl": "Фото URL",
+  "uLanguage": "Язык",
+  "uRequiredMsg": "Обезательное поле",
+  "uMin": "Минимальный размер",
+  "uMax": "Максимальный размер",
+  "uCharacters": "символов",
+  "uNotMatchMsg": "Не совпадает"
 }

@@ -55,6 +55,7 @@
  "hDiscounts": "DISCOUNTS",
  "hSubscribe": "SUBSCRIBE",
  "hFavorites": "FAVORITES",
+ "hAccount": "Account",
  "hLogOut": "Log out",
  "sLogIn": "Log in",
  "sChooseLocation": "Choose your location",
@@ -96,5 +97,15 @@
  "whereIsIt": "where is it",
  "сhoose": "сhoose",
  "Description:": "Description:",
- "deletingOfDiscount": "Are you sure you want to remove this discount"
+ "deletingOfDiscount": "Are you sure you want to remove this discount",
+ "uPhoneNumber": "Phone number",
+ "uNewPassword": "New password",
+ "uRepeatPassword": "Repeat password",
+ "uPhotoUrl": "Photo URL",
+ "uLanguage": "Language",
+ "uRequiredMsg": "Required",
+ "uMin": "Min",
+ "uMax": "Max",
+ "uCharacters": "characters",
+ "uNotMatchMsg": "Does not match"
 }

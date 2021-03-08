@@ -1,0 +1,42 @@
+<template>
+  <UserInfo v-bind:user="data" />
+</template>
+
+<script>
+import UserInfo from '@/components/UserInfo';
+import token from '@/mixins/token.mixin';
+import axios from 'axios';
+
+export default {
+  name: 'Profile',
+  components: { UserInfo },
+  mixins: [token],
+  data() {
+    return {
+      data: [],
+    };
+  },
+  methods: {
+    getUserInfo() {
+      const getUserInfo = () => {
+        axios
+          .get('https://localhost:9001/api/v1/users/get')
+          .then((responce) => {
+            this.data = responce.data;
+          });
+      };
+      this.getToken(getUserInfo);
+    },
+  },
+  mounted: function() {
+    this.getUserInfo();
+  },
+  created() {
+    const auth = this.$store.getters.getAuth;
+    this.setSecondAuth(auth);
+  },
+};
+</script>
+
+<style scoped>
+</style>

@@ -60,7 +60,7 @@
                   <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
                   <span>{{currentLoc.country}}, {{currentLoc.town}}</span>
                 </v-btn>
-                <Avatar/>
+                <Avatar v-on:sideNavFromAvatar='sideNavFromAvatarFalse'/>
               </v-list>
             </v-card>
           </v-dialog>
@@ -102,6 +102,9 @@ export default {
       localStorage.removeItem('key')
       this.$router.push('/location')
     },
+    sideNavFromAvatarFalse() {
+      this.sideNav = false;
+    }
   },
   data() {
     const loc = JSON.parse(localStorage.getItem('key'));
