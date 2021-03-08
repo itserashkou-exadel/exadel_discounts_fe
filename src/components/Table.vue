@@ -19,11 +19,11 @@
         <div class="d-flex flex-column justify-center align-center not_found" v-else-if="this.$store.state.filterRequest === true">
         <DeleteFilter></DeleteFilter>
             <h2>No services found! Try to change filtered settings.</h2>
-            <v-img class="pt-10" src="../../public/sad_cat.png"></v-img>
+            <v-img class="pt-10" src="../../public/sadCat.jpg"></v-img>
         </div>
         <div class="d-flex flex-column justify-center align-center not_found" v-else>
             <h2>No services found!</h2>
-            <v-img class="pt-10" src="../../public/sadest_cat.png"></v-img>
+            <v-img class="pt-10" src="../../public/sadCat.jpg"></v-img>
         </div>
     </div>
 </template>

@@ -245,10 +245,11 @@ let store = new Vuex.Store({
             try{
                 const response = await axios.post(searchDiscount, search);
                 commit('receiveSearch', response.data);
-                console.log("Render")
                 commit('setDisPage', 1);
             }catch (e) {
-                commit('setNoFound', true);
+                if (e.response.status === 404) {
+                    commit('setNoFound', true);
+                }
             }
         },
         async allInputPost({commit}, search){
