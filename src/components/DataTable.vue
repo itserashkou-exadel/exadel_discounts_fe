@@ -286,7 +286,6 @@
                 this.$store.state.discounts = [];
                 const resSearch = () => {
                     if(this.$store.state.filterRequest === false) {
-                        console.log(this.$store.state.userLocation.country, this.$store.state.userLocation.town);
                         this.inputPost(
                             {
                                 "searchText": this.$store.state.keyWord,
@@ -389,28 +388,24 @@
 
                 }
                 if (e.target.innerText === this.$t('dtDiscount')) {
-                    console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'AmountOfDiscount')
                     this.$store.commit('setSortOrder', 2)
                     this.$store.commit('setPreviousOrder', 2)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                 }
                 if (e.target.innerText === this.$t('dtStartDate')) {
-                    console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'DateStart')
                     this.$store.commit('setSortOrder', 3)
                     this.$store.commit('setPreviousOrder', 3)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                 }
                 if (e.target.innerText === this.$t('dtFinishDate')) {
-                    console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'DateEnd')
                     this.$store.commit('setSortOrder', 4)
                     this.$store.commit('setPreviousOrder', 4)
                     this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex]
                 }
                 if (e.target.innerText === this.$t('dtRating')) {
-                    console.log(e.target.innerText)
                     this.$store.commit('setSortName', 'RatingDiscount')
                     this.$store.commit('setSortOrder', 5)
                     this.$store.commit('setPreviousOrder', 5)
