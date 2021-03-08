@@ -32,10 +32,16 @@
                         <v-card-text>
                             <h4>Company:{{marker.company.name}}</h4>
                             <hr>
+                            <p>{{marker.description}}</p>
                             <p>{{marker.amountOfDiscount}}%</p>
-                            <p>{{marker.id}}</p>
-                            <p>{{marker.address.location.longitude}}</p>
-                            <p>{{marker.address.location.latitude}}</p>
+<!--                            <p>{{marker.id}}</p>-->
+<!--                            <p>{{marker.address.location.longitude}}</p>-->
+<!--                            <p>{{marker.address.location.latitude}}</p>-->
+                            <v-btn
+                                    class="ml-3 mb-3 primary"
+                                    @click="$router.push({name:'detail',params:{_id:marker.id}})"
+                            >Подробно
+                            </v-btn>
                         </v-card-text>
                     </v-card>
                 </MglPopup>
