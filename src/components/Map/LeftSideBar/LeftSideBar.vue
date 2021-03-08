@@ -81,16 +81,16 @@
             }
         },
         methods: {
-            test() {
-                console.log('TEST!')
-            },
+            // test() {
+            //     // console.log('TEST!')
+            // },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"
             },
         },
-        mounted() {
-            console.log('PROPS navBar:', this.props)
-        },
+        // mounted() {
+        //     console.log('PROPS navBar:', this.props)
+        // },
         computed: {
             propsFromMap: function () {
                 return this.discountsFromStore
@@ -98,7 +98,7 @@
         },
         watch: {
             discountsFromStore() {
-                console.log('WATCH')
+                // console.log('WATCH')
                 this.myKey += 1
             }
         },

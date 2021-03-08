@@ -2,7 +2,8 @@
     <div>
         <v-container v-if="signFormToggle" class="d-flex align-center wrapper" fluid>
             <v-card width="500" class="mx-auto ">
-                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">{{$t('yourLocationIs')}}
+                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">
+                    {{$t('yourLocationIs')}}
                     {{this.$store.state.userLocation.town}}
                 </v-card-title>
                 <v-card-text>
@@ -21,13 +22,6 @@
                         >
                             {{$t('sLogIn')}}
                         </v-btn>
-
-<!--                        <v-btn @click="logout()">-->
-<!--                            Logout-->
-<!--                        </v-btn>-->
-
-<!--                        <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>-->
-
                     </v-container>
 
                 </v-card-text>
@@ -89,9 +83,9 @@
 
                 const userLoc = this.$store.getters.getUserLocation
                 localStorage.setItem('key', JSON.stringify(userLoc))
-                console.group('User data')
-                console.log('User location in VueX store: ', this.$store.getters.getUserLocation.town)
-                console.groupEnd()
+                // console.group('User data')
+                // console.log('User location in VueX store: ', this.$store.getters.getUserLocation.town)
+                // console.groupEnd()
                 this.$router.push('/home')
             },
             login() {
@@ -138,7 +132,7 @@
         },
         watch: {
             language() {
-                console.log(this.language)
+                // console.log(this.language)
                 if (this.language === 'ru') {
                     this.setLanguage(true);
                     import(`../langs/ru.json`).then((msg) => {
@@ -162,13 +156,5 @@
     .wrapper {
         height: 100vh;
         background: #40BDED;
-    }
-
-    .loginDisabled {
-        /*display: none;*/
-    }
-
-    .titleNone {
-        display: none;
     }
 </style>

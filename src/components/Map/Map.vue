@@ -20,8 +20,6 @@
         >
             <MglMarker :coordinates="[marker.address.location.longitude, marker.address.location.latitude]"
                        v-for="marker in discountsFromStore"
-                       @click="test"
-
             >
                 <MglPopup>
                     <v-card
@@ -82,8 +80,8 @@
         mixins: [token],
 
         async mounted() {
-            console.log(this.$store.getters.getUserLocation.town)
-            console.log('Map.vue Rendred')
+            // console.log(this.$store.getters.getUserLocation.town)
+            // console.log('Map.vue Rendred')
 
         },
         async created() {
@@ -96,7 +94,7 @@
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     this.discountsFromStore = this.$store.state.discounts;
-                    console.log('DISCOUNTS FETCHED FROM STORE: ', this.discountsFromStore)
+                    // console.log('DISCOUNTS FETCHED FROM STORE: ', this.discountsFromStore)
                 }
             },
         },
@@ -115,14 +113,11 @@
                             zoom: 16,
                             speed: 2
                         })
-                        console.log('FLY TO WORK')
+                        // console.log('FLY TO WORK')
                     }
                 })
 
                 //console.log('WORK', coordinates)
-            },
-            test() {
-                //console.log('CLICK TEST!')
             },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"
