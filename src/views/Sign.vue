@@ -83,9 +83,6 @@
 
                 const userLoc = this.$store.getters.getUserLocation
                 localStorage.setItem('key', JSON.stringify(userLoc))
-                // console.group('User data')
-                // console.log('User location in VueX store: ', this.$store.getters.getUserLocation.town)
-                // console.groupEnd()
                 this.$router.push('/home')
             },
             login() {
@@ -94,20 +91,6 @@
             logout() {
                 auth.logout();
             },
-            // getProtectedApiData() {
-            //     const authorizationHeader = 'Authorization';
-            //     auth.getAccessToken().then((userToken) => {
-            //         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-            //
-            //         axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
-            //             .then((response) => {
-            //                 this.dataEventRecordsItems = response.data;
-            //             })
-            //             .catch((error) => {
-            //                 alert(error);
-            //             });
-            //     });
-            // },
             deleteLocalStorage() {
                 localStorage.clear()
                 this.signFormToggle = false
@@ -129,31 +112,20 @@
         mounted() {
             this.goForAuth(auth);
             this.getCountries();
-            // if (this.$store.getters.language === "Ru") {
-            //   import(`../langs/ru.json`).then((msg) => {
-            //     this.$i18n.setLocaleMessage('ru', msg);
-            //     this.$i18n.locale = 'ru';
-            //   })
-            // }else {
-            //     import(`../langs/en.json`).then((msg) => {
-            //       this.$i18n.setLocaleMessage('en', msg);
-            //       this.$i18n.locale = 'en';
-            //   })
-            // }
         },
         watch: {
             language() {
                 // console.log(this.language)
                 if (this.language === 'ru') {
-                   this.setLanguage(true);
+                    this.setLanguage(true);
                     sessionStorage.setItem('userLanguage', 'Ru')
                     import(`../langs/ru.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('ru', msg);
                         this.$i18n.locale = 'ru';
                     })
                 } else {
-                  this.setLanguage(false);
-                  sessionStorage.setItem('userLanguage', 'En')
+                    this.setLanguage(false);
+                    sessionStorage.setItem('userLanguage', 'En')
                     import(`../langs/en.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('en', msg);
                         this.$i18n.locale = 'en';
