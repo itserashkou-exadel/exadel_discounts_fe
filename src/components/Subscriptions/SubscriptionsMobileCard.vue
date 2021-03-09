@@ -31,12 +31,12 @@
       {{ subscription.description.substring(0, 120) }}
     </v-card-subtitle>
     <v-card-subtitle v-else>
-      <b>Description:<br></b>
+      <b>{{$t('Description:')}}<br></b>
       {{ subscription.description.substring(0, 120) + " ..." }}
     </v-card-subtitle>
     <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
       <v-btn @click="$router.push({name:'detail',params:{_id:subscription.id}})" color="primary" raised>
-        Подробнее
+        {{$t('MoreInfo')}}
       </v-btn>
       <Promocodes v-bind:subscrItem="subscription"
                   :showSubscriptions="showSubscriptions"
