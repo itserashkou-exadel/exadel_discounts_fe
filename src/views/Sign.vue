@@ -2,7 +2,8 @@
     <div>
         <v-container v-if="signFormToggle" class="d-flex align-center wrapper" fluid>
             <v-card width="500" class="mx-auto ">
-                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">{{$t('yourLocationIs')}}
+                <v-card-title :class="{'titleNone' : this.$store.state.userLocation.length === 0 }">
+                    {{$t('yourLocationIs')}}
                     {{this.$store.state.userLocation.town}}
                 </v-card-title>
                 <v-card-text>
@@ -21,15 +22,7 @@
                         >
                             {{$t('sLogIn')}}
                         </v-btn>
-
-<!--                        <v-btn @click="logout()">-->
-<!--                            Logout-->
-<!--                        </v-btn>-->
-
-<!--                        <v-btn @click="deleteLocalStorage">Clear Local Storage!</v-btn>-->
-
                     </v-container>
-
                 </v-card-text>
             </v-card>
         </v-container>
@@ -89,9 +82,6 @@
 
                 const userLoc = this.$store.getters.getUserLocation
                 localStorage.setItem('key', JSON.stringify(userLoc))
-                // console.group('User data')
-                // console.log('User location in VueX store: ', this.$store.getters.getUserLocation.town)
-                // console.groupEnd()
                 this.$router.push('/home')
             },
             login() {
@@ -100,20 +90,6 @@
             logout() {
                 auth.logout();
             },
-            // getProtectedApiData() {
-            //     const authorizationHeader = 'Authorization';
-            //     auth.getAccessToken().then((userToken) => {
-            //         axios.defaults.headers.common[authorizationHeader] = `Bearer ${userToken}`;
-            //
-            //         axios.get('https://localhost:9001/api/v1/tags/get/%D0%BA')
-            //             .then((response) => {
-            //                 this.dataEventRecordsItems = response.data;
-            //             })
-            //             .catch((error) => {
-            //                 alert(error);
-            //             });
-            //     });
-            // },
             deleteLocalStorage() {
                 localStorage.clear()
                 this.signFormToggle = false
@@ -135,31 +111,20 @@
         mounted() {
             this.goForAuth(auth);
             this.getCountries();
-            // if (this.$store.getters.language === "Ru") {
-            //   import(`../langs/ru.json`).then((msg) => {
-            //     this.$i18n.setLocaleMessage('ru', msg);
-            //     this.$i18n.locale = 'ru';
-            //   })
-            // }else {
-            //     import(`../langs/en.json`).then((msg) => {
-            //       this.$i18n.setLocaleMessage('en', msg);
-            //       this.$i18n.locale = 'en';
-            //   })
-            // }
         },
         watch: {
             language() {
                 console.log(this.language)
                 if (this.language === 'ru') {
-                   this.setLanguage(true);
+                    this.setLanguage(true);
                     sessionStorage.setItem('userLanguage', 'Ru')
                     import(`../langs/ru.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('ru', msg);
                         this.$i18n.locale = 'ru';
                     })
                 } else {
-                  this.setLanguage(false);
-                  sessionStorage.setItem('userLanguage', 'En')
+                    this.setLanguage(false);
+                    sessionStorage.setItem('userLanguage', 'En')
                     import(`../langs/en.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('en', msg);
                         this.$i18n.locale = 'en';
@@ -175,13 +140,5 @@
     .wrapper {
         height: 100vh;
         background: #40BDED;
-    }
-
-    .loginDisabled {
-        /*display: none;*/
-    }
-
-    .titleNone {
-        display: none;
     }
 </style>
