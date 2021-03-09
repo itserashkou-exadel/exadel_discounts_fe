@@ -65,7 +65,7 @@
             if (this.$route.params.placeOfCall === 'editingOfDiscount') {
                 const id = this.$route.params.idOfDiscount;
                 const funcForPromos = () => {
-                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                    axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/upsert/get/${id}`).then((response) => {
                         const discount = response.data
                         this.countActivePromocodePerUser = discount.promocodeOptions.countActivePromocodePerUser
                         this.daysDurationPromocode = discount.promocodeOptions.daysDurationPromocode

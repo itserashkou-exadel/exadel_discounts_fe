@@ -75,7 +75,7 @@ export default {
       const putFavor = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/favorites/delete/${id}`,
         }).then(response => show());
       };
       this.getToken(putFavor);

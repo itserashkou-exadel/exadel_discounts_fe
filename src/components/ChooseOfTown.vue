@@ -63,7 +63,7 @@
             if (this.$route.params.placeOfCall === 'editingOfDiscount') {
                 const id = this.$route.params.idOfDiscount;
                 const funcForCountries = () => {
-                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                    axios.get(`${process.env.VUE_APP_URL_SWAGGER}/v1/discounts/upsert/get/${id}`).then((response) => {
                         const discount = response.data;
                         if (this.$store.getters.language === 'Ru') {
                             this.selectedCountry = discount.address.country || discount.translations[0].address.country;

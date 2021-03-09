@@ -101,7 +101,7 @@ export default {
       const promo = () => {
         axios({
           method: 'get',
-          url: `https://localhost:9001/api/v1/discounts/subscriptions/get/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/subscriptions/get/${id}`,
         }).then(response => {
           updatePromocodes(response.data.promocodes);
         }).catch(error => {
@@ -116,7 +116,7 @@ export default {
       let showPromocodes = () => this.getPromo(discountId);
       const putSubscr = () => axios({
         method: 'put',
-        url: `https://localhost:9001/api/v1/discounts/subscriptions/delete/${discountId}/${promoId}`,
+        url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/subscriptions/delete/${discountId}/${promoId}`,
       }).then(response => showPromocodes())
           .then(response => showSubscriptions());
       this.getToken(putSubscr);

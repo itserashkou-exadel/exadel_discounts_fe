@@ -239,7 +239,7 @@ export default {
       const putSubscr = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/favorites/add/${id}`,
         }).then(()=>{
           this.showFavorites()
           })
@@ -251,7 +251,7 @@ export default {
       const putFavor = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/favorites/delete/${id}`,
         }).then(()=>{
           this.$store.state.favorites = this.$store.state.favorites.filter(item => item.id !== id);
           })
@@ -262,7 +262,7 @@ export default {
       const checkFavor = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/favorites/exists/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/favorites/exists/${id}`,
         }).then((promise) => {
           this.card="mdi-heart"})
       };
@@ -297,7 +297,7 @@ export default {
         str += rate;
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/vote/${str}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/vote/${str}`,
         }).then(this.detailView).then(()=> this.readonlyRating = true);
       }
       this.getToken(putRate)
@@ -324,7 +324,7 @@ export default {
       const putSubscr = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
         });
       };
       this.getToken(putSubscr);
@@ -334,7 +334,7 @@ export default {
       const promo = () => {
         axios({
           method: 'get',
-          url: `https://localhost:9001/api/v1/discounts/subscriptions/get/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/subscriptions/get/${id}`,
         }).then(response => {
           updatePromocodes(response.data.promocodes);
         }).catch(error => {
@@ -347,7 +347,7 @@ export default {
       const checkRating = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/vote/exists/${this.$route.params._id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/vote/exists/${this.$route.params._id}`,
         }).then((promise) => {
           this.readonlyRating = true;
           })

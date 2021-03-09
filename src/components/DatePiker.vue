@@ -128,7 +128,7 @@
             if (this.$route.params.placeOfCall == 'editingOfDiscount') {
                 const id = this.$route.params.idOfDiscount;
                 const funcForDate = () => {
-                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                    axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/upsert/get/${id}`).then((response) => {
                             const discount = response.data;
                             this.dateStart = discount.startDate.substr(0, 10),
                                 this.dateFinish = discount.endDate.substr(0, 10)
