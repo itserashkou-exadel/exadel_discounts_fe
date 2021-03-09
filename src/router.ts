@@ -28,6 +28,7 @@ const router = new VueRouter({
         {
             path: '/',
             name: 'signWrapper',
+            // @ts-ignore
             component: SignWrapper
         },
         {
