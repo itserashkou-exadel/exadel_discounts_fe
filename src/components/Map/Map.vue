@@ -20,8 +20,6 @@
         >
             <MglMarker :coordinates="[marker.address.location.longitude, marker.address.location.latitude]"
                        v-for="marker in discountsFromStore"
-                       @click="test"
-
             >
                 <MglPopup>
                     <v-card
@@ -34,11 +32,8 @@
                             <hr>
                             <p>{{marker.description}}</p>
                             <p>{{marker.amountOfDiscount}}%</p>
-<!--                            <p>{{marker.id}}</p>-->
-<!--                            <p>{{marker.address.location.longitude}}</p>-->
-<!--                            <p>{{marker.address.location.latitude}}</p>-->
                             <v-btn
-                                    class="ml-3 mb-3 primary"
+                                    class="ml-8 mb-3 primary"
                                     @click="$router.push({name:'detail',params:{_id:marker.id}})"
                             >Подробно
                             </v-btn>
@@ -58,7 +53,6 @@
     import token from '@/mixins/token.mixin'
     import DeleteFilter from "@/components/Filter/DeleteFilter";
 
-
     export default {
         components: {
             DeleteFilter,
@@ -72,22 +66,19 @@
             return {
                 accessToken: 'pk.eyJ1Ijoic3RpZ21hYnkiLCJhIjoiY2traWJpcGc5MHduNjJwcXRnYXlyM2p2ayJ9.oQtdhez6948Aq30pQWBGiA', // your access token. Needed if you using Mapbox maps
                 mapStyle: 'mapbox://styles/mapbox/streets-v11', // your map style
-                //coordinates: [27.544592, 53.898477],
                 coordinates: null,
                 dialog: false,
                 discountsFromStore: [],
                 result: [],
+                markerID: null
             };
         },
         mixins: [token],
-
-        async mounted() {
-            console.log(this.$store.getters.getUserLocation.town)
-            console.log('Map.vue Rendred')
-
+        beforeMount() {
+            const auth = this.$store.getters.getAuth
+            this.setSecondAuth(auth);
         },
         async created() {
-
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
         },
@@ -96,16 +87,12 @@
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
                     this.discountsFromStore = this.$store.state.discounts;
-                    console.log('DISCOUNTS FETCHED FROM STORE: ', this.discountsFromStore)
                 }
             },
         },
         methods: {
             onMapLoaded(event) {
-                // in component
                 this.map = event.map;
-                // or just to store if you want have access from other components
-                //this.$store.map = event.map;
             },
             jumpToMarker(coordinates, id) {
                 this.discountsFromStore.find((i) => {
@@ -115,14 +102,8 @@
                             zoom: 16,
                             speed: 2
                         })
-                        console.log('FLY TO WORK')
                     }
                 })
-
-                //console.log('WORK', coordinates)
-            },
-            test() {
-                //console.log('CLICK TEST!')
             },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"

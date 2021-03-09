@@ -5,7 +5,6 @@
             width="375px"
     >
         <v-divider></v-divider>
-
         <template>
             <v-expansion-panels focusable>
                 <v-expansion-panel
@@ -42,7 +41,7 @@
                                 <v-btn
                                         class="ml-3 mb-3 primary"
                                         @click="$router.push({name:'detail',params:{_id:item.id}})"
-                                >Подробно
+                                >{{$t('MoreInfo')}}
                                 </v-btn>
                             </v-img>
 
@@ -53,24 +52,15 @@
                             <v-card-text class="text--primary">
                                 <div>{{item.description}}</div>
                                 <v-divider></v-divider>
-<!--                                <div>{{item.id}}</div>-->
-<!--                                <div>{{item.address.location.longitude}}</div>-->
-<!--                                <div>{{item.address.location.latitude}}</div>-->
                             </v-card-text>
-
                         </v-card>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
         </template>
     </v-navigation-drawer>
-
 </template>
-
 <script>
-
-    import axios from "axios";
-
     export default {
         name: "LeftSideBar",
         props: ['discountsFromStore', 'jumpToMarker'],
@@ -81,15 +71,9 @@
             }
         },
         methods: {
-            test() {
-                console.log('TEST!')
-            },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"
             },
-        },
-        mounted() {
-            console.log('PROPS navBar:', this.props)
         },
         computed: {
             propsFromMap: function () {
@@ -98,7 +82,6 @@
         },
         watch: {
             discountsFromStore() {
-                console.log('WATCH')
                 this.myKey += 1
             }
         },

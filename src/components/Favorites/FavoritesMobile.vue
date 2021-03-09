@@ -1,7 +1,11 @@
 <template>
   <v-container fluid>
-    <v-card class="mb-16 pb-5">
+    <v-card class="mb-16 pb-5"
+            flat>
       <v-row>
+        <v-toolbar-title class="ml-7">
+          <h3>Избранное</h3>
+        </v-toolbar-title>
         <v-col lg="4"
                sm="12"
                md="6"
@@ -63,7 +67,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": this.pageNumber,
               "searchPaginationCountElementPerPage": this.pageSize,
-              "searchLanguage": "Ru"
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
             }
         ).then(response => this.updatePageCount())
             .catch((error) => {
@@ -125,6 +129,10 @@ export default {
               }
           ))
     },
+  },
+  created() {
+    const auth = this.getAuth
+    this.setSecondAuth(auth);
   },
   mounted() {
     this.showFavorites();

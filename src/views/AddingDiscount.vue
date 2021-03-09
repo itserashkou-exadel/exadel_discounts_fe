@@ -104,6 +104,7 @@
                                           v-model="titleEn"
                                           :label='item.labelEn'
                                           outlined
+                                          :rules='nameRules'
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"-->
 <!--                                          @keydown.enter="nothing"-->
@@ -120,6 +121,7 @@
                                           v-model='vendorEn'
                                           :label='item.labelEn'
                                           outlined
+                                          :rules='nameRules'
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"-->
 <!--                                          @keydown.enter="nothing"-->
@@ -136,6 +138,7 @@
                                           v-model='vendorDescrEn'
                                           :label='item.labelEn'
                                           outlined
+                                          :rules='nameRules'
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"-->
 <!--                                          @keydown.enter="nothing"-->
@@ -152,6 +155,7 @@
                                         v-model='descriptionEn'
                                         :label='item.labelEn'
                                         outlined
+                                        :rules='nameRules'
                             ></v-textarea>
 <!--                            <v-textarea v-if="i === 3 && ($i18n.locale === 'en')"-->
 <!--                                        @keydown.enter="nothing"-->
@@ -169,6 +173,7 @@
                                     v-bind:tags="tagsRu"
                                     v-on:tagShow="changeTagShow"
                                     v-on:sendTags="setTagsRu"
+                                    :rules='nameRules'
                     />
 <!--                    <chips-for-tags v-if="$i18n.locale === 'en'"-->
 <!--                                    v-bind:icon-show="true"-->
@@ -181,6 +186,7 @@
                                     v-bind:tags="tagsEn"
                                     v-bind:icon-show="false"
                                     v-on:sendTags="setTagsEn"
+                                    :rules='nameRules'
                     />
 <!--                    <chips-for-tags v-if="$i18n.locale === 'en'"-->
 <!--                                    v-show="tagShowAd"-->
@@ -211,6 +217,7 @@
                             :placeholder="this.$t('adLabelOfDiscountVendorWorkHours')"
                             multiple
                             outlined
+                            :rules='nameRules'
                     ></v-combobox>
                     <v-text-field
                             @keydown.enter="nothing"
@@ -266,9 +273,13 @@
                             v-model="coordinate2"
                             :rules='onlyNumberRules'
                     ></v-text-field>
+                  <v-checkbox
+                      v-model="enabledPromocodes"
+                  ></v-checkbox>
                     <PromocodesForAdding
                             v-bind:item1="promo1"
                             v-on:selectedPromos="getPromo"
+                            v-if="enabledPromocodes"
                     />
                 </v-col>
             </v-row>
@@ -384,9 +395,9 @@
                 trueOrFalseArr: [false, false, false, false],
                 dialog: false,
                 valid: true,
-                nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
-                onlyNumberRules: [v => /^-?\d*(\.\d+)?$/.test(v) || 'The field must contain only numbers'],
-                emailRules: [v => /^[0-9a-z_-]+@[0-9a-z_-]+\.[a-z]{2,5}$/i.test(v) || "Email is not correctly"],
+                nameRules: [v => (v && v.length > 0) || this.$t('theFieldCantBeEmpty')],
+                onlyNumberRules: [v => /^-?\d*(\.\d+)?$/.test(v) || this.$t('onlyNumbers')],
+                emailRules: [v => /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i.test(v) || this.$t('emailIsNotCorrectly')],
                 dateStart: '',
                 dateFinish: '',
                 address: {
@@ -395,6 +406,7 @@
                     line: null
                 },
                 discount: null,
+              enabledPromocodes: true
             }
         },
         mixins: [token],
@@ -435,7 +447,6 @@
                 }
             },
             nothing(event) {
-                console.log(event)
                 event.preventDefault()
             },
             agree() {
@@ -523,6 +534,7 @@
                         pictureUrl: this.picture,
                         tags: this.tagsRu,
                         promocodeOptions: {
+                        enabledPromocodes: this.enabledPromocodes,
                         countActivePromocodePerUser: this.promo1,
                         daysDurationPromocode: this.promo2,
                         countSymbolsPromocode: this.promo3,
@@ -553,7 +565,6 @@
                             }
                         ]
                     }
-
                 // if (this.$i18n.locale === 'en') {
                 //     return {
                 //         name: this.titleEn,
@@ -696,6 +707,7 @@
                     if (this.$i18n.locale === 'en') {
                         this.selectedCountry = this.discount.translations[0].address.country || this.discount.address.country;
                         this.selectedCity = this.discount.translations[0].address.city || this.discount.address.city}
+                    this.enabledPromocodes = this.discount.promocodeOptions.enabledPromocodes;
                     if (this.discount.promocodeOptions !== undefined) {
                     this.promo1 = this.discount.promocodeOptions.countActivePromocodePerUser,
                     this.promo2 = this.discount.promocodeOptions.daysDurationPromocode,
@@ -782,22 +794,15 @@
         },
         computed: {
             ...mapGetters(['allDiscounts', 'language', 'allCountries']),
-      changeOfModel: function () {
-        console.log(4444)
-    }
-
+        created(){
+          const auth = this.$store.getters.getAuth
+          this.setSecondAuth(auth);
+        }
         },
         mounted() {
-            // this.keyFromStore = this.$store.state.keyForAdditingDiscount
             this.getCountries();
             this.fillingFields();
         },
-        // watch: {
-        //     keyFromStore () {
-        //         this.getCountries();
-        //         this.fillingFields();
-        //     }
-        // }
     }
 </script>
 <style scoped>

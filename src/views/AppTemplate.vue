@@ -5,7 +5,7 @@
                    dark
                    color="primary"
         >
-            <HeadermMobile class="hidden-md-and-up"/>
+            <HeadermMobile class="hidden-lg-and-up"/>
             <Header class="hidden-sm-and-down"/>
         </v-app-bar>
         <v-main>
@@ -23,16 +23,44 @@
     import Footer from "@/components/Footer";
     import HeadermMobile from "@/components/Header/HeaderMobile";
     import token from "@/mixins/token.mixin"
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapMutations} from 'vuex'
 
     export default {
-        components: {HeadermMobile, Footer, Header},
-        mixins: [token],
-        computed: {
-            ...mapGetters(['getAuth'])
-        },
-
+      components: {HeadermMobile, Footer, Header},
+      mixins: [token],
+      computed: {
+        ...mapGetters(['getAuth'])
+      },
+      data() {
+        return {
+          userClaimsLocalData: [],
+        }
+      },
+      methods: {
+        ...mapMutations(['setUserClaims'])
+      },
+      async created() {
+        const auth = this.$store.getters.getAuth
+        this.setSecondAuth(auth);
+        const data = await this.$store.getters.getAuth.getUser();
+        this.userClaimsLocalData = data
+        this.setUserClaims({
+          name: data.profile.name,
+          surname: data.profile.surname,
+          role: data.profile.role,
+          //email: result.profile.email
+        })
+        if (window.location.pathname !== '' && data === null) {
+          this.$store.getters.getAuth.login()
+        }
+        const localStorage = JSON.parse(window.localStorage.getItem('key'));
+        this.$store.commit('setUserLocation', localStorage);
+        this.setLanguage();
+      }
     }
+
+
+
 </script>
 
 <style>

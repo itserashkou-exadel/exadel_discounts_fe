@@ -11,9 +11,6 @@
     export default Vue.extend({
         name: 'App',
         components: {},
-        created(): void {
-            console.log('Vue App Title : ', process.env.VUE_APP_URL)
-        },
         data: () => ({
             //
         }),

@@ -71,14 +71,14 @@
                         text
                         @click="dialog = false"
                 >
-                    {{$t('fClose')}}
+                    {{$t('fCancel')}}
                 </v-btn>
                 <v-btn
                         color="blue darken-1"
                         text
                         @click="getFilteredData"
                 >
-                    {{$t('fSave')}}
+                    {{$t('fOk')}}
                 </v-btn>
             </v-card-actions>
         </v-card>

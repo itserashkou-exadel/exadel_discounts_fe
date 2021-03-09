@@ -14,6 +14,7 @@
         >
           <v-card color="primary" flat tile class="d-flex justify-end mr-3">
           <v-switch
+              class="d-none"
               v-model="isRuLocale"
               :label="`${isRuLocale ? 'RU' : 'EN'}`"
           ></v-switch>
@@ -64,6 +65,7 @@ export default {
 <style scoped>
 .row {
   margin-bottom: 0;
+  min-height: 50px;
 }
 
 col-9 {

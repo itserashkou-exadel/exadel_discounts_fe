@@ -1,12 +1,12 @@
 <template>
     <v-menu
-            :offset-x="true"
+            :offset-x="false"
             :offset-y="true"
     >
         <template v-slot:activator="{ on, attrs }">
             <div class="d-flex">
                 <v-text-field
-                              placeholder="Search"
+                              :placeholder="$t('search')"
                               class="mt-4"
                               color="blue lighten-5"
                               v-model="search"

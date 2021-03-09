@@ -7,11 +7,6 @@
       max-height="800px"
   >
     <div>
-      <!--            <v-img-->
-      <!--                    height="250"-->
-      <!--                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"-->
-      <!--                    class="white&#45;&#45;text "-->
-      <!--            >-->
       <v-img
           height="250"
           :src="pictureCheck(description.picture)"
@@ -62,18 +57,6 @@
       <b>{{$t('Description:')}}<br></b>
       {{ description.description.substring(0, 120) + " ..." }}
     </v-card-subtitle>
-<!--    <v-sheet>-->
-<!--      <v-chip-group-->
-<!--          show-arrows-->
-<!--          class="v-slide-group&#45;&#45;has-affixes v-slide-group__next"-->
-<!--          active-class="light-blue accent-4 white&#45;&#45;text">-->
-<!--        <v-chip v-for="tag in description.tags"-->
-<!--                disabled-->
-<!--                :key="tag"-->
-<!--        > {{ tag }}-->
-<!--        </v-chip>-->
-<!--      </v-chip-group>-->
-<!--    </v-sheet>-->
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
 
@@ -88,9 +71,8 @@
       </v-card>
     </v-dialog>
     <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
-      <!--            <v-btn @click="$router.push({name:'detail'},detailView())" color="blue" raised>-->
       <v-btn @click="$router.push({name:'detail',params:{_id:description.id}})" color="blue" raised  class="white--text">
-          {{$t('сhoose')}}
+          {{$t('choose')}}
       </v-btn>
       <div v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" class="mr-12">
         <v-icon @click="editItem(description)">
@@ -109,7 +91,6 @@
     import Mixin from "@/mixins/token.mixin";
     const moment = require('moment')
     import token from '@/mixins/token.mixin'
-
     export default {
   name: "Card",
   mixins: [token, Mixin],
@@ -145,11 +126,9 @@
   methods: {
 
     pictureCheck(url) {
-      // console.log(url)
       if (url === false)
         return "../../public/cat_404.jpg"
       else
-          // return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
         return url
     },
     iconSwitch(id) {
@@ -167,9 +146,7 @@
       let loc = JSON.parse(localStorage.getItem('key'));
       let country = loc.country ? loc.country : 'Беларусь';
       let city = loc.city ? loc.city : 'Минск';
-      console.log("1")
       const getFavoritesResult = () => {
-        console.log("2")
         this.getFavorites(
             {
               "searchDiscountOption": "Favorites",
@@ -187,15 +164,13 @@
       this.getToken(getFavoritesResult);
       },
     addToFavorites: function (id) {
-      // console.log('discounts', id);
       const putSubscr = () => {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
         }).then(()=>{
           this.showFavorites()
-          console.log("ddd")})
-            // .then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+         })
       };
       this.getToken(putSubscr);
     },
@@ -207,8 +182,7 @@
           url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
         }).then(()=>{
           this.$store.state.favorites = this.$store.state.favorites.filter(item => item.id !== id);
-          console.log("ddd")})
-            // .then(response => console.log(response.status, "delete"));
+         })
       };
       this.getToken(putFavor);
     },
@@ -219,13 +193,11 @@
         return this.defaultCardColor
     },
     checkToFavorites: function (id) {
-      // console.log('discounts', id);
       const checkFavor = () => {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/favorites/exists/${id}`,
         }).then((promise) => {
-          console.log(promise.status,id)
           this.card="mdi-heart"})
       };
       this.getToken(checkFavor);
