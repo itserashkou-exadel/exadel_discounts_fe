@@ -108,14 +108,10 @@
         },
         computed: {
           visibleCards: function() {
-            // this.$store.commit('setItemsPerPage', this.itemsPerPage)
-            // console.log(this.$store.state.itemsPerPage)
             this.page = this.$store.state.disPage;
               this.isLoad = this.$store.state.disablePag;
-            // this.searchWord = this.$store.state.keyWord;
             let arr = [];
             let info = this.allDiscounts.slice((this.page - 1)* this.$store.state.itemsPerPage, this.page* this.$store.state.itemsPerPage);
-            // console.log(info)
             info.map(item => {
               arr.push({
                 id: item.id,
@@ -135,7 +131,6 @@
 
           },
             paginationLength: function() {
-              // console.log(Math.ceil(this.allDiscounts.length/this.$store.state.itemsPerPage));
               return this.pageCount = Math.ceil(this.allDiscounts.length/this.$store.state.itemsPerPage)
             },
             ...mapGetters(["allDiscounts"]),
