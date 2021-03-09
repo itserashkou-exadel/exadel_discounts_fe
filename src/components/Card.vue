@@ -167,7 +167,7 @@
       const putSubscr = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/favorites/add/${id}`,
         }).then(()=>{
           this.showFavorites()
          })
@@ -179,7 +179,7 @@
       const putFavor = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/favorites/delete/${id}`,
         }).then(()=>{
           this.$store.state.favorites = this.$store.state.favorites.filter(item => item.id !== id);
          })
@@ -196,7 +196,7 @@
       const checkFavor = () => {
         axios({
           method: 'put',
-          url: `https://localhost:9001/api/v1/discounts/favorites/exists/${id}`,
+          url: `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/favorites/exists/${id}`,
         }).then((promise) => {
           this.card="mdi-heart"})
       };
@@ -223,7 +223,7 @@
     deleteDiscount(){
       let itemID = this.deleteID;
       const goDelete = () => {
-        let url = 'https://localhost:9001/api/v1/discounts/delete/';
+        let url = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/delete/`;
         url += itemID;
         axios.delete(url);
         if(this.$store.state.userClaimsStoreData.role !== "Administrator" && this.delItem.deleted !== true){

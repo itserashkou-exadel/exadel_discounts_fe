@@ -7,15 +7,6 @@ Vue.use(Vuex);
 const searchDiscount = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/search`;
 const urlGetDiscountsById = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/get/`;
 const deleteURL = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/delete/`
-// const urlRating = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/vote/`
-
-// const urlDiscounts = 'http://localhost:3000/discounts';
-// const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
-// const urlGetDiscountsById = 'https://localhost:9001/api/v1/discounts/get/Ru/';
-// const urlCountries = 'https://localhost:9001/api/v1/addresses/all/Ru/countries'
-// const deleteURL = 'https://localhost:9001/api/v1/discounts/delete/'
-// const urlRating = 'https://localhost:9001/api/v1/discounts/vote/'
-
 
 let store = new Vuex.Store({
     state: {
@@ -227,11 +218,11 @@ let store = new Vuex.Store({
             commit('setCountries', response.data);
         },
         async addDiscount ({commit}, newDiscount) {
-            await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
+            await axios.post(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/upsert`, newDiscount);
             commit('createDiscount', newDiscount);
         },
         async updateDiscount ( { commit }, discount) {
-            await axios.post(`https://localhost:9001/api/v1/discounts/upsert`, discount);
+            await axios.post(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/upsert`, discount);
             commit('updTask', discount);
         },
         async inputPost({commit}, search){

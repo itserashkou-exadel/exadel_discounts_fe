@@ -672,7 +672,7 @@
                 if (this.$route.params.placeOfCall === 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
                     const funcForDisc = () => {
-                    axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
+                    axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/upsert/get/${id}`).then((response) => {
                     this.discount = response.data
                     if (this.discount.language === 'Ru') {
                         this.titleRu = this.discount.name;

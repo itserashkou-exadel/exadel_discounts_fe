@@ -139,7 +139,7 @@
                         searchAddressCountry: this.country,
                         searchAddressCity: this.city
                     }
-                    axios.post('https://localhost:9001/api/v1/statistics/discounts', surchObj).then(
+                    axios.post(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/statistics/discounts`, surchObj).then(
                         (data) => {
                             this.valuesForText[0] = data.data.discountsTotal;
                             this.valuesForText[1] = data.data.subscriptionsTotal;
@@ -154,7 +154,7 @@
             }
         },
       mounted() {
-          this.getCountries();
+         this.getCountries();
       }
     }
 </script>

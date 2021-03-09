@@ -66,7 +66,7 @@
                 }
                 const getTags = () => {
                     if (this.search !== '') {
-                    axios.get(`https://localhost:9001/api/v1/tags/get/${this.search}`).then((data) =>
+                    axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/tags/get/${this.search}`).then((data) =>
                         this.tags = data.data
                     )}
                 }

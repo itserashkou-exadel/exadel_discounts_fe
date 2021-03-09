@@ -27,7 +27,7 @@ export default {
         },
         getCountries () {
             const getCountries = () => {
-            this.goFetchForCountries(`https://localhost:9001/api/v1/addresses/all/${this.$store.getters.language}/countries`)}
+            this.goFetchForCountries(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/addresses/all/${this.$store.getters.language}/countries`)}
             this.getToken(getCountries)
         },
         setFirstAuth (auth) {
