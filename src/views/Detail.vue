@@ -243,10 +243,6 @@ export default {
       required: true
     },
   },
-  created() {
-    const auth = this.getAuth
-    this.setSecondAuth(auth);
-  },
   methods: {
     iconSwitch(id) {
       if (this.card === "mdi-heart-outline") {

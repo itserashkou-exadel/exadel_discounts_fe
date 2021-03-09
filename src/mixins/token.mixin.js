@@ -13,7 +13,6 @@ export default {
         ...mapGetters(['allDiscounts']),
         myF: function () {
             let a = this.$i18n.locale;
-            console.log(a);
         }
     },
     methods: {

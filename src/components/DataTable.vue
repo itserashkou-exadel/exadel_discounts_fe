@@ -202,8 +202,6 @@
         }),
         mixins: [token],
         created() {
-            const auth = this.getAuth
-            this.setSecondAuth(auth);
             this.$store.state.filterRequest = false;
             this.$store.state.filterIcon = false;
             this.$store.state.sortOption.sortName = "RatingDiscount";

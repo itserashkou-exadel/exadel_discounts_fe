@@ -80,22 +80,10 @@
             };
         },
         mixins: [token],
-
-        async mounted() {
-            console.log(this.$store.getters.getUserLocation.town)
-            console.log('Map.vue Rendred')
-
-        },
-      beforeMount() {
-        const auth = this.getAuth
-        this.setSecondAuth(auth);
-        this.setLanguage();
-      },
       async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
         },
-
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {
@@ -122,11 +110,6 @@
                         console.log('FLY TO WORK')
                     }
                 })
-
-                //console.log('WORK', coordinates)
-            },
-            test() {
-                //console.log('CLICK TEST!')
             },
             pictureCheck(url) {
                 return url ? url : "../../public/cat_404.jpg"

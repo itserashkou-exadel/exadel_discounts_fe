@@ -139,7 +139,6 @@
                         searchAddressCountry: this.country,
                         searchAddressCity: this.city
                     }
-                    console.log(surchObj);
                     axios.post('https://localhost:9001/api/v1/statistics/discounts', surchObj).then(
                         (data) => {
                             this.valuesForText[0] = data.data.discountsTotal;
@@ -153,7 +152,7 @@
                 }
                 this.getToken(getStatistic);
             }
-        },
+        }
     }
 </script>
 <style scoped>

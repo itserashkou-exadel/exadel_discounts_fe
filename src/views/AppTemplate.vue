@@ -9,9 +9,7 @@
             <Header class="hidden-sm-and-down"/>
         </v-app-bar>
         <v-main>
-<!--            <keep-alive>-->
                 <router-view></router-view>
-<!--            </keep-alive>-->
         </v-main>
         <v-footer absolute app flat color="primary">
             <Footer/>
@@ -31,11 +29,6 @@
       computed: {
         ...mapGetters(['getAuth'])
       },
-      data() {
-        return {
-          userClaimsLocalData: [],
-        }
-      },
       methods: {
         ...mapMutations(['setUserClaims'])
       },
@@ -43,16 +36,14 @@
         const auth = this.$store.getters.getAuth
         this.setSecondAuth(auth);
         const data = await this.$store.getters.getAuth.getUser();
-        this.userClaimsLocalData = data
+        if (window.location.pathname !== '' && data === null) {
+          this.$store.getters.getAuth.login()
+        }
         this.setUserClaims({
           name: data.profile.name,
           surname: data.profile.surname,
           role: data.profile.role,
-          //email: result.profile.email
         })
-        if (window.location.pathname !== '' && data === null) {
-          this.$store.getters.getAuth.login()
-        }
         const localStorage = JSON.parse(window.localStorage.getItem('key'));
         this.$store.commit('setUserLocation', localStorage);
         this.setLanguage();
