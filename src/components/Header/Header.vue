@@ -119,6 +119,7 @@ export default {
     },
     changeUserLoc() {
       localStorage.removeItem('key')
+      sessionStorage.removeItem('currentComponent')
       this.$router.push('/location')
     },
   },
