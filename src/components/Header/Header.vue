@@ -123,7 +123,6 @@ export default {
     ...mapGetters(['getUserClaims']),
     getDataFromStore()
     {
-      console.log(this.$store.getters.getUserClaims)
       this.user.initials = `${this.$store.getters.getUserClaims.name[0]}${this.$store.getters.getUserClaims.surname[0]}`;
       this.user.fullName = `${this.$store.getters.getUserClaims.name} ${this.$store.getters.getUserClaims.surname}`;
       this.user.mail = `${this.$store.getters.getUserClaims.mail}`;
