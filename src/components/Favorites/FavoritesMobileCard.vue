@@ -35,9 +35,12 @@
       {{ favorite.description.substring(0, 120) + " ..." }}
     </v-card-subtitle>
     <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
-      <v-btn @click="$router.push({name:'detail',params:{_id:favorite.id}})" color="primary" raised>
+      <v-btn @click="$router.push({name:'detail',params:{_id:favorite.id}})" color="primary">
         Подробнее
       </v-btn>
+      <v-icon class="mr-7" @click="deleteFromFavor(favorite.id)">
+        mdi-delete
+      </v-icon>
     </v-row>
   </v-card>
 </template>
@@ -47,6 +50,7 @@
 import Mixin from "@/mixins/token.mixin";
 const moment = require('moment')
 import token from '@/mixins/token.mixin'
+import axios from "axios";
 
 export default {
   name: "FavoritesMobileCard",
@@ -66,7 +70,16 @@ export default {
     pictureCheck(url) {
       return url ? url : "../../public/cat_404.jpg"
     },
-
+    deleteFromFavor: function (id) {
+      let show = () => this.showFavorites();
+      const putFavor = () => {
+        axios({
+          method: 'put',
+          url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
+        }).then(response => show());
+      };
+      this.getToken(putFavor);
+    },
   },
 }
 </script>
