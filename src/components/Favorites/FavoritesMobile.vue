@@ -127,8 +127,9 @@ export default {
     },
   },
   created() {
-    const auth = this.$store.getters.getAuth
+    const auth = this.getAuth
     this.setSecondAuth(auth);
+    this.setLanguage();
   },
   mounted() {
     this.showFavorites();

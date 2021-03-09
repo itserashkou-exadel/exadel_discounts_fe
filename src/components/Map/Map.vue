@@ -87,8 +87,9 @@
 
         },
       beforeMount() {
-        const auth = this.$store.getters.getAuth
+        const auth = this.getAuth
         this.setSecondAuth(auth);
+        this.setLanguage();
       },
       async created() {
             // We need to set mapbox-gl library here in order to use it in template
