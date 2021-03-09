@@ -54,7 +54,7 @@
 
 <script>
     import AuthService from '@/services/auth.service';
-    import {mapMutations, mapActions} from 'vuex'
+    import {mapMutations} from 'vuex'
     import ChooseOfTown from "@/components/ChooseOfTown";
     import token from '@/mixins/token.mixin'
 
@@ -73,7 +73,6 @@
         }),
         methods: {
             ...mapMutations(['setUserLocation', 'setLanguage']),
-            // ...mapActions(['goForAuth']),
             setUserLocAndLocalStorage() {
                 this.setUserLocation({
                     country: this.selectedCountry,
@@ -89,11 +88,6 @@
             },
             logout() {
                 auth.logout();
-            },
-            deleteLocalStorage() {
-                localStorage.clear()
-                this.signFormToggle = false
-                this.$store.state.userLocation = []
             },
             backToSelectTown() {
                 this.signFormToggle = true
@@ -113,7 +107,7 @@
         watch: {
             $route: {
               immediate: true,
-              handler(to, from) {
+              handler(to) {
                 document.title = to.meta.title || 'Discounts';
               }
             },
