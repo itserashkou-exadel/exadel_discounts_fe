@@ -108,5 +108,6 @@
  "prDelete": "DELETE",
  "emailIsNotCorrectly": "Email is not correctly",
  "theFieldCantBeEmpty": "The field cant be empty",
- "onlyNumbers": "The field must contain only numbers"
+ "onlyNumbers": "The field must contain only numbers",
+ "search": "search"
 }

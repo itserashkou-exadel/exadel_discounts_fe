@@ -204,7 +204,6 @@
         created() {
             const auth = this.getAuth
             this.setSecondAuth(auth);
-            this.setLanguage();
             this.$store.state.filterRequest = false;
             this.$store.state.filterIcon = false;
             this.$store.state.sortOption.sortName = "RatingDiscount";
@@ -212,16 +211,14 @@
             this.$store.state.sortOption.sortOrder[5] = false;
             this.$store.state.sortOption.sortIndex = 5;
             this.$store.commit('setDisPage', 1)
-            this.getUser2();
-            const localStorage = JSON.parse(window.localStorage.getItem('key'));
-            this.$store.commit('setUserLocation', localStorage);
+
             const resSearch = () => {
                 this.inputPost(
                     {
                         "searchText": null,
                         "searchDiscountOption": "All",
-                        "searchAddressCountry": localStorage.country,
-                        "searchAddressCity": localStorage.town,
+                        "searchAddressCountry": this.$store.state.userLocation.country,
+                        "searchAddressCity": this.$store.state.userLocation.town,
                         "searchSortFieldOption": "RatingDiscount",
                         "searchSortOption": "Desc",
                         "searchPaginationPageNumber": 1,
@@ -620,18 +617,6 @@
                     this.result.push(this.editedItem)
                 }
                 this.close()
-            },
-            async getUser2() {
-                const auth = this.getAuth
-                const result = await auth.getUser()
-                this.userClaimsLocalData = result
-                this.setUserClaims({
-                    name: result.profile.name,
-                    surname: result.profile.surname,
-                    role: result.profile.role,
-
-                    //email: result.profile.email
-                })
             },
             rowClass(item){
                 if(this.$store.state.userClaimsStoreData.role === "Administrator" && item.deleted === true){

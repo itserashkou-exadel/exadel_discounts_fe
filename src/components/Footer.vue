@@ -65,6 +65,7 @@ export default {
 <style scoped>
 .row {
   margin-bottom: 0;
+  min-height: 50px;
 }
 
 col-9 {

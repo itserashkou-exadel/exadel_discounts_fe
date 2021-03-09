@@ -246,7 +246,6 @@ export default {
   created() {
     const auth = this.getAuth
     this.setSecondAuth(auth);
-    this.setLanguage()
   },
   methods: {
     iconSwitch(id) {
