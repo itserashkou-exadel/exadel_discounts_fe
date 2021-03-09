@@ -27,16 +27,16 @@
     </v-row>
     <v-divider></v-divider>
     <v-card-subtitle v-if="favorite.description.length<120">
-      <b>Description:<br></b>
+      <b>{{$t('Description:')}}<br></b>
       {{ favorite.description.substring(0, 120) }}
     </v-card-subtitle>
     <v-card-subtitle v-else>
-      <b>Description:<br></b>
+      <b>{{$t('Description:')}}<br></b>
       {{ favorite.description.substring(0, 120) + " ..." }}
     </v-card-subtitle>
     <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
-      <v-btn @click="$router.push({name:'detail',params:{_id:favorite.id}})" color="primary">
-        Подробнее
+      <v-btn @click="$router.push({name:'detail',params:{_id:favorite.id}})" color="primary" raised>
+        {{$t('MoreInfo')}}
       </v-btn>
       <v-icon class="mr-7" @click="deleteFromFavor(favorite.id)">
         mdi-delete
