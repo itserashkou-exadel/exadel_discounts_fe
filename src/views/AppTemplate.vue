@@ -31,7 +31,15 @@
         computed: {
             ...mapGetters(['getAuth'])
         },
-
+       async mounted() {
+          const auth = this.$store.getters.getAuth
+          this.setSecondAuth(auth);
+         const data = await this.$store.getters.getAuth.getUser()
+         if (window.location.pathname !== '' && data === null) {
+           this.$store.getters.getAuth.login()
+         }
+          this.setLanguage();
+        }
     }
 </script>
 
