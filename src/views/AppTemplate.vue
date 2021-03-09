@@ -22,6 +22,7 @@
     import HeadermMobile from "@/components/Header/HeaderMobile";
     import token from "@/mixins/token.mixin"
     import {mapGetters, mapMutations} from 'vuex'
+    import axios from 'axios';
 
     export default {
       components: {HeadermMobile, Footer, Header},
@@ -33,17 +34,28 @@
         ...mapMutations(['setUserClaims'])
       },
       async created() {
-        const auth = this.$store.getters.getAuth
+        const auth = this.$store.getters.getAuth;
         this.setSecondAuth(auth);
         const data = await this.$store.getters.getAuth.getUser();
         if (window.location.pathname !== '' && data === null) {
           this.$store.getters.getAuth.login()
         }
-        this.setUserClaims({
-          name: data.profile.name,
-          surname: data.profile.surname,
-          role: data.profile.role,
-        })
+        this.userClaimsLocalData = data;
+        const getUserInfo = () => {
+                    axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
+                    .then((responce) => {
+                        this.setUserClaims({
+                            name: responce.data.name,
+                            surname: responce.data.surname,
+                            role: data.profile.role,
+                            mail: responce.data.mail,
+                            language: responce.data.language,
+                            photoUrl: responce.data.photoUrl,
+                        })
+                    });
+                };
+                this.getToken(getUserInfo);
+        
         const localStorage = JSON.parse(window.localStorage.getItem('key'));
         this.$store.commit('setUserLocation', localStorage);
         this.setLanguage();

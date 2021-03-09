@@ -44,11 +44,12 @@
               color="#2196f3"
               size="48"
           >
-            <span class="white--text headline">{{ user.initials }}</span>
+            <v-img v-if="user.pictureUri" :src="user.pictureUri" aspect-ratio="1.4"/>
+            <span v-else class="white--text headline">{{ user.initials }}</span>
           </v-avatar>
         </v-btn>
       </template>
-      <Avatar/>
+      <Avatar v-bind:user="user" :getData="getDataFromStore"/>
     </v-menu>
   </v-app-bar>
 </template>
@@ -67,9 +68,10 @@ export default {
     return {
       signIn: "sign",
       user: {
-        initials: 'JD',
-        fullName: 'John Doe',
-        email: 'john.doe@doe.com',
+        initials: null,
+        fullName: null,
+        mail: null,
+        pictureUri: null
       },
       currentLoc: {
         country: loc.country,
@@ -123,10 +125,15 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getUserClaims'])
-  },
-
-
+    ...mapGetters(['getUserClaims']),
+    getDataFromStore()
+    {
+      this.user.initials = `${this.$store.getters.getUserClaims.name[0]}${this.$store.getters.getUserClaims.surname[0]}`;
+      this.user.fullName = `${this.$store.getters.getUserClaims.name} ${this.$store.getters.getUserClaims.surname}`;
+      this.user.mail = `${this.$store.getters.getUserClaims.mail}`;
+      this.user.pictureUri = `${this.$store.getters.getUserClaims.photoUrl}`;
+    }
+  }
 }
 </script>
 
