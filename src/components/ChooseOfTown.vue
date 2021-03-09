@@ -6,6 +6,7 @@
                 outlined
                 v-model="selectedCountry"
                 @change="selectCountryHandler"
+                :rules='nameRules'
         ></v-select>
         <v-select
                 :items="cities"
@@ -13,6 +14,7 @@
                 outlined
                 @change="selectCityHandler"
                 v-model="selectedCity"
+                :rules='nameRules'
         ></v-select>
     </div>
 </template>
@@ -32,7 +34,8 @@
                 selectedCountry: null,
                 selectedCity: null,
                 countries: [],
-                cities: []
+                cities: [],
+                nameRules: [v => (v && v.length > 0) || this.$t('theFieldCantBeEmpty')],
             }
         },
         computed: {
@@ -52,7 +55,7 @@
                const funcForCities = () => {
                    let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
 
-                axios.get(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/cities/${this.selectedCountry}`)
+                axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/addresses/all/${languageForCountries}/cities/${this.selectedCountry}`)
                     .then((response) =>
                         this.cities = response.data
                     )}

@@ -125,7 +125,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": this.pageNumber,
               "searchPaginationCountElementPerPage": this.pageSize,
-              "searchLanguage": "Ru"
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
             }
         ).then(response => this.updatePageCount())
             .catch((error) => {
@@ -180,6 +180,11 @@ export default {
         }
       }
     }
+  },
+  created() {
+    const auth = this.getAuth
+    this.setSecondAuth(auth);
+    this.setLanguage()
   },
   mounted() {
     this.showFavorites();

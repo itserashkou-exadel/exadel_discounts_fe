@@ -71,7 +71,6 @@ import {mapGetters, mapActions} from 'vuex'
 import Modal from "@/components/Filter/Modal";
 import Promocodes from "@/components/Subscriptions/Promocodes";
 
-
 const moment = require('moment')
 
 export default {
@@ -119,7 +118,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": this.pageNumber,
               "searchPaginationCountElementPerPage": this.pageSize,
-              "searchLanguage": "Ru"
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
             }
         ).then(response => this.updatePageCount())
             .catch((error) => {
@@ -166,9 +165,13 @@ export default {
       }
     }
   },
+  created() {
+    const auth = this.getAuth
+    this.setSecondAuth(auth);
+    this.setLanguage()
+  },
   mounted() {
     this.showSubscriptions();
-
   },
 }
 </script>
