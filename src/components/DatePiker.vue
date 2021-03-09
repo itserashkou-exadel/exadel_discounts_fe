@@ -104,7 +104,7 @@
                 menuFinish: false,
                 picker: new Date().toISOString().substr(0, 10),
                 dateStart: '',
-                dateFinish: ''
+                dateFinish: '',
             }
         },
         mixins: [token],

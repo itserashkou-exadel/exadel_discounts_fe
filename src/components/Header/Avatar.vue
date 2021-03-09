@@ -24,11 +24,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import token from "@/mixins/token.mixin"
 
 export default {
   props: ["user"],
   
   name: "Avatar",
+  mixins: [token],
   data() {
     return {
       signIn: "signWrapper"
@@ -37,6 +39,8 @@ export default {
   methods: {
     userLogOut() {
       localStorage.removeItem("key");
+      sessionStorage.removeItem('currentComponent');
+      sessionStorage.removeItem('userLanguage');
       const auth = this.getAuth;
       auth.logout();
     },
@@ -49,6 +53,10 @@ export default {
   computed: {
     ...mapGetters(["getAuth"]),
   },
+  beforeMount() {
+        const auth = this.$store.getters.getAuth
+        this.setSecondAuth(auth);
+      },
 };
 </script>
 

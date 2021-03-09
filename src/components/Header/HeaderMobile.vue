@@ -54,7 +54,7 @@
               >
                 <v-list-item v-for="link in links()" :key="link.text" router :to="{name:link.route}"
                              @click="seeCurrentComponent(link)"
-                             v-on:click="sideNav = false"
+
                 >
                   <v-list-item-title>{{ link.text }}</v-list-item-title>
                 </v-list-item>
@@ -85,12 +85,14 @@
 import Avatar from "@/components/Header/Avatar";
 import Searching from "@/components/Header/Searching";
 import {mapActions} from "vuex";
+
 export default {
   name: "Header_mobile",
   components: {Searching, Avatar},
   methods: {
     ...mapActions(['goForCurrentComponent']),
-    seeCurrentComponent (item) {
+    seeCurrentComponent(item) {
+      this.sideNav= false
       if (item.text === 'СКИДКИ' || item.text ==='DISCOUNTS') {
         this.goForCurrentComponent('HomePage');
         sessionStorage.setItem('currentComponent', 'HomePage')

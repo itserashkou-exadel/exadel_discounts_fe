@@ -42,7 +42,7 @@
                                 <v-btn
                                         class="ml-3 mb-3 primary"
                                         @click="$router.push({name:'detail',params:{_id:item.id}})"
-                                >Подробно
+                                >{{$t('MoreInfo')}}
                                 </v-btn>
                             </v-img>
 
@@ -53,11 +53,9 @@
                             <v-card-text class="text--primary">
                                 <div>{{item.description}}</div>
                                 <v-divider></v-divider>
-                                <div>{{item.id}}</div>
-                                <div>{{item.address.location.longitude}}</div>
-                                <div>{{item.address.location.latitude}}</div>
-                                <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
-                                <!--                                <div>Whitsunday Island, Whitsunday Islands</div>-->
+<!--                                <div>{{item.id}}</div>-->
+<!--                                <div>{{item.address.location.longitude}}</div>-->
+<!--                                <div>{{item.address.location.latitude}}</div>-->
                             </v-card-text>
 
                         </v-card>
@@ -70,7 +68,6 @@
 </template>
 
 <script>
-
     import axios from "axios";
 
     export default {

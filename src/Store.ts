@@ -1,16 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
-import logger from "vuex/types/logger";
 
 Vue.use(Vuex);
 
-const urlDiscounts = `http://localhost:3000/discounts`;
 const searchDiscount = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/search`;
 const urlGetDiscountsById = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/get/`;
-const urlCountries = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/addresses/all/Ru/countries`
 const deleteURL = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/delete/`
-const urlRating = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/vote/`
+// const urlRating = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/vote/`
 
 // const urlDiscounts = 'http://localhost:3000/discounts';
 // const searchDiscount = 'https://localhost:9001/api/v1/discounts/search';
@@ -31,7 +28,7 @@ let store = new Vuex.Store({
         details: {},
         discounts: [],
         switch: true,
-        language: 'Ru',
+        language: sessionStorage.getItem('userLanguage') || 'Ru',
         filtered: [],
         filteredDiscounts: [],
         countries: [],
@@ -145,9 +142,9 @@ let store = new Vuex.Store({
         setTrueFilterRequest(state){
             state.filterRequest = true;
         },
-        changeFilterRequest(state){
-          state.filterRequest =  !state.filterRequest;
-        },
+        // changeFilterRequest(state){
+        //   state.filterRequest =  !state.filterRequest;
+        // },
         changeKeyWord(state, key) {
             state.keyWord = key;
         },
@@ -162,8 +159,8 @@ let store = new Vuex.Store({
             state.details = {};
             state.details = dis;
         },
-        receiveSubscription(state, subscr) {
-            state.subscriptions = subscr;
+        receiveSubscription(state, subscribe) {
+            state.subscriptions = subscribe;
         },
         receiveFavorites(state, favor) {
             state.favorites = favor;
@@ -229,10 +226,6 @@ let store = new Vuex.Store({
             const response = await axios.get(str);
             commit('setCountries', response.data);
         },
-        async goFetchForCities({commit}, str) {
-            const response = await axios.get(str);
-            commit('setCities', response.data);
-        },
         async addDiscount ({commit}, newDiscount) {
             await axios.post('https://localhost:9001/api/v1/discounts/upsert', newDiscount);
             commit('createDiscount', newDiscount);
@@ -245,10 +238,11 @@ let store = new Vuex.Store({
             try{
                 const response = await axios.post(searchDiscount, search);
                 commit('receiveSearch', response.data);
-                console.log("Render")
                 commit('setDisPage', 1);
             }catch (e) {
-                commit('setNoFound', true);
+                if (e.response.status === 404) {
+                    commit('setNoFound', true);
+                }
             }
         },
         async allInputPost({commit}, search){
@@ -260,14 +254,13 @@ let store = new Vuex.Store({
             }));
         },
         async getSubscription({commit}, searchSub) {
-            const response = await axios.post(searchDiscount, searchSub).catch(error => {
-              //  console.log(error.response.data.error);
+            const response = await axios.post(searchDiscount, searchSub).catch(()=> {
                 return {data: []};
             });
             commit('receiveSubscription', response.data)
         },
         async getFavorites({commit}, searchFav) {
-            const response = await axios.post(searchDiscount, searchFav).catch(error => {
+            const response = await axios.post(searchDiscount, searchFav).catch(() => {
            //     console.log(error.response.data.error);
                 return {data: []};
             });
@@ -295,7 +288,7 @@ let store = new Vuex.Store({
         async deleteDiscount({commit}, id){
               let url = deleteURL;
               url += id;
-              const response = await axios.delete(url);
+              // const response = await axios.delete(url);
         }
     }
 
