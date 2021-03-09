@@ -204,17 +204,7 @@
         created() {
             const auth = this.getAuth
             this.setSecondAuth(auth);
-          if (sessionStorage.getItem('userLanguage') === 'En') {
-            import(`@/langs/en.json`).then((msg) => {
-              this.$i18n.setLocaleMessage('en', msg);
-              this.$i18n.locale = 'en';
-            })
-          }
-          else {
-            import(`@/langs/ru.json`).then((msg) => {
-              this.$i18n.setLocaleMessage('ru', msg);
-              this.$i18n.locale = 'ru'})
-          }
+            this.setLanguage();
             this.$store.state.filterRequest = false;
             this.$store.state.filterIcon = false;
             this.$store.state.sortOption.sortName = "RatingDiscount";

@@ -105,5 +105,8 @@
  "numberOfPromocode": "PROMOCODE NUMBER",
  "prDateOfStart": "START DATE",
  "prDateOfEnd": "END DATE",
- "prDelete": "DELETE"
+ "prDelete": "DELETE",
+ "emailIsNotCorrectly": "Email is not correctly",
+ "theFieldCantBeEmpty": "The field cant be empty",
+ "onlyNumbers": "The field must contain only numbers"
 }
