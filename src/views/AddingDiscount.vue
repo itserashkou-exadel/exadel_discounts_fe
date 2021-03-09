@@ -365,7 +365,6 @@
                 promo4: 0,
                 tagShowAd: false,
                 val: true,
-                dialog: false,
                 componentKey: 0,
                 countries: [],
                 cities: [],
@@ -627,13 +626,13 @@
                         if (this.$route.params.placeOfCall === 'newDiscount') {
                             this.addDiscount(
                                 {...{id: uuidv4()}, ...(this.objectWithoutId())}
-                            ).catch((e) => this.val = false)
+                            ).catch(() => this.val = false)
                             this.dialog = true
                             this.val = true
                         } else {
                             this.updateDiscount(
                                 {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
-                            ).catch((e) => {this.val = false; this.dialog = true})
+                            ).catch(() => {this.val = false; this.dialog = true})
                             .then(() => {
                                 if (this.val === true)
                                 {this.$router.push({name:'home'})}
@@ -656,21 +655,21 @@
                 this.address.line = value;
             },
             titleOfPage() {
-                if (this.$route.params.placeOfCall == 'newDiscount') {
+                if (this.$route.params.placeOfCall === 'newDiscount') {
                     return this.$tc('adEditingNewDiscount', 2)
                 } else {
                     return this.$tc('adEditingNewDiscount', 1)
                 }
             },
             titleOfButton() {
-                if (this.$route.params.placeOfCall == 'newDiscount') {
+                if (this.$route.params.placeOfCall === 'newDiscount') {
                     return this.$tc('adAddSave', 1)
                 } else {
                     return this.$tc('adAddSave', 2);
                 }
             },
             async fillingFields() {
-                if (this.$route.params.placeOfCall == 'editingOfDiscount') {
+                if (this.$route.params.placeOfCall === 'editingOfDiscount') {
                     const id = this.$route.params.idOfDiscount;
                     const funcForDisc = () => {
                     axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
@@ -706,10 +705,11 @@
                         this.selectedCountry = this.discount.translations[0].address.country || this.discount.address.country;
                         this.selectedCity = this.discount.translations[0].address.city || this.discount.address.city}
                     this.enabledPromocodes = this.discount.promocodeOptions.enabledPromocodes;
-                    if (this.discount.promocodeOptions !== undefined) {
-                    this.promo1 = this.discount.promocodeOptions.countActivePromocodePerUser,
-                    this.promo2 = this.discount.promocodeOptions.daysDurationPromocode,
-                    this.promo3 = this.discount.promocodeOptions.countSymbolsPromocode,
+                    console.log(this.discount.promocodeOptions.enabledPromocodes)
+                    if (this.discount.promocodeOptions.enabledPromocodes === true) {
+                    this.promo1 = this.discount.promocodeOptions.countActivePromocodePerUser;
+                    this.promo2 = this.discount.promocodeOptions.daysDurationPromocode;
+                    this.promo3 = this.discount.promocodeOptions.countSymbolsPromocode;
                     this.promo4 = this.discount.promocodeOptions.timeLimitAddingInSeconds}
                     this.vendorPhone = this.discount.company.phoneNumber;
                     this.vendorEmail = this.discount.company.mail;
@@ -722,7 +722,7 @@
                     this.coordinate2 = this.discount.address.location.longitude;
                     this.picture = this.discount.pictureUrl || '';
                     })}
-                    this.getToken(funcForDisc)
+                    await this.getToken(funcForDisc)
                 }
             },
             transformateToDays(str) {
@@ -751,37 +751,37 @@
             },
             transformateDays() {
                 let str = '';
-                if (this.vendorSelectedDays.indexOf(this.$t('Monday')) != -1) {
+                if (this.vendorSelectedDays.indexOf(this.$t('Monday')) !== -1) {
                     str = '1'
                 } else {
                     str = '0'
                 }
-                if (this.vendorSelectedDays.indexOf(this.$t('Tuesday')) != -1) {
+                if (this.vendorSelectedDays.indexOf(this.$t('Tuesday')) !== -1) {
                     str = `${str}1`
                 } else {
                     str = `${str}0`
                 }
-                if (this.vendorSelectedDays.indexOf(this.$t('Wednesday')) != -1) {
+                if (this.vendorSelectedDays.indexOf(this.$t('Wednesday')) !== -1) {
                     str = `${str}1`
                 } else {
                     str = `${str}0`
                 }
-                if (this.vendorSelectedDays.indexOf(this.$t('Thursday')) != -1) {
+                if (this.vendorSelectedDays.indexOf(this.$t('Thursday')) !== -1) {
                     str = `${str}1`
                 } else {
                     str = `${str}0`
                 }
-                if (this.vendorSelectedDays.indexOf(this.$t('Friday')) != -1) {
+                if (this.vendorSelectedDays.indexOf(this.$t('Friday')) !== -1) {
                     str = `${str}1`
                 } else {
                     str = `${str}0`
                 }
-                if (this.vendorSelectedDays.indexOf(this.$t('Saturday')) != -1) {
+                if (this.vendorSelectedDays.indexOf(this.$t('Saturday')) !== -1) {
                     str = `${str}1`
                 } else {
                     str = `${str}0`
                 }
-                if (this.vendorSelectedDays.indexOf(this.$t('Sunday')) != -1) {
+                if (this.vendorSelectedDays.indexOf(this.$t('Sunday')) !== -1) {
                     str = `${str}1`
                 } else {
                     str = `${str}0`
@@ -800,9 +800,7 @@
     }
 </script>
 <style scoped>
-
     #addDiscountMap {
-
         height: 49vh;
     }
 </style>
