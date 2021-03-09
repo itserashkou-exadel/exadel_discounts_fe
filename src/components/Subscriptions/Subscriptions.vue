@@ -37,7 +37,8 @@
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="12" lg="12" class="d-flex justify-center">
-              <p class="mb-0">{{ item.description }}</p>
+              <p v-if="item.description.length<95" class="my-5">{{ item.description }}</p>
+              <p v-else class="my-5">{{item.description.substring(0, 95) + " ..." }}</p>
             </v-col>
             <v-col cols="9" lg="9" class="d-flex justify-space-around">
               <v-btn class="font-weight-light"
@@ -168,7 +169,6 @@ export default {
   created() {
     const auth = this.getAuth
     this.setSecondAuth(auth);
-    this.setLanguage()
   },
   mounted() {
     this.showSubscriptions();

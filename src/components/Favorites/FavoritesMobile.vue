@@ -1,7 +1,11 @@
 <template>
   <v-container fluid>
-    <v-card class="mb-16 pb-5">
+    <v-card class="mb-16 pb-5"
+            flat>
       <v-row>
+        <v-toolbar-title class="ml-7">
+          <h3>Избранное</h3>
+        </v-toolbar-title>
         <v-col lg="4"
                sm="12"
                md="6"
@@ -129,7 +133,6 @@ export default {
   created() {
     const auth = this.getAuth
     this.setSecondAuth(auth);
-    this.setLanguage();
   },
   mounted() {
     this.showFavorites();

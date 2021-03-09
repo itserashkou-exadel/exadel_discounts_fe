@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card class="mb-5 pb-5">
+    <v-card class="mb-5 pb-5" flat>
       <v-row>
         <v-toolbar-title class="ml-7">
           <h3>Подписки</h3>
@@ -133,7 +133,6 @@ export default {
   created() {
     const auth = this.getAuth
     this.setSecondAuth(auth);
-    this.setLanguage()
   },
   mounted() {
     this.showSubscriptions();

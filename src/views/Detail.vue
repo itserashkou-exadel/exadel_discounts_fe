@@ -5,11 +5,6 @@
         <v-col cols="12">
           <!--          dekstop-->
           <v-card max-width="100%" class="d-none mt-n7 d-md-block" style=" position:relative">
-            <!-- <v-img-->
-            <!-- max-height="50vh"-->
-            <!-- src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
-            <!-- class="d-flex"-->
-            <!-- >-->
             <v-img
                 max-height="70vh"
                 :src="pictureCheck(info.pictureUrl)"
@@ -20,9 +15,6 @@
 
                 {{ card }}
               </v-icon>
-              <!-- <v-icon class="ml-6 mt-4" large color="blue">-->
-              <!-- mdi-heart-outline-->
-              <!-- </v-icon>-->
             </v-img>
             <v-row>
               <v-col cols="5" class="mt-n4">
@@ -56,9 +48,6 @@ text-h2
                   <v-card-subtitle class="black--text mb-8 font-weight-bold" style="font-size:32px;">
                     {{ info.amountOfDiscount + "% " + $t('cardDiscount') }}
                   </v-card-subtitle>
-                  <!-- <v-icon color="white" large class="ml-14">-->
-                  <!-- mdi-heart-outline-->
-                  <!-- </v-icon>-->
                 </v-row>
                 <v-card-text class="black--text ml-2 mt-n14">
                   <p>{{ info.company.name }}</p>
@@ -102,11 +91,6 @@ col-xs-12"
           </v-card>
           <!--mobile-->
           <v-card max-width="100%" class="d-md-none">
-            <!-- <v-img-->
-            <!-- max-height="70vh"-->
-            <!-- src="https://images.wallpaperscraft.ru/image/burger_gamburger_chernyj_burger_sochnyj_116248_1920x1080.jpg"-->
-            <!-- class="d-flex"-->
-            <!-- >-->
             <v-img
                 max-height="70vh"
                 :src="pictureCheck(info.pictureUrl)"
@@ -114,7 +98,6 @@ col-xs-12"
             >
               <v-icon v-on:click="iconSwitch(info.id)"
                       class="ml-6 mt-4" large color="red">
-
                 {{ card }}
               </v-icon>
             </v-img>
@@ -205,7 +188,6 @@ text-h4
             <h1 class="mb-2 ">{{ $t('whereIsIt') }}</h1>
           </v-row>
           <v-card max-width="100%">
-            <!-- <v-img src="../../public/image1.png" height="60%"></v-img>-->
             <DetailPageMap v-bind:info="info"/>
           </v-card>
         </v-col>
@@ -246,7 +228,6 @@ export default {
   created() {
     const auth = this.getAuth
     this.setSecondAuth(auth);
-    this.setLanguage()
   },
   methods: {
     iconSwitch(id) {
@@ -265,8 +246,7 @@ export default {
           url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
         }).then(()=>{
           this.showFavorites()
-          console.log("ddd")})
-      // .then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+          })
       };
       this.getToken(putSubscr);
     },
@@ -278,19 +258,16 @@ export default {
           url: `https://localhost:9001/api/v1/discounts/favorites/delete/${id}`,
         }).then(()=>{
           this.$store.state.favorites = this.$store.state.favorites.filter(item => item.id !== id);
-          console.log("ddd")})
-        // .then(response => console.log(response.status, "delete"));
+          })
       };
       this.getToken(putFavor);
     },
     checkToFavorites: function (id) {
-      // console.log('discounts', id);
       const checkFavor = () => {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/favorites/exists/${id}`,
         }).then((promise) => {
-          console.log(promise.status,id)
           this.card="mdi-heart"})
       };
       this.getToken(checkFavor);
@@ -300,9 +277,7 @@ export default {
       let loc = JSON.parse(localStorage.getItem('key'));
       let country = loc.country ? loc.country : 'Беларусь';
       let city = loc.city ? loc.city : 'Минск';
-      console.log("1")
       const getFavoritesResult = () => {
-        console.log("2")
         this.getFavorites(
             {
               "searchDiscountOption": "Favorites",
@@ -319,7 +294,6 @@ export default {
     },
     ...mapActions["putRatingById"],
     ratingChose(rate) {
-      console.log(rate)
       let str = "";
       let self = this;
       const putRate = () => {
@@ -333,11 +307,9 @@ export default {
       this.getToken(putRate)
     },
     pictureCheck(url) {
-      console.log(url)
       if (url === false)
         return "../../public/cat_404.jpg.jpg"
       else
-// return "https://cdn.vuetifyjs.com/images/cards/cooking.png"
         return url
     },
     ...mapActions(['getDiscountById']),
@@ -357,7 +329,7 @@ export default {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/subscriptions/add/${self.$route.params._id}`,
-        }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
+        });
       };
       this.getToken(putSubscr);
     },
@@ -370,21 +342,18 @@ export default {
         }).then(response => {
           updatePromocodes(response.data.promocodes);
         }).catch(error => {
-          console.log("ERROR:", error);
           updatePromocodes([]);
         })
       };
       this.getToken(promo);
     },
     checkToRating: function () {
-      // console.log('discounts', id);
       const checkRating = () => {
         axios({
           method: 'put',
           url: `https://localhost:9001/api/v1/discounts/vote/exists/${this.$route.params._id}`,
         }).then((promise) => {
           this.readonlyRating = true;
-          console.log(promise.status, "STATUS");
           })
       };
       this.getToken(checkRating);
@@ -416,13 +385,12 @@ export default {
     this.detailView();
     this.checkToRating();
     this.checkToFavorites(this.$route.params._id)
-    console.log(this.info.ratingTotal)
+
   },
   computed: {
     ...mapGetters(["getDetailView"]),
     filterData() {
       this.info = this.getDetailView;
-      console.log(this.info)
       this.info.startDate = moment(this.info.startDate).format('L');
       this.info.endDate = moment(this.info.endDate).format('L');
       this.info.ratingTotal = +Number.parseFloat(this.info.ratingTotal).toFixed(2);

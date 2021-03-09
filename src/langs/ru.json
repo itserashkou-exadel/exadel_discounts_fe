@@ -119,5 +119,6 @@
   "prDelete": "УДАЛИТЬ",
   "emailIsNotCorrectly": "Email введен неверно",
   "theFieldCantBeEmpty": "Поле не может быть пустым",
-  "onlyNumbers": "Поле может содержать толь цифры"
+  "onlyNumbers": "Поле может содержать толь цифры",
+  "search": "поиск"
 }
