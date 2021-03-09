@@ -20,7 +20,7 @@ export default {
     getUserInfo() {
       const getUserInfo = () => {
         axios
-          .get('https://localhost:9001/api/v1/users/get')
+          .get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
           .then((responce) => {
             this.data = responce.data;
           });

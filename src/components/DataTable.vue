@@ -624,16 +624,25 @@
                 this.close()
             },
             async getUser2() {
+
                 const auth = this.getAuth
                 const result = await auth.getUser()
                 this.userClaimsLocalData = result
-                this.setUserClaims({
-                    name: result.profile.name,
-                    surname: result.profile.surname,
-                    role: result.profile.role,
 
-                    //email: result.profile.email
-                })
+                const getUserInfo = () => {
+                    axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
+                    .then((responce) => {
+                        this.setUserClaims({
+                            name: responce.data.name,
+                            surname: responce.data.surname,
+                            role: result.profile.role,
+                            mail: responce.data.mail,
+                            language: responce.data.language,
+                            photoUrl: responce.data.photoUrl,
+                        })
+                    });
+                };
+                this.getToken(getUserInfo);
             },
             rowClass(item){
                 if(this.$store.state.userClaimsStoreData.role === "Administrator" && item.deleted === true){

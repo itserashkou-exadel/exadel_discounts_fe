@@ -148,7 +148,7 @@ export default {
     updateUser() {
       const getUserInfo = () => {
         axios
-          .post("https://localhost:9001/api/v1/users/update", {
+          .post(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/update`, {
             phoneNumber: this.user.phoneNumber,
             password: this.repeatedPassword,
             photoUrl: this.user.photoUrl,
