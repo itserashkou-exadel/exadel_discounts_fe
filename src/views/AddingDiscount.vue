@@ -705,7 +705,6 @@
                         this.selectedCountry = this.discount.translations[0].address.country || this.discount.address.country;
                         this.selectedCity = this.discount.translations[0].address.city || this.discount.address.city}
                     this.enabledPromocodes = this.discount.promocodeOptions.enabledPromocodes;
-                    console.log(this.discount.promocodeOptions.enabledPromocodes)
                     if (this.discount.promocodeOptions.enabledPromocodes === true) {
                     this.promo1 = this.discount.promocodeOptions.countActivePromocodePerUser;
                     this.promo2 = this.discount.promocodeOptions.daysDurationPromocode;

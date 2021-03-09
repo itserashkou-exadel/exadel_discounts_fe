@@ -6,7 +6,6 @@
                 outlined
                 v-model="selectedCountry"
                 @change="selectCountryHandler"
-                :rules='nameRules'
         ></v-select>
         <v-select
                 :items="cities"
@@ -14,7 +13,6 @@
                 outlined
                 @change="selectCityHandler"
                 v-model="selectedCity"
-                :rules='nameRules'
         ></v-select>
     </div>
 </template>
@@ -35,7 +33,6 @@
                 selectedCity: null,
                 countries: [],
                 cities: [],
-                nameRules: [v => (v && v.length > 0) || this.$t('theFieldCantBeEmpty')],
             }
         },
         computed: {
