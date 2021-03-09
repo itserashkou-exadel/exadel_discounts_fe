@@ -152,7 +152,10 @@
                 }
                 this.getToken(getStatistic);
             }
-        }
+        },
+      mounted() {
+          this.getCountries();
+      }
     }
 </script>
 <style scoped>

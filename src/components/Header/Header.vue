@@ -49,7 +49,7 @@
           </v-avatar>
         </v-btn>
       </template>
-      <Avatar v-bind:user="user" :getData="getDataFromStore"/>
+      <Avatar v-bind:user="user"/>
     </v-menu>
   </v-app-bar>
 </template>
@@ -58,11 +58,14 @@
 import HeaderButton from "@/components/Header/HeaderButton";
 import Avatar from "@/components/Header/Avatar";
 import Searching from "@/components/Header/Searching";
-import {mapGetters, mapActions} from "vuex"
+import {mapGetters, mapActions, mapMutations} from "vuex"
+import axios from "axios";
+import token from '@/mixins/token.mixin'
 
 export default {
   name: "Header",
   components: {Searching, Avatar, HeaderButton},
+  mixins: [token],
   data() {
     const loc = JSON.parse(localStorage.getItem('key'));
     return {
@@ -81,6 +84,7 @@ export default {
   },
   methods: {
     ...mapActions(['goForCurrentComponent']),
+    ...mapMutations(['setUserClaims']),
     seeCurrentComponent (item) {
       if (item.text === 'СКИДКИ' || item.text ==='DISCOUNTS') {
         this.goForCurrentComponent('HomePage');
@@ -125,15 +129,31 @@ export default {
       this.$router.push('/location')
     },
   },
+  async created() {
+    const data = await this.$store.getters.getAuth.getUser();
+    const getUserInfo = () => {
+      axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
+          .then((responce) => {
+            this.setUserClaims({
+              name: responce.data.name,
+              surname: responce.data.surname,
+              role: data.profile.role,
+              mail: responce.data.mail,
+              language: responce.data.language,
+              photoUrl: responce.data.photoUrl,
+            })
+          })
+      .then(() => {
+        this.user.initials = `${this.$store.getters.getUserClaims.name.charAt(0)}${this.$store.getters.getUserClaims.surname.charAt(0)}`;
+        this.user.fullName = `${this.$store.getters.getUserClaims.name} ${this.$store.getters.getUserClaims.surname}`;
+        this.user.mail = `${this.$store.getters.getUserClaims.mail}`;
+        this.user.pictureUri = `${this.$store.getters.getUserClaims.photoUrl}`;
+      })
+    };
+    await this.getToken(getUserInfo);
+  },
   computed: {
     ...mapGetters(['getUserClaims']),
-    getDataFromStore()
-    {
-      this.user.initials = `${this.$store.getters.getUserClaims.name[0]}${this.$store.getters.getUserClaims.surname[0]}`;
-      this.user.fullName = `${this.$store.getters.getUserClaims.name} ${this.$store.getters.getUserClaims.surname}`;
-      this.user.mail = `${this.$store.getters.getUserClaims.mail}`;
-      this.user.pictureUri = `${this.$store.getters.getUserClaims.photoUrl}`;
-    }
   }
 }
 </script>

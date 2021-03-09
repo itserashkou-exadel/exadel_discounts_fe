@@ -105,7 +105,6 @@
             getUserCity(city) {
                 this.selectedCity = city
             },
-            ...mapActions(['goFetchForCountries'])
         },
         mixins: [token],
         mounted() {

@@ -38,26 +38,26 @@ export default {
   },
   mixins: [token],
   methods: {
-    ...mapActions(['goFetchForCountries']),
-    ...mapMutations(['setLanguage']),
+    // ...mapActions(['goFetchForCountries']),
+    // ...mapMutations(['setLanguage']),
   },
   watch: {
-    isRuLocale (){
-      if (this.isRuLocale) {
-        this.setLanguage(true);
-        import(`../langs/ru.json`).then((msg) =>{
-        this.$i18n.setLocaleMessage('ru', msg);
-        this.$i18n.locale = 'ru';
-        })
-      } else {
-        this.setLanguage(false);
-        import(`../langs/en.json`).then((msg) =>{
-          this.$i18n.setLocaleMessage('en', msg);
-          this.$i18n.locale = 'en';
-        })
-      }
-      this.getCountries()
-    }
+    // isRuLocale (){
+    //   if (this.isRuLocale) {
+    //     this.setLanguage(true);
+    //     import(`../langs/ru.json`).then((msg) =>{
+    //     this.$i18n.setLocaleMessage('ru', msg);
+    //     this.$i18n.locale = 'ru';
+    //     })
+    //   } else {
+    //     this.setLanguage(false);
+    //     import(`../langs/en.json`).then((msg) =>{
+    //       this.$i18n.setLocaleMessage('en', msg);
+    //       this.$i18n.locale = 'en';
+    //     })
+    //   }
+    //   this.getCountries()
+    // }
   },
 }
 </script>

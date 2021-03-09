@@ -16,7 +16,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['goForAuth']),
+        ...mapActions(['goForAuth', 'goFetchForCountries']),
         async getToken (func) {
             const auth = this.$store.getters.getAuth;
             const authorizationHeader = 'Authorization';
