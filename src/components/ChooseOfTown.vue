@@ -52,7 +52,7 @@
                const funcForCities = () => {
                    let languageForCountries = (this.$i18n.locale === 'ru' ? 'Ru' : 'En');
 
-                axios.get(`https://localhost:9001/api/v1/addresses/all/${languageForCountries}/cities/${this.selectedCountry}`)
+                axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/addresses/all/${languageForCountries}/cities/${this.selectedCountry}`)
                     .then((response) =>
                         this.cities = response.data
                     )}

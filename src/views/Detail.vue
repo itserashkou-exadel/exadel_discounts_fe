@@ -404,7 +404,7 @@ export default {
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 5,
               "searchPaginationCountElementPerPage": 24,
-              "searchLanguage": "Ru"
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
             }
         ).catch((error) => {
               alert(error)}
