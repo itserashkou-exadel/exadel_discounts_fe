@@ -74,15 +74,10 @@
             };
         },
         mixins: [token],
-        beforeMount() {
-            const auth = this.$store.getters.getAuth
-            this.setSecondAuth(auth);
-        },
-        async created() {
+      async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
         },
-
         computed: {
             filterData: function () {
                 if (this.$store.state.discounts.length > 0) {

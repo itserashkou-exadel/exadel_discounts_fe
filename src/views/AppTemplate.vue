@@ -9,9 +9,7 @@
             <Header class="hidden-sm-and-down"/>
         </v-app-bar>
         <v-main>
-<!--            <keep-alive>-->
                 <router-view></router-view>
-<!--            </keep-alive>-->
         </v-main>
         <v-footer absolute app flat color="primary">
             <Footer/>
@@ -32,11 +30,6 @@
       computed: {
         ...mapGetters(['getAuth'])
       },
-      data() {
-        return {
-          userClaimsLocalData: [],
-        }
-      },
       methods: {
         ...mapMutations(['setUserClaims'])
       },
@@ -44,6 +37,9 @@
         const auth = this.$store.getters.getAuth;
         this.setSecondAuth(auth);
         const data = await this.$store.getters.getAuth.getUser();
+        if (window.location.pathname !== '' && data === null) {
+          this.$store.getters.getAuth.login()
+        }
         this.userClaimsLocalData = data;
         const getUserInfo = () => {
                     axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
@@ -59,16 +55,12 @@
                     });
                 };
                 this.getToken(getUserInfo);
-        if (window.location.pathname !== '' && data === null) {
-          this.$store.getters.getAuth.login()
-        }
+        
         const localStorage = JSON.parse(window.localStorage.getItem('key'));
         this.$store.commit('setUserLocation', localStorage);
         this.setLanguage();
       }
     }
-
-
 
 </script>
 
@@ -76,12 +68,10 @@
     html {
         overflow-y: auto
     }
-
     h3 {
         font-weight: normal;
         text-transform: uppercase;
     }
-
     .v-btn__content {
         font-weight: normal;
     }

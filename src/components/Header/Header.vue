@@ -1,7 +1,8 @@
 <template>
   <v-app-bar color="primary" flat>
-    <router-link to="/home">
-      <v-btn text>
+    <router-link :to="{name:'home'}">
+      <v-btn text
+             @click="seeCurrentComponent({text:'СКИДКИ'})">
         <v-toolbar-title class="headline mr-6">
         <span class="text--accent-4"
               color="blue lighten-5">Crazy</span>
@@ -98,6 +99,10 @@ export default {
         sessionStorage.setItem('currentComponent', 'FavoritesPage')
       }
       if (item.text === 'СТАТИСТИКА' || item.text ==='STATISTICS') {
+        this.goForCurrentComponent('StatisticPage')
+        sessionStorage.setItem('currentComponent', 'StatisticPage')
+      }
+      if (item.text === '' || item.text ==='STATISTICS') {
         this.goForCurrentComponent('StatisticPage')
         sessionStorage.setItem('currentComponent', 'StatisticPage')
       }
