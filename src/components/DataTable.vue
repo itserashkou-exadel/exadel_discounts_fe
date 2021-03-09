@@ -102,7 +102,8 @@
                     <v-row class="d-flex  my-5">
                         <v-col cols="12" class="d-flex flex-column align-center justify-center">
                             <h2 class="align-self-center" >{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
-                            <p class="my-5">{{ item.description }}</p>
+                            <p v-if="item.description.length<95" class="my-5">{{ item.description }}</p>
+                            <p v-else class="my-5">{{item.description.substring(0, 95) + " ..." }}</p>
                             <v-btn
                                     color="primary mb-5"
                                     @click="$router.push({name:'detail',params:{_id:item.id}})"
