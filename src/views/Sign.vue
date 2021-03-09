@@ -23,7 +23,6 @@
                             {{$t('sLogIn')}}
                         </v-btn>
                     </v-container>
-
                 </v-card-text>
             </v-card>
         </v-container>
@@ -115,7 +114,7 @@
         },
         watch: {
             language() {
-                // console.log(this.language)
+                console.log(this.language)
                 if (this.language === 'ru') {
                     this.setLanguage(true);
                     sessionStorage.setItem('userLanguage', 'Ru')

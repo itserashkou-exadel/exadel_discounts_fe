@@ -105,5 +105,9 @@
   "numberOfPromocode": "НОМЕР ПРОМОКОДА",
   "prDateOfStart": "ДАТА НАЧАЛА",
   "prDateOfEnd": "ДАТА ОКОНЧАНИЯ",
-  "prDelete": "УДАЛИТЬ"
+  "prDelete": "УДАЛИТЬ",
+  "emailIsNotCorrectly": "Email введен неверно",
+  "theFieldCantBeEmpty": "Поле не может быть пустым",
+  "onlyNumbers": "Поле может содержать толь цифры",
+  "search": "поиск"
 }

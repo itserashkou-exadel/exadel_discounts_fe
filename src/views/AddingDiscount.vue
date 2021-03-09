@@ -104,6 +104,7 @@
                                           v-model="titleEn"
                                           :label='item.labelEn'
                                           outlined
+                                          :rules='nameRules'
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 0 && ($i18n.locale === 'en')"-->
 <!--                                          @keydown.enter="nothing"-->
@@ -120,6 +121,7 @@
                                           v-model='vendorEn'
                                           :label='item.labelEn'
                                           outlined
+                                          :rules='nameRules'
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 1 && ($i18n.locale === 'en')"-->
 <!--                                          @keydown.enter="nothing"-->
@@ -136,6 +138,7 @@
                                           v-model='vendorDescrEn'
                                           :label='item.labelEn'
                                           outlined
+                                          :rules='nameRules'
                             ></v-text-field>
 <!--                            <v-text-field v-if="i === 2 && ($i18n.locale === 'en')"-->
 <!--                                          @keydown.enter="nothing"-->
@@ -152,6 +155,7 @@
                                         v-model='descriptionEn'
                                         :label='item.labelEn'
                                         outlined
+                                        :rules='nameRules'
                             ></v-textarea>
 <!--                            <v-textarea v-if="i === 3 && ($i18n.locale === 'en')"-->
 <!--                                        @keydown.enter="nothing"-->
@@ -169,6 +173,7 @@
                                     v-bind:tags="tagsRu"
                                     v-on:tagShow="changeTagShow"
                                     v-on:sendTags="setTagsRu"
+                                    :rules='nameRules'
                     />
 <!--                    <chips-for-tags v-if="$i18n.locale === 'en'"-->
 <!--                                    v-bind:icon-show="true"-->
@@ -181,6 +186,7 @@
                                     v-bind:tags="tagsEn"
                                     v-bind:icon-show="false"
                                     v-on:sendTags="setTagsEn"
+                                    :rules='nameRules'
                     />
 <!--                    <chips-for-tags v-if="$i18n.locale === 'en'"-->
 <!--                                    v-show="tagShowAd"-->
@@ -211,6 +217,7 @@
                             :placeholder="this.$t('adLabelOfDiscountVendorWorkHours')"
                             multiple
                             outlined
+                            :rules='nameRules'
                     ></v-combobox>
                     <v-text-field
                             @keydown.enter="nothing"
@@ -388,9 +395,9 @@
                 trueOrFalseArr: [false, false, false, false],
                 dialog: false,
                 valid: true,
-                nameRules: [v => (v && v.length > 0) || 'The field cant be empty'],
-                onlyNumberRules: [v => /^-?\d*(\.\d+)?$/.test(v) || 'The field must contain only numbers'],
-                emailRules: [v => /^[0-9a-z_-]+@[0-9a-z_-]+\.[a-z]{2,5}$/i.test(v) || "Email is not correctly"],
+                nameRules: [v => (v && v.length > 0) || this.$t('theFieldCantBeEmpty')],
+                onlyNumberRules: [v => /^-?\d*(\.\d+)?$/.test(v) || this.$t('onlyNumbers')],
+                emailRules: [v => /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i.test(v) || this.$t('emailIsNotCorrectly')],
                 dateStart: '',
                 dateFinish: '',
                 address: {
@@ -440,7 +447,6 @@
                 }
             },
             nothing(event) {
-                console.log(event)
                 event.preventDefault()
             },
             agree() {
@@ -559,7 +565,6 @@
                             }
                         ]
                     }
-
                 // if (this.$i18n.locale === 'en') {
                 //     return {
                 //         name: this.titleEn,
@@ -672,7 +677,6 @@
                     const funcForDisc = () => {
                     axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
                     this.discount = response.data
-                      console.log(this.discount)
                     if (this.discount.language === 'Ru') {
                         this.titleRu = this.discount.name;
                         this.titleEn = this.discount.translations[0].name;
@@ -790,22 +794,15 @@
         },
         computed: {
             ...mapGetters(['allDiscounts', 'language', 'allCountries']),
-      changeOfModel: function () {
-        console.log(4444)
-    }
-
+        created(){
+          const auth = this.$store.getters.getAuth
+          this.setSecondAuth(auth);
+        }
         },
         mounted() {
-            // this.keyFromStore = this.$store.state.keyForAdditingDiscount
             this.getCountries();
             this.fillingFields();
         },
-        // watch: {
-        //     keyFromStore () {
-        //         this.getCountries();
-        //         this.fillingFields();
-        //     }
-        // }
     }
 </script>
 <style scoped>
