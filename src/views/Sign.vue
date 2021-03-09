@@ -94,7 +94,6 @@
                 localStorage.clear()
                 this.signFormToggle = false
                 this.$store.state.userLocation = []
-                console.log('User Location: ', this.$store.state.userLocation)
             },
             backToSelectTown() {
                 this.signFormToggle = true
@@ -119,7 +118,6 @@
               }
             },
             language() {
-                console.log(this.language)
                 if (this.language === 'ru') {
                     this.setLanguage(true);
                     sessionStorage.setItem('userLanguage', 'Ru')

@@ -122,7 +122,6 @@ let store = new Vuex.Store({
         },
         setUserClaims(state, userData) {
             state.userClaimsStoreData = userData;
-            console.log(state.userClaimsStoreData)
         },
         setUserLocation(state, location) {
             state.userLocation = location;
