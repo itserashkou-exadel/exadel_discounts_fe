@@ -90,7 +90,7 @@
     <v-row class="mt-4 ml-4 pb-6" align="center" justify="space-between">
       <!--            <v-btn @click="$router.push({name:'detail'},detailView())" color="blue" raised>-->
       <v-btn @click="$router.push({name:'detail',params:{_id:description.id}})" color="blue" raised  class="white--text">
-          {{$t('сhoose')}}
+          {{$t('choose')}}
       </v-btn>
       <div v-if="this.$store.state.userClaimsStoreData.role !=='Employee'" class="mr-12">
         <v-icon @click="editItem(description)">

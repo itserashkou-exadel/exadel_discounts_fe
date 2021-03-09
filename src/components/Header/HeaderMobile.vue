@@ -85,7 +85,6 @@
 import Avatar from "@/components/Header/Avatar";
 import Searching from "@/components/Header/Searching";
 import {mapActions} from "vuex";
-import {mapActions} from "vuex";
 
 export default {
   name: "Header_mobile",

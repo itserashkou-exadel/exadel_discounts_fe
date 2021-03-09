@@ -119,7 +119,9 @@ export default {
   },
   computed: {
     ...mapGetters(['getUserClaims'])
-  }
+  },
+
+
 }
 </script>
 

@@ -31,7 +31,7 @@ let store = new Vuex.Store({
         details: {},
         discounts: [],
         switch: true,
-        language: 'Ru',
+        language: sessionStorage.getItem('userLanguage') || 'Ru',
         filtered: [],
         filteredDiscounts: [],
         countries: [],

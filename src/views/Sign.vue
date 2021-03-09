@@ -135,18 +135,31 @@
         mounted() {
             this.goForAuth(auth);
             this.getCountries();
+            // if (this.$store.getters.language === "Ru") {
+            //   import(`../langs/ru.json`).then((msg) => {
+            //     this.$i18n.setLocaleMessage('ru', msg);
+            //     this.$i18n.locale = 'ru';
+            //   })
+            // }else {
+            //     import(`../langs/en.json`).then((msg) => {
+            //       this.$i18n.setLocaleMessage('en', msg);
+            //       this.$i18n.locale = 'en';
+            //   })
+            // }
         },
         watch: {
             language() {
                 console.log(this.language)
                 if (this.language === 'ru') {
-                    this.setLanguage(true);
+                   this.setLanguage(true);
+                    sessionStorage.setItem('userLanguage', 'Ru')
                     import(`../langs/ru.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('ru', msg);
                         this.$i18n.locale = 'ru';
                     })
                 } else {
-                    this.setLanguage(false);
+                  this.setLanguage(false);
+                  sessionStorage.setItem('userLanguage', 'En')
                     import(`../langs/en.json`).then((msg) => {
                         this.$i18n.setLocaleMessage('en', msg);
                         this.$i18n.locale = 'en';

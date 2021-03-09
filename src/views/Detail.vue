@@ -77,7 +77,7 @@ text-h2
                     centered
                     color="primary"
                 >
-                  {{ text }}
+                  {{ $t('additingPromocode') }}
                 </v-snackbar>
                 <v-row class="ml-6 mb-2">
                   <Promocodes v-bind:subscrItem="info"
@@ -182,7 +182,7 @@ text-h4
                     centered
                     color="primary"
                 >
-                  {{ text }}
+                  {{ $t('additingPromocode') }}
                 </v-snackbar>
               </v-row>
             </v-col>
@@ -235,7 +235,6 @@ export default {
     results: [],
     detailId: "",
     snackbar: false,
-    text: 'ПРОМОКОД ДОБАВЛЕН В ПОДПИСКИ',
     timeout: 2000,
   }),
   props: {
@@ -422,8 +421,8 @@ export default {
   computed: {
     ...mapGetters(["getDetailView"]),
     filterData() {
-      console.log(this.info.ratingTotal)
       this.info = this.getDetailView;
+      console.log(this.info)
       this.info.startDate = moment(this.info.startDate).format('L');
       this.info.endDate = moment(this.info.endDate).format('L');
       this.info.ratingTotal = +Number.parseFloat(this.info.ratingTotal).toFixed(2);

@@ -42,7 +42,7 @@
                                 <v-btn
                                         class="ml-3 mb-3 primary"
                                         @click="$router.push({name:'detail',params:{_id:item.id}})"
-                                >Подробно
+                                >{{$t('MoreInfo')}}
                                 </v-btn>
                             </v-img>
 
@@ -70,7 +70,6 @@
 </template>
 
 <script>
-
     import axios from "axios";
 
     export default {
