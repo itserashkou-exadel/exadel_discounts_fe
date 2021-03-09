@@ -64,7 +64,7 @@
         name: 'Sign',
         components: {ChooseOfTown},
         data: () => ({
-            language: 'ru',
+            language: sessionStorage.getItem('userLanguage') === "En" ? 'en': 'ru',
             items: ['ru', 'en'],
             selectedCountry: '',
             selectedCity: '',
