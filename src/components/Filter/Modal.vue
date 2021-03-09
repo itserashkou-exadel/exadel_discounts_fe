@@ -159,8 +159,6 @@
         this.getToken(filterSearch)
         this.dialog = false;
         // this.$store.commit('changeFilterRequest');
-        console.log(this.$store.state.filterRequest)
-        console.log(this.$store.state.discounts)
         this.setFilterIcon(true);
     }
     ,
@@ -170,7 +168,6 @@
         // "startDate": this.$store.state.filtered.rangeDate[0] === null ? this.$store.state.filtered.rangeDate[0] : null,
         //     "endDate": this.$store.state.filtered.rangeDate[1] === null ? this.$store.state.filtered.rangeDate[1] : null,
         // let res = this.$store.state.filtered.vendor === null ? 'I have this field' : 'Empty';
-        console.log(this.$store.state.discounts)
     }
     }
     }

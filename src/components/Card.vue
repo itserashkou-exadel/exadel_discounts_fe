@@ -179,8 +179,7 @@
               "searchSortOption": "Asc",
               "searchPaginationPageNumber": 1,
               "searchPaginationCountElementPerPage": 24,
-              "searchLanguage": "Ru"
-            }
+              "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"            }
         )
 
 

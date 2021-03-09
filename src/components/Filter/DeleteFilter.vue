@@ -51,10 +51,10 @@
                         }
                     );
                 }
-                this.getToken(resSearch)
+                this.getToken(resSearch);
                 this.setFilterIcon(false);
                 this.$store.commit('setDisPage', 1);
-                this.$store.commit('setNoFound', false)
+                this.$store.commit('setNoFound', false);
             },
 
         }

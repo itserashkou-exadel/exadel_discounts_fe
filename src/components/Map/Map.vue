@@ -32,10 +32,16 @@
                         <v-card-text>
                             <h4>Company:{{marker.company.name}}</h4>
                             <hr>
+                            <p>{{marker.description}}</p>
                             <p>{{marker.amountOfDiscount}}%</p>
-                            <p>{{marker.id}}</p>
-                            <p>{{marker.address.location.longitude}}</p>
-                            <p>{{marker.address.location.latitude}}</p>
+<!--                            <p>{{marker.id}}</p>-->
+<!--                            <p>{{marker.address.location.longitude}}</p>-->
+<!--                            <p>{{marker.address.location.latitude}}</p>-->
+                            <v-btn
+                                    class="ml-3 mb-3 primary"
+                                    @click="$router.push({name:'detail',params:{_id:marker.id}})"
+                            >Подробно
+                            </v-btn>
                         </v-card-text>
                     </v-card>
                 </MglPopup>
@@ -76,44 +82,6 @@
         mixins: [token],
 
         async mounted() {
-            // const getData = () => {
-            //     axios.post('https://localhost:9001/api/v1/discounts/search', {
-            //         "searchText": "Меха",
-            //         "searchDiscountOption": "All",
-            //         "searchAddressCountry": "Беларусь",
-            //         "searchAddressCity": "Минск",
-            //         "searchSortFieldOption": "NameDiscount",
-            //         "searchSortOption": "Asc",
-            //         "searchPaginationPageNumber": 1,
-            //         "searchPaginationCountElementPerPage": 20,
-            //         "searchLanguage": "Ru",
-            //         // "searchAdvanced": {
-            //         //     "companyName": this.$store.state.filtered.vendor,
-            //         //     "searchDate": {
-            //         //         "startDate": this.$store.state.filtered.rangeDate[0],
-            //         //         "endDate": this.$store.state.filtered.rangeDate[1],
-            //         //     },
-            //         //     "searchAmountOfDiscount": {
-            //         //         "searchAmountOfDiscountMin": this.$store.state.filtered.range[0],
-            //         //         "searchAmountOfDiscountMax": this.$store.state.filtered.range[1],
-            //         //     },
-            //         //     "searchRatingTotal": {
-            //         //         "searchRatingTotalMin": this.$store.state.filtered.starRange[0],
-            //         //         "searchRatingTotalMax": this.$store.state.filtered.starRange[1],
-            //         //     }
-            //         // }
-            //     })
-            //         .then((response) => {
-            //             this.markersData = response.data;
-            //             console.log(this.markersData)
-            //         })
-            //         .catch((error) => {
-            //             alert(error);
-            //         });
-            // }
-            //
-            // await this.getToken(getData)
-            //console.log(this.discountsFromStore)
             console.log(this.$store.getters.getUserLocation.town)
             console.log('Map.vue Rendred')
 
@@ -125,31 +93,6 @@
       async created() {
             // We need to set mapbox-gl library here in order to use it in template
             this.mapbox = Mapbox;
-            //
-            // this.$store.state.sortOption.sortName = "RatingDiscount";
-            // this.$store.state.sortOption.sortOrder = [false, false, true, true, true, false];
-            // this.$store.state.sortOption.sortOrder[5] = false;
-            // this.$store.state.sortOption.sortIndex = 5;
-            // this.$store.commit('setDisPage', 1)
-            // await this.getUser2();
-            // const localStorage = JSON.parse(window.localStorage.getItem('key'));
-            // this.$store.commit('setUserLocation', localStorage);
-            // const resSearch = () => {
-            //     this.inputPost(
-            //         {
-            //             "searchText": null,
-            //             "searchDiscountOption": "All",
-            //             "searchAddressCountry": localStorage.country,
-            //             "searchAddressCity": localStorage.town,
-            //             "searchSortFieldOption": "RatingDiscount",
-            //             "searchSortOption": "Desc",
-            //             "searchPaginationPageNumber": 1,
-            //             "searchPaginationCountElementPerPage": 24,
-            //             "searchLanguage": this.$i18n.locale === 'ru' ? "Ru" : "En"
-            //         }
-            //     );
-            // }
-            // await this.getToken(resSearch)
         },
 
         computed: {
@@ -157,24 +100,6 @@
                 if (this.$store.state.discounts.length > 0) {
                     this.discountsFromStore = this.$store.state.discounts;
                     console.log('DISCOUNTS FETCHED FROM STORE: ', this.discountsFromStore)
-                    // this.discountsFromStore.map((item) => {
-                    //     arr.push(
-                    //         {
-                    //             id: item.id,
-                    //             service: item.name,
-                    //             vendor: item.company.name,
-                    //             amountOfDiscount: item.amountOfDiscount,
-                    //             //startDate: moment(item.startDate).format('DD-MM-YYYY'),
-                    //             //endDate: moment(item.endDate).format('DD-MM-YYYY'),
-                    //             rating: item.ratingTotal,
-                    //             description: item.description,
-                    //             location: item.address.location
-                    //         }
-                    //     )
-                    // })
-                    // this.result = arr;
-                    // console.log(this.result);
-                    // return this.result;
                 }
             },
         },
@@ -284,7 +209,7 @@
         align-items: center;
         position: absolute;
         z-index: 10;
-        top: 100px;
+        bottom: 100px;
         right: 100px;
         height: 40px;
         border-radius: 5px;
