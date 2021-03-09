@@ -1,5 +1,5 @@
 <template>
-    
+    <div></div>
 </template>
 
 <script>
@@ -7,9 +7,10 @@
     import AuthService from '../services/auth.service';
     const auth = new AuthService();
     import token from '@/mixins/token.mixin.js'
+
     export default {
         name: "SignWrapper",
-        mixins: ['token'],
+        mixins: [token],
         methods: {
             ...mapActions(['goForAuth'])
         },

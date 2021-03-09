@@ -11,6 +11,14 @@
         name: "MapPage",
         mixins: [token],
         components: {Footer, Map},
+      watch: {
+        $route: {
+          immediate: true,
+          handler(to, from) {
+            document.title = to.meta.title || 'Map';
+          }
+        },
+      }
     }
 </script>
 

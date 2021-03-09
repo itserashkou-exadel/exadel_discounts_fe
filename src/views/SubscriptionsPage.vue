@@ -11,6 +11,14 @@ import SubscriptionsMobile from "@/components/Subscriptions/SubscriptionsMobile"
 
 export default {
   name: "SubscriptionsPage",
-  components: {SubscriptionsMobile, Subscriptions}
+  components: {SubscriptionsMobile, Subscriptions},
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to, from) {
+        document.title = to.meta.title || 'Subscriptions';
+      }
+    },
+  }
 };
 </script>
