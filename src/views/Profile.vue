@@ -35,6 +35,15 @@ export default {
     const auth = this.$store.getters.getAuth;
     this.setSecondAuth(auth);
   },
+  watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title = to.meta.title || 'User Profile';
+            }
+        },
+  }
+
 };
 </script>
 
