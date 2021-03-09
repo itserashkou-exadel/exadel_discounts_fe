@@ -54,10 +54,6 @@
         computed: {
             ...mapGetters(['getAuth'])
         },
-      beforeMount() {
-        const auth = this.$store.getters.getAuth
-        this.setSecondAuth(auth);
-      },
     }
 </script>
 

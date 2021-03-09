@@ -628,11 +628,9 @@
                             this.addDiscount(
                                 {...{id: uuidv4()}, ...(this.objectWithoutId())}
                             ).catch((e) => this.val = false)
-                            console.log({...{id: uuidv4()}, ...(this.objectWithoutId())})
                             this.dialog = true
                             this.val = true
                         } else {
-                            console.log({...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())});
                             this.updateDiscount(
                                 {...{id: this.$route.params.idOfDiscount}, ...(this.objectWithoutId())}
                             ).catch((e) => {this.val = false; this.dialog = true})
@@ -794,10 +792,6 @@
         },
         computed: {
             ...mapGetters(['allDiscounts', 'language', 'allCountries']),
-        created(){
-          const auth = this.$store.getters.getAuth
-          this.setSecondAuth(auth);
-        }
         },
         mounted() {
             this.getCountries();

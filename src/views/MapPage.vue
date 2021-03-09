@@ -11,10 +11,6 @@
         name: "MapPage",
         mixins: [token],
         components: {Footer, Map},
-        created() {
-            const auth = this.$store.getters.getAuth
-            this.setSecondAuth(auth);
-        },
     }
 </script>
 

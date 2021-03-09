@@ -181,10 +181,6 @@ export default {
       }
     }
   },
-  created() {
-    const auth = this.getAuth
-    this.setSecondAuth(auth);
-  },
   mounted() {
     this.showFavorites();
   },
@@ -206,9 +202,9 @@ tr {
   -webkit-box-shadow: none !important;
 }
 
-td {
-  width: 0;
-  white-space: nowrap;
-  vertical-align: top;
-}
+/*td {*/
+/*  width: 0;*/
+/*  white-space: nowrap;*/
+/*  vertical-align: top;*/
+/*}*/
 </style>
