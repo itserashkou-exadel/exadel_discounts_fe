@@ -12,12 +12,12 @@
             v-on="on"
             @click="getPromo(subscrItem.id)"
         >
-          Мои промокоды
+          {{$t('myPromocodes')}}
         </v-btn>
       </template>
       <v-card>
         <v-card-title class="headline grey lighten-2">
-          Промокоды
+          {{$t('Promocodes')}}
           <v-btn icon
                  @click="dialog= false"
                  right
@@ -87,10 +87,10 @@ export default {
           sortable: false,
           value: 'service',
         },
-        {text: 'НОМЕР ПРОМОКОДА', value: 'promocodeValue'},
-        {text: 'ДАТА НАЧАЛА', value: 'createDate'},
-        {text: 'ДАТА ОКОНЧАНИЯ', value: 'endDate'},
-        {text: 'УДАЛИТЬ', value: 'actions'},
+        {text: this.$t('numberOfPromocode'), value: 'promocodeValue'},
+        {text: this.$t('prDateOfStart'), value: 'createDate'},
+        {text: this.$t('prDateOfEnd'), value: 'endDate'},
+        {text: this.$t('prDelete'), value: 'actions'},
       ]
     },
     getColor(endDate) {

@@ -14,6 +14,7 @@
         >
           <v-card color="primary" flat tile class="d-flex justify-end mr-3">
           <v-switch
+              class="d-none"
               v-model="isRuLocale"
               :label="`${isRuLocale ? 'RU' : 'EN'}`"
           ></v-switch>

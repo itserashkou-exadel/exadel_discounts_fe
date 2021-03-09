@@ -66,13 +66,13 @@
                     zoom: 20,
                     speed: 1
                 })
-                console.log(newParams)
+                // console.log(newParams)
             },
             getProps(){
                 let self = this;
                 //console.log(self.info);
                 this.dataInfo = self.info.address.location
-                console.log('Data Info: ', this.dataInfo)
+                // console.log('Data Info: ', this.dataInfo)
             },
         }
     };
