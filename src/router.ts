@@ -2,17 +2,15 @@ import VueRouter from 'vue-router';
 import Vue from 'vue'
 import Sign from '@/views/Sign.vue';
 import SignWrapper from '@/views/SignWrapper.vue'
-import SubscribesPage from "@/views/SubscriptionsPage.vue";
-import FavoritesPage from "@/views/FavoritesPage.vue";
 import AppTemplate from "@/views/AppTemplate.vue";
 import AddingDiscount from '@/views/AddingDiscount.vue';
 import Detail from '@/views/Detail.vue';
 import ErrorPage from '@/views/ErrorPage.vue';
-import StatisticPage from "@/views/StatisticPage.vue"
 import TableAndMap from '@/views/TableAndMap.vue'
 
 Vue.use(VueRouter);
 
+// @ts-ignore
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
@@ -20,14 +18,15 @@ const router = new VueRouter({
     linkExactActiveClass: "exact-active",
     routes: [
         {
+            path: '/',
+            name: 'signWrapper',
+            // @ts-ignore
+            component: SignWrapper
+        },
+        {
             path: '/location',
             name: 'sign',
             component: Sign
-        },
-        {
-            path: '/',
-            name: 'signWrapper',
-            component: SignWrapper
         },
         {
             path: '/home',
@@ -38,6 +37,7 @@ const router = new VueRouter({
                     path: '/',
                     name: 'home',
                     component: TableAndMap,
+                    meta: [{ title: 'Discounts'}]
                 }
             ]
         },
@@ -53,18 +53,6 @@ const router = new VueRouter({
                     props: true
                 }]
         },
-        // {
-        //     path: '/home',
-        //     name: 'home',
-        //     component: AppTemplate,
-        //     children: [
-        //         {
-        //             path: '/cards',
-        //             name: 'cards',
-        //             component: Cards,
-        //         }
-        //     ]
-        // },
         {
             path: '/home',
             name: 'home',

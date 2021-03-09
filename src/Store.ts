@@ -104,7 +104,6 @@ let store = new Vuex.Store({
           state.notFound = status;
         },
         setPreviousOrder(state, number){
-            // @ts-ignore
             state.sortOption.sortIndex = number;
             state.sortOption.sortOrder.forEach((item, index) => {
                 if(index <=1){

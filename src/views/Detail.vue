@@ -399,6 +399,14 @@ export default {
       return this.$store.state.subscriptions
     }
   },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to, from) {
+        document.title = to.meta.title || 'Detail';
+      }
+    },
+  }
 }
 
 

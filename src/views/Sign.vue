@@ -113,6 +113,12 @@
             this.getCountries();
         },
         watch: {
+            $route: {
+              immediate: true,
+              handler(to, from) {
+                document.title = to.meta.title || 'Discounts';
+              }
+            },
             language() {
                 console.log(this.language)
                 if (this.language === 'ru') {

@@ -11,7 +11,15 @@ import FavoritesMobile from "@/components/Favorites/FavoritesMobile";
 
 export default {
   name: "FavoritesPage",
-  components: {FavoritesMobile, Favorites}
+  components: {FavoritesMobile, Favorites},
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to, from) {
+        document.title = to.meta.title || 'Favorites';
+      }
+    },
+  }
 }
 </script>
 
