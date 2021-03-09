@@ -1,6 +1,6 @@
 <template>
     <v-menu
-            :offset-x="true"
+            :offset-x="false"
             :offset-y="true"
     >
         <template v-slot:activator="{ on, attrs }">
@@ -73,7 +73,14 @@
                 this.getToken(getTags).then(() => {
                     this.setKeyWord(this.search)
                     if (this.search === '') {
+                        this.$store.state.filterRequest = false;
+                        this.setFilterIcon(false);
                         this.$store.commit('setNoFound', false);
+                        this.$store.commit('setDisPage', 1)
+                        this.$store.state.sortOption.sortName = "RatingDiscount";
+                        this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
+                        this.$store.state.sortOption.sortOrder[5] = false;
+                        this.$store.state.sortOption.sortIndex = 5;
                         const resSearch = () => {
                             this.inputPost(
                                 {
@@ -95,14 +102,20 @@
             }
         },
         methods: {
-            ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost"]),
+            ...mapActions(['inputPost', 'setKeyWord', 'nextDiscount', "allInputPost", 'setFilterIcon']),
             selectTag(item) {
                 this.search = item
             },
             showSearch() {
                 this.$store.state.discounts = [];
+                this.$store.state.filterRequest = false;
+                this.setFilterIcon(false);
                 this.$store.commit('setNoFound', false)
                 this.$store.commit('setDisPage', 1)
+                this.$store.state.sortOption.sortName = "RatingDiscount";
+                this.$store.state.sortOption.sortOrder = [false,false,true,true,true,false];
+                this.$store.state.sortOption.sortOrder[5] = false;
+                this.$store.state.sortOption.sortIndex = 5;
                 const resSearch = () => {
                     this.inputPost(
                         {
@@ -119,51 +132,9 @@
                     );
                 }
                 this.getToken(resSearch)
-
             },
-
-            //     testing: function(){
-            //     axios.all([
-            //         axios.post('https://localhost:9001/api/v1/discounts/search', {
-            //             "searchText": "Меха",
-            //             "searchDiscountOption": "All",
-            //             "searchAddressCountry": "Украина",
-            //             "searchAddressCity": "Винница",
-            //             "searchSortFieldOption": "NameDiscount",
-            //             "searchSortOption": "Asc",
-            //             "searchPaginationPageNumber": 1,
-            //             "searchPaginationCountElementPerPage": 5,
-            //             "searchLanguage": "Ru"
-            //         }),
-            //         axios.post('https://localhost:9001/api/v1/discounts/search', {
-            //             "searchText": "Меха",
-            //             "searchDiscountOption": "All",
-            //             "searchAddressCountry": "Украина",
-            //             "searchAddressCity": "Винница",
-            //             "searchSortFieldOption": "NameDiscount",
-            //             "searchSortOption": "Asc",
-            //             "searchPaginationPageNumber": 2,
-            //             "searchPaginationCountElementPerPage": 5,
-            //             "searchLanguage": "Ru"
-            //         })
-            //     ])
-            //         .then(axios.spread((data1, data2) => {
-            //         console.log('data1', data1.data, 'data2', data2.data)
-            //     }));
-            //
-            // },
-
-            // onResize() {
-            //     this.searchClosed = document.documentElement.clientWidth < 1080 ? true : false;
-            // },
         },
-        // created() {
-        //     window.addEventListener('resize', this.onResize);
-        //     this.onResize();
-        // },
-        // beforeDestroy() {
-        //     window.removeEventListener('resize', this.onResize);
-        // },
+
     }
 
 </script>

@@ -31,14 +31,14 @@
                 color="primary"
                 @click="menu = false"
         >
-            Cancel
+            {{$t('adCancel')}}
         </v-btn>
         <v-btn
                 text
                 color="primary"
                 @click="[$refs.menu.save(date), saveData()]"
         >
-            Save
+            {{$t('fSave')}}
         </v-btn>
 
     </v-menu>

@@ -266,9 +266,13 @@
                             v-model="coordinate2"
                             :rules='onlyNumberRules'
                     ></v-text-field>
+                  <v-checkbox
+                      v-model="enabledPromocodes"
+                  ></v-checkbox>
                     <PromocodesForAdding
                             v-bind:item1="promo1"
                             v-on:selectedPromos="getPromo"
+                            v-if="enabledPromocodes"
                     />
                 </v-col>
             </v-row>
@@ -395,6 +399,7 @@
                     line: null
                 },
                 discount: null,
+              enabledPromocodes: true
             }
         },
         mixins: [token],
@@ -523,6 +528,7 @@
                         pictureUrl: this.picture,
                         tags: this.tagsRu,
                         promocodeOptions: {
+                        enabledPromocodes: this.enabledPromocodes,
                         countActivePromocodePerUser: this.promo1,
                         daysDurationPromocode: this.promo2,
                         countSymbolsPromocode: this.promo3,
@@ -666,6 +672,7 @@
                     const funcForDisc = () => {
                     axios.get(`https://localhost:9001/api/v1/discounts/upsert/get/${id}`).then((response) => {
                     this.discount = response.data
+                      console.log(this.discount)
                     if (this.discount.language === 'Ru') {
                         this.titleRu = this.discount.name;
                         this.titleEn = this.discount.translations[0].name;
@@ -696,6 +703,7 @@
                     if (this.$i18n.locale === 'en') {
                         this.selectedCountry = this.discount.translations[0].address.country || this.discount.address.country;
                         this.selectedCity = this.discount.translations[0].address.city || this.discount.address.city}
+                    this.enabledPromocodes = this.discount.promocodeOptions.enabledPromocodes;
                     if (this.discount.promocodeOptions !== undefined) {
                     this.promo1 = this.discount.promocodeOptions.countActivePromocodePerUser,
                     this.promo2 = this.discount.promocodeOptions.daysDurationPromocode,
