@@ -41,22 +41,6 @@
           this.$store.getters.getAuth.login()
         }
         this.userClaimsLocalData = data;
-        // const getUserInfo = () => {
-        //             axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
-        //             .then((responce) => {
-        //               console.log('appTamplate8888888888888')
-        //                 this.setUserClaims({
-        //                     name: responce.data.name,
-        //                     surname: responce.data.surname,
-        //                     role: data.profile.role,
-        //                     mail: responce.data.mail,
-        //                     language: responce.data.language,
-        //                     photoUrl: responce.data.photoUrl,
-        //                 })
-        //             });
-        //         };
-        //        await this.getToken(getUserInfo);
-        
         const localStorage = JSON.parse(window.localStorage.getItem('key'));
         this.$store.commit('setUserLocation', localStorage);
         this.setLanguage();
