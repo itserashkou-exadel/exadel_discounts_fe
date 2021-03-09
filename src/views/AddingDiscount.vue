@@ -787,7 +787,7 @@
                 }
                 return str
             },
-            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'goFetchForCountries', 'nextDiscount'])
+            ...mapActions(['goFetch', 'addDiscount', 'updateDiscount', 'nextDiscount'])
         },
         computed: {
             ...mapGetters(['allDiscounts', 'language', 'allCountries']),
