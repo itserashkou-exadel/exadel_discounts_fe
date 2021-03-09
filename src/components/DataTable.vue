@@ -102,7 +102,8 @@
                     <v-row class="d-flex  my-5">
                         <v-col cols="12" class="d-flex flex-column align-center justify-center">
                             <h2 class="align-self-center" >{{$t('dtDetailsAbout')}} "{{item.NameDiscount}}"</h2>
-                            <p class="my-5">{{ item.description }}</p>
+                            <p v-if="item.description.length<95" class="my-5">{{ item.description }}</p>
+                            <p v-else class="my-5">{{item.description.substring(0, 95) + " ..." }}</p>
                             <v-btn
                                     color="primary mb-5"
                                     @click="$router.push({name:'detail',params:{_id:item.id}})"
@@ -263,12 +264,7 @@
             },
             sortData: function(){
                 this.sortOptionName = this.$store.state.sortOption.sortName;
-            },
-            // sortData() {
-            //     console.log('WORKING')
-            //     console.log(this.sortOption = this.$store.state.sortOption.sortOrder[this.$store.state.sortOption.sortIndex])
-            //
-            // },
+            }
         },
         watch: {
             dialog(val) {
@@ -330,42 +326,6 @@
                 }
                 this.getToken(resSearch)
             }
-            // result: function(){
-            //     console.log('res')
-            //     this.selectedPages.push(this.page)
-            // }
-            /*itemsPerPage: function(){
-                console.log(this.itemsPerPage)
-                this.changeItemsPerPage(this.itemsPerPage);
-                this.inputPost(
-                    {
-                        "searchText": 'Меха',
-                        "searchDiscountOption": "All",
-                        "searchAddressCountry": "Украина",
-                        "searchAddressCity": "Вінниця",
-                        "searchSortFieldOption": "NameDiscount",
-                        "searchSortOption": "Asc",
-                        "searchPaginationPageNumber": 1,
-                        "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                        "searchLanguage": "Ru"
-                    }
-                )
-            }*/
-            /*  itemsPerPage: function () {
-                  this.inputPost(
-                      {
-                          "searchText": 'Меха',
-                          "searchDiscountOption": "All",
-                          "searchAddressCountry": "Украина",
-                          "searchAddressCity": "Вінниця",
-                          "searchSortFieldOption": "NameDiscount",
-                          "searchSortOption": "Asc",
-                          "searchPaginationPageNumber": 1,
-                          "searchPaginationCountElementPerPage": this.$store.state.itemsPerPage,
-                          "searchLanguage": "Ru"
-                      }
-                  )
-              }*/
         },
 
         methods: {
@@ -484,29 +444,11 @@
                 }
                 return headerArr;
             },
-          addToFavorites: function (id) {
-            console.log('discounts',id);
-            const putSubscr = () => {
-              axios({
-                method: 'put',
-                url: `https://localhost:9001/api/v1/discounts/favorites/add/${id}`,
-              }).then(response => console.log("RESPONSE :" + JSON.stringify(response)));
-            };
-            this.getToken(putSubscr);
-          },
             next() {
-                // console.log(this.page, this.pageCount)
-                // console.log(this.selectedPages)
-                // console.log(this.selectedPages.indexOf(this.page))
-                // console.log(this.$store.state.discounts)
-                // console.log(this.page, this.pageCount);
-                //     console.log(this.page,this.pageCount)
-                this.$store.commit('setDisPage', this.page)
-               // console.log(this.$store.state.disPage)
+                this.$store.commit('setDisPage', this.page);
                 const goNext = () => {
                     if (this.$store.state.filterRequest === false) {
                         if(this.$store.state.disPage === this.pageCount || this.$store.state.disPage === this.pageCount-1){
-                          //  console.log("PAGINATION")
                             this.$store.commit('disPag', true);
                             this.nextDiscount(
                                 {
