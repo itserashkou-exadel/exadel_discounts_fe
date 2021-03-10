@@ -4,7 +4,6 @@
         :items="filterData"
         :headers="headers()"
         hide-default-footer
-        height="400"
         class="elevation-8 mb-16"
         show-expand
         :single-expand="singleExpand"
@@ -56,6 +55,7 @@
       </template>
     </v-data-table>
     <v-pagination
+        class="mb-16"
         v-model="pageNumber"
         :length="pageCount"
         @next="paginateNext"
