@@ -38,9 +38,6 @@
       <v-btn @click="$router.push({name:'detail',params:{_id:favorite.id}})" color="primary" raised>
         {{$t('MoreInfo')}}
       </v-btn>
-      <v-icon class="mr-7" @click="deleteFromFavor(favorite.id)">
-        mdi-delete
-      </v-icon>
     </v-row>
   </v-card>
 </template>
