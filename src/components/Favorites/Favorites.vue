@@ -4,11 +4,11 @@
         :items="filterData"
         :headers="headers()"
         hide-default-footer
-        height="400"
         class="elevation-8 mb-16"
         show-expand
         :single-expand="singleExpand"
         :expanded.sync="expanded"
+
     >
       <template v-slot:top>
         <v-toolbar
@@ -30,14 +30,6 @@
             </v-card>
           </v-dialog>
         </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-            small
-            @click="deleteFromFavor(item.id)"
-        >
-          mdi-delete
-        </v-icon>
       </template>
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">

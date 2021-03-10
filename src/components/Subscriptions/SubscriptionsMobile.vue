@@ -19,7 +19,7 @@
           </div>
         </v-col>
       </v-row>
-      <v-pagination
+      <v-pagination v-if="allSubscriptions.length > 0"
           v-model="pageNumber"
           :length="pageCount"
           @next="paginateNext"
