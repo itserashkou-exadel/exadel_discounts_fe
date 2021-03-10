@@ -2,13 +2,13 @@
   <v-card
       :color="deletedCheck(description)"
       :key="componentKey"
-      class="mx-4 my-12"
-      max-width="370px"
+      class="my-12"
+      width="358px"
       max-height="800px"
   >
     <div>
       <v-img
-          height="250"
+          height="250px"
           :src="pictureCheck(description.picture)"
           class="white--text "
       >
