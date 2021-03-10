@@ -62,7 +62,9 @@
                   <v-icon @click="changeUserLoc">mdi-map-marker</v-icon>
                   <span>{{currentLoc.country}}, {{currentLoc.town}}</span>
                 </v-btn>
-                <Avatar v-on:sideNavFromAvatar='sideNavFromAvatarFalse'/>
+                <Avatar v-on:sideNavFromAvatar='sideNavFromAvatarFalse'
+                        v-bind:user="user"
+                />
               </v-list>
             </v-card>
           </v-dialog>
@@ -89,6 +91,7 @@ import {mapActions} from "vuex";
 export default {
   name: "Header_mobile",
   components: {Searching, Avatar},
+  props: ['user'],
   methods: {
     ...mapActions(['goForCurrentComponent']),
     seeCurrentComponent(item) {

@@ -114,31 +114,32 @@ export default {
       valid: false,
       phoneRules: [
         (v) =>
-          v.length <= this.phoneMaxChars ||
+            v && v.length <= this.phoneMaxChars ||
           this.$t("uMax") + ' ' + this.phoneMaxChars + ' ' + this.$t("uCharacters"),
         (v) =>
-          v.length >= this.phoneMinChars ||
+            v && v.length >= this.phoneMinChars ||
           this.$t("uMin") + ' ' + this.phoneMinChars + ' ' + this.$t("uCharacters"),
       ],
       newPasswordRules: [
         (v) =>
-          v.length <= this.newPasswordMaxChars ||
+            v && v.length <= this.newPasswordMaxChars ||
           this.$t("uMax") + ' ' + this.newPasswordMaxChars + ' ' + this.$t("uCharacters"),
         (v) =>
-          v.length >= this.newPasswordMinChars ||
+            v && v.length >= this.newPasswordMinChars ||
           this.$t("uMin") + ' ' + this.newPasswordMinChars + ' ' + this.$t("uCharacters"),
         (v) => {
-          this.valid = this.repeatedPassword == this.password ? true : false;
+           this.valid = (v && (this.repeatedPassword === this.password) && (this.repeatedPassword >= this.newPasswordMinChars)) ? true : false;
+           return this.valid
         },
       ],
       repeatPasswordRules: [
         (v) => {
-          if (this.repeatedPassword == this.password) {
+           if (v && (this.repeatedPassword === this.password) && (this.repeatedPassword >= this.newPasswordMinChars)) {
             this.valid = true;
             return true;
           } else {
             this.valid = false;
-            return this.$t("uNotMatchMsg");
+            return this.$t("uNotMatchMsg")
           }
         },
       ],

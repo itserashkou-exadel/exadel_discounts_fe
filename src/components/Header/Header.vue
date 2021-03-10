@@ -66,16 +66,11 @@ export default {
   name: "Header",
   components: {Searching, Avatar, HeaderButton},
   mixins: [token],
+  props: ['user'],
   data() {
     const loc = JSON.parse(localStorage.getItem('key'));
     return {
       signIn: "sign",
-      user: {
-        initials: null,
-        fullName: null,
-        mail: null,
-        pictureUri: null
-      },
       currentLoc: {
         country: loc.country,
         town: loc.town
@@ -128,29 +123,6 @@ export default {
       sessionStorage.removeItem('currentComponent')
       this.$router.push('/location')
     },
-  },
-  async created() {
-    const data = await this.$store.getters.getAuth.getUser();
-    const getUserInfo = () => {
-      axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
-          .then((responce) => {
-            this.setUserClaims({
-              name: responce.data.name,
-              surname: responce.data.surname,
-              role: data.profile.role,
-              mail: responce.data.mail,
-              language: responce.data.language,
-              photoUrl: responce.data.photoUrl,
-            })
-          })
-      .then(() => {
-        this.user.initials = `${this.$store.getters.getUserClaims.name.charAt(0)}${this.$store.getters.getUserClaims.surname.charAt(0)}`;
-        this.user.fullName = `${this.$store.getters.getUserClaims.name} ${this.$store.getters.getUserClaims.surname}`;
-        this.user.mail = `${this.$store.getters.getUserClaims.mail}`;
-        this.user.pictureUri = `${this.$store.getters.getUserClaims.photoUrl}`;
-      })
-    };
-    await this.getToken(getUserInfo);
   },
   computed: {
     ...mapGetters(['getUserClaims']),
