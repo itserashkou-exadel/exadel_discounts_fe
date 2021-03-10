@@ -3,7 +3,7 @@
     <v-card class="mb-5 pb-5" flat>
       <v-row>
         <v-toolbar-title class="ml-7">
-          <h3>Подписки</h3>
+          <h3>{{$t('hSubscribe')}}</h3>
         </v-toolbar-title>
         <v-col lg="4"
                sm="12"

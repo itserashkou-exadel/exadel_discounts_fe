@@ -4,7 +4,7 @@
             flat>
       <v-row>
         <v-toolbar-title class="ml-7">
-          <h3>Избранное</h3>
+          <h3>{{$t('hFavorites')}}</h3>
         </v-toolbar-title>
         <v-col lg="4"
                sm="12"
