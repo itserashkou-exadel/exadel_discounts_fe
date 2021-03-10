@@ -149,7 +149,6 @@ export default {
         {text: this.$t('dtStartDate'), value: 'startDate'},
         {text: this.$t('dtFinishDate'), value: 'endDate'},
         {text: this.$t('dtRating'), value: 'rating'},
-        {text: this.$t('dtActions'), value: 'actions', sortable: false},
       ]
     },
     paginateInput(pageNumber) {
