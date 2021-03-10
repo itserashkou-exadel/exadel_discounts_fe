@@ -1,7 +1,7 @@
 <template>
     <v-container
             :key="componentKey"
-            class="mb-6 ml-10 mb-15 pr-10 font-weight-regular"
+            class="mb-6 ml-10 mb-15 mr-10 pr-10 font-weight-regular"
     >
         <router-view/>
         <v-form v-model="valid" ref="form"
