@@ -57,6 +57,9 @@
                         this.cities = response.data
                     )}
                     this.getToken(funcForCities);
+              // if(this.$store.state.language === 'En') {
+              //   this.cities.shift(this.cities[0])
+              // }
             },
         },
         async mounted() {
