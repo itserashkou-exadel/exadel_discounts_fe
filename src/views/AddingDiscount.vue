@@ -173,7 +173,6 @@
                                     v-bind:tags="tagsRu"
                                     v-on:tagShow="changeTagShow"
                                     v-on:sendTags="setTagsRu"
-                                    :rules='nameRules'
                     />
 <!--                    <chips-for-tags v-if="$i18n.locale === 'en'"-->
 <!--                                    v-bind:icon-show="true"-->
@@ -515,8 +514,8 @@
                         startDate: this.dateStart,
                         endDate: this.dateFinish,
                         address: {
-                            country: this.$i18n.locale === 'ru' ? this.selectedCountry : this.selectedCountry,
-                            city: this.$i18n.locale === 'ru' ? this.selectedCity : this.selectedCity,
+                            country: this.$i18n.locale === 'ru' ? this.selectedCountry : '',
+                            city: this.$i18n.locale === 'ru' ? this.selectedCity : '',
                             street: this.street,
                             location: {
                                 latitude: this.coordinate1,
