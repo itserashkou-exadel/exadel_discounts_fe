@@ -214,7 +214,11 @@ let store = new Vuex.Store({
         },
         async goFetchForCountries ({commit}, str) {
             const response = await axios.get(str);
-            commit('setCountries', response.data);
+            const data = response.data;
+            if (this.state.language === 'Ru') {
+                data.shift(data[0])
+            }
+            commit('setCountries', data);
         },
         async addDiscount ({commit}, newDiscount) {
             await axios.post(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/upsert`, newDiscount);
