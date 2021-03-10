@@ -12,6 +12,7 @@
                             :max="max"
                             :min="min"
                             hide-details
+                            :resetFilter="reset"
                             class="align-center slider-margin"
                             thumb-label="always"
 
@@ -33,6 +34,7 @@
                 min: 1,
                 max: 99,
                 range: [1, 99],
+                reseted: false
             }
         },
         watch:{
@@ -51,7 +53,15 @@
         },
         methods: {
             ...mapActions(['changeFilter']),
-        }
+        },
+       computed:{
+           reset(){
+               this.reseted = this.$store.state.resetFilter;
+               if(this.reseted === true){
+                   this.range = [1, 99];
+               }
+           }
+       }
     }
 </script>
 

@@ -36,6 +36,7 @@
                         >
                             <h3 class="mb-2">{{$t('fVendor')}}</h3>
                             <v-text-field
+                                    :resetFilter="reset"
                                     class="pt-0"
                                     v-model="vendor"
                             >
@@ -99,7 +100,8 @@
             dialog: false,
             from: null,
             title: 'From',
-            vendor: null
+            vendor: '',
+            reseted: false
         }),
         mixins: [token],
         watch: {
@@ -109,6 +111,20 @@
                     vendor: this.vendor
                 })
             }
+        },
+        computed:{
+            reset(){
+                this.reseted = this.$store.state.resetFilter;
+                if(this.reseted === true){
+                    this.vendor = '';
+                }
+            }
+        },
+        mounted() {
+            this.changeFilter({
+                ...this.$store.getters.getFilterData,
+                vendor: this.vendor
+            })
         },
         methods: {
             ...mapActions(['changeFilter', 'inputPost', 'setFilterRequest', 'setTrueFilterRequest', 'setFilterIcon']),
@@ -125,6 +141,7 @@
         this.$store.state.sortOption.sortIndex = 5;
         this.$store.state.discounts = [];
         this.$store.commit('setDisPage', 1)
+        console.log(this.$store.state.filtered)
         const filterSearch = () => {
             this.inputPost(
                 {
@@ -159,6 +176,7 @@
         this.getToken(filterSearch)
         this.dialog = false;
         // this.$store.commit('changeFilterRequest');
+        this.$store.commit('resetFilter', false);
         this.setFilterIcon(true);
     }
     ,
