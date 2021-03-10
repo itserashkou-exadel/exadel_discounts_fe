@@ -110,14 +110,21 @@
                     ...this.$store.getters.getFilterData,
                     vendor: this.vendor
                 })
+            },
+            reseted: function(){
+                if(this.reseted === true){
+                    this.vendor = '';
+                    this.changeFilter({
+                        ...this.$store.getters.getFilterData,
+                        vendor: this.vendor
+                    })
+                }
             }
         },
         computed:{
             reset(){
+                console.log("RESEt")
                 this.reseted = this.$store.state.resetFilter;
-                if(this.reseted === true){
-                    this.vendor = '';
-                }
             }
         },
         mounted() {

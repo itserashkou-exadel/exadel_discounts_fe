@@ -85,14 +85,22 @@
                 rangeDate: this.defaultDate
             })
         },
-        computed: {
-            reset(){
-                this.reseted = this.$store.state.resetFilter;
+        watch: {
+            reseted: function(){
                 if(this.reseted === true){
                     this.defaultDate = [moment().format(), moment().format()];
                     this.rangeData = [moment().format(), moment().format()];
                     this.date = new Date().toISOString().substr(0, 10);
+                    this.changeFilter({
+                        ...this.$store.getters.getFilterData,
+                        rangeDate: this.defaultDate
+                    })
                 }
+            }
+        },
+        computed: {
+            reset(){
+                this.reseted = this.$store.state.resetFilter;
             }
         },
 
