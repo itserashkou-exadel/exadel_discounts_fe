@@ -150,7 +150,7 @@
         components: {Modal},
         name: "DataTable",
         data: () => ({
-            delItem: null,
+            delItem: {deleted:false},
             isLoad: null,
             showSortIcon: true,
             sortOptionName: '',

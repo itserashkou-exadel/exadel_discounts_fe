@@ -230,7 +230,12 @@
           this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
         }
         if(this.$store.state.userClaimsStoreData.role === "Administrator"){
-          this.delItem.deleted = true;
+          this.$store.state.discounts = this.$store.state.discounts.map(item => {
+            if(item.id === this.description.id){
+              item.deleted = true;
+            }
+            return item;
+          })
         }
       }
       this.getToken(goDelete)
@@ -264,7 +269,7 @@
   },
   computed: {
     favorites() {
-      return this.$store.state.favorites
+      return this.$store.state.favorites;
     }
   },
   mounted() {
