@@ -52,17 +52,10 @@
                 this.$emit('sendTags', this.items);
             },
             chooseOrder() {
-                if (this.$i18n.locale === "ru" && this.iconShow) {
+                if (this.iconShow) {
                     return this.$t("adLabelOfDiscountTagsRu")
-                }
-                if (this.$i18n.locale === "en" && this.iconShow) {
+                } else {
                     return this.$t("adLabelOfDiscountTagsEn")
-                }
-                if (this.$i18n.locale === "ru" && !this.iconShow) {
-                    return this.$t("adLabelOfDiscountTagsEn")
-                }
-                if (this.$i18n.locale === "en" && !this.iconShow) {
-                    return this.$t("adLabelOfDiscountTagsRu")
                 }
             },
             changeTagShow() {

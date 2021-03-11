@@ -5,8 +5,12 @@
                    dark
                    color="primary"
         >
-            <HeadermMobile class="hidden-lg-and-up"/>
-            <Header class="hidden-sm-and-down"/>
+            <HeadermMobile class="hidden-lg-and-up"
+                           v-bind:user="user"
+            />
+            <Header class="hidden-sm-and-down"
+                    v-bind:user="user"
+            />
         </v-app-bar>
         <v-main>
                 <router-view></router-view>
@@ -26,6 +30,16 @@
 
     export default {
       components: {HeadermMobile, Footer, Header},
+      data () {
+        return {
+          user: {
+            initials: null,
+            fullName: null,
+            mail: null,
+            pictureUri: null
+          },
+        }
+      },
       mixins: [token],
       computed: {
         ...mapGetters(['getAuth'])
@@ -40,10 +54,31 @@
         if (window.location.pathname !== '' && data === null) {
           this.$store.getters.getAuth.login()
         }
-        this.userClaimsLocalData = data;
+       // this.userClaimsLocalData = data;
         const localStorage = JSON.parse(window.localStorage.getItem('key'));
         this.$store.commit('setUserLocation', localStorage);
         this.setLanguage();
+
+        const getUserInfo = () => {
+          axios.get(`${process.env.VUE_APP_URL_SWAGGER}/api/v1/users/get`)
+              .then((responce) => {
+                this.setUserClaims({
+                  name: responce.data.name,
+                  surname: responce.data.surname,
+                  role: data.profile.role,
+                  mail: responce.data.mail,
+                  language: responce.data.language,
+                  photoUrl: responce.data.photoUrl,
+                })
+              })
+              .then(() => {
+                this.user.initials = `${this.$store.getters.getUserClaims.name.charAt(0)}${this.$store.getters.getUserClaims.surname.charAt(0)}`;
+                this.user.fullName = `${this.$store.getters.getUserClaims.name} ${this.$store.getters.getUserClaims.surname}`;
+                this.user.mail = `${this.$store.getters.getUserClaims.mail}`;
+                this.user.pictureUri = `${this.$store.getters.getUserClaims.photoUrl}`;
+              })
+        };
+        await this.getToken(getUserInfo);
       }
     }
 

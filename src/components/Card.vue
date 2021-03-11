@@ -2,13 +2,13 @@
   <v-card
       :color="deletedCheck(description)"
       :key="componentKey"
-      class="mx-4 my-12"
-      max-width="370px"
+      class="my-12"
+      width="358px"
       max-height="800px"
   >
     <div>
       <v-img
-          height="250"
+          height="250px"
           :src="pictureCheck(description.picture)"
           class="white--text "
       >
@@ -230,7 +230,12 @@
           this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
         }
         if(this.$store.state.userClaimsStoreData.role === "Administrator"){
-          this.delItem.deleted = true;
+          this.$store.state.discounts = this.$store.state.discounts.map(item => {
+            if(item.id === this.description.id){
+              item.deleted = true;
+            }
+            return item;
+          })
         }
       }
       this.getToken(goDelete)
@@ -264,7 +269,7 @@
   },
   computed: {
     favorites() {
-      return this.$store.state.favorites
+      return this.$store.state.favorites;
     }
   },
   mounted() {
