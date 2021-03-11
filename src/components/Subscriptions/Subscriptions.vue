@@ -98,7 +98,7 @@ export default {
                 startDate: moment(item.startDate).format('L'),
                 endDate: moment(item.endDate).format('L'),
                 description: item.description,
-                rating: item.ratingTotal
+                rating: item.ratingTotal ? +Number.parseFloat(item.ratingTotal).toFixed(2) : 0
               }
           ))
     },
