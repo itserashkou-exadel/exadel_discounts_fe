@@ -182,7 +182,6 @@
                 description: '',
                 viewsTotal: 0,
                 subscriptionsTotal: 0,
-                usersSubscriptionTotal: 0,
                 createDate: ''
             },
             defaultItem: {
@@ -197,7 +196,6 @@
                 userClaimsLocalData: [],
                 viewsTotal: 0,
                 subscriptionsTotal: 0,
-                usersSubscriptionTotal: 0,
                 createDate: ''
             },
 
@@ -252,7 +250,6 @@
                                 description: item.description,
                                 viewsTotal: item.viewsTotal,
                                 subscriptionsTotal: item.subscriptionsTotal,
-                                usersSubscriptionTotal: item.usersSubscriptionTotal,
                                 createDate: moment(item.createDate).format("DD-MM-YYYY"),
                                 deleted: item.deleted
                             }
@@ -436,7 +433,6 @@
                     headerArr.push(
                         {text: this.$t('viewsTotal'), value: 'viewsTotal', sortable: true},
                         {text: this.$t('subscriptionsTotal'), value: 'subscriptionsTotal', sortable: true},
-                        {text: this.$t('usersSubscriptionTotal'), value: 'usersSubscriptionTotal', sortable: true},
                         {text: this.$t('createDate'), value: 'createDate', sortable: true},
                         )
                 }
