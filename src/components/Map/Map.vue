@@ -188,7 +188,7 @@
         border-radius: 5px;
     }
 
-    @media screen and (max-width: 375px) {
+    @media screen and (min-width: 320px) and (max-width: 414px){
         #map {
             display: flex;
             flex-direction: column;
@@ -218,4 +218,7 @@
             border-radius: 5px;
         }
     }
+
+
+
 </style>

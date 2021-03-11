@@ -2,7 +2,7 @@
     <v-navigation-drawer
             permanent
             class="d-flex mb-5"
-            width="375px"
+            width="414px"
     >
         <v-divider></v-divider>
         <template>
