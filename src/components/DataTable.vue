@@ -513,6 +513,12 @@
                         this.$store.state.discounts = this.$store.state.discounts.filter(item => item.id !== itemID);
                     }
                     if(this.$store.state.userClaimsStoreData.role === "Administrator"){
+                        this.$store.state.discounts = this.$store.state.discounts.map(item => {
+                            if(item.id === this.delItem.id){
+                                item.deleted = true;
+                            }
+                            return item;
+                        })
                         this.delItem.deleted = true;
                         let rowClass = 'deletedItem';
                         return rowClass;
