@@ -90,7 +90,7 @@ col-xs-12"
             </v-row>
           </v-card>
           <!--mobile-->
-          <v-card max-width="100%" class="d-md-none">
+          <v-card max-width="100%" class="d-md-none mt-n7">
             <v-img
                 max-height="70vh"
                 :src="pictureCheck(info.pictureUrl)"
