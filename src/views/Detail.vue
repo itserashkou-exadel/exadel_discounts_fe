@@ -389,7 +389,7 @@ export default {
       this.info = this.getDetailView;
       this.info.startDate = moment(this.info.startDate).format('L');
       this.info.endDate = moment(this.info.endDate).format('L');
-      this.info.ratingTotal = +Number.parseFloat(this.info.ratingTotal).toFixed(2);
+      this.info.ratingTotal = this.info.ratingTotal ? +Number.parseFloat(this.info.ratingTotal).toFixed(2) : 0;
       return this.info;
     },
     discounts() {
