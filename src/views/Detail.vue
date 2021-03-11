@@ -154,7 +154,7 @@ text-h4
                 >{{ $t('use') }}
                 </v-btn>
               </v-row>
-              <v-row justify="center ma-5">
+              <v-row justify="center" class="ma-5">
                                 <Promocodes v-bind:subscrItem="info"
                                             :showSubscriptions="showSubscriptions"
                                 />
