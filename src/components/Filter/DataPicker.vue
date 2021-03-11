@@ -23,6 +23,7 @@
         <v-date-picker
                 v-model="date"
                 range
+                :resedPicker="reset"
                 no-title
         ></v-date-picker>
         <v-spacer></v-spacer>
@@ -53,6 +54,7 @@
         data: () => ({
             date: new Date().toISOString().substr(0, 10),
             defaultDate: [moment().format(), moment().format()],
+            reseted: false,
             menu: false,
             modal: false,
             menu2: false,
@@ -78,16 +80,28 @@
             },
         },
         mounted() {
-            console.log(this.defaultDate)
             this.changeFilter({
                 ...this.$store.getters.getFilterData,
                 rangeDate: this.defaultDate
             })
         },
+        watch: {
+            reseted: function(){
+                if(this.reseted === true){
+                    this.defaultDate = [moment().format(), moment().format()];
+                    this.rangeData = [moment().format(), moment().format()];
+                    this.date = new Date().toISOString().substr(0, 10);
+                    this.changeFilter({
+                        ...this.$store.getters.getFilterData,
+                        rangeDate: this.defaultDate
+                    })
+                }
+            }
+        },
         computed: {
-            dateRangeText () {
-                console.log(this.$store.getters.allDiscounts);
-            },
+            reset(){
+                this.reseted = this.$store.state.resetFilter;
+            }
         },
 
     }

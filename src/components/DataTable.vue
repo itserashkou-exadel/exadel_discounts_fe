@@ -116,7 +116,7 @@
             </template>
             <template v-slot:footer>
                 <v-row class="mt-5">
-                    <v-col cols="11" class="d-flex flex-column align-center justify-center">
+                    <v-col cols="7" class="d-flex align-center justify-end">
                         <v-pagination
                                 v-model="page"
                                 :length="pageCount"
@@ -125,7 +125,8 @@
                                 :disabled="isLoad"
                         ></v-pagination>
                     </v-col>
-                    <v-col cols="1" class="d-flex align-center justify-center">
+                    <v-spacer></v-spacer>
+                    <v-col cols="1" md="2" lg="1" xl="1" class="d-flex align-center justify-center">
                         <v-select v-if="page === 1"
                                   v-model="itemsPerPage"
                                   :items="itmPer"

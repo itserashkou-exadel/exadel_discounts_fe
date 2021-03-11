@@ -10,6 +10,7 @@ const deleteURL = `${process.env.VUE_APP_URL_SWAGGER}/api/v1/discounts/delete/`
 
 let store = new Vuex.Store({
     state: {
+        resetFilter: false,
         currentComponent: sessionStorage.getItem('currentComponent') || 'HomePage',
         disablePag: false,
         notFound: false,
@@ -82,6 +83,9 @@ let store = new Vuex.Store({
         }
     },
     mutations: {
+        resetFilter(state, value){
+          state.resetFilter = value;
+        },
         disPag(state, value){
           state.disablePag = value;
         },

@@ -12,16 +12,16 @@
         response_mode: 'query',
         userStore: new Oidc.WebStorageStateStore()
     }).signinRedirectCallback().then(function (user) {
-        console.log("signin response success", user);
+        // console.log("signin response success", user);
         if (localStorage.getItem('key')) {
-            console.log(localStorage.getItem('key'))
+            // console.log(localStorage.getItem('key'))
             window.location.href = '../home';
         } else {
-            console.log(localStorage.getItem('key'))
+            // console.log(localStorage.getItem('key'))
             window.location.href = '../location';
         }
     }).catch(function (err) {
-        console.log(err);
+        // console.log(err);
     });
 
 </script>
