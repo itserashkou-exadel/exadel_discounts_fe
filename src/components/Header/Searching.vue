@@ -108,6 +108,8 @@
             },
             showSearch() {
                 this.$store.state.discounts = [];
+                this.$store.state.filtered = [];
+                this.$store.commit('resetFilter', true);
                 this.$store.state.filterRequest = false;
                 this.setFilterIcon(false);
                 this.$store.commit('setNoFound', false)

@@ -6,6 +6,7 @@
     >
         <v-card-text class="pa-0">
             <v-range-slider
+                    :resetFilter="reset"
                     class="slider-margin"
                     v-model="range"
                     :tick-labels="ticksLabels"
@@ -41,6 +42,7 @@
                 ticksLabels: [
                     1, 2, 3, 4, 5
                 ],
+                reseted: false
 
             }
         },
@@ -57,6 +59,14 @@
                 ...this.$store.getters.getFilterData,
                 starRange: [this.range[0], this.range[1]]
             })
+        },
+        computed:{
+            reset(){
+                this.reseted = this.$store.state.resetFilter;
+                if(this.reseted === true){
+                    this.range = [1, 5];
+                }
+            }
         },
         methods: {
             ...mapActions(['changeFilter']),
