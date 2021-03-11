@@ -124,7 +124,7 @@ export default {
                 amountOfDiscount: item.amountOfDiscount,
                 startDate: moment(item.startDate.$date).format('L'),
                 endDate: moment(item.endDate.$date).format('L'),
-                rating: item.ratingTotal,
+                rating: item.ratingTotal ? +Number.parseFloat(item.ratingTotal).toFixed(2) : 0,
                 description: item.description,
               }
           ))
