@@ -147,7 +147,7 @@
         this.$store.state.sortOption.sortIndex = 5;
         this.$store.state.discounts = [];
         this.$store.commit('setDisPage', 1)
-        console.log(this.$store.state.filtered)
+        // console.log(this.$store.state.filtered)
         const filterSearch = () => {
             this.inputPost(
                 {
