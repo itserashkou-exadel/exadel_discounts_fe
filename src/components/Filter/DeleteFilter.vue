@@ -53,7 +53,6 @@
                 }
                 this.getToken(resSearch);
                 this.setFilterIcon(false);
-                console.log(this.$store.state.filtered);
                 this.$store.state.filtered = [];
                 this.$store.commit('resetFilter', true);
                 this.$store.commit('setDisPage', 1);

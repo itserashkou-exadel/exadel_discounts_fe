@@ -123,7 +123,6 @@
         },
         computed:{
             reset(){
-                console.log("RESEt")
                 this.reseted = this.$store.state.resetFilter;
             }
         },
